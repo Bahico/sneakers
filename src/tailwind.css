@@ -1,0 +1,5 @@
+@import "tailwindcss";
+
+@theme {
+ --color-gray: #B2B2B2;
+}
