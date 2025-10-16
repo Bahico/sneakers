@@ -28,12 +28,7 @@
             ],
             "styles": [
               "src/styles.scss"
-            ],
-            "server": "src/main.server.ts",
-            "outputMode": "server",
-            "ssr": {
-              "entry": "src/server.ts"
-            }
+            ]
           },
           "configurations": {
             "production": {
@@ -66,7 +61,8 @@
               "buildTarget": "sneakers:build:production"
             },
             "development": {
-              "buildTarget": "sneakers:build:development"
+              "buildTarget": "sneakers:build:development",
+              "port": 4300
             }
           },
           "defaultConfiguration": "development"
