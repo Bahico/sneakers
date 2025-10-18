@@ -1,0 +1,4 @@
+@import "tailwindcss";
+.menu-item {
+  @apply p-2 border-b border-gray-200 cursor-pointer hover:bg-gray-100 duration-300 hover:rounded-md;
+}

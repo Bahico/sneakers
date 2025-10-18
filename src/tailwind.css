@@ -1,5 +1,23 @@
 @import "tailwindcss";
+@import "../public/styles/font-awesome.min.css";
 
 @theme {
- --color-gray: #B2B2B2;
+  --color-gray: #B2B2B2;
+  --bg-gray: #FAFAFA;
+  --bg-secondary: #F2F2F2;
+  --bg-primary: #222222;
 }
+
+@utility container {
+  @media (max-width: 640px) {
+    padding-left: 1.5rem; /* Example value for sm */
+    padding-right: 1.5rem; /* Example value for sm */
+  }
+}
+
+.w-container {
+  @media (max-width: var(--container-sm)) {
+    width: calc(100% - 3rem);
+  }
+}
+
