@@ -3,11 +3,15 @@ import {Routes} from '@angular/router';
 export default [
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'home',
     pathMatch: 'full',
   },
   {
-    path: 'dashboard',
-    loadComponent: () => import('./dashboard/dashboard.js'),
+    path: 'home',
+    loadComponent: () => import('./home/home'),
+  },
+  {
+    path: 'product',
+    loadChildren: () => import('./product/product.routes'),
   }
 ] satisfies Routes;

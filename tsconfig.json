@@ -4,6 +4,13 @@
   "compileOnSave": false,
   "compilerOptions": {
     "strict": false,
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": [
+        "app/shared/*",
+        "app/pages/*"
+      ],
+    },
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
