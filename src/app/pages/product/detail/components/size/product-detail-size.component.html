@@ -1,0 +1,50 @@
+<tui-tabs [(activeItemIndex)]="activeItemIndex">
+  <button
+    tuiTab
+    type="button"
+  >
+    EU
+  </button>
+  <button
+    tuiTab
+    type="button"
+  >
+    RU
+  </button>
+  <button
+    tuiTab
+    type="button"
+  >
+    US
+  </button>
+  <button
+    tuiTab
+    type="button"
+  >
+    UK
+  </button>
+  <button
+    tuiTab
+    type="button"
+  >
+    MM
+  </button>
+</tui-tabs>
+
+<div class="grid grid-cols-5 gap-2 my-4">
+  @for (size of productSize; track $index) {
+    <button
+      [disabled]="size === '35 ⅓'"
+      (click)="active.set(size)"
+      [ngClass]="{
+        'bg-primary text-white': size === active(),
+        'bg-white text-primary': size !== active()
+        }"
+      class="flex col-span-1 items-center justify-center h-12 text-xl border border-primary transition-colors duration-300 rounded-md disabled:opacity-40 hover:bg-primary hover:text-white hover:opacity-40"
+    >
+      {{size}}
+    </button>
+  }
+</div>
+
+<span class="underline text-lg text-black/60 flex my-3">Как выбрать размер?</span>

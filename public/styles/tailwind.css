@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+
+@import "./font-awesome.min.css";
+@import "./components";
+
+@theme {
+  /* text */
+  --color-gray: #F0F0F0;
+  --color-primary: #222222;
+  --color-orange: #FF9447;
+  --color-danger: #A21919;
+  --color-success: #19A249;
+
+  /* background */
+  --background-color-secondary: #F0F0F0;
+  --background-color-primary: #222222;
+  --background-color-orange: #FF9447;
+
+  /* border  */
+  --border-color-primary: #222222;
+  --border-color-secondary: #F0F0F0;
+  --border-color-orange: #FF9447;
+}
+
+@utility container {
+  @media (max-width: 640px) {
+    padding-left: 1.5rem; /* Example value for sm */
+    padding-right: 1.5rem; /* Example value for sm */
+  }
+}
+
+.w-container {
+  @media (max-width: var(--container-sm)) {
+    width: calc(100% - 3rem);
+  }
+}
+
+tui-tabs {
+  height: 40px !important;
+
+  &:before {
+    @apply !bg-primary;
+  }
+}
+
+.line {
+  @apply flex w-full h-[1px] bg-[#E8E8E8];
+}
+

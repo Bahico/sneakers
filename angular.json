@@ -33,7 +33,7 @@
             ],
             "styles": [
               "src/styles.scss",
-              "src/tailwind.css",
+              "public/styles/tailwind.css",
 
               "@taiga-ui/core/styles/taiga-ui-theme.less",
               "@taiga-ui/core/styles/taiga-ui-fonts.less"

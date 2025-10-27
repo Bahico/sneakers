@@ -8,7 +8,8 @@
     "paths": {
       "@/*": [
         "app/shared/*",
-        "app/pages/*"
+        "app/pages/*",
+        "app/config/*",
       ],
     },
     "noImplicitOverride": true,

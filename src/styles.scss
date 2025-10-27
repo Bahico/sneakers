@@ -6,3 +6,7 @@
 .color-base {
   color: #222222;
 }
+
+.hidden-scrollbar::-webkit-scrollbar {
+  display: none; /* Hides the scrollbar visually */
+}
