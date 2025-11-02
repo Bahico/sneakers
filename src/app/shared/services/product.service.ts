@@ -1,6 +1,6 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {getEndpoint} from '../../config/get-endpoint';
+import {getEndpoint} from '@/get-endpoint';
 import {ProductModel} from '@/models/product.model';
 
 @Injectable({providedIn: 'root'})

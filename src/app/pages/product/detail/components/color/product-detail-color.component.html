@@ -10,8 +10,13 @@
 </div>
 
 <div class="flex gap-1 h-30">
-  <div class="w-0 h-full">
-
+  <div
+    class="h-full transition-all duration-300 cursor-pointer flex items-center justify-center overflow-hidden text-xl"
+    [class.w-0]="disablePrevious()"
+    [class.w-10]="!disablePrevious()"
+    (click)="previous()"
+  >
+    <i class="fa fa-angle-left"></i>
   </div>
 
   <div class="w-full h-full overflow-x-auto hidden-scrollbar flex gap-2">
@@ -28,7 +33,13 @@
       </div>
     }
   </div>
-  <div class="w-0 h-full">
+  <div
+    class="h-full transition-all duration-300 cursor-pointer flex items-center justify-center overflow-hidden text-xl"
+    [class.w-0]="disableNext()"
+    [class.w-10]="!disableNext()"
+    (click)="next()"
+  >
+    <i class="fa fa-angle-right"></i>
 
   </div>
 </div>

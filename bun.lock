@@ -12,6 +12,7 @@
         "@angular/platform-server": "^20.3.0",
         "@angular/router": "^20.3.0",
         "@angular/ssr": "^20.3.6",
+        "@ng-web-apis/universal": "^4.12.2",
         "@taiga-ui/cdk": "^4.58.0",
         "@taiga-ui/core": "^4.58.0",
         "@taiga-ui/icons": "^4.58.0",
@@ -21,6 +22,7 @@
         "rxjs": "~7.8.0",
         "taiga-ui": "^4.58.0",
         "tslib": "^2.3.0",
+        "zone.js": "^0.15.1",
       },
       "devDependencies": {
         "@angular/build": "^20.3.6",
@@ -335,6 +337,8 @@
     "@ng-web-apis/resize-observer": ["@ng-web-apis/resize-observer@4.12.2", "", { "dependencies": { "tslib": "^2.3.0" }, "peerDependencies": { "@angular/core": ">=16.0.0", "@ng-web-apis/common": ">=4.12.0" } }, "sha512-ogthPEuHRBaJCXv/Df8GCqag52WkKziKx4l/+jp2jmaxKHWtmzW59Ftb7HFfoCzmkb+tVlVdC3EwFyldax2eyw=="],
 
     "@ng-web-apis/screen-orientation": ["@ng-web-apis/screen-orientation@4.12.2", "", { "dependencies": { "tslib": "^2.3.0" }, "peerDependencies": { "@angular/core": ">=16.0.0", "@ng-web-apis/common": ">=4.12.0", "rxjs": ">=7.0.0" } }, "sha512-8ZKFrfu0/7coUECmqi+ppk/1lUfHi38N0msmKR+iZvVbDiZcaJhu2SptZEmEkR1pTykp1wbbKSSfdyDb3MK1hQ=="],
+
+    "@ng-web-apis/universal": ["@ng-web-apis/universal@4.12.2", "", { "dependencies": { "tslib": "^2.3.0" }, "peerDependencies": { "@angular/core": ">=16.0.0", "@ng-web-apis/common": ">=4.12.0", "@types/node": ">=24.6.2", "rxjs": ">=7.0.0" } }, "sha512-RzmyCegC6tWrEONU4NpKsmQiw7rhlo1zZHJk+eHa9kEvm8K6o2/MRQKpxp/DDGruErCFtTskSKZ6V8trbjsB8g=="],
 
     "@nodelib/fs.scandir": ["@nodelib/fs.scandir@2.1.5", "", { "dependencies": { "@nodelib/fs.stat": "2.0.5", "run-parallel": "^1.1.9" } }, "sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g=="],
 
@@ -1305,6 +1309,8 @@
     "zod": ["zod@3.25.76", "", {}, "sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ=="],
 
     "zod-to-json-schema": ["zod-to-json-schema@3.24.6", "", { "peerDependencies": { "zod": "^3.24.1" } }, "sha512-h/z3PKvcTcTetyjl1fkj79MHNEjm+HpD6NXheWjzOekY7kV+lwDYnHw+ivHkijnCSMz1yJaWBD9vu/Fcmk+vEg=="],
+
+    "zone.js": ["zone.js@0.15.1", "", {}, "sha512-XE96n56IQpJM7NAoXswY3XRLcWFW83xe0BiAOeMD7K5k5xecOeul3Qcpx6GqEeeHNkW5DWL5zOyTbEfB4eti8w=="],
 
     "@angular-devkit/core/source-map": ["source-map@0.7.6", "", {}, "sha512-i5uvt8C3ikiWeNZSVZNWcfZPItFQOsYTUAOkcUPGd8DqDy1uOUikjt5dG+uRlwyvR108Fb9DOd4GvXfT0N2/uQ=="],
 

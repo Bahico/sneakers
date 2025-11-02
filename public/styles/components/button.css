@@ -13,4 +13,14 @@
   &:disabled {
     opacity: .7;
   }
+
+  &.default {
+    background-color: transparent;
+    @apply text-primary border border-primary;
+
+    &:hover {
+      opacity: 1;
+      @apply bg-primary text-white;
+    }
+  }
 }

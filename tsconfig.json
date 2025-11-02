@@ -11,6 +11,7 @@
         "app/pages/*",
         "app/config/*",
       ],
+      "environments": ["environment/environment.ts"],
     },
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,

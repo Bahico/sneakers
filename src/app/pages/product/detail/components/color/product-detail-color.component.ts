@@ -1,4 +1,4 @@
-import {Component, ElementRef, signal, viewChildren} from '@angular/core';
+import {Component, computed, ElementRef, signal, viewChildren} from '@angular/core';
 import {getImageUrl} from '@/get-endpoint';
 import {NgClass} from '@angular/common';
 
@@ -24,8 +24,22 @@ export class ProductDetailColorComponent {
     "images/product/Item → Label.png",
   ]);
 
+
+  protected readonly disablePrevious = computed(() => this.activeIndex() === 0);
+  protected readonly disableNext = computed(() => this.activeIndex() === this.colors().length - 1);
+
   setActiveIndex(index: number) {
     this.activeIndex.set(index);
+    this.scrollToActiveThumb();
+  }
+
+  previous(): void {
+    this.activeIndex.update(index => index > 0 ? index - 1 : 0);
+    this.scrollToActiveThumb();
+  }
+
+  next(): void {
+    this.activeIndex.update(index => this.colors().length > index ? index + 1 : 0);
     this.scrollToActiveThumb();
   }
 
