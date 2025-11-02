@@ -1,4 +1,4 @@
-import {afterNextRender, Component, DestroyRef, inject, OnInit} from '@angular/core';
+import {Component, DestroyRef, inject, OnInit} from '@angular/core';
 import {ProductService} from '@/services/product.service';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {ProductDetailImagesComponent} from './components/images/product-detail-images.component';
@@ -11,7 +11,7 @@ import {TuiBreadcrumbs} from '@taiga-ui/kit';
 import {TuiItem} from '@taiga-ui/cdk';
 import {TuiLink} from '@taiga-ui/core';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {map} from 'rxjs';
+import {ProductDetailStore} from '@/product/detail/services/product-detail-store';
 
 @Component({
   templateUrl: 'product-detail.component.html',
@@ -34,6 +34,7 @@ export default class ProductDetailComponent implements OnInit {
   private readonly productService = inject(ProductService);
   private readonly route = inject(ActivatedRoute);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly productDetailStore = inject(ProductDetailStore);
 
   protected items = [
     {
@@ -54,15 +55,9 @@ export default class ProductDetailComponent implements OnInit {
     },
   ];
 
-  constructor() {
-    afterNextRender(() => {
-      this.subscribeRoute();
-    })
-  }
-
 
   ngOnInit() {
-    console.log('ProductDetailComponent');
+    this.subscribeRoute();
   }
 
   subscribeRoute() {
@@ -77,15 +72,12 @@ export default class ProductDetailComponent implements OnInit {
   }
 
   loadProduct(spuId: number) {
-    console.log(spuId);
     this.productService
       .detail(spuId)
-      .pipe(map(res => {
-        console.log(res)
-        return res
-      }))
       .subscribe(res => {
-        console.log(res);
-      }, error => console.log(error))
+        this.productDetailStore.update = res;
+        const size = res.sizeTable[0];
+        this.productDetailStore.sizeType.set(size.primary ? 'primary' : size.type);
+      })
   }
 }

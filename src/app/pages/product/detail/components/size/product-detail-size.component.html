@@ -1,46 +1,26 @@
-<tui-tabs [(activeItemIndex)]="activeItemIndex">
-  <button
-    tuiTab
-    type="button"
-  >
-    EU
-  </button>
-  <button
-    tuiTab
-    type="button"
-  >
-    RU
-  </button>
-  <button
-    tuiTab
-    type="button"
-  >
-    US
-  </button>
-  <button
-    tuiTab
-    type="button"
-  >
-    UK
-  </button>
-  <button
-    tuiTab
-    type="button"
-  >
-    MM
-  </button>
+<tui-tabs
+  [(activeItemIndex)]="activeItemIndex"
+  (activeItemIndexChange)="onChangeIndex()"
+>
+  @for (size of detail().sizeTable; track $index) {
+    <button
+      tuiTab
+      type="button"
+    >
+      {{size.type}}
+    </button>
+  }
 </tui-tabs>
 
 <div class="grid grid-cols-5 gap-2 my-4">
-  @for (size of productSize; track $index) {
+  @for (size of detail()?.sizeTable?.[activeItemIndex()]?.values; track $index) {
     <button
-      [disabled]="size === '35 ⅓'"
       (click)="active.set(size)"
       [ngClass]="{
         'bg-primary text-white': size === active(),
         'bg-white text-primary': size !== active()
         }"
-      class="flex col-span-1 items-center justify-center h-12 text-xl border border-primary transition-colors duration-300 rounded-md disabled:opacity-40 hover:bg-primary hover:text-white hover:opacity-40"
+      class="cursor-pointer flex col-span-1 items-center justify-center h-12 text-xl border border-primary transition-colors duration-300 rounded-md disabled:opacity-40 hover:bg-primary hover:text-white hover:opacity-40"
     >
       {{size}}
     </button>

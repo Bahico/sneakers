@@ -1,6 +1,7 @@
-import {Component, model} from '@angular/core';
+import {Component, inject, model, OnInit} from '@angular/core';
 import {TuiTabs} from '@taiga-ui/kit';
 import {NgClass} from '@angular/common';
+import {ProductDetailStore} from '@/product/detail/services/product-detail-store';
 
 @Component({
   templateUrl: 'product-detail-size.component.html',
@@ -11,12 +12,14 @@ import {NgClass} from '@angular/common';
   selector: 'product-detail-size'
 })
 export class ProductDetailSizeComponent {
-  protected activeItemIndex = model(0);
+  private readonly productDetailStore = inject(ProductDetailStore);
 
-  productSize = [
-    35, '35 ⅓', '36 ⅓', '36', '37',
-    35, '35 ⅓', '36 ⅓', '36', '37',
-    35, '35 ⅓', '36 ⅓', '36', '37'
-  ];
-  active = model(null);
+  protected readonly detail = this.productDetailStore.detail;
+  protected readonly active = this.productDetailStore.sizeValue;
+  protected readonly activeItemIndex = model<number>(0);
+
+  onChangeIndex() {
+    const size = this.detail().sizeTable[this.activeItemIndex()];
+    this.productDetailStore.sizeType.set(size.primary ? 'primary' : size.type);
+  }
 }

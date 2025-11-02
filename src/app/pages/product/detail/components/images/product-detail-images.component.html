@@ -2,11 +2,16 @@
   <button
     [disabled]="disablePrevious()"
     (click)="previous()"
-    class="absolute top-1/2 left-5 -translate-y-1/2 text-3xl cursor-pointer disabled:opacity-50"
+    class="absolute top-1/2 left-5 -translate-y-1/2 text-3xl cursor-pointer disabled:opacity-50 z-10"
   >
     <i class="fa fa-angle-left"></i>
   </button>
-  <img [src]="getImageUrl(images()[activeIndex()])" class="h-full w-full object-contain" alt="product image">
+  <img
+    [src]="images()?.[activeIndex()]"
+    class="h-full w-full object-contain mix-blend-mode"
+    [style.mix-blend-mode]="'multiply'"
+    alt="product image"
+  >
   <button
     (click)="next()"
     [disabled]="disableNext()"
@@ -23,9 +28,10 @@
       class="w-1/4 min-w-1/4 bg-secondary rounded-md h-full cursor-pointer"
     >
       <img
-        [src]="getImageUrl(image)"
+        [src]="image"
         (click)="setActiveIndex($index)"
         alt="product image item"
+        [style.mix-blend-mode]="'multiply'"
         class="w-full h-full object-contain"
         [class.opacity-50]="activeIndex() !== $index"
       >
