@@ -21,9 +21,6 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "optimization": true,
-            "polyfills": [
-              "zone.js"
-            ],
             "assets": [
               {
                 "glob": "**/*",

@@ -10,6 +10,8 @@
         "app/shared/*",
         "app/pages/*",
         "app/config/*",
+        "app/core/*",
+        "app/store/*"
       ],
       "environments": ["environment/environment.ts"],
     },

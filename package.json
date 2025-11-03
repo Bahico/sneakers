@@ -38,10 +38,10 @@
     "@taiga-ui/kit": "^4.58.0",
     "express": "^5.1.0",
     "less": "^4.4.2",
+    "ngx-cookie-service": "^20.1.1",
     "rxjs": "~7.8.0",
     "taiga-ui": "^4.58.0",
-    "tslib": "^2.3.0",
-    "zone.js": "^0.15.1"
+    "tslib": "^2.3.0"
   },
   "devDependencies": {
     "@angular/build": "^20.3.6",

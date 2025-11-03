@@ -1,8 +1,10 @@
-import {Component} from '@angular/core';
+import {Component, computed, inject} from '@angular/core';
 import {NgClass, NgOptimizedImage} from '@angular/common';
-import {IconComponent} from '../../shared/components/icon/icon';
+import {IconComponent} from '@/components/icon/icon';
 import {TuiDropdownDirective, TuiDropdownManual, TuiDropdownOptionsDirective} from '@taiga-ui/core';
 import {TuiActiveZone, TuiObscured} from '@taiga-ui/cdk';
+import {AccountStore} from '@/account';
+import {AuthenticationService} from '@/components/authentication/authentication-open';
 
 @Component({
   selector: 'navbar',
@@ -23,7 +25,15 @@ import {TuiActiveZone, TuiObscured} from '@taiga-ui/cdk';
   }
 })
 export default class Navbar {
+  private readonly accountStore = inject(AccountStore);
+  private readonly authenticationService = inject(AuthenticationService);
+
+  protected readonly isAuthed = computed(() => !!this.accountStore.account());
   protected open = false;
+
+  openAuthentication() {
+    this.authenticationService.openModal()
+  }
 
   protected onClick(): void {
     this.open = !this.open;

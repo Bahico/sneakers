@@ -8,12 +8,11 @@
   </div>
 
   <div class="flex gap-2 items-center">
-    <div class="bg-gray-100 rounded-lg flex items-center gap-2 px-4 py-2 w-100 text-gray-500">
-      <icon-list icon="search"/>
+    <div class="sn-control !w-100">
+      <icon-list icon="search" class="sn-control-icon"/>
       <input
         type="text"
         placeholder="Введите бренд или название модели"
-        class="bg-transparent outline-none w-full placeholder:text-gray-400"
       >
     </div>
     <div class="py-1 px-2">
@@ -22,19 +21,28 @@
     <div class="py-1 px-2">
       <icon-list icon="basket"/>
     </div>
-    <div
-      class="text-xl cursor-pointer rounded-md py-1 px-2"
-      [ngClass]="{'bg-black text-white': open}"
-      [tuiDropdown]="dropdownContent"
-      [tuiDropdownManual]="open"
-      [tuiObscuredEnabled]="open"
-      tuiDropdownAlign="center"
-      (click)="onClick()"
-      (tuiActiveZoneChange)="onActiveZone($event)"
-      (tuiObscured)="onObscured($event)"
-    >
-      <i class="fa fa-user-o"></i>
-    </div>
+    @if (isAuthed()) {
+      <div
+        class="text-xl cursor-pointer rounded-md py-1 px-2"
+        [ngClass]="{'bg-black text-white': open}"
+        [tuiDropdown]="dropdownContent"
+        [tuiDropdownManual]="open"
+        [tuiObscuredEnabled]="open"
+        tuiDropdownAlign="center"
+        (click)="onClick()"
+        (tuiActiveZoneChange)="onActiveZone($event)"
+        (tuiObscured)="onObscured($event)"
+      >
+        <i class="fa fa-user-o"></i>
+      </div>
+    } @else {
+      <div
+        class="text-xl cursor-pointer rounded-md py-1 px-2"
+        (click)="openAuthentication()"
+      >
+        <i class="fa fa-user-o"></i>
+      </div>
+    }
 
     <ng-template #dropdownContent>
       <div class="grid grid-cols-1 flex-col gap-2 w-50 p-2">

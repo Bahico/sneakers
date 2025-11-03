@@ -19,10 +19,10 @@
         "@taiga-ui/kit": "^4.58.0",
         "express": "^5.1.0",
         "less": "^4.4.2",
+        "ngx-cookie-service": "^20.1.1",
         "rxjs": "~7.8.0",
         "taiga-ui": "^4.58.0",
         "tslib": "^2.3.0",
-        "zone.js": "^0.15.1",
       },
       "devDependencies": {
         "@angular/build": "^20.3.6",
@@ -1005,6 +1005,8 @@
     "negotiator": ["negotiator@1.0.0", "", {}, "sha512-8Ofs/AUQh8MaEcrlq5xOX0CQ9ypTF5dl78mjlMNfOK08fzpgTHQRQPBxcPlEtIw0yRpws+Zo/3r+5WRby7u3Gg=="],
 
     "ng-morph": ["ng-morph@4.8.4", "", { "dependencies": { "jsonc-parser": "3.3.1", "minimatch": "10.0.1", "multimatch": "5.0.0", "ts-morph": "23.0.0" }, "peerDependencies": { "@angular-devkit/core": ">=16.0.0", "@angular-devkit/schematics": ">=16.0.0", "tslib": "^2.7.0" } }, "sha512-XwL53wCOhyaAxvoekN74ONbWUK30huzp+GpZYyC01RfaG2AX9l7YlC1mGG/l7Rx7YXtFAk85VFnNJqn2e46K8g=="],
+
+    "ngx-cookie-service": ["ngx-cookie-service@20.1.1", "", { "dependencies": { "tslib": "^2.8.0" }, "peerDependencies": { "@angular/common": "^20.0.0", "@angular/core": "^20.0.0" } }, "sha512-jGjjIqu+Kt8De6YjDqTQOaUHKB7gYs0eaDuLyXfNhfKnA78lA7D7oWcaIzjkmXhRqTnh2/ex1UHmZHN9MX0yoQ=="],
 
     "node-addon-api": ["node-addon-api@6.1.0", "", {}, "sha512-+eawOlIgy680F0kBzPUNFhMZGtJ1YmqM6l4+Crf4IkImjYrO/mqPwRMh352g23uIaQKFItcQ64I7KMaJxHgAVA=="],
 

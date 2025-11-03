@@ -23,4 +23,13 @@
       @apply bg-primary text-white;
     }
   }
+
+  &.secondary {
+    @apply text-primary border-none bg-gray-100;
+
+    &:hover {
+      opacity: 1;
+      @apply bg-primary text-white;
+    }
+  }
 }

@@ -1,4 +1,4 @@
-import {Component, DestroyRef, inject, OnInit} from '@angular/core';
+import {afterNextRender, Component, DestroyRef, inject, OnInit} from '@angular/core';
 import {ProductService} from '@/services/product.service';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {ProductDetailImagesComponent} from './components/images/product-detail-images.component';
@@ -30,7 +30,7 @@ import {ProductDetailStore} from '@/product/detail/services/product-detail-store
     RouterLink
   ]
 })
-export default class ProductDetailComponent implements OnInit {
+export default class ProductDetailComponent {
   private readonly productService = inject(ProductService);
   private readonly route = inject(ActivatedRoute);
   private readonly destroyRef = inject(DestroyRef);
@@ -38,26 +38,19 @@ export default class ProductDetailComponent implements OnInit {
 
   protected items = [
     {
-      caption: 'Selects',
-      routerLink: '/components/select',
+      caption: 'Главная',
+      routerLink: '/',
     },
     {
-      caption: 'Multi',
-      routerLink: '/components/multi-select',
-    },
-    {
-      caption: 'With tags',
-      routerLink: '/components/multi-select',
-    },
-    {
-      caption: 'Current',
-      routerLink: '/navigation/breadcrumbs',
+      caption: 'Current'
     },
   ];
 
 
-  ngOnInit() {
-    this.subscribeRoute();
+  constructor() {
+    afterNextRender(() => {
+      this.subscribeRoute();
+    })
   }
 
   subscribeRoute() {
@@ -66,7 +59,7 @@ export default class ProductDetailComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(params => {
         if (params['spuId']) {
-          this.loadProduct(params['spuId'])
+          this.loadProduct(params['spuId']);
         }
       })
   }
@@ -78,6 +71,9 @@ export default class ProductDetailComponent implements OnInit {
         this.productDetailStore.update = res;
         const size = res.sizeTable[0];
         this.productDetailStore.sizeType.set(size.primary ? 'primary' : size.type);
+        this.items[1] = {
+          caption:res.name
+        }
       })
   }
 }
