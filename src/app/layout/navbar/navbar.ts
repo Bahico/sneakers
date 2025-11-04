@@ -4,7 +4,7 @@ import {IconComponent} from '@/components/icon/icon';
 import {TuiDropdownDirective, TuiDropdownManual, TuiDropdownOptionsDirective} from '@taiga-ui/core';
 import {TuiActiveZone, TuiObscured} from '@taiga-ui/cdk';
 import {AccountStore} from '@/account';
-import {AuthenticationService} from '@/components/authentication/authentication-open';
+import {AuthenticationOpen} from '@/components/authentication/authentication-open';
 
 @Component({
   selector: 'navbar',
@@ -26,7 +26,7 @@ import {AuthenticationService} from '@/components/authentication/authentication-
 })
 export default class Navbar {
   private readonly accountStore = inject(AccountStore);
-  private readonly authenticationService = inject(AuthenticationService);
+  private readonly authenticationService = inject(AuthenticationOpen);
 
   protected readonly isAuthed = computed(() => !!this.accountStore.account());
   protected open = false;

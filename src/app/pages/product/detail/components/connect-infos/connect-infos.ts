@@ -3,6 +3,7 @@ import {ProductDetailStore} from '@/product/detail/services/product-detail-store
 import {IconComponent} from '@/components/icon/icon';
 import {CdkCopyToClipboard} from '@angular/cdk/clipboard';
 import {NgOptimizedImage} from '@angular/common';
+import {OriginalCertificateOpen} from '@/components/original-certificate/original-certificate-open';
 
 @Component({
   templateUrl: 'connect-infos.html',
@@ -15,6 +16,7 @@ import {NgOptimizedImage} from '@angular/common';
 })
 export class ConnectInfos {
   private readonly productDetailStore = inject(ProductDetailStore);
+  private readonly originalCertificateOpen = inject(OriginalCertificateOpen);
 
   protected readonly detail = this.productDetailStore.detail;
 
@@ -27,5 +29,9 @@ export class ConnectInfos {
     setTimeout(() => {
       this.copySuccess.set(false);
     }, 3000);
+  }
+
+  openCertificate() {
+    this.originalCertificateOpen.openModal();
   }
 }

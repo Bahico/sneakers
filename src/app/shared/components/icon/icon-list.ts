@@ -1,10 +1,12 @@
 import {IconList} from './icon.model';
 import socials from './list/socials';
 import simple from './list/simple';
+import primary from '@/components/icon/list/primary';
 
 export const ICON_LIST: IconList[] = [
   ...socials,
   ...simple,
+  ...primary,
   {
     name: 'profile',
     icon: `
