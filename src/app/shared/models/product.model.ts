@@ -44,3 +44,22 @@ interface Properties {
   propertyValues: [];
   propertyTypes: [];
 }
+
+export interface ProductListDetail {
+  slug: string;
+  name: string;
+  spuId: number;
+  brand: string;
+  availability: string;
+  category: {
+    category1: string;
+    category2: string;
+    category3: string;
+  };
+  fit: 'MALE' | 'MAN';
+  price: number;
+  article: string;
+  split: number;
+  first_image: string;
+  skus: Skus[];
+}

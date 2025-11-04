@@ -77,16 +77,28 @@
       <span class="text-sm">Поиск</span>
     </div>
     <div class="flex flex-col items-center text-xl">
-      <i class="fa fa-heart-o h-6"></i>
-<!--      <icon-list class="h-7" icon="favorite"/>-->
+      <icon-list class="h-7" icon="basket"/>
       <span class="text-sm">Корзина</span>
     </div>
+    @if (isAuthed()) {
+      <div class="flex flex-col items-center">
+        <icon-list class="h-7" icon="profile"/>
+        <span class="text-sm">Профиль</span>
+      </div>
+    } @else {
+      <div
+        class="flex flex-col items-center"
+        (click)="openAuthentication()"
+      >
+        <icon-list class="h-7" icon="profile"/>
+        <span class="text-sm">Профиль</span>
+      </div>
+    }
+
     <div class="flex flex-col items-center">
-      <icon-list class="h-7" icon="basket"/>
-      <span class="text-sm">Профиль</span>
-    </div>
-    <div class="flex flex-col items-center">
-      <icon-list class="h-7" icon="profile"/>
+      <span class="text-2xl h-7">
+      <i class="fa fa-bars" aria-hidden="true"></i>
+      </span>
       <span class="text-sm">Меню</span>
     </div>
   </div>

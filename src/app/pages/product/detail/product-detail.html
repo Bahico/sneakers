@@ -1,6 +1,6 @@
 <div class="container mb-10 mt-5 md:mt-0">
   <tui-breadcrumbs class="mb-4" (click)="loadProduct(7536140)">
-    @for (item of items; track $index) {
+    @for (item of items(); track $index) {
       <a
         *tuiItem
         tuiLink
@@ -21,7 +21,7 @@
       <product-detail-name />
       <product-detail-size />
       <product-detail-order />
-      <product-detail-color />
+<!--      <product-detail-color />-->
       <connect-infos />
     </div>
   </div>

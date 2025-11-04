@@ -1,6 +1,8 @@
-import {Component, computed, ElementRef, signal, viewChildren} from '@angular/core';
+import {Component, computed, ElementRef, inject, signal, viewChildren} from '@angular/core';
 import {getImageUrl} from '@/get-endpoint';
 import {NgClass} from '@angular/common';
+import {ProductModel} from '@/models/product.model';
+import {ProductDetailStore} from '@/product/detail/services/product-detail-store';
 
 @Component({
   templateUrl: 'product-detail-color.html',
@@ -10,20 +12,12 @@ import {NgClass} from '@angular/common';
   ]
 })
 export class ProductDetailColor {
-  protected readonly getImageUrl = getImageUrl;
+  private readonly productDetailStore = inject(ProductDetailStore);
 
   thumbs = viewChildren<ElementRef>('thumb');
 
   activeIndex = signal(0);
-  colors = signal([
-    "images/product/b641d56d7ad792aec554525f33ccc89c072065f1.png",
-    "images/product/Item → Label.png",
-    "images/product/b641d56d7ad792aec554525f33ccc89c072065f1.png",
-    "images/product/Item → Label.png",
-    "images/product/b641d56d7ad792aec554525f33ccc89c072065f1.png",
-    "images/product/Item → Label.png",
-  ]);
-
+  colors = computed(() => this.productDetailStore.similar().slice(0, 8));
 
   protected readonly disablePrevious = computed(() => this.activeIndex() === 0);
   protected readonly disableNext = computed(() => this.activeIndex() === this.colors().length - 1);

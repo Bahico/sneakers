@@ -35,21 +35,90 @@
 
 <span class="line mt-8 mb-4"></span>
 
-<div class="flex justify-between items-center">
+<div
+  class="flex justify-between items-center cursor-pointer"
+  [cdkCopyToClipboard]="detail().article"
+  (cdkCopyToClipboardCopied)="copy()"
+>
   <div class="flex flex-col gap-1">
     <span>Артикул</span>
     <span class="text-xl font-bold">{{detail().article}}</span>
   </div>
   <span>
-    <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <g clip-path="url(#clip0_8274_17142)">
-        <path d="M26.125 33.25C30.0533 33.25 33.25 30.0533 33.25 26.125V7.125C33.25 3.19675 30.0533 0 26.125 0H7.125C3.19675 0 0 3.19675 0 7.125V26.125C0 30.0533 3.19675 33.25 7.125 33.25H26.125ZM1.58333 26.125V7.125C1.58333 4.06917 4.06917 1.58333 7.125 1.58333H26.125C29.1808 1.58333 31.6667 4.06917 31.6667 7.125V26.125C31.6667 29.1808 29.1808 31.6667 26.125 31.6667H7.125C4.06917 31.6667 1.58333 29.1808 1.58333 26.125ZM38 7.125V30.875C38 34.8032 34.8032 38 30.875 38H7.125C6.688 38 6.33333 37.6453 6.33333 37.2083C6.33333 36.7713 6.688 36.4167 7.125 36.4167H30.875C33.9308 36.4167 36.4167 33.9308 36.4167 30.875V7.125C36.4167 6.688 36.7713 6.33333 37.2083 6.33333C37.6453 6.33333 38 6.688 38 7.125Z" fill="#222222"/>
-      </g>
-      <defs>
-        <clipPath id="clip0_8274_17142">
-          <rect width="38" height="38" fill="white"/>
-        </clipPath>
-      </defs>
-    </svg>
+    @if (copySuccess()) {
+      <icon-list icon="checked" />
+    } @else {
+      <icon-list icon="copy" />
+    }
+  </span>
+</div>
+
+<span class="line mt-8 mb-4"></span>
+
+<div
+  class="flex flex-col gap-2 duration-300 overflow-hidden"
+  [class.max-h-8]="!openDescription()"
+  [class.max-h-100]="openDescription()"
+>
+  <div class="flex justify-between items-center cursor-pointer" (click)="openDescription.set(!openDescription())">
+    <span class="text-primary text-xl font-bold">Описание</span>
+
+    @if (openDescription()) {
+      <icon-list icon="minus" />
+    } @else {
+      <icon-list icon="plus" />
+    }
+  </div>
+  <p>{{detail().description}}</p>
+</div>
+
+<span class="line mt-8 mb-4"></span>
+
+<div
+  class="flex flex-col gap-2 duration-300 overflow-hidden"
+  [class.max-h-8]="!openProperties()"
+  [class.max-h-100]="openProperties()"
+>
+  <div class="flex justify-between items-center cursor-pointer" (click)="openProperties.set(!openProperties())">
+    <span class="text-primary text-xl font-bold">Характеристики</span>
+
+    @if (openProperties()) {
+      <icon-list icon="minus" />
+    } @else {
+      <icon-list icon="plus" />
+    }
+  </div>
+  <div class="flex flex-col gap-1">
+    @for (property of detail().productProperties; track property.key) {
+      <div>
+        <span class="text-primary">{{property.translatedKey}}:</span>
+        <span class="text-primary">
+          @for (value of property.translatedValue; track value) {
+            {{value}}@if (!$last) {,}
+          }
+        </span>
+      </div>
+    }
+  </div>
+</div>
+
+<span class="line mt-8 mb-4"></span>
+
+<div class="flex justify-between items-center cursor-pointer">
+  <div class="flex flex-col gap-1">
+    <span class="text-xl font-bold">Доставка и оплата</span>
+  </div>
+</div>
+
+<span class="line mt-4 mb-4"></span>
+
+<div class="flex justify-between items-center cursor-pointer">
+  <div class="flex gap-1 items-center -ml-2">
+    <img ngSrc="images/original.png" alt="original" height="50" width="70">
+    <span class="text-xl font-bold">Оригинальный товар</span>
+  </div>
+
+  <span class="text-2xl pr-4">
+    <i class="fa fa-angle-right" aria-hidden="true"></i>
   </span>
 </div>

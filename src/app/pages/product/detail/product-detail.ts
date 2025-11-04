@@ -1,4 +1,4 @@
-import {afterNextRender, Component, DestroyRef, inject, ViewEncapsulation} from '@angular/core';
+import {afterNextRender, Component, DestroyRef, inject, signal, ViewEncapsulation} from '@angular/core';
 import {ProductService} from '@/services/product.service';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {ProductDetailImages} from './components/images/product-detail-images';
@@ -12,6 +12,7 @@ import {TuiItem} from '@taiga-ui/cdk';
 import {TuiLink} from '@taiga-ui/core';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {ProductDetailStore} from '@/product/detail/services/product-detail-store';
+import {finalize} from 'rxjs';
 
 @Component({
   templateUrl: 'product-detail.html',
@@ -36,7 +37,7 @@ export default class ProductDetail {
   private readonly destroyRef = inject(DestroyRef);
   private readonly productDetailStore = inject(ProductDetailStore);
 
-  protected items = [
+  protected items = signal([
     {
       caption: 'Главная',
       routerLink: '/',
@@ -44,7 +45,7 @@ export default class ProductDetail {
     {
       caption: 'Current'
     },
-  ];
+  ]);
 
 
   constructor() {
@@ -67,13 +68,30 @@ export default class ProductDetail {
   loadProduct(spuId: number) {
     this.productService
       .detail(spuId)
+      .pipe(finalize(() => this.loadSimilarOnes()))
       .subscribe(res => {
         this.productDetailStore.update = res;
         const size = res.sizeTable[0];
         this.productDetailStore.sizeType.set(size.primary ? 'primary' : size.type);
-        this.items[1] = {
-          caption:res.name
-        }
+        this.items.update(items => [
+          items[0],
+          {
+            caption: res.name
+          }
+        ]);
+      })
+  }
+
+  loadSimilarOnes() {
+    const detail = this.productDetailStore.detail();
+    this.productService
+      .query({
+        category1: detail.category.category1,
+        category2: detail.category.category2,
+        category3: detail.category.category3,
+      })
+      .subscribe(res => {
+        this.productDetailStore.updateSimilar = res.results;
       })
   }
 }
