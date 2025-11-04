@@ -16,8 +16,8 @@ export class TokenStore {
       this.cookieService.delete(this.accessCol);
       this.cookieService.delete(this.refreshCol);
     }
-    this.cookieService.set(this.accessCol, value.access);
-    this.cookieService.set(this.refreshCol, value.refresh);
+    this.cookieService.set(this.accessCol, value.access, null, '/');
+    this.cookieService.set(this.refreshCol, value.refresh, null, '/');
     this.token$.set(value);
   }
 

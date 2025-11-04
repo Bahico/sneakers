@@ -1,4 +1,4 @@
-import {Component, inject, signal} from '@angular/core';
+import {afterNextRender, Component, ElementRef, inject, signal, ViewChild, viewChild} from '@angular/core';
 import {AuthenticationType} from './authentication.type';
 import {IconComponent} from '@/components/icon/icon';
 import {FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
@@ -9,6 +9,16 @@ import {TokenModel} from '@/models/token.model';
 import {injectContext} from '@taiga-ui/polymorpheus';
 import {TuiDialogContext} from '@taiga-ui/core';
 import {AccountStore} from '@/account';
+
+export type TGUser = {
+  id: number;
+  username?: string;
+  photo_url?: string;
+  first_name: string;
+  last_name?: string;
+  auth_date: number;
+  hash: string;
+};
 
 @Component({
   templateUrl: 'authentication-main.html',
@@ -25,6 +35,9 @@ export class AuthenticationMain {
   private readonly tokenStore = inject(TokenStore);
   protected readonly context = injectContext<TuiDialogContext<string, string>>();
 
+
+  @ViewChild('telegramBtnRef') myDivElement!: ElementRef;
+
   protected readonly email = new FormControl(null, [Validators.email, Validators.required]);
   protected readonly code = new FormControl(null, [Validators.minLength(6), Validators.maxLength(6), Validators.required]);
 
@@ -32,6 +45,14 @@ export class AuthenticationMain {
   enterCode = signal(false);
   restOfTime = signal(30);
   errorCode = signal(false);
+
+  constructor() {
+    afterNextRender(() => {
+      setTimeout(() => {
+        this.loginTelegram()
+      }, 1000)
+    })
+  }
 
   changeType(type: AuthenticationType) {
     this.loginType.set(type);
@@ -68,5 +89,21 @@ export class AuthenticationMain {
         clearInterval(interval);
       }
     }, 1000);
+  }
+
+  loginTelegram() {
+    (window as any).TelegramOnAuthCb = (user: TGUser) => console.log(user);
+
+
+    const script = document.createElement('script');
+    script.src = 'https://telegram.org/js/telegram-widget.js?22';
+    script.async = true;
+
+    script.setAttribute('data-telegram-login', 'sneaker_team_bot');
+    script.setAttribute('data-request-access', 'write');
+    script.setAttribute('data-onauth', 'TelegramOnAuthCb(user)');
+    script.setAttribute('data-lang', 'ru');
+
+    this.myDivElement.nativeElement.appendChild(script);
   }
 }
