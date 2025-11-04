@@ -6,6 +6,6 @@ export default [
   },
   {
     path: 'detail/:spuId',
-    loadComponent: () => import('./detail/product-detail.component'),
+    loadComponent: () => import('./detail/product-detail'),
   }
 ] satisfies import('@angular/router').Routes;

@@ -1,0 +1,18 @@
+<img
+  id="myimage"
+  [src]="urlImage()"
+  [style]="styles()"
+  [class]="classes()"
+  alt="product image"
+  (click)="updateZooming()"
+  checkMouseLeave
+  [style.cursor]="zooming() ? 'zoom-out' : 'zoom-in'"
+  (onLeaved)="onLeaved()"
+>
+<div
+  id="myresult"
+  [class.opacity-100]="zooming()"
+  [class.opacity-0]="!zooming()"
+  (click)="updateZooming()"
+  class="img-zoom-result pointer-events-none transition-opacity duration-300"
+></div>

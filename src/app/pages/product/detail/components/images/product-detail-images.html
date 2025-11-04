@@ -6,12 +6,11 @@
   >
     <i class="fa fa-angle-left"></i>
   </button>
-  <img
-    [src]="images()?.[activeIndex()]"
-    class="h-full w-full object-contain mix-blend-mode"
-    [style.mix-blend-mode]="'multiply'"
-    alt="product image"
-  >
+  <image-zoom
+    [urlImage]="images()?.[activeIndex()]"
+    styles="mix-blend-mode: multiply;"
+    classes="h-full w-full object-contain"
+  />
   <button
     (click)="next()"
     [disabled]="disableNext()"

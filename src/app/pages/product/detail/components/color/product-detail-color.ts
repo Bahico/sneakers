@@ -3,13 +3,13 @@ import {getImageUrl} from '@/get-endpoint';
 import {NgClass} from '@angular/common';
 
 @Component({
-  templateUrl: 'product-detail-color.component.html',
+  templateUrl: 'product-detail-color.html',
   selector: 'product-detail-color',
   imports: [
     NgClass
   ]
 })
-export class ProductDetailColorComponent {
+export class ProductDetailColor {
   protected readonly getImageUrl = getImageUrl;
 
   thumbs = viewChildren<ElementRef>('thumb');

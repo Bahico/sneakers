@@ -4,14 +4,14 @@ import {NgClass} from '@angular/common';
 import {ProductDetailStore} from '@/product/detail/services/product-detail-store';
 
 @Component({
-  templateUrl: 'product-detail-size.component.html',
+  templateUrl: 'product-detail-size.html',
   imports: [
     TuiTabs,
     NgClass
   ],
   selector: 'product-detail-size'
 })
-export class ProductDetailSizeComponent {
+export class ProductDetailSize {
   private readonly productDetailStore = inject(ProductDetailStore);
 
   protected readonly detail = this.productDetailStore.detail;

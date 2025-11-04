@@ -1,11 +1,15 @@
 import {Component, inject} from '@angular/core';
 import {ProductDetailStore} from '@/product/detail/services/product-detail-store';
+import {DecimalPipe} from '@angular/common';
 
 @Component({
-  templateUrl: 'connect-infos.component.html',
-  selector: 'connect-infos',
+  templateUrl: 'product-detail-name.html',
+  imports: [
+    DecimalPipe
+  ],
+  selector: 'product-detail-name'
 })
-export class ConnectInfosComponent {
+export class ProductDetailName {
   private readonly productDetailStore = inject(ProductDetailStore);
 
   protected readonly detail = this.productDetailStore.detail;

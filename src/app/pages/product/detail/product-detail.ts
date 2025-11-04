@@ -1,12 +1,12 @@
-import {afterNextRender, Component, DestroyRef, inject, OnInit} from '@angular/core';
+import {afterNextRender, Component, DestroyRef, inject, ViewEncapsulation} from '@angular/core';
 import {ProductService} from '@/services/product.service';
 import {ActivatedRoute, RouterLink} from '@angular/router';
-import {ProductDetailImagesComponent} from './components/images/product-detail-images.component';
-import {ProductDetailOrderComponent} from './components/order/product-detail-order.component';
-import {ProductDetailNameComponent} from './components/name/product-detail-name.component';
-import {ProductDetailSizeComponent} from './components/size/product-detail-size.component';
-import {ProductDetailColorComponent} from '@/product/detail/components/color/product-detail-color.component';
-import {ConnectInfosComponent} from '@/product/detail/components/connect-infos/connect-infos.component';
+import {ProductDetailImages} from './components/images/product-detail-images';
+import {ProductDetailOrder} from './components/order/product-detail-order';
+import {ProductDetailName} from './components/name/product-detail-name';
+import {ProductDetailSize} from './components/size/product-detail-size';
+import {ProductDetailColor} from '@/product/detail/components/color/product-detail-color';
+import {ConnectInfos} from '@/product/detail/components/connect-infos/connect-infos';
 import {TuiBreadcrumbs} from '@taiga-ui/kit';
 import {TuiItem} from '@taiga-ui/cdk';
 import {TuiLink} from '@taiga-ui/core';
@@ -14,23 +14,23 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {ProductDetailStore} from '@/product/detail/services/product-detail-store';
 
 @Component({
-  templateUrl: 'product-detail.component.html',
+  templateUrl: 'product-detail.html',
   selector: 'product-detail',
   host: {class: 'flex w-full justify-center'},
   imports: [
-    ProductDetailImagesComponent,
-    ProductDetailOrderComponent,
-    ProductDetailNameComponent,
-    ProductDetailSizeComponent,
-    ProductDetailColorComponent,
-    ConnectInfosComponent,
+    ProductDetailImages,
+    ProductDetailOrder,
+    ProductDetailName,
+    ProductDetailSize,
+    ProductDetailColor,
+    ConnectInfos,
     TuiBreadcrumbs,
     TuiItem,
     TuiLink,
     RouterLink
   ]
 })
-export default class ProductDetailComponent {
+export default class ProductDetail {
   private readonly productService = inject(ProductService);
   private readonly route = inject(ActivatedRoute);
   private readonly destroyRef = inject(DestroyRef);

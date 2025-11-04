@@ -1,0 +1,18 @@
+::ng-deep.img-zoom-lens {
+  position: absolute;
+  /*border: 1px solid #d4d4d4;*/
+  /*set the size of the lens:*/
+  width: 20% !important;
+  height: 20% !important;
+}
+
+.img-zoom-result {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 1000;
+  width: 100%;
+  height: 100%;
+}

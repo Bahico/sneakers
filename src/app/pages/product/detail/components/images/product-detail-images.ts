@@ -1,11 +1,16 @@
 import {Component, computed, ElementRef, inject, signal, viewChildren} from '@angular/core';
 import {ProductDetailStore} from '@/product/detail/services/product-detail-store';
+import {ImageZoom} from '@/components/image-zoom/image-zoom';
+
 
 @Component({
-  templateUrl: 'product-detail-images.component.html',
-  selector: 'product-images',
+  templateUrl: 'product-detail-images.html',
+  imports: [
+    ImageZoom
+  ],
+  selector: 'product-images'
 })
-export class ProductDetailImagesComponent {
+export class ProductDetailImages {
   private readonly productDetailStore = inject(ProductDetailStore);
 
   thumbs = viewChildren<ElementRef>('thumb');
