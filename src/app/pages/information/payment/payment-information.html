@@ -17,7 +17,65 @@
   <h3 class="text-xl font-semibold text-primary mt-10 mb-4">Способы оплаты</h3>
   <p>При оформлении заказа вы сможете выбрать способ доставки и указать данные получателя. В нашем сервисе вы можете оплатить свой заказ любым удобным для вас способом:</p>
 
-  <div class="mt-4 flex gap-3">
-    <img ngSrc="images/bank/sber.png" alt="">
+  <div class="mt-4 flex gap-6 h-10 items-center mb-8">
+    <img ngSrc="images/bank/sber.png" width="120" height="50" class="h-full object-contain" alt="">
+    <span class="flex w-[1px] bg-[#E8E8E8] h-full"></span>
+    <img ngSrc="images/bank/tinkof.png" width="120" height="50" class="h-full object-contain" alt="">
+    <span class="flex w-[1px] bg-[#E8E8E8] h-full"></span>
+    <img ngSrc="images/bank/sbp.png" width="120" height="50" class="h-full object-contain" alt="">
+    <span class="flex w-[1px] bg-[#E8E8E8] h-full"></span>
+    <span class="font-bold text-xl">Сплит</span>
   </div>
+  <div class="flex">
+    <div class="w-full">
+      <h3 class="text-xl font-semibold text-primary mt-10 mb-4">Подробнее о "сплите"</h3>
+      <p class="mb-2">
+        Сплит - это возможность оплатить вашу покупку двумя платежами. Первая половина - сразу / вторая половина - после фото отчёта, при этом Вы ничего не переплачиваете - смысл сплита не в том, чтобы взять с Вас больше денег, он нужен для того, чтобы новые пользователи могли дополнительно убедиться в честности и скорости работы нашего сервиса. Получив фото отчёт своего заказа со склада в Китае, Вы можете спокойно продолжить покупку после оплаты второй части заказа.
+      </p>
+      <p class="mb-6">
+        Важно! – функция сплит доступна для заказа товаров стоимостью до 20.000 руб
+      </p>
+      <h3 class="text-xl font-semibold text-primary mt-10 mb-4">Как воспользоваться сплитом?</h3>
+      <p class="mb-8">
+        Активировать оплату "сплитом" вы сможете на странице оформления заказа при выборе способа оплаты.
+        У вас будет 2 варианта на выбор - оплатить полностью и сплит-платёж.
+      </p>
+    </div>
+    <div class="relative w-[495px]">
+      <img
+        ngSrc="images/information/payment.png"
+        width="495"
+        height="505"
+        class="absolute right-0 top-1/2 -translate-y-1/2"
+        alt=""
+      >
+    </div>
+  </div>
+
+
+  <h3 class="text-xl font-semibold text-primary mt-10 mb-8">Доставка</h3>
+
+  <div class="flex items-center w-full gap-1 mb-8">
+    <span class="font-bold text-lg min-w-30">Чек оплаты</span>
+    <span class="flex w-full h-1 bg-gray-100 relative">
+      <icon-list icon="right-arrow-outline" class="absolute right-0 top-1/2 -translate-y-1/2" />
+    </span>
+    <span class="font-bold text-lg">Склад</span>
+    <span class="flex w-full h-1 bg-gray-100 relative">
+      <icon-list icon="right-arrow-outline" class="absolute right-0 top-1/2 -translate-y-1/2" />
+    </span>
+    <span class="font-bold text-lg min-w-30">Фото отчет</span>
+    <span class="flex w-full h-1 bg-gray-100 relative">
+      <icon-list icon="right-arrow-outline" class="absolute right-0 top-1/2 -translate-y-1/2" />
+    </span>
+    <span class="font-bold text-lg min-w-30">Товар в пути</span>
+    <span class="flex w-full h-1 bg-gray-100 relative">
+      <icon-list icon="right-arrow-outline" class="absolute right-0 top-1/2 -translate-y-1/2" />
+    </span>
+    <span class="font-bold text-lg min-w-40">Посылка в СДЭКе</span>
+  </div>
+  <p class="mb-4">
+    Весь путь, который проходит Ваш заказ, занимает 3-4 недели - от продавца в Китае к вашему пункту СДЭКа. После того, как ваш заказ будет успешно выкуплен, он тщательно проверяется площадкой Poizon, после чего едет на наш склад в Китае. Занимает это от 1 до 6 дней. На этом этапе вы получаете фото отчёт, и посылка выезжает в Россию.
+  </p>
+  <p>Важно: при получении заказа в СДЭКе вам не нужно будет оплачивать доставку, она входит в сумму заказа полностью - из Китая в указанный Вами СДЭК.</p>
 </div>
