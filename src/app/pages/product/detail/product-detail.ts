@@ -1,11 +1,10 @@
-import {afterNextRender, Component, DestroyRef, inject, signal, ViewEncapsulation} from '@angular/core';
+import {afterNextRender, Component, DestroyRef, inject, signal} from '@angular/core';
 import {ProductService} from '@/services/product.service';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {ProductDetailImages} from './components/images/product-detail-images';
 import {ProductDetailOrder} from './components/order/product-detail-order';
 import {ProductDetailName} from './components/name/product-detail-name';
 import {ProductDetailSize} from './components/size/product-detail-size';
-import {ProductDetailColor} from '@/product/detail/components/color/product-detail-color';
 import {ConnectInfos} from '@/product/detail/components/connect-infos/connect-infos';
 import {TuiBreadcrumbs} from '@taiga-ui/kit';
 import {TuiItem} from '@taiga-ui/cdk';
@@ -23,7 +22,6 @@ import {finalize} from 'rxjs';
     ProductDetailOrder,
     ProductDetailName,
     ProductDetailSize,
-    ProductDetailColor,
     ConnectInfos,
     TuiBreadcrumbs,
     TuiItem,

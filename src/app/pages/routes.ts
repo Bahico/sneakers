@@ -13,5 +13,9 @@ export default [
   {
     path: 'product',
     loadChildren: () => import('./product/product.routes'),
+  },
+  {
+    path: 'information',
+    loadChildren: () => import('./information/information.routes'),
   }
 ] satisfies Routes;

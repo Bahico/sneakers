@@ -4,6 +4,7 @@ import {IconComponent} from '@/components/icon/icon';
 import {CdkCopyToClipboard} from '@angular/cdk/clipboard';
 import {NgOptimizedImage} from '@angular/common';
 import {OriginalCertificateOpen} from '@/components/original-certificate/original-certificate-open';
+import {RouterLink} from '@angular/router';
 
 @Component({
   templateUrl: 'connect-infos.html',
@@ -11,7 +12,8 @@ import {OriginalCertificateOpen} from '@/components/original-certificate/origina
   imports: [
     IconComponent,
     CdkCopyToClipboard,
-    NgOptimizedImage
+    NgOptimizedImage,
+    RouterLink
   ]
 })
 export class ConnectInfos {
