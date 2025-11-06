@@ -5,6 +5,7 @@ import {TuiDropdownDirective, TuiDropdownManual, TuiDropdownOptionsDirective} fr
 import {TuiActiveZone, TuiObscured} from '@taiga-ui/cdk';
 import {AccountStore} from '@/account';
 import {AuthenticationOpen} from '@/components/authentication/authentication-open';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'navbar',
@@ -18,7 +19,8 @@ import {AuthenticationOpen} from '@/components/authentication/authentication-ope
     TuiObscured,
     TuiActiveZone,
     TuiDropdownOptionsDirective,
-    NgClass
+    NgClass,
+    RouterLink
   ],
   host: {
     class: 'flex w-full justify-center'

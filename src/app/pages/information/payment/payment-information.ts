@@ -4,6 +4,7 @@ import {TuiLink} from '@taiga-ui/core';
 import {TuiItem} from '@taiga-ui/cdk';
 import {RouterLink} from '@angular/router';
 import {NgOptimizedImage} from '@angular/common';
+import {IconComponent} from '@/components/icon/icon';
 
 @Component({
   templateUrl: 'payment-information.html',
@@ -14,7 +15,8 @@ import {NgOptimizedImage} from '@angular/common';
     TuiLink,
     TuiItem,
     RouterLink,
-    NgOptimizedImage
+    NgOptimizedImage,
+    IconComponent
   ]
 })
 export default class PaymentInformation {

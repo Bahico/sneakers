@@ -12,6 +12,7 @@ import {TuiLink} from '@taiga-ui/core';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {ProductDetailStore} from '@/product/detail/services/product-detail-store';
 import {finalize} from 'rxjs';
+import {ProductDetailColor} from '@/product/detail/components/color/product-detail-color';
 
 @Component({
   templateUrl: 'product-detail.html',
@@ -26,7 +27,8 @@ import {finalize} from 'rxjs';
     TuiBreadcrumbs,
     TuiItem,
     TuiLink,
-    RouterLink
+    RouterLink,
+    ProductDetailColor
   ]
 })
 export default class ProductDetail {

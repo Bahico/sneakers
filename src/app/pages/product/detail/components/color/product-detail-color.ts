@@ -3,12 +3,14 @@ import {getImageUrl} from '@/get-endpoint';
 import {NgClass} from '@angular/common';
 import {ProductModel} from '@/models/product.model';
 import {ProductDetailStore} from '@/product/detail/services/product-detail-store';
+import {RouterLink} from '@angular/router';
 
 @Component({
   templateUrl: 'product-detail-color.html',
   selector: 'product-detail-color',
   imports: [
-    NgClass
+    NgClass,
+    RouterLink
   ]
 })
 export class ProductDetailColor {
