@@ -4,9 +4,9 @@
       ngSrc="images/logo/logo.png"
       alt="site logo"
       routerLink="/"
-      class="object-contain cursor-pointer"
-      width="98"
-      height="40"
+      class="object-contain cursor-pointer w-20 h-10"
+      width="1047"
+      height="420"
     >
     <div class="flex gap-6">
       <span class="text-base font-medium color-base">Обувь</span>
@@ -22,12 +22,32 @@
         placeholder="Введите бренд или название модели"
       >
     </div>
-    <div class="py-1 px-2">
+    <div class="py-1 px-2 cursor-pointer">
       <icon-list icon="favorite"/>
     </div>
-    <div class="py-1 px-2">
-      <icon-list icon="basket"/>
-    </div>
+    @if (basketProductCount()) {
+      <tui-badged-content>
+        <tui-badge-notification
+          size="s"
+          tuiSlot="top"
+        >
+          {{ basketProductCount() }}
+        </tui-badge-notification>
+        <div
+          class="py-1 px-2 cursor-pointer"
+          routerLink="/basket"
+        >
+          <icon-list icon="basket"/>
+        </div>
+      </tui-badged-content>
+    } @else {
+      <div
+        class="py-1 px-2 cursor-pointer"
+        routerLink="/basket"
+      >
+        <icon-list icon="basket"/>
+      </div>
+    }
     @if (isAuthed()) {
       <div
         class="text-xl cursor-pointer rounded-md py-1 px-2"

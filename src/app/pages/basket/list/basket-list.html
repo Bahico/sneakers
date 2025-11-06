@@ -1,0 +1,85 @@
+<div class="container mb-10 mt-5 md:mt-0">
+  <tui-breadcrumbs class="mb-4">
+    @for (item of items; track $index) {
+      <a
+        *tuiItem
+        tuiLink
+        [routerLink]="item.routerLink"
+        [class.!text-primary]="$last"
+      >
+        {{ item.caption }}
+      </a>
+    }
+  </tui-breadcrumbs>
+
+  @if (carts()?.count) {
+    <div class="grid grid-cols-1 md:grid-cols-8 lg:grid-cols-12 gap-6">
+      <div class="col-span-8">
+        <h1 class="text-3xl font-bold text-primary mb-6">Корзина</h1>
+
+        <div class="p-4 border flex flex-col gap-3 w-full border-gray-200 rounded-xl">
+          @for (cart of carts().results; track cart.id) {
+            <div class="w-full flex gap-4 border-b border-gray-200 last:border-b-0 pb-4 last:pb-0 relative h-40">
+              <div class="w-40 h-full rounded-xl bg-gray-200 px-2">
+                <img
+                  [src]="cart.product.first_image"
+                  style="mix-blend-mode: multiply;"
+                  class="flex w-full h-full object-contain"
+                  alt=""
+                >
+              </div>
+
+              <div class="flex flex-col justify-between w-full">
+                <div class="flex flex-col gap-1">
+                  <span class="text-xl font-semibold">{{ cart.product.name }}</span>
+                  <span class="text-base">Размер: EU {{ cart.size }}</span>
+                  <span>Стандартная доставка 20-25 дней</span>
+                </div>
+
+                <span class="text-3xl font-bold text-primary">{{ cart.sku.price | number }} р.</span>
+              </div>
+
+              <span class="absolute right-2 top-2 cursor-pointer" (click)="removeCart(cart.id)">
+                <icon-list icon="trash-outline"/>
+              </span>
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="col-span-4">
+        <div class="border border-gray-200 rounded-xl px-4 py-2 w-full">
+          <span class="text-xl font-bold mb-2">Сумма заказа</span>
+
+          <div class="flex justify-between mb-2 border-b border-gray-200 py-2">
+            <span class="text-lg">{{ summary().items_count }} товара на сумму</span>
+            <span class="text-lg font-bold">{{ summary().total | number }} p.</span>
+          </div>
+
+          <div class="flex justify-between py-2">
+            <span class="text-2xl">Итого</span>
+
+            <span class="text-2xl font-semibold">{{summary().total | number }} p.</span>
+          </div>
+
+          <button class="sn-btn w-full mt-4 text-xl" (click)="checkout()">
+            Оформить заказ
+          </button>
+        </div>
+      </div>
+    </div>
+  } @else {
+    <div class="flex flex-col items-center justify-center gap-4 h-full">
+      <img ngSrc="images/svg/empty.svg" alt="" height="67" width="67">
+
+      <div class="flex flex-col items-center gap-2">
+        <span class="font-semibold text-2xl text-primary">В корзине нет товаров</span>
+        <span class="text-primary">Добавьте товар, нажав кнопку «В корзину» в карточке товара</span>
+      </div>
+
+      <button class="sn-btn" routerLink="/">
+        На главную
+      </button>
+    </div>
+  }
+</div>

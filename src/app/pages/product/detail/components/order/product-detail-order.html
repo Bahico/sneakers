@@ -22,7 +22,11 @@
   </span>
 </div>
 
-<button class="sn-btn w-full !py-4 mt-4" [disabled]="!selectedSkus()">
+<button
+  class="sn-btn w-full !py-4 mt-4"
+  [disabled]="!selectedSkus()"
+  (click)="addToCart()"
+>
   Добавить в корзину
 </button>
 
