@@ -1,4 +1,4 @@
-import {Component, inject, input, OnInit} from "@angular/core";
+import {Component, inject, input, OnChanges, OnInit} from "@angular/core";
 import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
 import {ICON_LIST} from "./icon-list";
 
@@ -9,13 +9,17 @@ import {ICON_LIST} from "./icon-list";
   `,
   selector: 'icon-list'
 })
-export class IconComponent implements OnInit {
+export class IconComponent implements OnInit, OnChanges {
   private readonly sanitizer = inject(DomSanitizer);
 
   icon = input.required<string>();
   iconHtml: SafeHtml;
 
   ngOnInit() {
+    this.iconHtml = this.sanitizeHtml(this.iconElement);
+  }
+
+  ngOnChanges() {
     this.iconHtml = this.sanitizeHtml(this.iconElement);
   }
 
