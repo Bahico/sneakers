@@ -1,10 +1,10 @@
-import {ProductListDetail} from '@/models/product.model';
+import {ProductListDetailModel} from '@/models/product.model';
 import {Skus} from '@/models/skus.model';
 
 export interface CartList {
   id: number;
   created_at: Date | string;
-  product: ProductListDetail;
+  product: ProductListDetailModel;
   quantity: number;
   size: string;
   sku: Skus;

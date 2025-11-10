@@ -68,7 +68,7 @@ export default class ProductDetail {
   loadProduct(spuId: number) {
     this.productService
       .detail(spuId)
-      .pipe(finalize(() => this.loadSimilarOnes()))
+      // .pipe(finalize(() => this.loadSimilarOnes()))
       .subscribe(res => {
         this.productDetailStore.update = res;
         const size = res.sizeTable[0];

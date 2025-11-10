@@ -1,10 +1,10 @@
 import {afterNextRender, Component, computed, inject, signal} from '@angular/core';
 import {TuiBreadcrumbs} from '@taiga-ui/kit';
-import {TuiLink} from '@taiga-ui/core';
+import {TuiFormatNumberPipe, TuiLink} from '@taiga-ui/core';
 import {RouterLink} from '@angular/router';
 import {TuiItem} from '@taiga-ui/cdk';
 import {CartStore} from '@/cart';
-import {DecimalPipe, NgOptimizedImage} from '@angular/common';
+import {AsyncPipe, DecimalPipe, NgOptimizedImage} from '@angular/common';
 import {CartService} from '@/services/cart.service';
 import {IconComponent} from '@/components/icon/icon';
 import {Summary} from '@/models/cart';
@@ -20,7 +20,9 @@ import {Summary} from '@/models/cart';
     TuiItem,
     NgOptimizedImage,
     DecimalPipe,
-    IconComponent
+    IconComponent,
+    TuiFormatNumberPipe,
+    AsyncPipe
   ]
 })
 export default class BasketList {
@@ -49,9 +51,7 @@ export default class BasketList {
   }
 
   removeCart(cartId: number) {
-    this.cartService
-      .deleteCart(cartId)
-      .subscribe()
+    this.cartService.deleteCart(cartId)
   }
 
   checkout() {

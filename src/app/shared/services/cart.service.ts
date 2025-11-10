@@ -23,15 +23,15 @@ export class CartService {
   }
 
   addCart(data: CartAdd) {
-    return this.updateFn(this.http.post(getEndpoint('cart/'), data));
+    this.updateFn(this.http.post(getEndpoint('cart/'), data)).subscribe();
   }
 
   decrease(id: number) {
-    return this.updateSize(this.http.post<{quantity: number}>(getEndpoint(`cart/${id}/increase/`), {}), id);
+    this.updateSize(this.http.post<{quantity: number}>(getEndpoint(`cart/${id}/increase/`), {}), id).subscribe();
   }
 
   increase(id: number) {
-    return this.updateSize(this.http.post<{quantity: number}>(getEndpoint(`cart/${id}/increase/`), {}), id);
+    this.updateSize(this.http.post<{quantity: number}>(getEndpoint(`cart/${id}/increase/`), {}), id).subscribe();
   }
 
   updateCart(data: CartList) {
@@ -39,7 +39,7 @@ export class CartService {
   }
 
   deleteCart(id: number) {
-    return this.updateFn(this.http.delete(getEndpoint(`cart/${id}/`)));
+    this.updateFn(this.http.delete(getEndpoint(`cart/${id}/`))).subscribe();
   }
 
   clear() {

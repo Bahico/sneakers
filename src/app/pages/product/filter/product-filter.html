@@ -1,6 +1,6 @@
 <div class="container mb-10 mt-5 md:mt-0">
   <tui-breadcrumbs class="mb-4">
-    @for (item of items(); track $index) {
+    @for (item of items; track $index) {
       <a
         *tuiItem
         tuiLink
@@ -31,14 +31,83 @@
 
       <div class="flex flex-col overflow-hidden w-full">
         <div class="flex gap-2 items-center cursor-pointer" (click)="changeOpen( 'size')">
-          <icon-list [icon]="openFilters().size ? 'plus' : 'minus'" class="text-primary" />
+          <icon-list [icon]="openFilters().size ? 'minus' : 'plus'" class="text-primary" />
           <span class="text-lg text-primary font-semibold">Размер</span>
+        </div>
+
+        <div class="flex flex-col gap-2 overflow-hidden px-2" [class.max-h-0]="!openFilters().size">
+          <tui-tabs>
+            @for (size of sizeTable; track $index) {
+              <button
+                tuiTab
+                type="button"
+              >
+                {{size}}
+              </button>
+            }
+          </tui-tabs>
+
+          <div class="grid grid-cols-2 gap-2 mt-2">
+            @for (size of sizes; track $index) {
+              <div class="flex gap-1">
+                <input
+                  tuiCheckbox
+                  type="checkbox"
+                  [ngModel]="false"
+                  size="s"
+                />
+                <label>{{size}}</label>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-col overflow-hidden w-full">
+        <div class="flex gap-2 items-center cursor-pointer" (click)="changeOpen( 'brand')">
+          <icon-list [icon]="openFilters().brand ? 'minus' : 'plus'" class="text-primary" />
+          <span class="text-lg text-primary font-semibold">Бренд</span>
+        </div>
+
+        <div class="flex flex-col gap-2 overflow-hidden px-2 mt-4" [class.max-h-0]="!openFilters().brand">
+          <div class="sn-control">
+            <span class="sn-control-icon">
+              <icon-list icon="search" />
+            </span>
+
+            <input type="text" placeholder="Введите бренд">
+          </div>
+
+          <div class="flex flex-col gap-2 mt-4">
+            @for (_ of [0, 1, 2]; track $index) {
+              <div class="flex flex-col gap-1">
+                <span class="font-semibold">A</span>
+
+                @for (brand of brands; track $index) {
+                  <div class="flex gap-1">
+                    <input
+                      tuiCheckbox
+                      type="checkbox"
+                      [ngModel]="false"
+                      size="s"
+                    />
+                    <label>{{brand}}</label>
+                  </div>
+                }
+              </div>
+            }
+          </div>
         </div>
       </div>
 
     </div>
-    <div class="md:col-span-2 lg:col-span-3">
 
+    <div class="md:col-span-2 lg:col-span-3">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        @for (product of products(); track product.spuId) {
+          <product-list-detail [detail]="product" />
+        }
+      </div>
     </div>
   </div>
 </div>

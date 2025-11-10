@@ -20,7 +20,10 @@
         <div class="p-4 border flex flex-col gap-3 w-full border-gray-200 rounded-xl">
           @for (cart of carts().results; track cart.id) {
             <div class="w-full flex gap-4 border-b border-gray-200 last:border-b-0 pb-4 last:pb-0 relative h-40">
-              <div class="w-40 h-full rounded-xl bg-gray-200 px-2">
+              <div
+                routerLink="/product/detail/{{cart.product.spuId}}"
+                class="w-40 h-full rounded-xl bg-gray-200 px-2 cursor-pointer"
+              >
                 <img
                   [src]="cart.product.first_image"
                   style="mix-blend-mode: multiply;"
@@ -30,13 +33,14 @@
               </div>
 
               <div class="flex flex-col justify-between w-full">
-                <div class="flex flex-col gap-1">
-                  <span class="text-xl font-semibold">{{ cart.product.name }}</span>
-                  <span class="text-base">Размер: EU {{ cart.size }}</span>
+                <div class="flex flex-col">
+                  <span class="text-xl font-semibold">{{ cart.product.brand }}</span>
+                  <span class="text-gray-500 mb-2">{{cart.product.name}}</span>
+                  <span class="text-base mb-1">Размер: EU {{ cart.size }}</span>
                   <span>Стандартная доставка 20-25 дней</span>
                 </div>
 
-                <span class="text-3xl font-bold text-primary">{{ cart.sku.price | number }} р.</span>
+                <span class="text-3xl font-bold text-primary">{{ cart.sku.price | tuiFormatNumber | async}} р.</span>
               </div>
 
               <span class="absolute right-2 top-2 cursor-pointer" (click)="removeCart(cart.id)">
@@ -53,13 +57,13 @@
 
           <div class="flex justify-between mb-2 border-b border-gray-200 py-2">
             <span class="text-lg">{{ summary().items_count }} товара на сумму</span>
-            <span class="text-lg font-bold">{{ summary().total | number }} p.</span>
+            <span class="text-lg font-bold">{{ summary().total | tuiFormatNumber | async }} p.</span>
           </div>
 
           <div class="flex justify-between py-2">
             <span class="text-2xl">Итого</span>
 
-            <span class="text-2xl font-semibold">{{summary().total | number }} p.</span>
+            <span class="text-2xl font-semibold">{{summary().total | tuiFormatNumber | async }} p.</span>
           </div>
 
           <button class="sn-btn w-full mt-4 text-xl" (click)="checkout()">

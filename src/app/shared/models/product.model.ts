@@ -45,7 +45,7 @@ interface Properties {
   propertyTypes: [];
 }
 
-export interface ProductListDetail {
+export interface ProductListDetailModel {
   slug: string;
   name: string;
   spuId: number;

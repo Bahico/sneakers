@@ -1,11 +1,14 @@
 import {Component, inject} from '@angular/core';
 import {ProductDetailStore} from '@/product/detail/services/product-detail-store';
-import {DecimalPipe} from '@angular/common';
+import {AsyncPipe, DecimalPipe} from '@angular/common';
+import {TuiFormatNumberPipe} from '@taiga-ui/core';
 
 @Component({
   templateUrl: 'product-detail-name.html',
   imports: [
-    DecimalPipe
+    DecimalPipe,
+    AsyncPipe,
+    TuiFormatNumberPipe
   ],
   selector: 'product-detail-name'
 })

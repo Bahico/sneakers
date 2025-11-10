@@ -1,11 +1,11 @@
 import {computed, Injectable, signal} from '@angular/core';
-import {ProductListDetail, ProductModel} from '@/models/product.model';
+import {ProductListDetailModel, ProductModel} from '@/models/product.model';
 import {Skus} from '@/models/skus.model';
 
 @Injectable({providedIn: 'root'})
 export class ProductDetailStore {
   private readonly productDetail$ = signal<Partial<ProductModel>>({});
-  private readonly productSimilar$ = signal<ProductListDetail[]>([]);
+  private readonly productSimilar$ = signal<ProductListDetailModel[]>([]);
 
   readonly sizeType = signal<string>(null);
   readonly sizeValue = signal<string>(null);
@@ -26,7 +26,7 @@ export class ProductDetailStore {
     return this.productSimilar$.asReadonly();
   }
 
-  set updateSimilar(value: ProductListDetail[]) {
+  set updateSimilar(value: ProductListDetailModel[]) {
     this.productSimilar$.set(value);
   }
 }
