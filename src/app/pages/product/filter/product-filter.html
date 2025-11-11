@@ -12,100 +12,59 @@
     }
   </tui-breadcrumbs>
 
-  <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-    <div class="col-span-1 flex flex-col gap-4">
-      <h3 class="text-2xl font-semibold">Фильтры</h3>
+  <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 relative">
+    <div class="col-span-1">
+      <div class="hidden md:flex flex-col gap-4">
+        <h3 class="text-2xl font-semibold">Фильтры</h3>
 
-      <div class="flex w-full items-center gap-1">
-        <span class="flex px-3 py-0.5 bg-gray-100 rounded-xl text-nowrap">От {{formControl.value?.[0]}} р.</span>
-        <tui-range
-          size="m"
-          [formControl]="formControl"
-          [max]="10"
-          class="w-full"
-          [style.--tui-thickness.rem]="0.5"
-          [style.--tui-background-accent-1]="'#222'"
-        />
-        <span class="flex px-3 py-0.5 bg-gray-100 rounded-xl text-nowrap">До {{formControl.value?.[1]}} р.</span>
-      </div>
+        <product-filter-price />
 
-      <div class="flex flex-col overflow-hidden w-full">
-        <div class="flex gap-2 items-center cursor-pointer" (click)="changeOpen( 'size')">
-          <icon-list [icon]="openFilters().size ? 'minus' : 'plus'" class="text-primary" />
-          <span class="text-lg text-primary font-semibold">Размер</span>
+        <div class="flex flex-col overflow-hidden w-full">
+          <div class="flex gap-2 w-full items-center cursor-pointer" (click)="changeOpen( 'size')">
+            <icon-list [icon]="openFilters().size ? 'minus' : 'plus'" class="text-primary w-10 h-10 flex items-center justify-center"/>
+            <span class="text-lg text-primary font-semibold">Размер</span>
+          </div>
+
+          <div
+            class="overflow-hidden w-full duration-300"
+            [class.max-h-0]="!openFilters().size"
+            [class.max-h-screen]="openFilters().size"
+          >
+            <product-filter-size />
+          </div>
         </div>
 
-        <div class="flex flex-col gap-2 overflow-hidden px-2" [class.max-h-0]="!openFilters().size">
-          <tui-tabs>
-            @for (size of sizeTable; track $index) {
-              <button
-                tuiTab
-                type="button"
-              >
-                {{size}}
-              </button>
-            }
-          </tui-tabs>
+        <div class="flex flex-col overflow-hidden w-full">
+          <div class="flex gap-2 w-full items-center cursor-pointer" (click)="changeOpen( 'brand')">
+            <icon-list [icon]="openFilters().brand ? 'minus' : 'plus'" class="text-primary w-10 h-10 flex items-center justify-center"/>
+            <span class="text-lg text-primary font-semibold">Бренд</span>
+          </div>
 
-          <div class="grid grid-cols-2 gap-2 mt-2">
-            @for (size of sizes; track $index) {
-              <div class="flex gap-1">
-                <input
-                  tuiCheckbox
-                  type="checkbox"
-                  [ngModel]="false"
-                  size="s"
-                />
-                <label>{{size}}</label>
-              </div>
-            }
+          <div
+            class="overflow-hidden w-full duration-300"
+            [class.max-h-0]="!openFilters().brand"
+            [class.max-h-screen]="openFilters().brand"
+          >
+            <product-filter-brand />
           </div>
         </div>
       </div>
 
-      <div class="flex flex-col overflow-hidden w-full">
-        <div class="flex gap-2 items-center cursor-pointer" (click)="changeOpen( 'brand')">
-          <icon-list [icon]="openFilters().brand ? 'minus' : 'plus'" class="text-primary" />
-          <span class="text-lg text-primary font-semibold">Бренд</span>
-        </div>
+      <button
+        (click)="openFilter.set(true)"
+        class="flex md:hidden w-full items-center justify-center bg-gray-100 gap-2 text-primary rounded-md py-3"
+      >
+        <icon-list icon="filter"/>
+        Фильтры
+      </button>
 
-        <div class="flex flex-col gap-2 overflow-hidden px-2 mt-4" [class.max-h-0]="!openFilters().brand">
-          <div class="sn-control">
-            <span class="sn-control-icon">
-              <icon-list icon="search" />
-            </span>
-
-            <input type="text" placeholder="Введите бренд">
-          </div>
-
-          <div class="flex flex-col gap-2 mt-4">
-            @for (_ of [0, 1, 2]; track $index) {
-              <div class="flex flex-col gap-1">
-                <span class="font-semibold">A</span>
-
-                @for (brand of brands; track $index) {
-                  <div class="flex gap-1">
-                    <input
-                      tuiCheckbox
-                      type="checkbox"
-                      [ngModel]="false"
-                      size="s"
-                    />
-                    <label>{{brand}}</label>
-                  </div>
-                }
-              </div>
-            }
-          </div>
-        </div>
-      </div>
-
+      <mobile-filter [(openFilter)]="openFilter" />
     </div>
 
     <div class="md:col-span-2 lg:col-span-3">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         @for (product of products(); track product.spuId) {
-          <product-list-detail [detail]="product" />
+          <product-list-detail [detail]="product"/>
         }
       </div>
     </div>

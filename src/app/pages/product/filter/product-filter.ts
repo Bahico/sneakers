@@ -1,14 +1,18 @@
-import {Component, inject, OnInit, signal} from '@angular/core';
-import {TuiBreadcrumbs, TuiCheckbox, TuiRange, TuiTab, TuiTabsHorizontal} from '@taiga-ui/kit';
+import {Component, effect, inject, OnInit, signal} from '@angular/core';
+import {TuiBreadcrumbs} from '@taiga-ui/kit';
 import {TuiLink} from '@taiga-ui/core';
 import {TuiItem} from '@taiga-ui/cdk';
 import {RouterLink} from '@angular/router';
-import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {IconComponent} from '@/components/icon/icon';
-import {BRANDS, PRODUCT_FILTER_BREAD_CRUMBS, SIZE_TABLE, SIZES} from '@/product/filter/product-filter.constans';
-import {ProductListDetailModel, ProductModel} from '@/models/product.model';
+import {PRODUCT_FILTER_BREAD_CRUMBS} from '@/product/filter/product-filter.constans';
+import {ProductListDetailModel} from '@/models/product.model';
 import {ProductService} from '@/services/product.service';
 import {ProductListDetail} from '@/components/product-list-detail/product-list-detail';
+import {ProductFilterPrice} from '@/product/filter/components/price/product-filter-price';
+import {ProductFilterSize} from '@/product/filter/components/size/product-filter-size';
+import {ProductFilterBrand} from '@/product/filter/components/brand/product-filter-brand';
+import {MobileFilter} from '@/product/filter/components/mobile-filter/mobile-filter';
 
 @Component({
   selector: 'product-filter',
@@ -19,32 +23,42 @@ import {ProductListDetail} from '@/components/product-list-detail/product-list-d
     TuiLink,
     TuiItem,
     RouterLink,
-    TuiRange,
     ReactiveFormsModule,
     IconComponent,
-    TuiTab,
-    TuiTabsHorizontal,
-    TuiCheckbox,
     FormsModule,
-    ProductListDetail
+    ProductListDetail,
+    ProductFilterPrice,
+    ProductFilterSize,
+    ProductFilterBrand,
+    MobileFilter
   ]
 })
 export default class ProductFilter implements OnInit {
   private readonly productService = inject(ProductService);
 
-  protected readonly sizes = SIZES;
-  protected readonly sizeTable = SIZE_TABLE;
   protected readonly items = PRODUCT_FILTER_BREAD_CRUMBS;
-  protected readonly brands = BRANDS;
 
-  protected readonly formControl = new FormControl([4, 6]);
-
+  protected readonly openFilter = signal(false);
   protected readonly openFilters = signal({
     size: false,
     brand: false,
   });
 
   products = signal<ProductListDetailModel[]>([]);
+
+  constructor() {
+    effect(() => {
+      if (typeof document === 'undefined' || !document.body) {
+        return;
+      }
+
+      if (this.openFilter()) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = '';
+      }
+    });
+  }
 
   ngOnInit() {
     this.productService

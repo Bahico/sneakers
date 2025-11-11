@@ -1,0 +1,42 @@
+<div class="flex w-full justify-between items-center pb-4 border-b border-gray-200">
+  <icon-list icon="right-arrow" class="text-primary text-2xl" (click)="back()"/>
+  <span class="text-lg font-semibold">
+    @switch (typeView()) {
+      @case ('brand') {
+        Бренд
+      }
+      @case ('size') {
+        Размер
+      }
+      @default {
+        Фильтры
+      }
+    }
+  </span>
+  <span></span>
+</div>
+@switch (typeView()) {
+  @case ('brand') {
+    <product-filter-brand />
+  }
+  @case ('size') {
+    <product-filter-size />
+  }
+  @default {
+    <div class="flex flex-col gap-8 pt-4">
+      <product-filter-price/>
+
+      <div class="flex justify-between items-center" (click)="typeView.set('size')">
+        <span class="text-base font-semibold">Размер</span>
+        <icon-list icon="right-arrow" class="rotate-180"/>
+      </div>
+
+      <div class="flex justify-between items-center" (click)="typeView.set('brand')">
+        <span class="text-base font-semibold">Бренд</span>
+        <icon-list icon="right-arrow" class="rotate-180"/>
+      </div>
+
+      <button class="sn-btn !py-3">Показать 309 товаров</button>
+    </div>
+  }
+}

@@ -1,0 +1,29 @@
+<div class="flex flex-col gap-2 px-2 mt-4">
+  <div class="sn-control">
+    <span class="sn-control-icon">
+      <icon-list icon="search"/>
+    </span>
+
+    <input type="text" placeholder="Введите бренд">
+  </div>
+
+  <div class="flex flex-col gap-2 mt-4">
+    @for (_ of [0, 1, 2]; track $index) {
+      <div class="flex flex-col gap-1">
+        <span class="font-semibold">A</span>
+
+        @for (brand of brands; track $index) {
+          <div class="flex gap-1">
+            <input
+              tuiCheckbox
+              type="checkbox"
+              [ngModel]="false"
+              size="s"
+            />
+            <label>{{ brand }}</label>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>

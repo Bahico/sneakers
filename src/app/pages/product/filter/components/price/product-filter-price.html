@@ -1,0 +1,12 @@
+<div class="flex w-full items-center gap-1">
+  <span class="flex px-3 py-0.5 bg-gray-100 rounded-xl text-nowrap">От {{formControl.value?.[0]}} р.</span>
+  <tui-range
+    size="m"
+    [formControl]="formControl"
+    [max]="10"
+    class="w-full"
+    [style.--tui-thickness.rem]="0.5"
+    [style.--tui-background-accent-1]="'#222'"
+  />
+  <span class="flex px-3 py-0.5 bg-gray-100 rounded-xl text-nowrap">До {{formControl.value?.[1]}} р.</span>
+</div>
