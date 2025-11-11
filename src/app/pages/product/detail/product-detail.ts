@@ -13,6 +13,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {ProductDetailStore} from '@/product/detail/services/product-detail-store';
 import {finalize} from 'rxjs';
 import {ProductDetailColor} from '@/product/detail/components/color/product-detail-color';
+import {CommentList} from '@/product/detail/components/comment/comment-list';
 
 @Component({
   templateUrl: 'product-detail.html',
@@ -28,7 +29,8 @@ import {ProductDetailColor} from '@/product/detail/components/color/product-deta
     TuiItem,
     TuiLink,
     RouterLink,
-    ProductDetailColor
+    ProductDetailColor,
+    CommentList
   ]
 })
 export default class ProductDetail {

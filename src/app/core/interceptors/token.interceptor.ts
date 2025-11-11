@@ -1,5 +1,5 @@
 import {HttpErrorResponse, HttpEvent, HttpHandlerFn, HttpRequest} from '@angular/common/http';
-import {catchError, Observable, retry, throwError} from 'rxjs';
+import {catchError, Observable, throwError} from 'rxjs';
 import {inject} from '@angular/core';
 import {TokenStore} from '@/token';
 
@@ -13,16 +13,37 @@ export default function (req: HttpRequest<unknown>, next: HttpHandlerFn): Observ
       },
     })
   }
-  console.log('aa')
+
   return next(req)
     .pipe(
-      retry(1),
-      catchError((err: HttpErrorResponse) => {
-        console.log(err)
-        if (err.status) {
+      catchError((error: HttpErrorResponse) => {
+        // Error response ni tekshirish
+        console.log('Xato maʼlumotlari:', {
+          status: error.status,
+          statusText: error.statusText,
+          url: req.url,
+          headers: req.headers,
+          errorBody: error.error,
+          message: error.message
+        });
+
+        // 401 xatosini qayta ishlash
+        if (error.status === 401) {
           tokenService.update = null;
         }
-        return throwError(() => new Error(err.error.message || 'Something went wrong'));
+
+        // Xatoni qayta throw qilish
+        return throwError(() => createHttpError(error));
       })
     );
+}
+
+function createHttpError(error: HttpErrorResponse): HttpErrorResponse {
+  return new HttpErrorResponse({
+    error: error.error,
+    headers: error.headers,
+    status: error.status,
+    statusText: error.statusText,
+    url: error.url || undefined,
+  });
 }
