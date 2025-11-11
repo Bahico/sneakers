@@ -4,7 +4,7 @@ import {TuiFormatNumberPipe, TuiLink} from '@taiga-ui/core';
 import {RouterLink} from '@angular/router';
 import {TuiItem} from '@taiga-ui/cdk';
 import {CartStore} from '@/cart';
-import {AsyncPipe, DecimalPipe, NgOptimizedImage} from '@angular/common';
+import {AsyncPipe, NgOptimizedImage} from '@angular/common';
 import {CartService} from '@/services/cart.service';
 import {IconComponent} from '@/components/icon/icon';
 import {Summary} from '@/models/cart';
@@ -19,7 +19,6 @@ import {Summary} from '@/models/cart';
     RouterLink,
     TuiItem,
     NgOptimizedImage,
-    DecimalPipe,
     IconComponent,
     TuiFormatNumberPipe,
     AsyncPipe

@@ -1,7 +1,7 @@
 import {Component, input} from '@angular/core';
 import {ProductListDetailModel} from '@/models/product.model';
 import {IconComponent} from '@/components/icon/icon';
-import {AsyncPipe, DecimalPipe} from '@angular/common';
+import {AsyncPipe} from '@angular/common';
 import {RouterLink} from '@angular/router';
 import {TuiFormatNumberPipe} from '@taiga-ui/core';
 
@@ -10,7 +10,6 @@ import {TuiFormatNumberPipe} from '@taiga-ui/core';
   templateUrl: 'product-list-detail.html',
   imports: [
     IconComponent,
-    DecimalPipe,
     RouterLink,
     AsyncPipe,
     TuiFormatNumberPipe

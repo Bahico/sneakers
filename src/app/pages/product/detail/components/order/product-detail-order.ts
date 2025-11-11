@@ -1,6 +1,6 @@
 import {Component, computed, inject} from '@angular/core';
 import {ProductDetailStore} from '@/product/detail/services/product-detail-store';
-import {AsyncPipe, DecimalPipe} from '@angular/common';
+import {AsyncPipe} from '@angular/common';
 import {CartService} from '@/services/cart.service';
 import {CartStore} from '@/cart';
 import {IconComponent} from '@/components/icon/icon';
@@ -9,7 +9,6 @@ import {TuiFormatNumberPipe} from '@taiga-ui/core';
 @Component({
   templateUrl: 'product-detail-order.html',
   imports: [
-    DecimalPipe,
     IconComponent,
     AsyncPipe,
     TuiFormatNumberPipe

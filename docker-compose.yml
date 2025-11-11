@@ -1,0 +1,16 @@
+version: "3.9"
+
+services:
+  angular-ssr:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sneakers-angular-ssr
+    ports:
+      - "4300:4300"
+    environment:
+      - PORT=4300
+    restart: unless-stopped
+    # Agar .env fayl bo‘lsa, uni ham ulab qo‘yish mumkin
+    # env_file:
+    #   - .env
