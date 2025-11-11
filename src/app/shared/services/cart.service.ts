@@ -12,10 +12,10 @@ export class CartService {
   private readonly cartStore = inject(CartStore);
 
   loadCart() {
-    this.http.get<ListResult<CartList>>(getEndpoint('cart/'))
-      .subscribe(res => {
+    return this.http.get<ListResult<CartList>>(getEndpoint('cart/'))
+      .pipe(tap(res => {
         this.cartStore.update = res;
-      })
+      }))
   }
 
   summary() {
@@ -67,6 +67,6 @@ export class CartService {
 
   private updateFn<T>(source: Observable<T>) {
     return source
-      .pipe(finalize(() => this.loadCart()));
+      .pipe(finalize(() => this.loadCart().subscribe()));
   }
 }

@@ -5,6 +5,8 @@ import Footer from './layout/footer/footer';
 import {TuiRoot} from '@taiga-ui/core';
 import {CartService} from '@/services/cart.service';
 import {AccountStore} from '@/account';
+import {mergeMap} from 'rxjs';
+import {FavoriteService} from '@/services/favorite.service';
 
 @Component({
   selector: 'app-root',
@@ -14,12 +16,16 @@ import {AccountStore} from '@/account';
 })
 export class App {
   private readonly cartService = inject(CartService);
-  private readonly accountStore = inject(AccountStore)
+  private readonly accountStore = inject(AccountStore);
+  private readonly favoritesService = inject(FavoriteService);
 
   constructor() {
     afterNextRender(() => {
-      this.cartService.loadCart();
-      this.accountStore.getAccount().subscribe();
+      this.accountStore.getAccount()
+        .pipe(
+          mergeMap(() => this.cartService.loadCart()),
+          mergeMap(() => this.favoritesService.loadFavorites()))
+        .subscribe();
     })
   }
 }
