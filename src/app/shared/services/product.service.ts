@@ -16,4 +16,8 @@ export class ProductService {
     // return this.http.get<ListResult<ProductListDetailModel>>(getEndpoint('products/'), {params});
     return this.http.get<ListResult<ProductListDetailModel>>('faker/products.json', {params});
   }
+
+  similar(params: {category1: string, category2: string; category3: string}) {
+    return this.http.get<ListResult<ProductListDetailModel>>(getEndpoint('products_actual/'), {params});
+  }
 }

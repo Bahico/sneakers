@@ -1,4 +1,4 @@
-import {afterNextRender, Component, DestroyRef, inject, signal} from '@angular/core';
+import {afterNextRender, Component, computed, DestroyRef, inject, signal} from '@angular/core';
 import {ProductService} from '@/services/product.service';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {ProductDetailImages} from './components/images/product-detail-images';
@@ -14,6 +14,7 @@ import {ProductDetailStore} from '@/product/detail/services/product-detail-store
 import {finalize} from 'rxjs';
 import {ProductDetailColor} from '@/product/detail/components/color/product-detail-color';
 import {CommentList} from '@/product/detail/components/comment/comment-list';
+import {SimilarProducts} from '@/product/detail/components/similar-products/similar-products';
 
 @Component({
   templateUrl: 'product-detail.html',
@@ -30,7 +31,8 @@ import {CommentList} from '@/product/detail/components/comment/comment-list';
     TuiLink,
     RouterLink,
     ProductDetailColor,
-    CommentList
+    CommentList,
+    SimilarProducts
   ]
 })
 export default class ProductDetail {
@@ -70,7 +72,7 @@ export default class ProductDetail {
   loadProduct(spuId: number) {
     this.productService
       .detail(spuId)
-      // .pipe(finalize(() => this.loadSimilarOnes()))
+      .pipe(finalize(() => this.loadSimilarOnes()))
       .subscribe(res => {
         this.productDetailStore.update = res;
         const size = res.sizeTable[0];
@@ -93,7 +95,7 @@ export default class ProductDetail {
         category3: detail.category.category3,
       })
       .subscribe(res => {
-        this.productDetailStore.updateSimilar = res.results;
+        this.productDetailStore.updateSimilar = res.results.splice(0, 8);
       })
   }
 }

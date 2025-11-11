@@ -13,9 +13,10 @@
     }
   </tui-breadcrumbs>
 
-  <div class="flex flex-col md:flex-row relative w-full gap-6">
+  <div class="flex flex-col md:flex-row relative w-full gap-6 mb-10">
     <product-images
-      class="w-full md:w-[65%] md:sticky top-0"
+      class="w-full md:w-[65%] md:sticky top-2"
+      style="align-self: flex-start;"
     />
 
     <div class="w-full md:w-[35%] bg-secondary rounded-2xl p-4">
@@ -28,4 +29,6 @@
   </div>
 
   <comment-list />
+
+  <similar-products class="mt-20 flex flex-col"/>
 </div>
