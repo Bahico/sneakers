@@ -31,7 +31,7 @@
       <icon-list [icon]="cart().quantity === 1 ? 'trash-outline' : 'minus'" />
     </div>
 
-    <span>{{cart().quantity}} в карзине</span>
+    <span class="select-none">{{cart().quantity}} в карзине</span>
 
     <div
       class="text-primary cursor-pointer w-8 h-8 flex items-center justify-center rounded-md bg-gray-200"
@@ -40,15 +40,15 @@
       <icon-list icon="plus" />
     </div>
   </div>
+} @else {
+  <button
+    class="sn-btn w-full !py-4"
+    [disabled]="!selectedSkus()"
+    (click)="addToCart()"
+  >
+    Добавить в корзину
+  </button>
 }
-
-<button
-  class="sn-btn w-full !py-4"
-  [disabled]="!selectedSkus()"
-  (click)="addToCart()"
->
-  Добавить в корзину
-</button>
 
 <div class="border-primary border opacity-60 rounded-md px-4 py-2 w-full mt-3 flex justify-between items-center text-lg">
   <span>СПЛИТ</span>

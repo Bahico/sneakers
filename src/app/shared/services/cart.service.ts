@@ -4,7 +4,7 @@ import {getEndpoint} from '@/get-endpoint';
 import {ListResult} from '@/models/list-result';
 import {CartAdd, CartList, Summary} from '@/models/cart';
 import {CartStore} from '@/cart';
-import {finalize, Observable} from 'rxjs';
+import {finalize, Observable, tap} from 'rxjs';
 
 @Injectable({providedIn: 'root'})
 export class CartService {
@@ -27,11 +27,11 @@ export class CartService {
   }
 
   decrease(id: number) {
-    this.updateSize(this.http.post<{quantity: number}>(getEndpoint(`cart/${id}/increase/`), {}), id).subscribe();
+    return this.updateSize(this.http.post<{quantity: number}>(getEndpoint(`cart/${id}/decrease/`), {}), id)
   }
 
   increase(id: number) {
-    this.updateSize(this.http.post<{quantity: number}>(getEndpoint(`cart/${id}/increase/`), {}), id).subscribe();
+    return this.updateSize(this.http.post<{quantity: number}>(getEndpoint(`cart/${id}/increase/`), {}), id);
   }
 
   updateCart(data: CartList) {
@@ -39,7 +39,7 @@ export class CartService {
   }
 
   deleteCart(id: number) {
-    this.updateFn(this.http.delete(getEndpoint(`cart/${id}/`))).subscribe();
+    return this.updateFn(this.http.delete(getEndpoint(`cart/${id}/`)));
   }
 
   clear() {
@@ -48,14 +48,14 @@ export class CartService {
 
   private updateSize(source: Observable<{quantity: number}>, id: number) {
     return source
-      .pipe(finalize(() => {
+      .pipe(tap((res) => {
         this.cartStore.update = {
           ...this.cartStore.carts(),
           results: this.cartStore.carts().results.map(item => {
             if (item.id === id) {
               return {
                 ...item,
-                quantity: item.quantity
+                quantity: res.quantity
               }
             }
             return item;

@@ -43,17 +43,29 @@ export default class BasketList {
 
   constructor() {
     afterNextRender(() => {
-      this.cartService
-        .summary()
-        .subscribe(data => this.summary.set(data))
+      this.loadSummary();
     })
   }
 
+  loadSummary() {
+    this.cartService
+      .summary()
+      .subscribe(data => this.summary.set(data))
+  }
+
   removeCart(cartId: number) {
-    this.cartService.deleteCart(cartId)
+    this.cartService.deleteCart(cartId).subscribe(() => this.loadSummary())
   }
 
   checkout() {
 
+  }
+
+  decrease(id: number) {
+    this.cartService.decrease(id).subscribe(() => this.loadSummary());
+  }
+
+  increase(id: number) {
+    this.cartService.increase(id).subscribe(() => this.loadSummary());
   }
 }

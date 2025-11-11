@@ -9,6 +9,7 @@ import {TokenModel} from '@/models/token.model';
 import {injectContext} from '@taiga-ui/polymorpheus';
 import {TuiDialogContext} from '@taiga-ui/core';
 import {AccountStore} from '@/account';
+import {CartService} from '@/services/cart.service';
 
 export type TGUser = {
   id: number;
@@ -33,6 +34,7 @@ export class AuthenticationMain {
   private readonly authService = inject(AuthService);
   private readonly accountStore = inject(AccountStore);
   private readonly tokenStore = inject(TokenStore);
+  private readonly cartService = inject(CartService);
   protected readonly context = injectContext<TuiDialogContext<string, string>>();
 
 
@@ -75,6 +77,7 @@ export class AuthenticationMain {
           this.tokenStore.update = token;
           this.context.$implicit.complete();
           this.accountStore.getAccount().subscribe();
+          this.cartService.loadCart();
         },
         error: () => {
           this.errorCode.set(true);

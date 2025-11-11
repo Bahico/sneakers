@@ -4,6 +4,7 @@ import Navbar from './layout/navbar/navbar';
 import Footer from './layout/footer/footer';
 import {TuiRoot} from '@taiga-ui/core';
 import {CartService} from '@/services/cart.service';
+import {AccountStore} from '@/account';
 
 @Component({
   selector: 'app-root',
@@ -13,10 +14,12 @@ import {CartService} from '@/services/cart.service';
 })
 export class App {
   private readonly cartService = inject(CartService);
+  private readonly accountStore = inject(AccountStore)
 
   constructor() {
     afterNextRender(() => {
       this.cartService.loadCart();
+      this.accountStore.getAccount().subscribe();
     })
   }
 }
