@@ -1,4 +1,4 @@
-import {afterNextRender, Component, ElementRef, inject, signal, ViewChild, viewChild} from '@angular/core';
+import {afterNextRender, Component, ElementRef, inject, signal, ViewChild} from '@angular/core';
 import {AuthenticationType} from './authentication.type';
 import {IconComponent} from '@/components/icon/icon';
 import {FormControl, ReactiveFormsModule, Validators} from '@angular/forms';

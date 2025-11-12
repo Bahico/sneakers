@@ -1,4 +1,13 @@
 ## SneakersTeam
+
+### Frontend Development
+
+This project uses **Tailwind CSS** exclusively for styling. Inline styles are not allowed.
+
+- See [STYLING_RULES.md](./STYLING_RULES.md) for detailed styling guidelines
+- Run `npm run lint:tailwind` to check for inline styles
+- Run `npm run lint:all` to run all linting checks
+
 #### Шаги по развертыванию проекта с помощью docker
 
 1. docker-compose build

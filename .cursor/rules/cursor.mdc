@@ -1,9 +1,6 @@
 ---
-context: true
-priority: high
-scope: project
+alwaysApply: true
 ---
-
 You are an expert in TypeScript, Angular, and scalable web application development. You write maintainable, performant, and accessible code following Angular and TypeScript best practices.
 
 ## TypeScript Best Practices
@@ -31,7 +28,7 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 - Prefer inline templates for small components
 - Prefer Reactive forms instead of Template-driven ones
 - Do NOT use `ngClass`, use `class` bindings instead
-- Do NOT use `ngStyle`, use `style` bindings instead
+- Do NOT use `ngStyle`, use Tailwind CSS classes instead
 
 ## State Management
 
@@ -51,3 +48,60 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 - Design services around a single responsibility
 - Use the `providedIn: 'root'` option for singleton services
 - Use the `inject()` function instead of constructor injection
+
+## Styling - Tailwind CSS Only
+
+- **ALWAYS use Tailwind CSS utility classes for all styling in HTML templates**
+- **NEVER use inline `style` attributes** (e.g., `style="color: red;"`)
+- **NEVER use Angular style bindings** (e.g., `[style.color]="'red'"` or `[style.property]="value"`)
+- **NEVER use static style attributes** (e.g., `style="display: flex;"`)
+- Use Tailwind CSS utility classes for all styling needs
+- Use conditional Tailwind classes with `[class.xxx]` when needed (prefer over `[ngClass]`)
+- For dynamic values that require CSS custom properties, document why Tailwind cannot be used and use style bindings only as a last resort
+- Prefer Tailwind classes over custom CSS classes in component stylesheets
+- Use Tailwind's utility-first approach: combine multiple utility classes instead of creating custom CSS
+
+### Examples
+
+❌ **BAD - Inline Styles:**
+```html
+<div style="display: flex; align-items: center;">
+  <img style="mix-blend-mode: multiply;" src="image.jpg">
+</div>
+```
+
+✅ **GOOD - Tailwind Classes:**
+```html
+<div class="flex items-center">
+  <img class="mix-blend-multiply" src="image.jpg">
+</div>
+```
+
+❌ **BAD - Style Bindings:**
+```html
+<div [style.cursor]="zooming() ? 'zoom-out' : 'zoom-in'">
+  <img [style.mix-blend-mode]="'multiply'">
+</div>
+```
+
+✅ **GOOD - Conditional Classes:**
+```html
+<div 
+  [class.cursor-zoom-out]="zooming()"
+  [class.cursor-zoom-in]="!zooming()">
+  <img class="mix-blend-multiply">
+</div>
+```
+
+### Common Tailwind Alternatives
+
+- `style="display: flex;"` → `class="flex"`
+- `style="align-items: center;"` → `class="items-center"`
+- `style="justify-content: center;"` → `class="justify-center"`
+- `style="color: red;"` → `class="text-red-500"`
+- `style="background-color: blue;"` → `class="bg-blue-500"`
+- `style="padding: 1rem;"` → `class="p-4"`
+- `style="margin: 0.5rem;"` → `class="m-2"`
+- `style="mix-blend-mode: multiply;"` → `class="mix-blend-multiply"`
+- `style="cursor: pointer;"` → `class="cursor-pointer"`
+- `style="opacity: 0.5;"` → `class="opacity-50"`
