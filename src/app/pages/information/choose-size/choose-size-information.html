@@ -1,0 +1,78 @@
+<div class="container mb-10 mt-5 md:mt-0">
+    <tui-breadcrumbs class="mb-4">
+        <a *tuiItem tuiLink routerLink="/">
+            Главная
+        </a>
+        <div *tuiItem class="text-primary">Как выбрать размер</div>
+    </tui-breadcrumbs>
+
+    <h1 class="text-3xl font-bold mt-10 mb-5">Как правильно подобрать размер?</h1>
+
+    <div class="flex flex-col mb-6">
+        <h3 class="text-lg font-semibold mb-4">Что понадобится?</h3>
+
+        <span>1. Линейка/рулетка/метр</span>
+        <span>2. Родная стелька от самых удобных ваших кроссовок/обуви</span>
+    </div>
+
+    <div class="flex flex-col mb-6">
+        <h3 class="text-lg font-semibold mb-4">Что делать?</h3>
+
+        <span>1. Высуньте из ваших кроссовок стельку</span>
+        <span>2. Измерьте линейкой стельку таким образом, как показано на изображении:</span>
+    </div>
+
+    <img ngSrc="images/information/size-1.png" class="w-full h-auto object-contain" width="100" height="100" alt="">
+    <div class="relative">
+        <img ngSrc="images/information/size-3.png" class="w-full h-auto object-contain" width="100" height="100" alt="">
+        <span class="text-4xl absolute bottom-10 left-1/2 -translate-x-1/2 font-semibold">Пример стельки без
+            изгиба</span>
+    </div>
+    <p class="text-lg">
+        Все! Теперь вы знаете нужную Вам длину, а значит, с наибольшей точностью можете подобрать себе размер обуви! В
+        каждой карточке товара есть размерная сетка EU, RU, UK, US, MM. Обозначение MM – это как раз длина стельки
+        конкретной модели, ориентируйтесь по этому показателю.
+    </p>
+
+    <div class="flex justify-center mt-10">
+        <div class="w-2/3 grid grid-cols-8 gap-2">
+            @for (size of sizes; track size) {
+            <div class="sn-btn default flex items-center justify-center">
+                {{size}}
+            </div>
+            }
+        </div>
+    </div>
+
+    <div class="flex flex-col items-center mt-20">
+        <span class="font-semibold text-xl mb-4">Таблица соответсвия выбранного размера</span>
+
+        <div class="flex gap-16">
+            <div class="flex flex-col gap-2 w-80">
+                <div class="flex justify-between w-full pb-2 border-b border-gray-200">
+                    <span class="text-lg">Европа (EU)</span>
+                    <span>36</span>
+                </div>
+                <div class="flex justify-between w-full pb-2 border-b border-gray-200">
+                    <span class="text-lg">США (US)</span>
+                    <span>М4/W5</span>
+                </div>
+                <div class="flex justify-between w-full pb-2 border-b border-gray-200">
+                    <span class="text-lg">Длина (мм)</span>
+                    <span>220</span>
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-2 w-80">
+                <div class="flex justify-between w-full pb-2 border-b border-gray-200">
+                    <span class="text-lg">Великобритания (UK)</span>
+                    <span>3.5</span>
+                </div>
+                <div class="flex justify-between w-full pb-2 border-b border-gray-200">
+                    <span class="text-lg">Россия (RU)</span>
+                    <span>35</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

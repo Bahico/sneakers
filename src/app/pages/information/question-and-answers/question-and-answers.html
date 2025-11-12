@@ -1,0 +1,39 @@
+<div class="container mb-10 mt-5 md:mt-0">
+    <tui-breadcrumbs class="mb-4">
+        <a *tuiItem tuiLink routerLink="/">
+            Главная
+        </a>
+        <div *tuiItem class="text-primary">Вопрос-ответ</div> 
+    </tui-breadcrumbs>
+
+    <h1 class="text-3xl font-semibold text-primary">Часто задаваемые вопросы</h1>
+
+    <div class="flex flex-col gap-4 mt-10">
+        @for (question of questions; track question) {
+            <div class="flex flex-col gap-2 py-4 border-b border-gray-200">
+                <div class="flex justify-between cursor-pointer" (click)="setIndex($index)">
+                    <span class="text-xl font-semibold text-primary">{{ question }}</span>
+                    <icon-list [icon]="activeIndex() === $index ? 'minus' : 'plus'" class="w-8 h-8 flex justify-center items-center" /> 
+                </div>
+                <div 
+                    class="text-gray-700 transition-all duration-300 overflow-hidden px-4"
+                    [class.max-h-0]="activeIndex() !== $index"
+                    [class.max-h-40]="activeIndex() === $index"
+                >
+                    <ul class="list-disc">
+                        <li>
+                            Вы получили бракованный товар (порезы, невыводимые пятна).
+                        </li>
+                        <li>
+                            Товар не соответствует заказу (неверный размер, артикул или выбор расцветки товара). Обратите внимание: товар может незначительно отличаться по цвету на картинке на сайте, так как цветопередача бывает искаженной.
+                        </li>
+                        <li>
+                            Отмена заказа в день оформления.
+                        </li>
+                    </ul>
+                </div>
+                
+            </div>
+        }
+    </div>
+</div>

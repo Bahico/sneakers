@@ -11,5 +11,5 @@ export default [
   {
     path: 'filter',
     loadComponent: () => import('./filter/product-filter'),
-  },
+  }
 ] satisfies import('@angular/router').Routes;
