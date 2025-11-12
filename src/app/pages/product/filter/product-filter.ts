@@ -13,6 +13,8 @@ import {ProductFilterPrice} from '@/product/filter/components/price/product-filt
 import {ProductFilterSize} from '@/product/filter/components/size/product-filter-size';
 import {ProductFilterBrand} from '@/product/filter/components/brand/product-filter-brand';
 import {MobileFilter} from '@/product/filter/components/mobile-filter/mobile-filter';
+import {InfiniteScrollDirective} from 'ngx-infinite-scroll';
+import {ProductFilterStore} from '@/product/filter/product-filter-store';
 
 @Component({
   selector: 'product-filter',
@@ -30,14 +32,18 @@ import {MobileFilter} from '@/product/filter/components/mobile-filter/mobile-fil
     ProductFilterPrice,
     ProductFilterSize,
     ProductFilterBrand,
-    MobileFilter
+    MobileFilter,
+    InfiniteScrollDirective
   ]
 })
 export default class ProductFilter implements OnInit {
   private readonly productService = inject(ProductService);
+  private readonly productFilterStore = inject(ProductFilterStore);
 
   protected readonly items = PRODUCT_FILTER_BREAD_CRUMBS;
 
+  throttle = 300;
+  scrollDistance = 20;
   protected readonly openFilter = signal(false);
   protected readonly openFilters = signal({
     size: false,
@@ -61,11 +67,22 @@ export default class ProductFilter implements OnInit {
   }
 
   ngOnInit() {
+    this.loadProduct();
+  }
+
+  loadProduct() {
     this.productService
-      .query({})
-      .subscribe(res => {
-        this.products.set(res.results);
+      .query({
+        page: this.productFilterStore.currentPage()
       })
+      .subscribe(res => {
+        this.products.update(items => [...items, ...res.results]);
+      })
+  }
+
+  nextPage() {
+    this.productFilterStore.currentPage.update(page => page + 1);
+    this.loadProduct();
   }
 
   changeOpen(key: string) {

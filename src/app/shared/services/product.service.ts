@@ -13,8 +13,8 @@ export class ProductService {
   }
 
   query(params: any) {
-    // return this.http.get<ListResult<ProductListDetailModel>>(getEndpoint('products/'), {params});
-    return this.http.get<ListResult<ProductListDetailModel>>('faker/products.json', {params});
+    return this.http.get<ListResult<ProductListDetailModel>>(getEndpoint('products/'), {params});
+    // return this.http.get<ListResult<ProductListDetailModel>>('faker/products.json', {params});
   }
 
   similar(params: {category1: string, category2: string; category3: string}) {

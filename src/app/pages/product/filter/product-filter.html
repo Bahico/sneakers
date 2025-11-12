@@ -62,7 +62,13 @@
     </div>
 
     <div class="md:col-span-2 lg:col-span-3">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
+        infinite-scroll
+        [infiniteScrollDistance]="scrollDistance"
+        [infiniteScrollThrottle]="throttle"
+        (scrolled)="nextPage()"
+      >
         @for (product of products(); track product.spuId) {
           <product-list-detail [detail]="product"/>
         }
