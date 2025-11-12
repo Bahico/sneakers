@@ -16,5 +16,9 @@ export default [
   {
     path: 'choose-size',
     loadComponent: () => import('./choose-size/choose-size-information')
+  },
+  {
+    path: 'original-certificate',
+    loadComponent: () => import('./original-certificate/original-certificate')
   }
 ] satisfies Routes;
