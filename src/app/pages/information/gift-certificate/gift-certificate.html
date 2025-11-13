@@ -6,9 +6,9 @@
     <div *tuiItem class="text-primary">Подарочный сертификат</div>
   </tui-breadcrumbs>
 
-  <div class="flex justify-between gap-4">
+  <div class="flex flex-col md:flex-row justify-between gap-4">
     <div class="flex flex-col gap-4">
-      <h2 class="text-xl md:text-2xl lg:text-3xl font-semibold text-primary mt-5 mb-14">Подарочный сертификат Sneaker Team</h2>
+      <h2 class="text-xl md:text-2xl lg:text-3xl font-semibold text-center text-primary mt-5 md:mb-4 md:mb-10 lg:mb-14">Подарочный сертификат Sneaker Team</h2>
 
       <p>Идеальный выбор на любой праздник, с поводом и без! Радуйте друзей, удивляйте родных, поздравляйте коллег!</p>
       <ul class="list-disc ml-4 gap-2 flex flex-col">
@@ -21,12 +21,12 @@
       <p>Подарочный сертификат Sneaker Team – лучший выбор!</p>
 
       <div class="flex gap-2">
-        <button class="sn-btn !bg-orange-400 !py-4 w-80">
+        <button class="sn-btn !bg-orange-400 md:!py-4 w-80" (click)="openModal()">
           Купить сертификат
         </button>
 
         <button
-          class="sn-btn default !bg-gray-200 border-none !py-4 w-40 justify-center flex items-center gap-2 hover:!text-primary"
+          class="sn-btn default !bg-gray-200 border-none md:!py-4 w-40 justify-center flex items-center gap-2 hover:!text-primary"
           [tuiDropdown]="dropdownContent"
           [tuiDropdownManual]="open"
           [tuiObscuredEnabled]="open"
@@ -68,14 +68,14 @@
     <img ngSrc="images/information/gift-certificate-1.png" class="object-contain h-full w-auto" alt="" height="518" width="545">
   </div>
 
-  <img ngSrc="images/information/gift-certificate-2.png" class="w-full h-auto object-contain mt-2" alt="" height="487" width="1589">
+  <img ngSrc="images/information/gift-certificate-2.png" class="w-full h-auto object-contain mt-2 hidden md:block" alt="" height="487" width="1589">
 
   <div class="flex flex-col gap-4 mt-10 items-center">
     <h3 class="text-xl font-semibold">Сэкономьте время на поиск презента</h3>
     <p class="text-center">На сумму подарочного сертификата получатель сможет выбрать брендовую обувь, одежду и аксессуары из каталога Sneaker Team</p>
 
     <div class="flex gap-4">
-      <button class="sn-btn !bg-orange-400 !px-6">
+      <button class="sn-btn !bg-orange-400 !px-6" (click)="openModal()">
         Купить сертификат
       </button>
       <button class="sn-btn default !bg-gray-200 border-none !px-6 justify-center flex items-center gap-2 hover:!text-primary hover:!opacity-70">
@@ -83,9 +83,11 @@
       </button>
     </div>
 
-    <h3 class="text-xl font-semibold mt-8">Как работает электронный сертификат?</h3>
+    <img ngSrc="images/information/gift-certificate-3.png" alt="" class="w-[90%] h-auto object-contain md:hidden" height="641" width="686">
 
-    <div class="relative flex flex-col gap-12 mx-auto w-200 mt-10">
+    <h3 class="text-xl font-semibold mt-8 text-center">Как работает электронный сертификат?</h3>
+
+    <div class="relative flex flex-col gap-12 mx-auto w-full md:w-200 mt-10">
       <span class="bg-primary w-[2px] h-[calc(100%-20px)] absolute top-5 left-1/2 -translate-x-1/2"></span>
       @for (step of steps; track step.title) {
         <div class="relative">
@@ -111,13 +113,13 @@
       }
     </div>
 
-    <h3 class="text-3xl font-semibold mt-8">Часто задаваемые вопросы</h3>
+    <h3 class="text-lg md:text-xl lg:text-3xl font-semibold mt-8 text-center md:text-start">Часто задаваемые вопросы</h3>
 
-    <div class="flex flex-col gap-4 mt-10 w-[80%]">
+    <div class="flex flex-col gap-4 mt-10 w-full md:w-[80%]">
       @for (question of questions; track question) {
         <div class="flex flex-col gap-2 py-4 border-b border-gray-200">
           <div class="flex justify-between cursor-pointer" (click)="setIndex($index)">
-            <span class="text-xl font-semibold text-primary">{{$index + 1}}. {{ question }}</span>
+            <span class="text-base lg:text-xl font-semibold text-primary">{{$index + 1}}. {{ question }}</span>
             <icon-list [icon]="activeIndex() === $index ? 'minus' : 'plus'" class="w-8 h-8 flex justify-center items-center" />
           </div>
           <div
@@ -133,15 +135,15 @@
     </div>
 
     <div
-      class="w-[80%] h-[100px] bg-[#FFD5B6] mt-5 rounded-xl flex justify-between items-center px-8"
+      class="w-full md:w-[80%] py-4 md:py-0 md:h-[100px] bg-[#FFD5B6] mt-5 rounded-xl flex flex-col text-center md:text-start md:flex-row justify-between items-center px-8"
       style="background-image: url('images/background/orange-bg.png'); background-size: cover; background-position: center;"
     >
-      <div class="flex flex-col gap-1">
+      <div class="flex flex-col gap-1 items-center md:items-start">
         <h3 class="text-lg font-semibold">Остались вопросы?</h3>
-        <span>Напишите нам! Мы на связи каждый день с 9:00 до 21:00.<br>Обычно отвечаем в течении 5 минут.</span>
+        <span class="w-[80%] md:w-auto">Напишите нам! Мы на связи каждый день с 9:00 до 21:00.<br>Обычно отвечаем в течении 5 минут.</span>
       </div>
 
-      <button class="sn-btn !bg-orange-400 !px-6 py-3">
+      <button class="sn-btn !bg-orange-400 !px-6 py-3 mt-4 md:mt-0">
         Задать вопрос
       </button>
     </div>

@@ -1,12 +1,13 @@
-import {Component, signal} from '@angular/core';
+import {Component, inject, signal} from '@angular/core';
 import {RouterLink} from '@angular/router';
 import {TuiBreadcrumbs, TuiRadioComponent} from '@taiga-ui/kit';
-import {TuiDropdown, TuiFormatNumberPipe, TuiLink} from '@taiga-ui/core';
+import {TuiDialogService, TuiDropdown, TuiFormatNumberPipe, TuiLink} from '@taiga-ui/core';
 import {TuiActiveZone, TuiItem, TuiObscured} from '@taiga-ui/cdk';
 import {AsyncPipe, NgOptimizedImage} from '@angular/common';
 import {IconComponent} from '@/components/icon/icon';
-import {first} from 'rxjs';
 import {FormsModule} from '@angular/forms';
+import {PolymorpheusComponent} from '@taiga-ui/polymorpheus';
+import {GiftOrder} from '@/information/gift-certificate/order/gift-order';
 
 @Component({
   templateUrl: 'gift-certificate.html',
@@ -36,6 +37,8 @@ import {FormsModule} from '@angular/forms';
   ]
 })
 export default class GiftCertificate {
+  private readonly dialogs = inject(TuiDialogService);
+
   protected readonly activeIndex = signal<number | null>(null);
   protected readonly amount = signal(15000);
   protected open = false;
@@ -87,5 +90,17 @@ export default class GiftCertificate {
     this.activeIndex.update(current => current === index ? null : index);
   }
 
-  protected readonly first = first;
+  openModal() {
+    this.dialogs
+      .open(
+        new PolymorpheusComponent(GiftOrder),
+        {
+          label: null,
+          size: 'm',
+          data: this.amount(),
+          closeable: false,
+        },
+      )
+      .subscribe();
+  }
 }

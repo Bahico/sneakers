@@ -1,0 +1,56 @@
+<span class="absolute w-10 h-10 right-5 md:-right-10 top-3 md:top-0 cursor-pointer text-primary md:text-white" (click)="close()">
+  <icon-list icon="close" />
+</span>
+
+<div class="flex flex-col md:flex-row justify-between pb-6 border-b border-gray-200">
+  <h3 class="text-2xl font-semibold">Ваш заказ:</h3>
+
+  <h3 class="text-2xl font-semibold">Сумма: {{context.data | tuiFormatNumber | async}} ₽</h3>
+</div>
+
+<div class="flex gap-4 mt-6 border-b border-gray-200 pb-4">
+  <img ngSrc="images/information/gift-certificate-1.png" alt="" class="w-40 md:w-50 object-contain" height="247" width="243">
+  <div class="flex flex-col gap-1">
+    <h3 class="text-sm md:text-lg lg:text-xl font-semibold mb-1">Электронный <br> подарочный сертификат SNEAKER TEAM</h3>
+    <span class="text-xs text-gray-500">Номинал: 15.000₽</span>
+    <p class="text-xs text-gray-500">Идеальный выбор на любой праздник, с поводом и без! Радуйте друзей, удивляйте родных, поздравляйте коллег!</p>
+  </div>
+</div>
+
+
+<div class="border-b border-gray-200 pb-4 mt-4">
+  <label for="telegram_name" class="md:text-lg">Ваш ник в Telegram</label>
+  <p class="text-gray-500 text-xs md:text-sm mb-2">На этот Telegram аккаунт мы вышлем вам сам сертификат в формате PDF</p>
+  <div class="sn-control">
+    <span class="sn-control-icon">{{ '@' }}</span>
+    <input type="text" id="telegram_name" placeholder="">
+  </div>
+</div>
+
+<div class="border-b border-gray-200 pb-4 mt-4">
+  <label for="fullName" class="md:text-lg">Имя и Фамилия получателя</label>
+  <p class="text-gray-500 text-xs md:text-sm mb-2">Как зовут человека, кому вы подарите сертификат? Это имя будет указано на сертификате.</p>
+  <div class="sn-control">
+    <span class="sn-control-icon">{{ '@' }}</span>
+    <input type="text" id="fullName" placeholder="">
+  </div>
+</div>
+
+<div class="border-b border-gray-200 pb-4 mt-4">
+  <label for="telegram_username" class="md:text-lg">Telegram Username получателя</label>
+  <p class="text-gray-500 text-xs md:text-sm mb-2">Username нужен будет нам для идентификации получателя, чтобы мы смогли потом активировать его сертификат и начислить ему сумму на баланс.</p>
+  <div class="sn-control">
+    <span class="sn-control-icon">{{ '@' }}</span>
+    <input type="text" id="telegram_username" placeholder="">
+  </div>
+</div>
+
+<div class="flex justify-center mt-4">
+  <button class="sn-btn w-70 !py-3">
+    Заказать за {{context.data | tuiFormatNumber | async}} ₽
+  </button>
+</div>
+
+<div class="flex justify-center items-center mt-4 text-gray-500 text-sm">
+  <p class="text-center w-[80%] text-xs md:text-sm">После оплаты в течении 10 минут мы вышлем на ваш Telegram-аккаунт электронный сертификат в формате PDF. Чтобы подарить сертификат получателю, просто перешлите ему этот файл вместе со своим поздравлением.</p>
+</div>

@@ -1,4 +1,13 @@
-import {afterNextRender, Component, computed, DestroyRef, inject, OnDestroy, signal} from '@angular/core';
+import {
+  afterNextRender,
+  Component,
+  computed,
+  DestroyRef,
+  inject, Injector,
+  OnDestroy, OnInit, PLATFORM_ID,
+  runInInjectionContext,
+  signal
+} from '@angular/core';
 import {ProductService} from '@/services/product.service';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {ProductDetailImages} from './components/images/product-detail-images';
@@ -15,6 +24,7 @@ import {finalize} from 'rxjs';
 import {ProductDetailColor} from '@/product/detail/components/color/product-detail-color';
 import {CommentList} from '@/product/detail/components/comment/comment-list';
 import {SimilarProducts} from '@/product/detail/components/similar-products/similar-products';
+import {isPlatformBrowser} from '@angular/common';
 
 @Component({
   templateUrl: 'product-detail.html',
@@ -35,27 +45,30 @@ import {SimilarProducts} from '@/product/detail/components/similar-products/simi
     SimilarProducts
   ]
 })
-export default class ProductDetail implements OnDestroy {
+export default class ProductDetail implements OnDestroy, OnInit {
   private readonly productService = inject(ProductService);
   private readonly route = inject(ActivatedRoute);
   private readonly destroyRef = inject(DestroyRef);
   private readonly productDetailStore = inject(ProductDetailStore);
+  private readonly injector = inject(Injector);
+  private readonly platformId = inject(PLATFORM_ID);
+
+
 
   protected items = signal([
     {
-      caption: 'Главная',
-      routerLink: '/',
+      caption: 'В каталог',
+      routerLink: '/product/filter',
     },
     {
       caption: 'Current'
     },
   ]);
 
-
-  constructor() {
-    afterNextRender(() => {
+  ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
       this.subscribeRoute();
-    })
+    }
   }
 
   ngOnDestroy() {
@@ -78,15 +91,17 @@ export default class ProductDetail implements OnDestroy {
       .detail(spuId)
       .pipe(finalize(() => this.loadSimilarOnes()))
       .subscribe(res => {
-        this.productDetailStore.update = res;
-        const size = res.sizeTable[0];
-        this.productDetailStore.sizeType.set(size.primary ? 'primary' : size.type);
-        this.items.update(items => [
-          items[0],
-          {
-            caption: res.name
-          }
-        ]);
+        runInInjectionContext(this.injector, () => {
+          this.productDetailStore.update = res;
+          const size = res.sizeTable[0];
+          this.productDetailStore.sizeType.set(size.primary ? 'primary' : size.type);
+          this.items.update(items => [
+            items[0],
+            {
+              caption: res.name
+            }
+          ]);
+        })
       })
   }
 
