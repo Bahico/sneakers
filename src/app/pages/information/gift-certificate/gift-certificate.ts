@@ -1,15 +1,24 @@
 import {Component, signal} from '@angular/core';
 import {RouterLink} from '@angular/router';
-import {TuiBreadcrumbs} from '@taiga-ui/kit';
-import {TuiDropdown, TuiLink} from '@taiga-ui/core';
+import {TuiBreadcrumbs, TuiRadioComponent} from '@taiga-ui/kit';
+import {TuiDropdown, TuiFormatNumberPipe, TuiLink} from '@taiga-ui/core';
 import {TuiActiveZone, TuiItem, TuiObscured} from '@taiga-ui/cdk';
-import {NgOptimizedImage} from '@angular/common';
+import {AsyncPipe, NgOptimizedImage} from '@angular/common';
 import {IconComponent} from '@/components/icon/icon';
+import {first} from 'rxjs';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   templateUrl: 'gift-certificate.html',
   selector: 'gift-certificate',
   host: {class: 'flex w-full justify-center pb-10'},
+  styles: [`
+    @import "tailwindcss";
+
+    .amount-item {
+      @apply flex justify-between items-center px-4 py-2 border-b border-gray-200 last:border-none cursor-pointer;
+    }
+  `],
   imports: [
     RouterLink,
     TuiBreadcrumbs,
@@ -19,11 +28,16 @@ import {IconComponent} from '@/components/icon/icon';
     TuiDropdown,
     TuiObscured,
     TuiActiveZone,
-    IconComponent
+    IconComponent,
+    TuiFormatNumberPipe,
+    AsyncPipe,
+    TuiRadioComponent,
+    FormsModule
   ]
 })
 export default class GiftCertificate {
-  activeIndex = signal<number | null>(null);
+  protected readonly activeIndex = signal<number | null>(null);
+  protected readonly amount = signal(15000);
   protected open = false;
 
   steps = [
@@ -45,6 +59,16 @@ export default class GiftCertificate {
     "Как оплатить заказ электронным сертификатом?"
   ];
 
+  protected readonly amounts = [
+    5000,
+    10000,
+    15000,
+    20000,
+    30000,
+    50000,
+    100000,
+  ]
+
   protected onClick(): void {
     this.open = !this.open;
   }
@@ -62,4 +86,6 @@ export default class GiftCertificate {
   setIndex(index: number) {
     this.activeIndex.update(current => current === index ? null : index);
   }
+
+  protected readonly first = first;
 }

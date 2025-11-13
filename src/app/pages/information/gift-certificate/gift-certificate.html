@@ -34,7 +34,7 @@
           (tuiActiveZoneChange)="onActiveZone($event)"
           (tuiObscured)="onObscured($event)"
         >
-          15'000₽
+          {{amount() | tuiFormatNumber | async}}₽
           <span
             class="text-xl duration-300 transition-transform"
             [class.rotate-180]="open"
@@ -43,7 +43,21 @@
           </span>
 
           <ng-template #dropdownContent>
-            <div class="dropdown">But there is nothing to choose...</div>
+            <div class="w-40 flex flex-col gap-1 p-1">
+              @for (item of amounts; track item) {
+                <div class="amount-item" (click)="amount.set(item)">
+                  <span>{{item | tuiFormatNumber | async}}₽</span>
+
+                  <input
+                    [(ngModel)]="amount"
+                    tuiRadio
+                    type="radio"
+                    [value]="item"
+                    size="s"
+                  />
+                </div>
+              }
+            </div>
           </ng-template>
         </button>
       </div>
@@ -99,7 +113,7 @@
 
     <h3 class="text-3xl font-semibold mt-8">Часто задаваемые вопросы</h3>
 
-    <div class="flex flex-col gap-4 mt-10">
+    <div class="flex flex-col gap-4 mt-10 w-[80%]">
       @for (question of questions; track question) {
         <div class="flex flex-col gap-2 py-4 border-b border-gray-200">
           <div class="flex justify-between cursor-pointer" (click)="setIndex($index)">
@@ -116,6 +130,20 @@
 
         </div>
       }
+    </div>
+
+    <div
+      class="w-[80%] h-[100px] bg-[#FFD5B6] mt-5 rounded-xl flex justify-between items-center px-8"
+      style="background-image: url('images/background/orange-bg.png'); background-size: cover; background-position: center;"
+    >
+      <div class="flex flex-col gap-1">
+        <h3 class="text-lg font-semibold">Остались вопросы?</h3>
+        <span>Напишите нам! Мы на связи каждый день с 9:00 до 21:00.<br>Обычно отвечаем в течении 5 минут.</span>
+      </div>
+
+      <button class="sn-btn !bg-orange-400 !px-6 py-3">
+        Задать вопрос
+      </button>
     </div>
   </div>
 </div>
