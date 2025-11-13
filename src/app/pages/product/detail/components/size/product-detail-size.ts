@@ -54,6 +54,6 @@ export class ProductDetailSize {
   }
 
   added(sku: Skus) {
-    return this.cartStore.carts().results.some(item => item.sku.skuId === sku.skuId)
+    return this.cartStore.carts()?.results?.some(item => item.sku.skuId === sku.skuId)
   }
 }
