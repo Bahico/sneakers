@@ -1,5 +1,6 @@
-import {afterNextRender, Component, input, signal} from '@angular/core';
+import {afterNextRender, Component, ElementRef, inject, input, signal, viewChildren} from '@angular/core';
 import {MouseLeaveDirective} from '@/components/image-zoom/check-mouse-leave';
+import {TUI_IS_MOBILE} from '@taiga-ui/cdk';
 
 @Component({
   templateUrl: 'image-zoom.html',
@@ -11,6 +12,7 @@ import {MouseLeaveDirective} from '@/components/image-zoom/check-mouse-leave';
   host: {class: 'relative'}
 })
 export class ImageZoom {
+  protected readonly isMobile = inject(TUI_IS_MOBILE);
 
   urlImage = input.required<string>();
 
@@ -101,6 +103,8 @@ export class ImageZoom {
   }
 
   updateZooming() {
+    if (this.isMobile.valueOf())
+      return;
     this.zooming.update(item => !item);
   }
 }

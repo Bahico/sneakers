@@ -1,4 +1,4 @@
-import {afterNextRender, Component, computed, DestroyRef, inject, signal} from '@angular/core';
+import {afterNextRender, Component, computed, DestroyRef, inject, OnDestroy, signal} from '@angular/core';
 import {ProductService} from '@/services/product.service';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {ProductDetailImages} from './components/images/product-detail-images';
@@ -35,7 +35,7 @@ import {SimilarProducts} from '@/product/detail/components/similar-products/simi
     SimilarProducts
   ]
 })
-export default class ProductDetail {
+export default class ProductDetail implements OnDestroy {
   private readonly productService = inject(ProductService);
   private readonly route = inject(ActivatedRoute);
   private readonly destroyRef = inject(DestroyRef);
@@ -56,6 +56,10 @@ export default class ProductDetail {
     afterNextRender(() => {
       this.subscribeRoute();
     })
+  }
+
+  ngOnDestroy() {
+    this.productDetailStore.clear();
   }
 
   subscribeRoute() {

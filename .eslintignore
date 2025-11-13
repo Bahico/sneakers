@@ -1,6 +1,0 @@
-node_modules/
-dist/
-.angular/
-*.spec.ts
-bun.lock
-

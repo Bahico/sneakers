@@ -1,11 +1,27 @@
-import {computed, Injectable, signal} from '@angular/core';
+import {computed, inject, Injectable, signal} from '@angular/core';
 import {ProductListDetailModel, ProductModel} from '@/models/product.model';
 import {Skus} from '@/models/skus.model';
+import {AuthenticationOpen} from '@/components/authentication/authentication-open';
+import {AccountStore} from '@/account';
+import {CartService} from '@/services/cart.service';
+import {TuiDialogService} from '@taiga-ui/core';
+import {PolymorpheusComponent} from '@taiga-ui/polymorpheus';
+import {MobileAddCart} from '@/product/detail/components/mobile-add-cart/mobile-add-cart';
+import {concatMap} from 'rxjs';
+import {CartStore} from '@/cart';
 
 @Injectable({providedIn: 'root'})
 export class ProductDetailStore {
+  private readonly accountStore = inject(AccountStore);
+  private readonly authenticationService = inject(AuthenticationOpen);
+  private readonly cartService = inject(CartService);
+  private readonly dialogs = inject(TuiDialogService);
+  private readonly cartStore = inject(CartStore, {optional: true});
+
   private readonly productDetail$ = signal<Partial<ProductModel>>({});
   private readonly productSimilar$ = signal<ProductListDetailModel[]>([]);
+
+  protected readonly isAuthed = computed(() => !!this.accountStore.account());
 
   readonly sizeType = signal<string>(null);
   readonly sizeValue = signal<string>(null);
@@ -13,6 +29,8 @@ export class ProductDetailStore {
   readonly selectedSkus = computed<Skus>(() =>
     this.productDetail$().skus?.find(item => item.size[this.sizeType()?.toLowerCase()] === this.sizeValue())
   );
+
+  readonly cart = computed(() => this.cartStore.carts()?.results?.find(item => item.sku.skuId === this.selectedSkus()?.skuId))
 
   get detail() {
     return this.productDetail$.asReadonly();
@@ -28,5 +46,48 @@ export class ProductDetailStore {
 
   set updateSimilar(value: ProductListDetailModel[]) {
     this.productSimilar$.set(value);
+  }
+
+  addToCart() {
+    if (!this.isAuthed()) {
+      return this.authenticationService.openModal();
+    }
+    this.cartService.addCart({
+      sku_id: this.selectedSkus().skuId,
+      quantity: 1
+    }).subscribe();
+  }
+
+  mobileAddCart() {
+    if (!this.isAuthed()) {
+      return this.authenticationService.openModal();
+    }
+
+    if (this.cart()) {
+      this.openMobileModal().subscribe()
+    } else {
+      this.cartService.addCart({
+        sku_id: this.selectedSkus().skuId,
+        quantity: 1
+      })
+        .pipe(concatMap(() => this.openMobileModal()))
+        .subscribe()
+    }
+  }
+
+  openMobileModal() {
+    return this.dialogs.open(
+      new PolymorpheusComponent(MobileAddCart),
+      {
+        label: null,
+        size: 'm'
+      },
+    )
+  }
+
+  clear() {
+    this.productDetail$.set({});
+    this.sizeType.set(null);
+    this.sizeValue.set(null);
   }
 }

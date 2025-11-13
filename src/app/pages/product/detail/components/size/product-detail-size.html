@@ -17,8 +17,9 @@
     <button
       (click)="active.set(size.value)"
       [ngClass]="{
+        'bg-white text-primary': size.value !== active() && !size.added,
+        '!text-white bg-black/60 border-none': size.added,
         'bg-primary text-white': size.value === active(),
-        'bg-white text-primary': size.value !== active()
         }"
       [disabled]="size.disabled"
       class="cursor-pointer flex col-span-1 items-center justify-center h-12 text-xl border border-primary transition-colors duration-300 rounded-md disabled:opacity-40 hover:bg-primary hover:text-white hover:opacity-40"

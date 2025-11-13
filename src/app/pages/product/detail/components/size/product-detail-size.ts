@@ -3,6 +3,8 @@ import {TuiTabs} from '@taiga-ui/kit';
 import {NgClass} from '@angular/common';
 import {ProductDetailStore} from '@/product/detail/services/product-detail-store';
 import {SizeTable} from '@/models/size-table.model';
+import {CartStore} from '@/cart';
+import {Skus} from '@/models/skus.model';
 
 @Component({
   templateUrl: 'product-detail-size.html',
@@ -14,6 +16,7 @@ import {SizeTable} from '@/models/size-table.model';
 })
 export class ProductDetailSize {
   private readonly productDetailStore = inject(ProductDetailStore);
+  private readonly cartStore = inject(CartStore);
 
   protected readonly detail = this.productDetailStore.detail;
   protected readonly active = this.productDetailStore.sizeValue;
@@ -27,10 +30,14 @@ export class ProductDetailSize {
   );
 
   protected readonly sizes = computed(() =>
-    this.detail().sizeTable?.[this.activeItemIndex()]?.values?.map(size => ({
-      value: size,
-      disabled: this.isDisabled(size)
-    }))
+    this.detail().sizeTable?.[this.activeItemIndex()]?.values?.map(size => {
+      const sku = this.getSku(size);
+      return {
+        value: size,
+        disabled: !sku,
+        added: sku && this.added(sku)
+      }
+    })
   )
 
   onChangeIndex() {
@@ -42,8 +49,11 @@ export class ProductDetailSize {
     return size.primary ? 'primary' : size.type
   }
 
-  isDisabled(size: string) {
-    console.count('isDisabled');
-    return !this.detail().skus.some(sku => sku.size[this.activeType()] === size)
+  getSku(size: string) {
+    return this.detail().skus.find(sku => sku.size[this.activeType()] === size)
+  }
+
+  added(sku: Skus) {
+    return this.cartStore.carts().results.some(item => item.sku.skuId === sku.skuId)
   }
 }

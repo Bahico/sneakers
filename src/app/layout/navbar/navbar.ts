@@ -8,6 +8,7 @@ import {AuthenticationOpen} from '@/components/authentication/authentication-ope
 import {RouterLink} from '@angular/router';
 import {TuiBadgedContentComponent, TuiBadgeNotification} from '@taiga-ui/kit';
 import {CartStore} from '@/cart';
+import {ProductDetailStore} from '@/product/detail/services/product-detail-store';
 
 @Component({
   selector: 'navbar',
@@ -34,11 +35,18 @@ export default class Navbar {
   private readonly accountStore = inject(AccountStore);
   private readonly authenticationService = inject(AuthenticationOpen);
   private readonly cartStore = inject(CartStore);
+  private readonly productDetailStore = inject(ProductDetailStore);
 
   protected readonly isAuthed = computed(() => !!this.accountStore.account());
   protected open = false;
 
   protected readonly basketProductCount = computed(() => this.cartStore.carts().count);
+
+  openCartBtn = computed(() => !!this.productDetailStore.selectedSkus());
+  addedCart = computed(() =>
+    this.productDetailStore.selectedSkus() &&
+    this.cartStore.carts()?.results?.find(item => item.sku.skuId === this.productDetailStore.selectedSkus()?.skuId)
+  );
 
   openAuthentication() {
     this.authenticationService.openModal()
@@ -56,5 +64,9 @@ export default class Navbar {
 
   protected onActiveZone(active: boolean): void {
     this.open = active && this.open;
+  }
+
+  openMobileCart() {
+    this.productDetailStore.mobileAddCart();
   }
 }

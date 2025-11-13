@@ -99,7 +99,20 @@
 </div>
 
 <div class="fixed bottom-0 left-0 right-0 py-4 bg-gray z-20 w-full flex justify-center md:hidden">
-  <div class="w-[80%] flex justify-between items-end">
+  <div class="w-[90%] flex justify-between items-end relative">
+    <button
+      class="sn-btn !py-4.5 absolute left-0 top-1/2 -translate-y-1/2 w-[85%] overflow-hidden duration-300 transition-all text-nowrap z-20"
+      [class.max-w-[85%]]="openCartBtn()"
+      [class.max-w-0]="!openCartBtn()"
+      [class.!px-0]="!openCartBtn()"
+      (click)="openMobileCart()"
+    >
+      @if (addedCart()) {
+        Перейти в корзину
+      } @else {
+        Добавить в корзину
+      }
+    </button>
     <div class="flex flex-col items-center" routerLink="/">
       <icon-list class="h-7" icon="home"/>
       <span class="text-sm">Главная</span>
@@ -120,13 +133,13 @@
           routerLink="/basket"
           class="flex flex-col items-center text-xl"
         >
-          <icon-list class="h-7" icon="basket"/>
+          <icon-list class="h-7 flex items-center" icon="basket"/>
           <span class="text-sm text-primary">Корзина</span>
         </div>
       </tui-badged-content>
     } @else {
       <div class="flex flex-col items-center text-xl">
-        <icon-list class="h-7" icon="basket"/>
+        <icon-list class="h-7 flex items-center" icon="basket"/>
         <span class="text-sm">Корзина</span>
       </div>
     }

@@ -23,7 +23,7 @@ export class CartService {
   }
 
   addCart(data: CartAdd) {
-    this.updateFn(this.http.post(getEndpoint('cart/'), data)).subscribe();
+    return this.updateFn(this.http.post(getEndpoint('cart/'), data));
   }
 
   decrease(id: number) {
