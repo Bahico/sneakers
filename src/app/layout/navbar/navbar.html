@@ -98,7 +98,7 @@
   </div>
 </div>
 
-<div class="fixed bottom-0 left-0 right-0 py-4 bg-gray z-20 w-full flex justify-center md:hidden">
+<div class="fixed bottom-0 left-0 right-0 py-4 bg-gray-100 z-20 w-full h-[80px] flex justify-center md:hidden">
   <div class="w-[90%] flex justify-between items-end relative">
     <button
       class="sn-btn !py-4.5 absolute left-0 top-1/2 -translate-y-1/2 w-[85%] overflow-hidden duration-300 transition-all text-nowrap z-20"
@@ -158,11 +158,57 @@
       </div>
     }
 
-    <div class="flex flex-col items-center">
-      <span class="text-2xl h-7">
-      <i class="fa fa-bars" aria-hidden="true"></i>
+    <div class="flex flex-col items-center" (click)="openMobileNavbar.set(!openMobileNavbar())">
+      <span class="text-2xl flex items-center h-7">
+        <div
+          class="burger"
+          [class.active]="openMobileNavbar()"
+        >
+          <span></span>
+        </div>
       </span>
       <span class="text-sm">Меню</span>
     </div>
+  </div>
+</div>
+
+<div
+  class="fixed inset-0 bg-white backdrop-blur-md z-10 w-full h-[calc(100vh-80px)] transition-transform duration-300 py-5"
+  [class.translate-x-full]="!openMobileNavbar()"
+>
+  <div class="w-full flex justify-center items-center">
+    <img
+      ngSrc="images/logo/logo.png"
+      alt="site logo"
+      routerLink="/"
+      class="object-contain cursor-pointer w-20 h-10"
+      width="1047"
+      height="420"
+    >
+  </div>
+
+  <div class="flex flex-col gap-4 mt-4 px-6 pb-4 mx-4 text-lg border-b border-gray-200">
+    <span>Обувь</span>
+    <span>Одежда</span>
+    <span>Аксессуары</span>
+    <span>Отзывы</span>
+    <span>Доставка и оплата</span>
+    <span>Блог</span>
+    <span>Контакты</span>
+  </div>
+  <span class="flex gap-2 items-center px-6 py-4 mx-4 text-lg cursor-pointer">
+    Избранные
+    	<img
+        alt=""
+        [src]="'@tui.heart' | tuiIcon"
+      />
+  </span>
+
+  <div class="bg-gray-200 rounded-lg p-2 mx-10 mt-4 flex gap-2 relative">
+    <img ngSrc="images/logo/poizon.png" class="object-cover w-10 h-10 rounded-lg" alt="" height="92" width="92">
+    <span class="font-semibold w-2/3">Рассчитать стоимость товара из Poizon</span>
+    <span class="text-2xl absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer">
+      <i class="fa fa-angle-right" aria-hidden="true"></i>
+    </span>
   </div>
 </div>

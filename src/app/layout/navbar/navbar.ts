@@ -1,7 +1,7 @@
-import {Component, computed, inject} from '@angular/core';
+import {Component, computed, inject, signal} from '@angular/core';
 import {NgClass, NgOptimizedImage} from '@angular/common';
 import {IconComponent} from '@/components/icon/icon';
-import {TuiDropdownDirective, TuiDropdownManual, TuiDropdownOptionsDirective} from '@taiga-ui/core';
+import {TuiDropdownDirective, TuiDropdownManual, TuiDropdownOptionsDirective, TuiIconPipe} from '@taiga-ui/core';
 import {TuiActiveZone, TuiObscured} from '@taiga-ui/cdk';
 import {AccountStore} from '@/account';
 import {AuthenticationOpen} from '@/components/authentication/authentication-open';
@@ -25,7 +25,8 @@ import {ProductDetailStore} from '@/product/detail/services/product-detail-store
     NgClass,
     RouterLink,
     TuiBadgedContentComponent,
-    TuiBadgeNotification
+    TuiBadgeNotification,
+    TuiIconPipe
   ],
   host: {
     class: 'flex w-full justify-center'
@@ -39,6 +40,7 @@ export default class Navbar {
 
   protected readonly isAuthed = computed(() => !!this.accountStore.account());
   protected open = false;
+  protected readonly openMobileNavbar = signal(false);
 
   protected readonly basketProductCount = computed(() => this.cartStore.carts().count);
 
