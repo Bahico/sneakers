@@ -20,5 +20,9 @@ export default [
   {
     path: 'original-certificate',
     loadComponent: () => import('./original-certificate/original-certificate')
+  },
+  {
+    path: 'gift-certificate',
+    loadComponent: () => import('./gift-certificate/gift-certificate')
   }
 ] satisfies Routes;

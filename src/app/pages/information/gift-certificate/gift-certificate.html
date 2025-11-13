@@ -1,0 +1,121 @@
+<div class="container mb-10 mt-5 md:mt-0">
+  <tui-breadcrumbs class="mb-4">
+    <a *tuiItem tuiLink routerLink="/">
+      Главная
+    </a>
+    <div *tuiItem class="text-primary">Подарочный сертификат</div>
+  </tui-breadcrumbs>
+
+  <div class="flex justify-between gap-4">
+    <div class="flex flex-col gap-4">
+      <h2 class="text-xl md:text-2xl lg:text-3xl font-semibold text-primary mt-5 mb-14">Подарочный сертификат Sneaker Team</h2>
+
+      <p>Идеальный выбор на любой праздник, с поводом и без! Радуйте друзей, удивляйте родных, поздравляйте коллег!</p>
+      <ul class="list-disc ml-4 gap-2 flex flex-col">
+        <li><strong>Нет ограничений.</strong> Для покупки подарочной картой доступно 100% каталога Sneaker Team. Можете покупать любую обувь, одежду и аксессуары любых брендов.</li>
+        <li><strong>Подарочная карта бессрочная.</strong> Можете использовать хоть через год, хоть через 5 лет.</li>
+        <li><strong>Остаток не сгорает.</strong> Оставшиеся деньги после покупки можно использовать для оплаты следующих покупок.</li>
+        <li><strong>Возможность доплаты.</strong> Если цена товара выше – можно доплатить недостающую часть суммы, и купить что-то подороже</li>
+      </ul>
+
+      <p>Подарочный сертификат Sneaker Team – лучший выбор!</p>
+
+      <div class="flex gap-2">
+        <button class="sn-btn !bg-orange-400 !py-4 w-80">
+          Купить сертификат
+        </button>
+
+        <button
+          class="sn-btn default !bg-gray-200 border-none !py-4 w-40 justify-center flex items-center gap-2 hover:!text-primary"
+          [tuiDropdown]="dropdownContent"
+          [tuiDropdownManual]="open"
+          [tuiObscuredEnabled]="open"
+          (click)="onClick()"
+          (tuiActiveZoneChange)="onActiveZone($event)"
+          (tuiObscured)="onObscured($event)"
+        >
+          15'000₽
+          <span
+            class="text-xl duration-300 transition-transform"
+            [class.rotate-180]="open"
+          >
+            <i class="fa fa-angle-down" aria-hidden="true"></i>
+          </span>
+
+          <ng-template #dropdownContent>
+            <div class="dropdown">But there is nothing to choose...</div>
+          </ng-template>
+        </button>
+      </div>
+
+      <p>Вы можете выбрать любой номинал: 5'000₽, 10'000₽, 15'000₽, 20'000₽, 30'000₽, 50'000₽, 100'000₽</p>
+    </div>
+
+    <img ngSrc="images/information/gift-certificate-1.png" class="object-contain h-full w-auto" alt="" height="518" width="545">
+  </div>
+
+  <img ngSrc="images/information/gift-certificate-2.png" class="w-full h-auto object-contain mt-2" alt="" height="487" width="1589">
+
+  <div class="flex flex-col gap-4 mt-10 items-center">
+    <h3 class="text-xl font-semibold">Сэкономьте время на поиск презента</h3>
+    <p class="text-center">На сумму подарочного сертификата получатель сможет выбрать брендовую обувь, одежду и аксессуары из каталога Sneaker Team</p>
+
+    <div class="flex gap-4">
+      <button class="sn-btn !bg-orange-400 !px-6">
+        Купить сертификат
+      </button>
+      <button class="sn-btn default !bg-gray-200 border-none !px-6 justify-center flex items-center gap-2 hover:!text-primary hover:!opacity-70">
+        Каталог Sneaker Team
+      </button>
+    </div>
+
+    <h3 class="text-xl font-semibold mt-8">Как работает электронный сертификат?</h3>
+
+    <div class="relative flex flex-col gap-12 mx-auto w-200 mt-10">
+      <span class="bg-primary w-[2px] h-[calc(100%-20px)] absolute top-5 left-1/2 -translate-x-1/2"></span>
+      @for (step of steps; track step.title) {
+        <div class="relative">
+          <div
+            class="absolute left-1/2 -translate-x-1/2 bottom-0 w-10 h-10 flex items-center justify-center text-xl bg-primary rounded-full border-4 text-white z-10">
+            {{$index + 1}}
+          </div>
+
+          @if (step.side === 'left') {
+            <!-- Chap tomondagi content -->
+            <div class="pr-8 w-1/2 text-right mr-auto mt-[-12px]">
+              <h3 class="text-base font-semibold">{{ step.title }}</h3>
+              <p class="text-gray-600 text-sm">{{ step.description }}</p>
+            </div>
+          } @else {
+            <!-- O‘ng tomondagi content -->
+            <div class="pl-8 w-1/2 ml-auto mt-[-12px]">
+              <h3 class="text-base font-semibold">{{ step.title }}</h3>
+              <p class="text-gray-600 text-sm">{{ step.description }}</p>
+            </div>
+          }
+        </div>
+      }
+    </div>
+
+    <h3 class="text-3xl font-semibold mt-8">Часто задаваемые вопросы</h3>
+
+    <div class="flex flex-col gap-4 mt-10">
+      @for (question of questions; track question) {
+        <div class="flex flex-col gap-2 py-4 border-b border-gray-200">
+          <div class="flex justify-between cursor-pointer" (click)="setIndex($index)">
+            <span class="text-xl font-semibold text-primary">{{$index + 1}}. {{ question }}</span>
+            <icon-list [icon]="activeIndex() === $index ? 'minus' : 'plus'" class="w-8 h-8 flex justify-center items-center" />
+          </div>
+          <div
+            class="text-gray-700 transition-all duration-300 overflow-hidden px-4"
+            [class.max-h-0]="activeIndex() !== $index"
+            [class.max-h-40]="activeIndex() === $index"
+          >
+            <p>Это именная открытка в формате PDF с уникальным номером, которую мы присылаем вам в Telegram. На открытке указывается Имя и Telegram получателя, который может погасить сертификат. Сертификат вы дарите получателю самостоятельно. После активации получатель получает сумму, равную номиналу сертификата на свой баланс.</p>
+          </div>
+
+        </div>
+      }
+    </div>
+  </div>
+</div>
