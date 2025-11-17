@@ -28,5 +28,9 @@ export default [
   {
     path: 'application',
     loadComponent: () => import('./application/application-information')
+  },
+  {
+    path: 'user-agreement',
+    loadComponent: () => import('./user-agreement/user-agreement')
   }
 ] satisfies Routes;

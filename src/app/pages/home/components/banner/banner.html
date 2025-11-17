@@ -1,0 +1,16 @@
+<div class="banner">
+    @for (slide of slides; track slide) {
+      @switch (slide) {
+        @case ('guarantee-original') {
+          <guarantee-original />
+        }
+      }
+    }
+</div>
+
+<div class="slider-indicators">
+    <div class="indicator" (click)="activeIndex.set(0)" [class.active]="activeIndex() === 0"></div>
+    <div class="indicator" (click)="activeIndex.set(1)" [class.active]="activeIndex() === 1"></div>
+    <div class="indicator" (click)="activeIndex.set(2)" [class.active]="activeIndex() === 2"></div>
+    <div class="indicator" (click)="activeIndex.set(3)" [class.active]="activeIndex() === 3"></div>
+</div>

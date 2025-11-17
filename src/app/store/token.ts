@@ -15,6 +15,8 @@ export class TokenStore {
     if (!value) {
       this.cookieService.delete(this.accessCol);
       this.cookieService.delete(this.refreshCol);
+      this.token$.set(null)
+      return;
     }
     this.cookieService.set(this.accessCol, value.access, new Date(Date.now() + 1000 * 60 * 60 * 24 * 30), '/');
     this.cookieService.set(this.refreshCol, value.refresh, new Date(Date.now() + 1000 * 60 * 60 * 24 * 30), '/');
