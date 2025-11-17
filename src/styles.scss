@@ -3,6 +3,10 @@
   font-family: Inter, sans-serif;
 }
 
+html, body {
+  scroll-behavior: smooth;
+}
+
 .color-base {
   color: #222222;
 }

@@ -21,5 +21,9 @@ export default [
   {
     path: 'basket',
     loadChildren: () => import('./basket/basket.routes'),
+  },
+  {
+    path: 'profile',
+    loadChildren: () => import('./profile/profile.routes'),
   }
 ] satisfies Routes;

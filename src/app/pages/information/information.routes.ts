@@ -32,5 +32,13 @@ export default [
   {
     path: 'user-agreement',
     loadComponent: () => import('./user-agreement/user-agreement')
+  },
+  {
+    path: 'personal-data',
+    loadComponent: () => import('./personal-data/personal-data')
+  },
+  {
+    path: 'payment-and-rules',
+    loadComponent: () => import('./payment-and-rules/payment-and-rules')
   }
 ] satisfies Routes;
