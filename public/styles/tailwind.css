@@ -25,8 +25,8 @@
 
 @utility container {
   @media (max-width: 640px) {
-    padding-left: 1.5rem; /* Example value for sm */
-    padding-right: 1.5rem; /* Example value for sm */
+    padding-left: 1rem; /* Example value for sm */
+    padding-right: 1rem; /* Example value for sm */
   }
 }
 

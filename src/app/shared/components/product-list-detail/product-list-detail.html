@@ -1,14 +1,15 @@
 <div
   routerLink="/product/detail/{{detail().spuId}}"
-  class="relative flex flex-col h-50 bg-gray-100 rounded-2xl p-3 cursor-pointer"
+  class="relative flex flex-col h-34 md:h-50 bg-gray-100 rounded-2xl p-1 md:p-3 cursor-pointer"
 >
-  <div class="flex justify-between">
-    <span class="px-2 py-0.5 rounded-2xl bg-orange-500 text-white">Быстро разбирают</span>
+  <div class="flex justify-between" [class.hidden]="onHome()">
+    <span class="px-1 md:px-2 py-0.5 text-xs md:text-base rounded-2xl bg-orange-500 text-white">Быстро разбирают</span>
 
     <tui-icon
       icon="@tui.heart"
     />
   </div>
+
   <img
     [src]="detail().first_image"
     alt="product list detail"
@@ -18,11 +19,14 @@
 </div>
 
 <div>
-  <h4 class="text-lg font-semibold">{{detail().brand}}</h4>
-  <h4 class="text-sm text-gray-400 truncate">{{detail().name}}</h4>
+  <h4 class="truncate md:text-lg font-semibold">{{detail().brand}}</h4>
+  <h4 class="text-xs md:text-sm text-gray-400 truncate">{{detail().name}}</h4>
 
-  <span class="text-base font-semibold">{{detail().price | tuiFormatNumber | async}} p.</span>
-  <div class="flex gap-0.5 items-center">
+  <span class="text-sm md:text-base font-semibold">{{detail().price | tuiFormatNumber | async}} p.</span>
+  <div
+    class="flex gap-0.5 items-center"
+    [class.hidden]="onHome()"
+  >
     <span class="py-0.5 px-1 bg-primary/80 rounded text-white text-xs">{{detail().price / 2 | tuiFormatNumber | async}} p. x 2</span>
     <span class="text-gray-500 text-xs">Сплит</span>
   </div>

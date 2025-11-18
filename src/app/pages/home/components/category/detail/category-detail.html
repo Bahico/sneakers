@@ -1,15 +1,26 @@
 <div class="w-full">
   <div class="flex justify-between">
-    <h2 class="text-xl font-semibold">Покупки в реальном времени</h2>
+    <h2 class="text-xl font-semibold hidden md:block">Покупки в реальном времени</h2>
+    <h2 class="text-lg font-semibold md:hidden">Купили сейчас</h2>
     <span class="flex items-center text-xs gap-1 px-3 py-1 bg-gray-100 rounded-2xl">
       Все
       <i class="fa fa-angle-right" aria-hidden="true"></i>
     </span>
   </div>
 
-  <div class="flex overflow-x-auto gap-2">
-    @for (product of products(); track $index) {
-      <product-list-detail class="min-w-1/6 w-1/6" [detail]="product" />
-    }
+  <div class="flex">
+    <button (click)="previous()" class="min-h-full min-w-8 bg-white items-center justify-center hidden md:flex text-2xl cursor-pointer">
+      <i class="fa fa-angle-left" aria-hidden="true"></i>
+    </button>
+
+    <div #scrollContainer class="flex overflow-x-auto overflow-y-hidden gap-2 hidden-scrollbar mt-4">
+      @for (product of products(); track $index) {
+        <product-list-detail class="min-w-1/3 w-1/3 md:min-w-1/6 md:w-1/6" [detail]="product" [onHome]="true" />
+      }
+    </div>
+
+    <button (click)="next()" class="min-h-full min-w-8 bg-white items-center justify-center hidden md:flex text-2xl cursor-pointer">
+      <i class="fa fa-angle-right" aria-hidden="true"></i>
+    </button>
   </div>
 </div>

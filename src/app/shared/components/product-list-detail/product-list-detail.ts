@@ -13,8 +13,10 @@ import {TuiFormatNumberPipe, TuiIcon} from '@taiga-ui/core';
     TuiFormatNumberPipe,
     TuiIcon
   ],
-  host: {class: 'h-80'}
+  host: {class: 'max-h-80'}
 })
 export class ProductListDetail {
   detail = input.required<ProductListDetailModel>();
+  onHome = input(false);
+
 }
