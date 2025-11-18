@@ -1,41 +1,42 @@
-import {Component, signal} from "@angular/core";
+import {Component, computed, signal} from "@angular/core";
 import {GuaranteeOriginal} from './guarantee-original/guarantee-original';
+import {MeetTeam} from '@/home/components/banner/meet-team/meet-team';
+import {BannerRealRate} from '@/home/components/banner/real-rate/banner-real-rate';
+import {BannerSplit} from '@/home/components/banner/split/banner-split';
+import {BannerTelegram} from '@/home/components/banner/telegram/banner-telegram';
 
 @Component({
   templateUrl: 'banner.html',
   selector: 'banner',
   imports: [
-    GuaranteeOriginal
+    GuaranteeOriginal,
+    MeetTeam,
+    BannerRealRate,
+    BannerSplit,
+    BannerTelegram
   ],
   styles: [
     `
-      .slider-indicators {
-        display: flex;
-        gap: 40px;
-        justify-content: center;
-        padding: 40px 0;
+      .slider-wrapper {
         width: 100%;
+        overflow: hidden;
       }
-
-      .indicator {
-        width: 200px;
-        height: 20px;
-        background: #e6e6e6;
-        clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
-        transition: background 0.3s ease;
-        cursor: pointer;
-      }
-
-      .indicator.active {
-        background: #222; /* Qora rang */
-        cursor: default;
-      }
-
     `
   ]
 })
 export class Banner {
   activeIndex = signal(0);
 
-  slides = ['guarantee-original'] as const;
+  slides = ['guarantee-original', 'meet-team', 'real-rate', 'split', 'telegram'] as const;
+
+  protected readonly disablePrevious = computed(() => this.activeIndex() === 0);
+  protected readonly disableNext = computed(() => this.activeIndex() === this.slides.length - 1);
+
+  previous() {
+    this.activeIndex.update(index => index > 0 ? index - 1 : this.slides.length - 1);
+  }
+
+  next() {
+    this.activeIndex.update(index => index < this.slides.length - 1 ? index + 1 : 0);
+  } 
 }

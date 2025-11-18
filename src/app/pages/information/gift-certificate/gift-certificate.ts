@@ -13,13 +13,7 @@ import {GiftOrder} from '@/information/gift-certificate/order/gift-order';
   templateUrl: 'gift-certificate.html',
   selector: 'gift-certificate',
   host: {class: 'flex w-full justify-center pb-10'},
-  styles: [`
-    @import "tailwindcss";
-
-    .amount-item {
-      @apply flex justify-between items-center px-4 py-2 border-b border-gray-200 last:border-none cursor-pointer;
-    }
-  `],
+  styleUrl: 'gift-certificate.css',
   imports: [
     RouterLink,
     TuiBreadcrumbs,

@@ -1,16 +1,50 @@
-<div class="banner">
-    @for (slide of slides; track slide) {
-      @switch (slide) {
-        @case ('guarantee-original') {
-          <guarantee-original />
-        }
+<div class="relative w-full overflow-hidden">
+
+  <!-- Slider Container with smooth scroll -->
+  <div class="slider-wrapper">
+    <div 
+      class="flex transition-transform duration-500 ease-in-out h-100"
+      [style.transform]="'translateX(-' + (activeIndex() * 100) + '%)'"
+    >
+      @for (slide of slides; track $index) {
+        <div class="w-full flex-shrink-0">
+          @switch (slide) {
+            @case ('guarantee-original') {
+              <guarantee-original class="w-full" />
+            }
+
+            @case ('meet-team') {
+              <meet-team class="w-full" />
+            }
+
+            @case ('real-rate') {
+              <banner-real-rate class="w-full" />
+            }
+
+            @case ('split') {
+              <banner-split class="w-full" />
+            }
+
+            @case ('telegram') {
+              <banner-telegram class="w-full" />
+            }
+          }
+        </div>
       }
-    }
+    </div>
+  </div>
+
 </div>
 
-<div class="slider-indicators">
-    <div class="indicator" (click)="activeIndex.set(0)" [class.active]="activeIndex() === 0"></div>
-    <div class="indicator" (click)="activeIndex.set(1)" [class.active]="activeIndex() === 1"></div>
-    <div class="indicator" (click)="activeIndex.set(2)" [class.active]="activeIndex() === 2"></div>
-    <div class="indicator" (click)="activeIndex.set(3)" [class.active]="activeIndex() === 3"></div>
+<div class="flex gap-10 justify-center py-10 w-full">
+  @for (_ of slides; track $index) {
+    <div
+      class="w-[200px] h-5 transition-colors duration-300 cursor-pointer"
+      [class.bg-gray-300]="activeIndex() !== $index"
+      [class.bg-gray-900]="activeIndex() === $index"
+      [class.cursor-default]="activeIndex() === $index"
+      [style.clip-path]="'polygon(10% 0, 100% 0, 90% 100%, 0 100%)'"
+      (click)="activeIndex.set($index)"
+    ></div>
+  }
 </div>
