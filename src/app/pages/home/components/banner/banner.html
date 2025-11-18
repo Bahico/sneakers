@@ -2,8 +2,8 @@
 
   <!-- Slider Container with smooth scroll -->
   <div class="slider-wrapper">
-    <div 
-      class="flex transition-transform duration-500 ease-in-out h-100"
+    <div
+      class="flex transition-transform duration-500 ease-in-out h-40 md:h-60 lg:h-100"
       [style.transform]="'translateX(-' + (activeIndex() * 100) + '%)'"
     >
       @for (slide of slides; track $index) {
@@ -36,10 +36,10 @@
 
 </div>
 
-<div class="flex gap-10 justify-center py-10 w-full">
+<div class="flex gap-2 md:gap-4 justify-center py-4 md:py-10 w-full">
   @for (_ of slides; track $index) {
     <div
-      class="w-[200px] h-5 transition-colors duration-300 cursor-pointer"
+      class="w-14 md:w-20 h-[5.6px] transition-colors duration-300 cursor-pointer"
       [class.bg-gray-300]="activeIndex() !== $index"
       [class.bg-gray-900]="activeIndex() === $index"
       [class.cursor-default]="activeIndex() === $index"
