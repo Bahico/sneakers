@@ -9,4 +9,8 @@ export const serverRoutes: ServerRoute[] = [
     path: 'product/detail/:spuId',
     renderMode: RenderMode.Client
   },
+  {
+    path: 'home/:gender',
+    renderMode: RenderMode.Client
+  },
 ];
