@@ -1,0 +1,60 @@
+@if (currentStage() === 3) {
+  <div class="flex flex-col">
+    <img
+      src="https://cdn.poizon.com/pro-img/origin-img/20231203/e6c8decaa7524a6d8c228fc9f02fcfe9.jpg"
+      alt=""
+      class="w-full h-auto object-contain mb-4"
+      style="mix-blend-mode: multiply;"
+    >
+
+    <h1 class="text-3xl font-semibold mb-2">New Balance 574 Legacy 'Natural Indigo Anagora'</h1>
+    <span class="text-xl mb-4">Размер 40.5</span>
+    <span class="text-xl font-semibold mb-10">16 756 ₽</span>
+
+    <span class="text-lg font-semibold mb-3">Доставка</span>
+    <div class="flex gap-2">
+      <div class="w-1/2 flex flex-col gap-2 relative py-2 px-4 bg-primary rounded-md text-white">
+        <span class="absolute right-2 top-2 bg-primary text-white px-2 py-0.5 rounded">6 800 р.</span>
+
+        <span class="text-lg font-semibold">25-30 дней</span>
+        <p>Доставим до Москвы за 25-30 дней, по России - чуть дольше</p>
+      </div>
+      <div class="w-1/2 flex flex-col gap-2 relative py-2 px-4 border border-primary rounded-md text-primary">
+        <span class="absolute right-2 top-2 bg-primary text-white px-2 py-0.5 rounded">9 800 р.</span>
+
+        <span class="text-lg font-semibold">~20-25 дней</span>
+        <p>Экспресс-доставка в Москву ~ 13-15 дней, по России - чуть дольше</p>
+      </div>
+    </div>
+
+    <div class="flex w-full justify-center mt-10">
+      <button class="sn-btn w-2/3 !py-3" (click)="close()">Заказать за 16 756 ₽</button>
+    </div>
+  </div>
+} @else {
+  <h1 class="text-2xl font-semibold text-center w-full">Рассчитать стоимость товара из Poizon</h1>
+
+  <div class="flex gap-2 md:gap-4 justify-center w-full my-6">
+    @for (stage of stages; track $index) {
+      <div
+        class="w-1/4 h-[5.6px] transition-colors duration-300"
+        [class.bg-gray-300]="currentStage() < stage"
+        [class.bg-gray-900]="currentStage() >= stage"
+        [style.clip-path]="'polygon(10% 0, 100% 0, 90% 100%, 0 100%)'"
+      ></div>
+    }
+  </div>
+
+  @switch (currentStage()) {
+    @case (0) {
+      <poizon-calculate-link (next)="currentStage.set(1)" />
+    }
+    @case (1) {
+      <poizon-calculate-size (next)="currentStage.set(2)" (close)="close()" (previous)="currentStage.set(0)" />
+    }
+    @case (2) {
+      <poizon-calculate-price (next)="currentStage.set(3)" (previous)="currentStage.set(1)" />
+    }
+  }
+}
+

@@ -1,0 +1,16 @@
+<div class="flex gap-2">
+  <span class="text-nowrap">Шаг 1 из 4:</span>
+  <p>Нажмите на товаре Poizon кнопку “поделиться”. Скопируйте ссылку и вставьте сюда:</p>
+</div>
+
+<div class="sn-control w-full my-4">
+  <icon-list icon="search" class="sn-control-icon" />
+
+  <input type="text" [(ngModel)]="link" placeholder="Введите ссылку на товар в Poizon">
+</div>
+
+<img ngSrc="images/home/poizon-calculate-1.png" alt="" class="w-full h-auto object-contain" height="740" width="1234">
+
+<div class="flex justify-center items-center mt-4">
+  <button class="sn-btn w-2/3" [disabled]="!link()" (click)="next.emit()">Далее</button>
+</div>
