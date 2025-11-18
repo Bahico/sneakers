@@ -1,0 +1,65 @@
+<div class="w-full flex flex-col">
+  <div class="flex justify-between w-full">
+    <h2 class="text-xl font-semibold">Обувь</h2>
+
+    <span class="flex items-center text-xs gap-1 px-3 py-1 bg-gray-100 rounded-2xl">
+      Все категории
+      <i class="fa fa-angle-right" aria-hidden="true"></i>
+    </span>
+  </div>
+
+  <div class="grid grid-cols-12 gap-4 mt-4">
+      <div
+        class="h-60 px-3 py-2 rounded-md cursor-pointer bg-gray-100 relative overflow-hidden col-span-5"
+        style="background-image: url('images/background/gray-bg.svg'); background-size: cover; background-position: center"
+      >
+        <span class="font-semibold text-lg">
+          Кроссовки <br />и кеды
+        </span>
+
+        <img ngSrc="images/home/shoes-1.png" width="100" height="100" class="h-auto w-90 object-contain absolute -right-10 bottom-3 rotate-y-180" alt="">
+      </div>
+      <div
+        class="h-60 px-3 py-2 rounded-md cursor-pointer bg-gray-100 relative overflow-hidden col-span-3"
+        style="background-image: url('images/background/gray-bg.svg'); background-size: cover; background-position: center"
+      >
+        <span class="font-semibold text-lg">
+          Кастомные <br />кроссовки
+        </span>
+
+        <img ngSrc="images/home/shoes-2.png" width="100" height="100" class="h-auto min-w-80 object-contain absolute -right-24 bottom-5 rotate-y-180" alt="">
+      </div>
+      <div
+        class="h-60 px-3 py-2 rounded-md cursor-pointer bg-gray-100 relative overflow-hidden col-span-4"
+        style="background-image: url('images/background/gray-bg.svg'); background-size: cover; background-position: center"
+      >
+        <span class="font-semibold text-lg">
+          Ботинки
+        </span>
+
+        <img ngSrc="images/home/shoes-3.png" width="100" height="100" class="h-auto w-90 object-contain absolute -right-10 bottom-0 rotate-y-180" alt="">
+      </div>
+      <div
+        class="h-60 px-3 py-2 rounded-md cursor-pointer bg-gray-100 relative overflow-hidden col-span-6"
+        style="background-image: url('images/background/gray-bg.svg'); background-size: cover; background-position: center"
+      >
+        <span class="font-semibold text-lg">
+          Сланцы, сандалии, <br />сабо, мюле
+        </span>
+
+        <img ngSrc="images/home/shoes-4.png" width="100" height="100" class="h-auto w-120 object-contain absolute -right-15 -bottom-5 rotate-y-180" alt="">
+      </div>
+      <div
+        class="h-60 px-3 py-2 rounded-md cursor-pointer bg-gray-100 relative overflow-hidden col-span-6"
+        style="background-image: url('images/background/gray-bg.svg'); background-size: cover; background-position: center"
+      >
+        <span class="font-semibold text-lg">
+          Обувь <br />для спорта
+        </span>
+
+        <img ngSrc="images/home/shoes-5.png" width="100" height="100" class="h-auto w-120 object-contain absolute -right-15 -bottom-5 rotate-y-180" alt="">
+      </div>
+  </div>
+</div>
+
+<category-detail />

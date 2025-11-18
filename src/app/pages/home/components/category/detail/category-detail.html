@@ -1,0 +1,15 @@
+<div class="w-full">
+  <div class="flex justify-between">
+    <h2 class="text-xl font-semibold">Покупки в реальном времени</h2>
+    <span class="flex items-center text-xs gap-1 px-3 py-1 bg-gray-100 rounded-2xl">
+      Все
+      <i class="fa fa-angle-right" aria-hidden="true"></i>
+    </span>
+  </div>
+
+  <div class="flex overflow-x-auto gap-2">
+    @for (product of products(); track $index) {
+      <product-list-detail class="min-w-1/6 w-1/6" [detail]="product" />
+    }
+  </div>
+</div>

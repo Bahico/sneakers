@@ -1,12 +1,9 @@
-import { Component } from "@angular/core";
-import { NgOptimizedImage } from "@angular/common";
+import {Component} from "@angular/core";
 
 @Component({
-    templateUrl: 'guarantee-original.html',
-    selector: 'guarantee-original',
-    imports: [
-        NgOptimizedImage
-    ]
+  templateUrl: 'guarantee-original.html',
+  selector: 'guarantee-original',
+  imports: []
 })
 export class GuaranteeOriginal {
 

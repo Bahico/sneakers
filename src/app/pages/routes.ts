@@ -3,11 +3,16 @@ import {Routes} from '@angular/router';
 export default [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'home/male',
     pathMatch: 'full',
   },
   {
     path: 'home',
+    redirectTo: 'home/male',
+    pathMatch: 'full',
+  },
+  {
+    path: 'home/:gender',
     loadComponent: () => import('./home/home'),
   },
   {

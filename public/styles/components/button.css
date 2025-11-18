@@ -13,6 +13,10 @@
   &:disabled {
     opacity: .7;
   }
+ 
+  &.gray {
+    @apply bg-gray-200 text-primary border-none hover:text-primary;
+  }
 
   &.default {
     background-color: transparent;

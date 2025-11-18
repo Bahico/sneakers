@@ -1,1 +1,25 @@
-<banner />
+<!-- <banner /> -->
+
+<div class="container mb-10 mt-5 md:mt-0">
+  <div class="flex gap-4 items-center justify-center">
+    <button
+      class="sn-btn gray !rounded-4xl !px-10 font-semibold"
+      routerLink="/home/male"
+      routerLinkActive="!bg-primary !text-white"
+    >
+      Мужская
+    </button>
+    <button
+      class="sn-btn gray !rounded-4xl !px-10 font-semibold"
+      routerLink="/home/female"
+      routerLinkActive="!bg-primary !text-white"
+    >
+      Женская
+    </button>
+  </div>
+
+  <category-shoes />
+  <category-cloth class="mt-10 flex" />
+  <category-accessories class="mt-10 flex" />
+</div>
+
