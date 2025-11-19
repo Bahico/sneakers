@@ -21,7 +21,8 @@ export class Feedback {
     star: new FormControl(0, [Validators.required, Validators.min(1), Validators.max(5)]),
   });
 
-  images = signal<string[]>([])
+  images = signal<string[]>([]);
+  success = signal(false);
 
   close() {
     this.context.$implicit.complete();

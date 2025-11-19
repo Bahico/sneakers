@@ -21,7 +21,7 @@
 
 .sn-error {
   color: #A21919;
-  @apply text-base;
+  @apply text-sm md:text-base;
 }
 
 

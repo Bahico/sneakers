@@ -7,7 +7,7 @@
 
 <div class="mt-4 flex gap-4 items-center">
   <span class="text-xl font-bold text-primary">{{detail().price | tuiFormatNumber | async}} р.</span>
-  <div class="select-none bg-[#DEDEDE] flex gap-2 p-2 rounded-md items-center">
+  <div class="select-none bg-[#DEDEDE] flex gap-2 p-2 rounded-md items-center cursor-pointer" (click)="openCoin()">
     <div class="bg-primary text-white rounded-md py-1 px-2 text-xs">
       S
     </div>

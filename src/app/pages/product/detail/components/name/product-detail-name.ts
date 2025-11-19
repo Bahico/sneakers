@@ -4,6 +4,7 @@ import {AsyncPipe} from '@angular/common';
 import {TuiDialogService, TuiFormatNumberPipe} from '@taiga-ui/core';
 import {Feedback} from '@/product/detail/components/feedback/feedback';
 import {PolymorpheusComponent} from '@taiga-ui/polymorpheus';
+import {BuyCoin} from '@/product/detail/components/buy-coin/buy-coin';
 
 @Component({
   templateUrl: 'product-detail-name.html',
@@ -23,6 +24,18 @@ export class ProductDetailName {
     this.dialogs
       .open(
         new PolymorpheusComponent(Feedback),
+        {
+          label: null,
+          size: 'l'
+        },
+      )
+      .subscribe();
+  }
+
+  openCoin() {
+    this.dialogs
+      .open(
+        new PolymorpheusComponent(BuyCoin),
         {
           label: null,
           size: 'l'
