@@ -12,14 +12,14 @@
     <span class="text-xl font-semibold mb-10">16 756 ₽</span>
 
     <span class="text-lg font-semibold mb-3">Доставка</span>
-    <div class="flex gap-2">
-      <div class="w-1/2 flex flex-col gap-2 relative py-2 px-4 bg-primary rounded-md text-white">
+    <div class="flex gap-2 flex-col md:flex-row">
+      <div class="w-full md:w-1/2 flex flex-col gap-2 relative py-2 px-4 bg-primary rounded-md text-white">
         <span class="absolute right-2 top-2 bg-primary text-white px-2 py-0.5 rounded">6 800 р.</span>
 
         <span class="text-lg font-semibold">25-30 дней</span>
         <p>Доставим до Москвы за 25-30 дней, по России - чуть дольше</p>
       </div>
-      <div class="w-1/2 flex flex-col gap-2 relative py-2 px-4 border border-primary rounded-md text-primary">
+      <div class="w-full md:w-1/2 flex flex-col gap-2 relative py-2 px-4 border border-primary rounded-md text-primary">
         <span class="absolute right-2 top-2 bg-primary text-white px-2 py-0.5 rounded">9 800 р.</span>
 
         <span class="text-lg font-semibold">~20-25 дней</span>
@@ -28,7 +28,7 @@
     </div>
 
     <div class="flex w-full justify-center mt-10">
-      <button class="sn-btn w-2/3 !py-3" (click)="close()">Заказать за 16 756 ₽</button>
+      <button class="sn-btn w-full md:w-2/3 !py-3" (click)="close()">Заказать за 16 756 ₽</button>
     </div>
   </div>
 } @else {

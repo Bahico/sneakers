@@ -1,18 +1,16 @@
 import {Component, signal} from '@angular/core';
 import {PoizonCalculateLink} from './link/poizon-calculate-link';
-import {PoizonCalculateSize} from '@/home/components/poizon-product-calculate/size/poizon-calculate-size';
+import {PoizonCalculateSize} from './size/poizon-calculate-size';
 import {injectContext} from '@taiga-ui/polymorpheus';
 import {TuiDialogContext} from '@taiga-ui/core';
-import {PoizonCalculatePrice} from '@/home/components/poizon-product-calculate/price/poizon-calculate-price';
-import {ImageZoom} from '@/components/image-zoom/image-zoom';
+import {PoizonCalculatePrice} from './price/poizon-calculate-price';
 
 @Component({
   templateUrl: 'poizon-product-calculate.html',
   imports: [
     PoizonCalculateLink,
     PoizonCalculateSize,
-    PoizonCalculatePrice,
-    ImageZoom
+    PoizonCalculatePrice
   ],
   selector: 'poizon-product-calculate'
 })

@@ -1,7 +1,7 @@
 .sn-control {
   @apply w-full flex gap-2 bg-gray-100 p-2 rounded-md border border-primary/0 transition-colors duration-300;
 
-  input {
+  input, textarea {
     @apply w-full bg-transparent outline-none text-primary;
     font-size: 14px;
 
