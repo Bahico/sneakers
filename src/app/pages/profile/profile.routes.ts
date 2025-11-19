@@ -8,6 +8,10 @@ export default [
   },
   {
     path: 'main',
-    loadComponent: () => import('./main/main-profile')
+    loadComponent: () => import('@/profile/pages/main/main-profile')
+  },
+  {
+    path: 'edit',
+    loadComponent: () => import('./pages/edit/profile-edit')
   }
 ] satisfies Routes;

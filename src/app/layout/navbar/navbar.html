@@ -20,7 +20,7 @@
       <span class="text-base font-medium color-base cursor-pointer" routerLink="/information/reviews">Отзывы</span>
       <span class="text-base font-medium color-base cursor-pointer" routerLink="/information/payment">Доставка и оплата</span>
       <span class="text-base font-medium color-base">Блог</span>
-      <span class="text-base font-medium color-base">Контакты</span>
+      <span class="text-base font-medium color-base cursor-pointer" routerLink="/information/contact">Контакты</span>
     </div>
   </div>
 
@@ -83,7 +83,7 @@
 
     <ng-template #dropdownContent>
       <div class="grid grid-cols-1 flex-col gap-2 w-50 p-2">
-        <div class="menu-item">
+        <div class="menu-item" routerLink="/profile/main">
           Управление профилем
         </div>
         <div class="menu-item">
@@ -199,7 +199,7 @@
     <span class="cursor-pointer" routerLink="/information/reviews">Отзывы</span>
     <span class="cursor-pointer" routerLink="/information/payment">Доставка и оплата</span>
     <span>Блог</span>
-    <span>Контакты</span>
+    <span class="cursor-pointer" routerLink="/information/contact">Контакты</span>
   </div>
   <span class="flex gap-2 items-center px-6 py-4 mx-4 text-lg cursor-pointer">
     Избранные

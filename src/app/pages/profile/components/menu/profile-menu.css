@@ -1,0 +1,5 @@
+@import "tailwindcss";
+
+.profile-menu-item {
+  @apply md:px-2 py-4 w-full flex items-center justify-between border-b border-gray-200 last:border-b-0 hover:bg-gray-100 duration-300 cursor-pointer;
+}

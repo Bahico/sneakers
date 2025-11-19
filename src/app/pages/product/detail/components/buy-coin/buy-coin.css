@@ -1,0 +1,5 @@
+@import "tailwindcss";
+
+.coin-card {
+  @apply w-1/4 py-4 px-2 flex flex-col gap-1 items-center text-center border border-gray-200 rounded-xl h-70 relative overflow-hidden;
+}

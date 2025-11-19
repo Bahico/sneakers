@@ -40,5 +40,9 @@ export default [
   {
     path: 'payment-and-rules',
     loadComponent: () => import('./payment-and-rules/payment-and-rules')
+  },
+  {
+    path: 'contact',
+    loadComponent: () => import('./contact/contact-information')
   }
 ] satisfies Routes;

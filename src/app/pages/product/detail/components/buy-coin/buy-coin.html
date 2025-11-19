@@ -1,8 +1,54 @@
-<div class="flex w-full flex-col items-center text-center">
+<div class="flex w-full flex-col gap-4 items-center text-center">
   <h1 class="text-2xl font-semibold">Покупай и получай Sneaker Coins</h1>
-  <p>Зарегистрируйтесь и начните получать Sneaker Coins — бонусы, которые можно потратить на оплату следующих заказов.</p>
+  <p class="w-3/4">Зарегистрируйтесь и начните получать Sneaker Coins — бонусы, которые можно потратить на оплату следующих заказов.</p>
 
-  <div class="flex gap-2">
+  <div class="flex gap-4 w-full">
+    <div class="coin-card">
+      <h3 class="text-3xl font-semibold text-primary">3%</h3>
+      <p class="text-gray-500 text-sm">За каждую покупку ты получишь от заказа в Sneaker Coins</p>
 
+      <div class="absolute -bottom-30 -right-20 w-60 h-60 rounded-full bg-[#FFDABF]">
+        <img ngSrc="images/product/coin-1.png" class="-mt-10 -ml-3" alt="" height="378" width="434">
+      </div>
+    </div>
+    <div class="coin-card">
+      <h3 class="text-3xl font-semibold text-primary">500</h3>
+      <p class="text-gray-500 text-sm">Оставил отзыв? Получи еще 500 бонусных Sneaker Coins</p>
+
+      <div class="absolute -bottom-30 -right-20 w-60 h-60 rounded-full bg-[#FFDABF]">
+        <img ngSrc="images/product/coin-2.png" class="-mt-14 -ml-5" alt="" height="405" width="453">
+      </div>
+    </div>
+    <div class="coin-card">
+      <h3 class="text-3xl font-semibold text-primary">5%</h3>
+      <p class="text-gray-500 text-sm">От стоимости покупки каждого приглашеннго друга по твоей ссылке</p>
+
+      <div class="absolute -bottom-30 -right-20 w-60 h-60 rounded-full bg-[#FFDABF]">
+        <img ngSrc="images/product/coin-3.png" class="-mt-14 -ml-5" alt="" height="405" width="453">
+      </div>
+    </div>
+    <div class="coin-card">
+      <h3 class="text-3xl font-semibold text-primary flex gap-1 items-center">
+        1
+        <div class="bg-primary text-white rounded-md py-1 px-2 text-sm">
+          S
+        </div>
+        = 1 ₽
+      </h3>
+      <p class="text-gray-500 text-sm">Используй монеты для оплаты следующего заказа полностью или частично</p>
+
+      <div class="absolute -bottom-30 -right-20 w-60 h-60 rounded-full bg-[#FFDABF]">
+        <img ngSrc="images/product/coin-4.png" class="-mt-14 -ml-5" alt="" height="405" width="453">
+      </div>
+    </div>
+  </div>
+
+  <div class="flex gap-2 w-full">
+    <button class="sn-btn w-1/2 !py-3" (click)="close()">
+      Войти / Зарегистрироваться
+    </button>
+    <button class="sn-btn gray w-1/2 !py-3" (click)="close()">
+      Продолжить как гость
+    </button>
   </div>
 </div>

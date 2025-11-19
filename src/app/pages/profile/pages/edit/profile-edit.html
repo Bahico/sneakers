@@ -1,0 +1,121 @@
+<div class="container mb-10 mt-5 md:mt-0">
+  <tui-breadcrumbs class="mb-4">
+    <a *tuiItem tuiLink routerLink="/">
+      Главная
+    </a>
+    <div *tuiItem class="text-primary">Управление профилем</div>
+  </tui-breadcrumbs>
+
+  <h1 class="text-xl text-center md:text-start md:text-2xl lg:text-4xl font-semibold mb-4 md:mb-10">Управление профилем</h1>
+  <div class="flex flex-col md:flex-row justify-between w-full gap-10">
+    <div class="flex flex-col gap-4 w-full md:max-w-150">
+      <div class="sn-control w-full">
+        <span class="sn-control-icon">
+          {{ '@' }}
+        </span>
+        <input type="text">
+      </div>
+      <div class="sn-control w-full">
+        <span class="sn-control-icon">
+          <icon-list icon="call"/>
+        </span>
+        <input type="text">
+      </div>
+
+      <span class="line"></span>
+
+      <span class="text-xl font-semibold">Телеграм</span>
+
+      <div class="sn-control w-full">
+        <span class="sn-control-icon">
+          {{ '@' }}
+        </span>
+        <input type="text">
+      </div>
+
+      <span class="line"></span>
+
+      <span class="text-xl font-semibold">Паспортные данные</span>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div class="sn-control">
+          <span class="sn-control-icon">
+            <i class="fa fa-user-o" aria-hidden="true"></i>
+          </span>
+          <input type="text">
+        </div>
+        <div class="sn-control">
+          <span class="sn-control-icon">
+            <i class="fa fa-user-o" aria-hidden="true"></i>
+          </span>
+          <input type="text">
+        </div>
+        <div class="sn-control">
+          <span class="sn-control-icon">
+            <i class="fa fa-user-o" aria-hidden="true"></i>
+          </span>
+          <input type="text">
+        </div>
+        <div class="flex gap-2 items-center">
+          <input
+            tuiCheckbox
+            type="checkbox"
+            [ngModel]="checked"
+          />
+          <span>Нет отчества</span>
+        </div>
+        <div class="sn-control col-span-2">
+          <span class="sn-control-icon">
+            <icon-list icon="calendar"/>
+          </span>
+          <input type="text">
+        </div>
+        <div class="sn-control">
+          <span class="sn-control-icon">
+            <icon-list icon="calendar"/>
+          </span>
+          <input type="text">
+        </div>
+        <div class="sn-control">
+          <span class="sn-control-icon">
+            <icon-list icon="calendar"/>
+          </span>
+          <input type="text">
+        </div>
+        <div class="sn-control col-span-2">
+          <span class="sn-control-icon">
+            <icon-list icon="calendar"/>
+          </span>
+          <input type="text">
+        </div>
+        <div class="sn-control col-span-2">
+          <span class="sn-control-icon">
+            <icon-list icon="calendar"/>
+          </span>
+          <textarea rows="3"></textarea>
+        </div>
+        <div class="sn-control col-span-2">
+          <span class="sn-control-icon">
+            <icon-list icon="calendar"/>
+          </span>
+          <input type="number">
+        </div>
+      </div>
+
+      <div class="flex gap-2">
+        <span class="flex mt-1 min-w-6 h-6 justify-center items-center border border-primary rounded">
+          <i class="fa fa-info" aria-hidden="true"></i>
+        </span>
+
+        <div class="flex flex-col gap-1">
+          <span class="text-lg font-semibold">Зачем мои паспортные данные?</span>
+          <p>Все посылки в рамках международных отправлений проходят процедуру таможенного оформления. Для товаров личного пользования используется реестр экспресс-грузов, который, согласно приказу ФТС(федеральная таможенная служба) №1060 от 05.07.18, должен содержать в себе сведения о документе, удостоверяющем личность физического лица – паспортные данные и ИНН. Poizon действует в рамках таможенного законодательства и организует процесс сбора паспортных данных в личном кабинете на сайте. Мы не храним паспортные данные, вся информация передается по безопасным каналам связи.</p>
+        </div>
+      </div>
+
+      <button class="sn-btn w-full !py-3">Сохранить изменения</button>
+    </div>
+
+    <profile-menu />
+  </div>
+</div>
