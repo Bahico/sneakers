@@ -46,8 +46,8 @@ export default class ProductFilter implements OnInit {
   scrollDistance = 20;
   protected readonly openFilter = signal(false);
   protected readonly openFilters = signal({
-    size: false,
-    brand: false,
+    size: true,
+    brand: true,
   });
 
   products = signal<ProductListDetailModel[]>([]);

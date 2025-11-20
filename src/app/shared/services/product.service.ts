@@ -17,9 +17,9 @@ export class ProductService {
   }
 
   query(params: any) {
-    return this.http.get<ListResult<ProductListDetailModel>>(getEndpoint('products/'), {params})
+    // return this.http.get<ListResult<ProductListDetailModel>>(getEndpoint('products/'), {params})
+    return this.http.get<ListResult<ProductListDetailModel>>('faker/products.json', {params})
       .pipe(tap(res => this.products$.set(res.results)));
-    // return this.http.get<ListResult<ProductListDetailModel>>('faker/products.json', {params});
   }
 
   withCategory(params: {category1?: string, category2?: string; category3?: string}) {

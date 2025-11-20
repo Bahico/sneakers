@@ -20,5 +20,37 @@
 </div>
 
 @for (comment of [1, 2]; track comment) {
-  <comment-detail class="border-b border-gray-200 last:border-none"/>
+  <comment-detail class="border-b border-gray-200" [class.border-b-0]="$last" />
 }
+<button class="sn-btn secondary w-full mt-2 !py-3">
+  Смотреть все отзывы
+</button>
+
+<h3 class="font-semibold text-2xl">Отзывы на {{detail().brand}}</h3>
+
+<div class="flex flex-col gap-3">
+  <div class="flex gap-2">
+    <h4 class="text-4xl font-semibold">5.0</h4>
+    <div>
+      <span class="flex gap-0.5">
+        <icon-list icon="star" />
+        <icon-list icon="star" />
+        <icon-list icon="star" />
+        <icon-list icon="star" />
+        <icon-list icon="star" />
+      </span>
+      <div class="flex gap-2 text-gray-500">
+        <span>29 оценок</span>
+        <span>20 отзывов</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+@for (comment of [1, 2]; track comment) {
+  <comment-detail class="border-b border-gray-200" [class.border-b-0]="$last" />
+}
+<button class="sn-btn secondary w-full mt-2 !py-3">
+  Смотреть все отзывы
+</button>
+

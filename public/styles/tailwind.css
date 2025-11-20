@@ -6,7 +6,7 @@
 
 @theme {
   /* text */
-  --color-gray: #F0F0F0;
+  --color-gray: #B2B2B2;
   --color-primary: #222222;
   --color-orange: #FF9447;
   --color-danger: #A21919;
@@ -24,9 +24,14 @@
 }
 
 @utility container {
+  max-width: 1400px !important;
   @media (max-width: 640px) {
     padding-left: 1rem; /* Example value for sm */
     padding-right: 1rem; /* Example value for sm */
+  }
+  @media (max-width: 1400px) {
+    padding-left: 2rem; /* Example value for sm */
+    padding-right: 2rem; /* Example value for sm */
   }
 }
 

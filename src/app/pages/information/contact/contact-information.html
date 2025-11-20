@@ -6,74 +6,76 @@
     <div *tuiItem class="text-primary">Контакты</div>
   </tui-breadcrumbs>
 
-  <h1 class="text-lg md:text-xl lg:text-3xl font-bold text-center md:text-start">Контакты</h1>
+  <h1 class="text-xl lg:text-3xl font-bold text-center md:text-start md:mb-4">Контакты</h1>
 
-  <div class="w-full rounded-2xl bg-gray-100 border border-gray-200 p-4 grid grid-cols-4 gap-2">
-    <div class="col-span-2 rounded-2xl grid grid-cols-2 bg-primary p-2">
+  <div class="w-full rounded-2xl bg-gray-100 border border-gray-200 p-4 grid md:grid-cols-4 gap-2">
+    <div class="md:col-span-2 rounded-2xl grid md:grid-cols-2 bg-primary p-2">
       <a class="flex gap-3 p-2" href="https://t.me/sneakerteamru" target="_blank">
-        <span class="w-15 h-15 flex justify-center items-center rounded-md bg-white text-primary">
-          <icon-list icon="telegram-outline" />
+        <span class="w-10 md:w-15 h-10 md:h-15 flex justify-center items-center rounded-md bg-white text-primary">
+          <icon-list icon="telegram-outline"/>
         </span>
 
         <div class="flex flex-col gap-2 text-white">
-          <span class="text-lg font-semibold">{{ '@sneakerteamru' }}</span>
+          <span class="text-base md:text-lg font-semibold">{{ '@sneakerteamru' }}</span>
           <span>Телеграм</span>
         </div>
       </a>
+
       <a class="flex gap-3 p-2" href="https://www.instagram.com/sneakerteam.ru?igsh=NGxpcm96NWszMm15" target="_blank">
-        <span class="w-15 h-15 flex justify-center items-center rounded-md bg-white text-primary text-4xl">
+        <span class="w-10 md:w-15 h-10 md:h-15 flex justify-center items-center rounded-md bg-white text-primary text-2xl">
           <i class="fa fa-instagram" aria-hidden="true"></i>
         </span>
 
         <div class="flex flex-col gap-2 text-white">
-          <span class="text-lg font-semibold">{{ '@sneakerteam.ru' }}</span>
+          <span class="text-base md:text-lg font-semibold">{{ '@sneakerteam.ru' }}</span>
           <span>Инстаграм</span>
         </div>
       </a>
     </div>
-    <div></div>
-    <div></div>
+
+    <div class="hidden md:block"></div>
+    <div class="hidden md:block"></div>
 
     <a class="flex gap-3 p-2 pl-4" href="https://t.me/sneaker_team_bot" target="_blank">
-        <span class="w-15 h-15 flex justify-center items-center rounded-md bg-gray-200 text-primary">
-          <icon-list icon="telegram-outline" />
+        <span class="w-10 md:w-15 h-10 md:h-15 flex justify-center items-center rounded-md bg-gray-200 text-primary">
+          <icon-list icon="telegram-outline"/>
         </span>
 
       <div class="flex flex-col gap-2 text-primary">
-        <span class="text-lg font-semibold">{{ '@sneaker_team_bot' }}</span>
+        <span class="text-base md:text-lg font-semibold">{{ '@sneaker_team_bot' }}</span>
         <span>Telegram-бот</span>
       </div>
     </a>
 
-    <a class="flex gap-3 p-2" href="https://t.me/sneakerteam_feedback" target="_blank">
-        <span class="w-15 h-15 flex justify-center items-center rounded-md bg-gray-200 text-primary">
-          <icon-list icon="telegram-outline" />
+    <a class="flex gap-3 p-2 pl-4 md:pl-2" href="https://t.me/sneakerteam_feedback" target="_blank">
+        <span class="w-10 md:w-15 h-10 md:h-15 flex justify-center items-center rounded-md bg-gray-200 text-primary">
+          <icon-list icon="telegram-outline"/>
         </span>
 
       <div class="flex flex-col gap-2 text-primary">
-        <span class="text-lg font-semibold">{{ '@sneakerteam_feedback' }}</span>
+        <span class="text-base md:text-lg font-semibold">{{ '@sneakerteam_feedback' }}</span>
         <span>Telegram (отзывы)</span>
       </div>
     </a>
 
-    <a class="flex gap-3 p-2" href="mailto:info@sneakerteam.ru" target="_blank">
-      <span class="w-15 h-15 flex justify-center items-center rounded-md bg-gray-200 text-primary text-3xl">
+    <a class="flex gap-3 p-2 pl-4 md:pl-2" href="mailto:info@sneakerteam.ru" target="_blank">
+      <span class="w-10 md:w-15 h-10 md:h-15 flex justify-center items-center rounded-md bg-gray-200 text-primary text-2xl">
         <i class="fa fa-envelope-o" aria-hidden="true"></i>
       </span>
 
       <div class="flex flex-col gap-2 text-primary">
-        <span class="text-lg font-semibold">{{ 'info@sneakerteam.ru' }}</span>
+        <span class="text-base md:text-lg font-semibold">{{ 'info@sneakerteam.ru' }}</span>
         <span>Почта</span>
       </div>
     </a>
 
-    <a class="flex gap-3 p-2" href="https://www.youtube.com/@sneakerteamru" target="_blank">
-      <span class="w-15 h-15 flex justify-center items-center rounded-md bg-gray-200 text-primary">
-        <icon-list icon="youtube" />
+    <a class="flex gap-3 p-2 pl-4 md:pl-2" href="https://www.youtube.com/@sneakerteamru" target="_blank">
+      <span class="w-10 md:w-15 h-10 md:h-15 flex justify-center items-center rounded-md bg-gray-200 text-primary text-2xl">
+        <i class="fa fa-youtube-play" aria-hidden="true"></i>
       </span>
 
       <div class="flex flex-col gap-2 text-primary">
-        <span class="text-lg font-semibold">{{ '@sneakerteamru' }}</span>
+        <span class="text-base md:text-lg font-semibold">{{ '@sneakerteamru' }}</span>
         <span>YouYube</span>
       </div>
     </a>
