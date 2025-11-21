@@ -4,13 +4,15 @@ import {AsyncPipe} from '@angular/common';
 import {CartService} from '@/services/cart.service';
 import {IconComponent} from '@/components/icon/icon';
 import {TuiFormatNumberPipe} from '@taiga-ui/core';
+import {RouterLink} from '@angular/router';
 
 @Component({
   templateUrl: 'product-detail-order.html',
   imports: [
     IconComponent,
     AsyncPipe,
-    TuiFormatNumberPipe
+    TuiFormatNumberPipe,
+    RouterLink
   ],
   selector: 'product-detail-order'
 })
