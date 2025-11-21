@@ -17,11 +17,12 @@
       <div class="hidden md:flex flex-col gap-4">
         <h3 class="text-2xl font-semibold">Фильтры</h3>
 
-        <product-filter-price />
+        <product-filter-price/>
 
         <div class="flex flex-col overflow-hidden w-full">
           <div class="flex gap-2 w-full items-center cursor-pointer" (click)="changeOpen( 'size')">
-            <icon-list [icon]="openFilters().size ? 'minus' : 'plus'" class="text-primary w-10 h-10 flex items-center justify-center"/>
+            <icon-list [icon]="openFilters().size ? 'minus' : 'plus'"
+                       class="text-primary w-10 h-10 flex items-center justify-center"/>
             <span class="text-lg text-primary font-semibold">Размер</span>
           </div>
 
@@ -30,13 +31,14 @@
             [class.max-h-0]="!openFilters().size"
             [class.max-h-screen]="openFilters().size"
           >
-            <product-filter-size />
+            <product-filter-size/>
           </div>
         </div>
 
         <div class="flex flex-col overflow-hidden w-full">
           <div class="flex gap-2 w-full items-center cursor-pointer" (click)="changeOpen( 'brand')">
-            <icon-list [icon]="openFilters().brand ? 'minus' : 'plus'" class="text-primary w-10 h-10 flex items-center justify-center"/>
+            <icon-list [icon]="openFilters().brand ? 'minus' : 'plus'"
+                       class="text-primary w-10 h-10 flex items-center justify-center"/>
             <span class="text-lg text-primary font-semibold">Бренд</span>
           </div>
 
@@ -45,7 +47,7 @@
             [class.max-h-0]="!openFilters().brand"
             [class.max-h-screen]="openFilters().brand"
           >
-            <product-filter-brand />
+            <product-filter-brand/>
           </div>
         </div>
       </div>
@@ -58,17 +60,36 @@
         Фильтры
       </button>
 
-      <mobile-filter [(openFilter)]="openFilter" />
+      <mobile-filter [(openFilter)]="openFilter"/>
     </div>
 
     <div class="md:col-span-2 lg:col-span-3">
       <div
         class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
         infinite-scroll
-        [infiniteScrollDistance]="scrollDistance"
-        [infiniteScrollThrottle]="throttle"
+        [infiniteScrollDistance]="scrollDistance()"
+        [infiniteScrollThrottle]="throttle()"
         (scrolled)="nextPage()"
       >
+        <div>
+          <img ngSrc="images/product/team.png" alt="" class="w-full object-contain h-34 md:h-76 mb-2" height="600"
+               width="531">
+
+          <div>
+            <h4 class="md:text-lg font-semibold mb-4">Ранний доступ к релизу - только в Telegram</h4>
+            <h4 class="text-xs md:text-sm text-gray-400 truncate mb-2">Перейти в Telegram</h4>
+          </div>
+        </div>
+        <div>
+          <img ngSrc="images/product/give-cert.png" alt="" class="w-full object-contain h-34 md:h-76 mb-2" height="600"
+               width="531">
+
+          <div>
+            <h4 class="md:text-2xl font-semibold mb-4">Подарочный сертификат</h4>
+            <h4 class="text-xs md:text-sm text-gray-400 truncate mb-2">Оформить в 2 клика</h4>
+          </div>
+        </div>
+
         @for (product of products(); track product.spuId) {
           <product-list-detail [detail]="product"/>
         }

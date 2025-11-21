@@ -15,6 +15,7 @@ import {ProductFilterBrand} from '@/product/filter/components/brand/product-filt
 import {MobileFilter} from '@/product/filter/components/mobile-filter/mobile-filter';
 import {InfiniteScrollDirective} from 'ngx-infinite-scroll';
 import {ProductFilterStore} from '@/product/filter/product-filter-store';
+import {NgOptimizedImage} from '@angular/common';
 
 @Component({
   selector: 'product-filter',
@@ -33,7 +34,8 @@ import {ProductFilterStore} from '@/product/filter/product-filter-store';
     ProductFilterSize,
     ProductFilterBrand,
     MobileFilter,
-    InfiniteScrollDirective
+    InfiniteScrollDirective,
+    NgOptimizedImage
   ]
 })
 export default class ProductFilter implements OnInit {
@@ -42,8 +44,8 @@ export default class ProductFilter implements OnInit {
 
   protected readonly items = PRODUCT_FILTER_BREAD_CRUMBS;
 
-  throttle = 300;
-  scrollDistance = 20;
+  throttle = signal(10);
+  scrollDistance = signal(2);
   protected readonly openFilter = signal(false);
   protected readonly openFilters = signal({
     size: true,
@@ -77,6 +79,7 @@ export default class ProductFilter implements OnInit {
       })
       .subscribe(res => {
         this.products.update(items => [...items, ...res.results]);
+        // this.products.update(items => res.results);
       })
   }
 
