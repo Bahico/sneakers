@@ -18,7 +18,7 @@
     </button>
   </div>
 
-  <category-shoes/>
+  <category-shoes [gender]="gender()"/>
   <category-cloth class="mt-10 flex flex-col"/>
   <category-accessories class="mt-10 flex flex-col"/>
 
@@ -27,12 +27,12 @@
       (click)="openCalculate()"
       class="p-2 rounded-xl bg-gray-100 w-full md:w-[70%] flex justify-between items-center cursor-pointer"
     >
-      <div class="flex gap-4 items-center">
-        <img ngSrc="images/logo/poizon.png" class="w-15 h-15 object-contain rounded-xl" alt="" height="92" width="92">
-        <span class=" text-xl font-semibold">Рассчитать стоимость товара из Poizon</span>
+      <div class="flex gap-2 md:gap-4 items-center w-[70%]">
+        <img ngSrc="images/logo/poizon.png" class="w-10 md:w-15 h-10 md:h-15 object-contain rounded-xl" alt="" height="92" width="92">
+        <span class="md:text-xl font-semibold">Рассчитать стоимость товара из Poizon</span>
       </div>
 
-      <span class="text-4xl mr-4">
+      <span class="text-2xl md:text-4xl mr-4">
         <i class="fa fa-angle-right" aria-hidden="true"></i>
       </span>
     </div>

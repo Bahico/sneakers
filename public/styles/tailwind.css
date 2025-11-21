@@ -29,9 +29,9 @@
     padding-left: 1rem; /* Example value for sm */
     padding-right: 1rem; /* Example value for sm */
   }
-  @media (max-width: 1400px) {
-    padding-left: 2rem; /* Example value for sm */
-    padding-right: 2rem; /* Example value for sm */
+  @media (max-width: 1500px) and (min-width: 641px) {
+    padding-left: 6rem; /* Example value for sm */
+    padding-right: 6rem; /* Example value for sm */
   }
 }
 

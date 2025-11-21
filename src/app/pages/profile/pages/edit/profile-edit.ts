@@ -5,7 +5,8 @@ import {TuiLink} from '@taiga-ui/core';
 import {TuiItem} from '@taiga-ui/cdk';
 import {ProfileMenu} from '@/profile/components/menu/profile-menu';
 import {IconComponent} from '@/components/icon/icon';
-import {FormsModule} from '@angular/forms';
+import {FormControl, FormGroup, FormsModule} from '@angular/forms';
+import {Profile} from '@/models/profile';
 
 @Component({
   templateUrl: 'profile-edit.html',
@@ -24,4 +25,12 @@ import {FormsModule} from '@angular/forms';
 })
 export default class ProfileEdit {
   checked = false;
+
+  form = new FormGroup<{[key in keyof Profile]?: any}>({
+    username: new FormControl(null),
+    phone: new FormControl(null),
+    first_name: new FormControl(null),
+    last_name: new FormControl(null),
+    surname: new FormControl(null),
+  })
 }

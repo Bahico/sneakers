@@ -119,12 +119,12 @@
       }
     </button>
     <div class="flex flex-col items-center" routerLink="/">
-      <icon-list class="h-7" icon="home"/>
-      <span class="text-sm">Главная</span>
+      <icon-list class="h-7" icon="home" />
+      <span class="text-xs">Главная</span>
     </div>
     <div class="flex flex-col items-center" routerLink="/product/filter">
       <icon-list class="h-7" icon="search"/>
-      <span class="text-sm">Поиск</span>
+      <span class="text-xs">Поиск</span>
     </div>
     @if (basketProductCount()) {
       <tui-badged-content>
@@ -139,19 +139,19 @@
           class="flex flex-col items-center text-xl"
         >
           <icon-list class="h-7 flex items-center" icon="basket"/>
-          <span class="text-sm text-primary">Корзина</span>
+          <span class="text-xs text-primary">Корзина</span>
         </div>
       </tui-badged-content>
     } @else {
       <div class="flex flex-col items-center text-xl">
         <icon-list class="h-7 flex items-center" icon="basket"/>
-        <span class="text-sm">Корзина</span>
+        <span class="text-xs">Корзина</span>
       </div>
     }
     @if (isAuthed()) {
       <div class="flex flex-col items-center">
         <icon-list class="h-7" icon="profile"/>
-        <span class="text-sm">Профиль</span>
+        <span class="text-xs">Профиль</span>
       </div>
     } @else {
       <div
@@ -159,7 +159,7 @@
         (click)="openAuthentication()"
       >
         <icon-list class="h-7" icon="profile"/>
-        <span class="text-sm">Профиль</span>
+        <span class="text-xs">Профиль</span>
       </div>
     }
 

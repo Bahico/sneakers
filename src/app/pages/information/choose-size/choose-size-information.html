@@ -36,8 +36,11 @@
     <div class="flex justify-center mt-10">
         <div class="w-full md:w-2/3 grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2">
             @for (size of sizes; track size) {
-              <div class="sn-btn default flex items-center justify-center !px-1 md:px-2">
-                  {{size}}
+              <div
+                class="sn-btn flex items-center justify-center !px-1 md:px-2"
+                [class.default]="selectedSize().name !== size.name"
+                (click)="selectedSize.set(size)">
+                  {{size.name}}
               </div>
             }
         </div>
@@ -50,26 +53,26 @@
             <div class="flex flex-col gap-2 w-80">
                 <div class="flex justify-between w-full pb-2 border-b border-gray-200">
                     <span class="text-lg">Европа (EU)</span>
-                    <span>36</span>
+                    <span>{{selectedSize().sizes.eu}}</span>
                 </div>
                 <div class="flex justify-between w-full pb-2 border-b border-gray-200">
                     <span class="text-lg">США (US)</span>
-                    <span>М4/W5</span>
+                    <span>{{selectedSize().sizes.us}}</span>
                 </div>
                 <div class="flex justify-between w-full pb-2 border-b border-gray-200">
                     <span class="text-lg">Длина (мм)</span>
-                    <span>220</span>
+                    <span>{{selectedSize().sizes.mm}}</span>
                 </div>
             </div>
 
             <div class="flex flex-col gap-2 w-80">
                 <div class="flex justify-between w-full pb-2 border-b border-gray-200">
                     <span class="text-lg">Великобритания (UK)</span>
-                    <span>3.5</span>
+                    <span>{{selectedSize().sizes.uk}}</span>
                 </div>
                 <div class="flex justify-between w-full pb-2 border-b border-gray-200">
                     <span class="text-lg">Россия (RU)</span>
-                    <span>35</span>
+                    <span>{{ selectedSize().sizes.ru }}</span>
                 </div>
             </div>
         </div>
