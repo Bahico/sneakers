@@ -1,5 +1,5 @@
-import {Component, computed, ElementRef, signal, viewChild} from '@angular/core';
-import { NgOptimizedImage } from '@angular/common';
+import {afterNextRender, Component, computed, ElementRef, signal, viewChild} from '@angular/core';
+import {NgClass, NgOptimizedImage} from '@angular/common';
 import { IconComponent } from '@/components/icon/icon';
 import { TuiBreadcrumbs } from '@taiga-ui/kit';
 import { TuiItem } from '@taiga-ui/cdk';
@@ -16,7 +16,8 @@ import { RouterLink } from '@angular/router';
     TuiBreadcrumbs,
     TuiItem,
     TuiLink,
-    RouterLink
+    RouterLink,
+    NgClass
   ]
 })
 export default class ReviewsInformation {
@@ -24,11 +25,21 @@ export default class ReviewsInformation {
 
   scrolling = signal(0);
 
+  scrollSize = signal(350)
+
+  constructor() {
+    afterNextRender(() => {
+      if (window.innerWidth < 768) {
+        this.scrollSize.set(250)
+      }
+    })
+  }
+
   previous() {
     const container = this.scrollContainer()?.nativeElement;
     this.scrolling.update(current => current != 0 ? current - 1 : 0);
     if (container) {
-      container.scrollBy({ left: -350, behavior: 'smooth' });
+      container.scrollBy({ left: this.scrollSize() * -1, behavior: 'smooth' });
     }
   }
 
@@ -36,7 +47,7 @@ export default class ReviewsInformation {
     const container = this.scrollContainer()?.nativeElement;
     this.scrolling.update(current => current != 4 ? current + 1 : 4);
     if (container) {
-      container.scrollBy({ left: 350, behavior: 'smooth' });
+      container.scrollBy({ left: this.scrollSize(), behavior: 'smooth' });
     }
   }
 }

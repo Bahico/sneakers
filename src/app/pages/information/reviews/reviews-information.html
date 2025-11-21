@@ -22,26 +22,30 @@
     </div>
   </div>
 
-  <div class="relative max-w-300">
+  <div class="relative max-w-300 flex md:block justify-center">
     @if (scrolling() !== 0) {
-      <span class="absolute -left-16 top-1/2 -translate-y-1/2 w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-3xl text-primary cursor-pointer" (click)="previous()">
+      <span class="absolute -left-5 md:left-0 top-1/2 -translate-y-1/2 w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-3xl text-primary cursor-pointer" (click)="previous()">
         <i class="fa fa-angle-left" aria-hidden="true"></i>
       </span>
     }
 
-    <div #scrollContainer class="flex items-end overflow-hidden max-w-300 pb-4">
-      <img ngSrc="/images/information/review-1.png" alt="Отзывы" class="w-40 md:w-70" width="100" height="100">
-      <img ngSrc="images/information/review-2.png" alt="Отзывы" class="w-50 md:w-80" width="100" height="100">
-      <img ngSrc="images/information/review-3.png" alt="Отзывы" class="w-50 md:w-80" width="100" height="100">
-      <img ngSrc="images/information/review-4.png" alt="Отзывы" class="w-40 md:w-70" width="100" height="100">
-      <img ngSrc="images/information/review-5.png" alt="Отзывы" class="w-50 md:w-80" width="100" height="100">
-      <img ngSrc="images/information/review-6.png" alt="Отзывы" class="w-50 md:w-80" width="100" height="100">
-      <img ngSrc="images/information/review-7.png" alt="Отзывы" class="w-40 md:w-70" width="100" height="100">
-      <img ngSrc="images/information/review-8.png" alt="Отзывы" class="w-50 md:w-80" width="100" height="100">
+    <div
+      #scrollContainer
+      class="flex items-end overflow-hidden max-w-70 md:max-w-300 pb-4 duration-150"
+      [ngClass]="{' md:ml-14': scrolling() !== 0}"
+    >
+      <img ngSrc="/images/information/review-1.png" alt="Отзывы" class="w-30 md:w-70" width="100" height="100">
+      <img ngSrc="images/information/review-2.png" alt="Отзывы" class="w-40 md:w-80" width="100" height="100">
+      <img ngSrc="images/information/review-3.png" alt="Отзывы" class="w-40 md:w-80" width="100" height="100">
+      <img ngSrc="images/information/review-4.png" alt="Отзывы" class="w-30 md:w-70" width="100" height="100">
+      <img ngSrc="images/information/review-5.png" alt="Отзывы" class="w-40 md:w-80" width="100" height="100">
+      <img ngSrc="images/information/review-6.png" alt="Отзывы" class="w-40 md:w-80" width="100" height="100">
+      <img ngSrc="images/information/review-7.png" alt="Отзывы" class="w-30 md:w-70" width="100" height="100">
+      <img ngSrc="images/information/review-8.png" alt="Отзывы" class="w-40 md:w-80" width="100" height="100">
     </div>
 
     @if (scrolling() < 4) {
-      <span class="absolute -right-16 top-1/2 -translate-y-1/2 w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-3xl text-primary cursor-pointer" (click)="next()">
+      <span class="absolute -right-5 md:-right-16 top-1/2 -translate-y-1/2 w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-3xl text-primary cursor-pointer" (click)="next()">
         <i class="fa fa-angle-right" aria-hidden="true"></i>
       </span>
     }
