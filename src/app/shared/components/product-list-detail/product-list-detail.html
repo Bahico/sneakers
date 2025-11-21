@@ -18,7 +18,12 @@
     class="w-full h-full max-h-40 object-contain"
   >
 
-  <span class="text-gray-500">EU: 41.5 42</span>
+  <span class="text-black/40 truncate">
+    EU:
+    @for (sku of detail()?.skus; track sku?.size?.primary) {
+      {{sku.size?.primary}}
+    }
+  </span>
 </div>
 
 <div>

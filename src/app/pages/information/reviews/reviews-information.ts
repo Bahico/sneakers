@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, computed, ElementRef, signal, viewChild} from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
 import { IconComponent } from '@/components/icon/icon';
 import { TuiBreadcrumbs } from '@taiga-ui/kit';
@@ -20,5 +20,23 @@ import { RouterLink } from '@angular/router';
   ]
 })
 export default class ReviewsInformation {
+  scrollContainer = viewChild<ElementRef<HTMLDivElement>>('scrollContainer');
 
+  scrolling = signal(0);
+
+  previous() {
+    const container = this.scrollContainer()?.nativeElement;
+    this.scrolling.update(current => current != 0 ? current - 1 : 0);
+    if (container) {
+      container.scrollBy({ left: -350, behavior: 'smooth' });
+    }
+  }
+
+  next() {
+    const container = this.scrollContainer()?.nativeElement;
+    this.scrolling.update(current => current != 4 ? current + 1 : 4);
+    if (container) {
+      container.scrollBy({ left: 350, behavior: 'smooth' });
+    }
+  }
 }
