@@ -1,8 +1,8 @@
-<h3 class="text-2xl font-bold">Вас может заинтересовать</h3>
+<h3 class="text-2xl w-2/3 md:w-auto font-bold">Вас может заинтересовать</h3>
 
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
+<div class="flex overflow-x-auto md:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
   @for (product of products(); track product.spuId) {
-    <product-list-detail [detail]="product"/>
+    <product-list-detail class="w-40 md:w-auto" [detail]="product"/>
   }
 </div>
 
