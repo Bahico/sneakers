@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+.meet-team-item {
+  @apply bg-white rounded md:rounded-xl px-1 md:px-4 h-10 md:h-24 flex items-center gap-1 md:gap-4 border border-[#FFDABF];
+}
+
+.meet-team-image {
+  @apply w-5 md:w-10 h-5 md:h-10 rounded-full;
+}

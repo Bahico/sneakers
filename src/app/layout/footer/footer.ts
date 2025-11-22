@@ -10,7 +10,7 @@ import {RouterLink} from '@angular/router';
     RouterLink
   ],
   host: {
-    class: 'flex w-full justify-center bg-[#0D0D0D] pt-20 pb-30'
+    class: 'flex w-full justify-center bg-[#0D0D0D] pt-10 md:pt-20 pb-30'
   }
 })
 export default class Footer {

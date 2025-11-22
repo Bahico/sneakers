@@ -1,15 +1,18 @@
 import {Component, signal} from '@angular/core';
 import {IconComponent} from '@/components/icon/icon';
-import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {injectContext} from '@taiga-ui/polymorpheus';
 import {TuiDialogContext} from '@taiga-ui/core';
+import {TuiCheckbox} from '@taiga-ui/kit';
 
 @Component({
   templateUrl: 'feedback.html',
   selector: 'feedback',
   imports: [
     IconComponent,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TuiCheckbox,
+    FormsModule
   ]
 })
 export class Feedback {
@@ -23,6 +26,7 @@ export class Feedback {
 
   images = signal<string[]>([]);
   success = signal(false);
+  agree = signal(false);
 
   close() {
     this.context.$implicit.complete();

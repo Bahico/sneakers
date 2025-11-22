@@ -1,12 +1,14 @@
 import {Component, computed, ElementRef, inject, signal, viewChildren} from '@angular/core';
 import {ProductDetailStore} from '@/product/detail/services/product-detail-store';
 import {ImageZoom} from '@/components/image-zoom/image-zoom';
+import {TuiIcon} from '@taiga-ui/core';
 
 
 @Component({
   templateUrl: 'product-detail-images.html',
   imports: [
-    ImageZoom
+    ImageZoom,
+    TuiIcon
   ],
   selector: 'product-images'
 })

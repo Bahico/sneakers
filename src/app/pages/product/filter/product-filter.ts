@@ -1,11 +1,11 @@
 import {Component, effect, inject, OnInit, signal} from '@angular/core';
-import {TuiBreadcrumbs} from '@taiga-ui/kit';
-import {TuiLink} from '@taiga-ui/core';
-import {TuiItem} from '@taiga-ui/cdk';
+import {TuiBreadcrumbs, TuiRadioComponent} from '@taiga-ui/kit';
+import {TuiDropdown, TuiLink} from '@taiga-ui/core';
+import {TuiActiveZone, TuiItem, TuiObscured} from '@taiga-ui/cdk';
 import {RouterLink} from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {IconComponent} from '@/components/icon/icon';
-import {PRODUCT_FILTER_BREAD_CRUMBS} from '@/product/filter/product-filter.constans';
+import {PRODUCT_FILTER_BREAD_CRUMBS, SORT} from '@/product/filter/product-filter.constans';
 import {ProductListDetailModel} from '@/models/product.model';
 import {ProductService} from '@/services/product.service';
 import {ProductListDetail} from '@/components/product-list-detail/product-list-detail';
@@ -35,7 +35,11 @@ import {NgOptimizedImage} from '@angular/common';
     ProductFilterBrand,
     MobileFilter,
     InfiniteScrollDirective,
-    NgOptimizedImage
+    NgOptimizedImage,
+    TuiRadioComponent,
+    TuiDropdown,
+    TuiObscured,
+    TuiActiveZone
   ]
 })
 export default class ProductFilter implements OnInit {
@@ -43,10 +47,13 @@ export default class ProductFilter implements OnInit {
   private readonly productFilterStore = inject(ProductFilterStore);
 
   protected readonly items = PRODUCT_FILTER_BREAD_CRUMBS;
+  protected readonly throttle = 10;
+  protected readonly scrollDistance = 2;
+  protected readonly sorts = SORT;
 
-  throttle = signal(10);
-  scrollDistance = signal(2);
+  protected readonly sort = signal(SORT[0]);
   protected readonly openFilter = signal(false);
+  protected open = false;
   protected readonly openFilters = signal({
     size: true,
     brand: true,
@@ -94,5 +101,19 @@ export default class ProductFilter implements OnInit {
         [key]: !filters[key]
       })
     );
+  }
+
+  protected onClick(): void {
+    this.open = !this.open;
+  }
+
+  protected onObscured(obscured: boolean): void {
+    if (obscured) {
+      this.open = false;
+    }
+  }
+
+  protected onActiveZone(active: boolean): void {
+    this.open = active && this.open;
   }
 }

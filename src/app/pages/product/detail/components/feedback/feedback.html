@@ -95,9 +95,19 @@
       }
     </div>
 
+    <div class="flex w-full justify-center items-center gap-2">
+      <input
+        tuiCheckbox
+        type="checkbox"
+        [(ngModel)]="agree"
+        [ngModelOptions]="{standalone: true}"
+        size="m"
+      />
+      Соглашаюсь на публикацию отзыва на сайте
+    </div>
   </div>
 
-  <button class="sn-btn w-full md:w-2/3" [disabled]="form.invalid">Опубликовать</button>
+  <button class="sn-btn w-full md:w-2/3" [disabled]="form.invalid || !agree()">Опубликовать</button>
 </form>
 
 <div

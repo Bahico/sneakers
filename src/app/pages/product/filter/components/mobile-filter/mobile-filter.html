@@ -24,6 +24,23 @@
   }
   @default {
     <div class="flex flex-col gap-8 pt-4">
+      <div class="border-gray-200 border-b pb-4 flex flex-col gap-2">
+        <h2 class="text-lg font-semibold">Сортировка</h2>
+        @for (currentSort of sorts; track currentSort) {
+          <label tuiLabel>
+            <input
+              tuiRadio
+              type="radio"
+              [identityMatcher]="identityMatcher"
+              [value]="currentSort"
+              [(ngModel)]="sort"
+              size="s"
+            />
+            {{ currentSort.name }}
+          </label>
+        }
+      </div>
+
       <product-filter-price/>
 
       <div class="flex justify-between items-center" (click)="typeView.set('size')">

@@ -3,6 +3,10 @@ import {IconComponent} from '@/components/icon/icon';
 import {ProductFilterPrice} from '@/product/filter/components/price/product-filter-price';
 import {ProductFilterBrand} from '@/product/filter/components/brand/product-filter-brand';
 import {ProductFilterSize} from '@/product/filter/components/size/product-filter-size';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {TuiLabel} from '@taiga-ui/core';
+import {TuiRadioComponent, TuiRadioDirective} from '@taiga-ui/kit';
+import {SORT} from '@/product/filter/product-filter.constans';
 
 @Component({
   templateUrl: 'mobile-filter.html',
@@ -16,14 +20,25 @@ import {ProductFilterSize} from '@/product/filter/components/size/product-filter
     IconComponent,
     ProductFilterPrice,
     ProductFilterBrand,
-    ProductFilterSize
+    ProductFilterSize,
+    ReactiveFormsModule,
+    TuiLabel,
+    TuiRadioDirective,
+    FormsModule,
+    TuiRadioComponent
   ]
 })
 export class MobileFilter {
   openFilter = input(false);
   openFilterChange = output<boolean>();
 
+  protected readonly sorts = SORT;
+
+  protected readonly sort = signal(SORT[0]);
   typeView = signal<'size' | 'brand' | null>(null);
+
+  protected identityMatcher = (a: {name: string}, b: {name: string}): boolean =>
+    a?.name === b?.name;
 
   back() {
     if (this.typeView()) {

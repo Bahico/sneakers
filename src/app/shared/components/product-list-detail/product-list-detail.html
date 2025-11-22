@@ -4,7 +4,7 @@
 >
   <div class="flex justify-between">
     <span [class.hidden]="!onHome()"></span>
-    <span [class.hidden]="onHome()" class="px-1 md:px-2 py-0.5 flex items-center text-xs md:text-sm rounded-xl bg-orange-500 text-white">Быстро разбирают</span>
+    <span [class.hidden]="onHome()" class="px-1 md:px-2 flex items-center text-xs md:text-sm rounded-xl bg-orange-500 text-white">Быстро разбирают</span>
 
     <tui-icon
       icon="@tui.heart"
@@ -15,14 +15,11 @@
     [src]="detail().first_image"
     alt="product list detail"
     style="mix-blend-mode: multiply;"
-    class="w-full h-full max-h-40 object-contain"
+    class="w-full h-full max-h-30 md:max-h-40 object-contain"
   >
 
   <span class="text-black/40 truncate">
-    EU:
-    @for (sku of detail()?.skus; track sku?.size?.primary) {
-      {{sku.size?.primary}}
-    }
+    EU: {{detail()?.skus?.[3]?.size?.primary}}
   </span>
 </div>
 
