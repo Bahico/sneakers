@@ -1,18 +1,19 @@
-import {Component, signal} from '@angular/core';
+import {Component, model, signal} from '@angular/core';
 import {AngularYandexMapsModule} from 'angular8-yandex-maps';
-import {TuiSegmented} from '@taiga-ui/kit';
+import {NgClass} from '@angular/common';
+import {DeliveryTypeInputs} from '@/basket/create/delivery-type-inputs/delivery-type-inputs';
 import {IconComponent} from '@/components/icon/icon';
 
 @Component({
+  selector: 'delivery-place',
   templateUrl: 'delivery-place.html',
   imports: [
     AngularYandexMapsModule,
-    TuiSegmented,
+    NgClass,
+    DeliveryTypeInputs,
     IconComponent
   ],
-  selector: 'delivery-place'
 })
 export class DeliveryPlace {
-  protected readonly activeSegment = signal(0);
-
+  open = model(false);
 }

@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+.black-segment {
+
+  &::before {
+    color: #222;
+    box-shadow: none;
+  }
+
+  .active {
+    color: #fff;
+  }
+}

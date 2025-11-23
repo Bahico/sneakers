@@ -4,6 +4,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "strict": false,
+    "esModuleInterop": true,
     "baseUrl": "./src",
     "paths": {
       "@/*": [
@@ -17,6 +18,7 @@
     },
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
+    "moduleResolution": "bundler",
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "skipLibCheck": true,

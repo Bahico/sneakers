@@ -50,38 +50,7 @@
       }
     </div>
     <h3 class="text-lg md:text-2xl font-semibold">Способ доставки</h3>
-    <tui-segmented
-      class="colors p-1"
-      size="l"
-      [(activeItemIndex)]="activeSegment"
-    >
-      <button
-        type="button"
-        class="w-1/3"
-        [class.active]="0 === activeSegment()"
-      >
-        В пункт выдачи СДЭК
-      </button>
-      <button
-        type="button"
-        class="w-1/3"
-        [class.active]="1 === activeSegment()"
-      >
-        Курьером СДЭК
-      </button>
-      <button
-        type="button"
-        class="w-1/3"
-        [class.active]="2 === activeSegment()"
-      >
-        Почтой России
-      </button>
-    </tui-segmented>
-
-    <div class="sn-control w-full cursor-pointer" (click)="openModal()">
-      <icon-list icon="location" class="sn-control-icon" />
-      <input type="text" placeholder="Введите город, пункт выдачи">
-    </div>
+    <delivery-type-inputs [readonly]="true" (openModal)="openDeliveryPlace.set(true)" />
     <h3 class="text-lg md:text-2xl font-semibold">Получатель</h3>
     <div class="grid grid-cols-2 gap-4">
       <div class="sn-control">
@@ -208,3 +177,5 @@
     <p class="text-xs text-gray-500">Нажимая «Оплатить», вы соглашаетесь с условиями Пользовательского соглашения, Политики обработки персональных данных и файлов Cookie, Правила совершения платежей и возврата оплаты, соглашаетесь на получение рекламно-информационных материалов</p>
   </div>
 </div>
+
+<delivery-place [(open)]="openDeliveryPlace" />
