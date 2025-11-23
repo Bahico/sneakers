@@ -32,7 +32,7 @@ export class MobileAddCart {
   }
 
   removeFromCart() {
-    this.cartService.deleteCart(this.cart().id).subscribe();
+    this.cartService.deleteCart(this.cart().id).subscribe(() => this.close());
   }
 
   close() {

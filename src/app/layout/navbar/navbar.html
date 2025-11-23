@@ -41,7 +41,7 @@
           size="s"
           tuiSlot="top"
         >
-          {{ basketProductCount() }}
+          {{ basketProductCount() || 1 }}
         </tui-badge-notification>
         <div
           class="py-1 px-2 cursor-pointer"

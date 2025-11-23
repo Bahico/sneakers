@@ -9,5 +9,9 @@ export default [
   {
     path: 'list',
     loadComponent: () => import('./list/basket-list')
-  }
+  },
+  {
+    path: 'create',
+    loadComponent: () => import('./create/basket-create')
+  },
 ] satisfies Routes;
