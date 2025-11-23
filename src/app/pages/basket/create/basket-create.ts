@@ -1,6 +1,6 @@
 import {Component, computed, inject, signal, ViewEncapsulation} from '@angular/core';
 import {TuiBreadcrumbs, TuiCheckbox, TuiSwitch} from '@taiga-ui/kit';
-import {TuiFormatNumberPipe, TuiLink} from '@taiga-ui/core';
+import {TuiDialogService, TuiFormatNumberPipe, TuiLink} from '@taiga-ui/core';
 import {TuiItem} from '@taiga-ui/cdk';
 import {RouterLink} from '@angular/router';
 import {AsyncPipe} from '@angular/common';
@@ -9,6 +9,7 @@ import {IconComponent} from '@/components/icon/icon';
 import {FormsModule} from '@angular/forms';
 import {DeliveryPlace} from './delivery-place/delivery-place';
 import {DeliveryTypeInputs} from '@/basket/create/delivery-type-inputs/delivery-type-inputs';
+import {PolymorpheusComponent} from '@taiga-ui/polymorpheus';
 
 @Component({
   templateUrl: 'basket-create.html',
@@ -33,8 +34,19 @@ import {DeliveryTypeInputs} from '@/basket/create/delivery-type-inputs/delivery-
 })
 export default class BasketCreate {
   private readonly cartStore = inject(CartStore);
+  private readonly dialogs = inject(TuiDialogService);
 
   protected readonly carts = computed(() => this.cartStore.carts());
 
   protected readonly openDeliveryPlace = signal(false);
+
+  openModal() {
+    if (window.innerWidth < 768) {
+      this.dialogs.open(
+        new PolymorpheusComponent(DeliveryPlace),
+      ).subscribe()
+    } else {
+      this.openDeliveryPlace.set(true)
+    }
+  }
 }

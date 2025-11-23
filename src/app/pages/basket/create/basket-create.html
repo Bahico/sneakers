@@ -50,7 +50,7 @@
       }
     </div>
     <h3 class="text-lg md:text-2xl font-semibold">Способ доставки</h3>
-    <delivery-type-inputs [readonly]="true" (openModal)="openDeliveryPlace.set(true)" />
+    <delivery-type-inputs [readonly]="true" (openModal)="openModal()" />
     <h3 class="text-lg md:text-2xl font-semibold">Получатель</h3>
     <div class="grid grid-cols-2 gap-4">
       <div class="sn-control">
@@ -178,4 +178,4 @@
   </div>
 </div>
 
-<delivery-place [(open)]="openDeliveryPlace" />
+<delivery-place class="hidden md:block" [(open)]="openDeliveryPlace" />

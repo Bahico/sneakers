@@ -5,24 +5,24 @@
 >
   <button
     type="button"
-    class="w-1/3"
+    class="w-1/3 !px-2`"
     [class.active]="0 === activeSegment()"
   >
-    В пункт выдачи СДЭК
+    <span class="line-clamp-2 text-wrap text-xs md:text-base">В пункт выдачи СДЭК</span>
   </button>
   <button
     type="button"
-    class="w-1/3"
+    class="w-1/3 !px-1"
     [class.active]="1 === activeSegment()"
   >
-    Курьером СДЭК
+    <span class="line-clamp-2 text-wrap text-xs md:text-base">Курьером <br class="md:hidden"> СДЭК</span>
   </button>
   <button
     type="button"
-    class="w-1/3"
+    class="w-1/3 !px-1"
     [class.active]="2 === activeSegment()"
   >
-    Почтой России
+    <span class="line-clamp-2 text-wrap text-xs md:text-base">Почтой <br class="md:hidden"> России</span>
   </button>
 </tui-segmented>
 
@@ -35,8 +35,8 @@
       </div>
     }
     @case (1) {
-      <div class="grid grid-cols-2 gap-2">
-        <div class="sn-control col-span-4">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+        <div class="sn-control col-span-2 md:col-span-4">
           <icon-list icon="location" class="sn-control-icon" />
           <input type="text" [readOnly]="readonly()" placeholder="Найдите адрес">
         </div>
@@ -52,7 +52,7 @@
         <div class="sn-control">
           <input type="text" [readOnly]="readonly()" placeholder="Домофон">
         </div>
-        <div class="sn-control col-span-4">
+        <div class="sn-control col-span-2 md:col-span-4">
           <icon-list icon="message" class="sn-control-icon" />
           <input type="text" [readOnly]="readonly()" placeholder="Введите комментарий для курьера">
         </div>

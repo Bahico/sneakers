@@ -1,29 +1,38 @@
 <div
-  class="bg-black/30 transition-all duration-300 fixed inset-0 z-10 opacity-0"
+  class="bg-black/30 transition-all duration-300 fixed inset-0 z-30 opacity-0 hidden md:block"
   (click)="open.set(false)"
   [class.!opacity-100]="open()"
   [class.pointer-events-none]="!open()"
   [class.pointer-events-auto]="open()"
 ></div>
 <div
-  class="fixed top-1/2 left-1/2 transform -translate-x-1/2 z-20 flex justify-center items-center transition-all duration-300 opacity-0"
+  class="fixed top-1/2 left-1/2 transform -translate-x-1/2 z-40 hidden md:flex justify-center items-center transition-all duration-300 opacity-0"
   [ngClass]="{
     'pointer-events-none translate-y-10': !open(),
     '!opacity-100 -translate-y-1/2': open()
   }"
 >
-  <span class="absolute -right-14 -top-2 cursor-pointer">
+  <span class="absolute -right-10 md:-right-14 -top-2 cursor-pointer">
     <icon-list icon="close" class="w-10 h-10 text-white" (click)="open.set(false)" />
   </span>
-  <div class="grid grid-cols-2 w-full gap-4 md:h-200 md:!w-[70vw] xl:!min-w-[1000px] bg-white rounded-xl overflow-hidden">
-    <div class="p-4 flex flex-col gap-4">
-      <h2 class="text-xl font-semibold">Выбери пункт выдачи</h2>
-      <delivery-type-inputs />
-    </div>
-    <div class="h-full">
-      <ya-map [center]="[55.751952, 37.600739]" [zoom]="12">
-        <ya-placemark [geometry]="[55.751952, 37.600739]"></ya-placemark>
-      </ya-map>
-    </div>
+  <div class="grid md:grid-cols-2 p-0 md:p-4 w-[80vw] gap-4 md:h-200 md:!w-[70vw] xl:!min-w-[1000px] bg-white rounded-xl overflow-hidden">
+    <ng-container *ngTemplateOutlet="content" />
   </div>
 </div>
+
+<div class="flex flex-col gap-4 md:hidden">
+  <ng-container *ngTemplateOutlet="content" />
+</div>
+
+<ng-template #content>
+
+  <div class="p-4 flex flex-col gap-4">
+    <h2 class="text-xl font-semibold">Выбери пункт выдачи</h2>
+    <delivery-type-inputs />
+  </div>
+  <div class="h-100 md:h-full">
+    <ya-map [center]="[55.751952, 37.600739]" [zoom]="12">
+      <ya-placemark [geometry]="[55.751952, 37.600739]"></ya-placemark>
+    </ya-map>
+  </div>
+</ng-template>
