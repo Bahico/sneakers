@@ -39,6 +39,7 @@ export default class BasketCreate {
   protected readonly carts = computed(() => this.cartStore.carts());
 
   protected readonly openDeliveryPlace = signal(false);
+  protected readonly hideText = signal(false);
 
   openModal() {
     if (window.innerWidth < 768) {

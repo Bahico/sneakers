@@ -1,4 +1,4 @@
-<div class="w-full bg-secondary rounded-2xl relative h-74 md:h-[500px]">
+<div class="w-full bg-secondary rounded-2xl relative h-[500px] hidden md:block">
   <span class="absolute right-4 top-4">
     <tui-icon
       icon="@tui.heart"
@@ -7,7 +7,7 @@
   <button
     [disabled]="disablePrevious()"
     (click)="previous()"
-    class="absolute hidden md:block top-1/2 left-5 -translate-y-1/2 text-3xl cursor-pointer disabled:opacity-50 z-10"
+    class="absolute top-1/2 left-5 -translate-y-1/2 text-3xl cursor-pointer disabled:opacity-50 z-10"
   >
     <i class="fa fa-angle-left"></i>
   </button>
@@ -19,12 +19,28 @@
   <button
     (click)="next()"
     [disabled]="disableNext()"
-    class="absolute hidden md:block top-1/2 right-5 -translate-y-1/2 text-3xl cursor-pointer disabled:opacity-50"
+    class="absolute top-1/2 right-5 -translate-y-1/2 text-3xl cursor-pointer disabled:opacity-50"
   >
     <i class="fa fa-angle-right"></i>
   </button>
 
-  <div class="absolute bottom-0 left-0 right-0 flex md:hidden justify-center py-4 w-full">
+</div>
+
+<div class="relative">
+  <div
+    #mobileScrollContainer
+    class="w-full bg-secondary rounded-2xl h-74 md:hidden flex overflow-x-auto hidden-scrollbar snap-x snap-mandatory"
+  >
+    @for (image of images(); track $index) {
+      <img
+        #mobileImage
+        [src]="image"
+        alt="product image item"
+        class="min-w-full w-full h-full object-contain snap-center mix-blend-multiply"
+      >
+    }
+  </div>
+  <div class="absolute bottom-0 left-0 right-0 flex justify-center py-4 w-full">
     @for (_ of images(); track $index) {
       <div
         class="w-14 h-[5.6px] transition-colors duration-300 cursor-pointer -mr-2"
@@ -32,11 +48,10 @@
         [class.bg-gray-900]="activeIndex() === $index"
         [class.cursor-default]="activeIndex() === $index"
         [style.clip-path]="'polygon(10% 0, 100% 0, 90% 100%, 0 100%)'"
-        (click)="activeIndex.set($index)"
+        (click)="setActiveIndex($index)"
       ></div>
     }
   </div>
-
 </div>
 
 <div class="w-full hidden md:flex gap-2 mt-4 h-[100px] overflow-x-auto hidden-scrollbar">
