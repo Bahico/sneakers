@@ -40,6 +40,7 @@ export default class BasketCreate {
 
   protected readonly openDeliveryPlace = signal(false);
   protected readonly hideText = signal(false);
+  protected readonly openMoreInfo = signal(false);
 
   openModal() {
     if (window.innerWidth < 768) {
