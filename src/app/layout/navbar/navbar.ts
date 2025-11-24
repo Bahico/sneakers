@@ -5,7 +5,7 @@ import {TuiDropdownDirective, TuiDropdownManual, TuiDropdownOptionsDirective, Tu
 import {TuiActiveZone, TuiObscured} from '@taiga-ui/cdk';
 import {AccountStore} from '@/account';
 import {AuthenticationOpen} from '@/components/authentication/authentication-open';
-import {RouterLink} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import {TuiBadgedContentComponent, TuiBadgeNotification} from '@taiga-ui/kit';
 import {CartStore} from '@/cart';
 import {ProductDetailStore} from '@/product/detail/services/product-detail-store';
@@ -37,6 +37,7 @@ export default class Navbar {
   private readonly authenticationService = inject(AuthenticationOpen);
   private readonly cartStore = inject(CartStore);
   private readonly productDetailStore = inject(ProductDetailStore);
+  private readonly router = inject(Router);
 
   protected readonly isAuthed = computed(() => !!this.accountStore.account());
   protected open = false;
@@ -49,6 +50,11 @@ export default class Navbar {
     this.productDetailStore.selectedSkus() &&
     this.cartStore.carts()?.results?.find(item => item.sku.skuId === this.productDetailStore.selectedSkus()?.skuId)
   );
+
+  logout() {
+    this.accountStore.logout();
+    this.router.navigate(['/']);
+  }
 
   openAuthentication() {
     this.authenticationService.openModal()

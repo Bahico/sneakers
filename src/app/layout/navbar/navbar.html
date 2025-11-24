@@ -95,7 +95,7 @@
         <div class="menu-item !border-gray-400">
           Программа лояльности
         </div>
-        <div class="menu-item border-none">
+        <div class="menu-item border-none" (click)="logout()">
           Выйти
         </div>
       </div>
@@ -149,7 +149,7 @@
       </div>
     }
     @if (isAuthed()) {
-      <div class="flex flex-col items-center">
+      <div class="flex flex-col items-center" routerLink="/profile">
         <icon-list class="h-7" icon="profile"/>
         <span class="text-xs">Профиль</span>
       </div>

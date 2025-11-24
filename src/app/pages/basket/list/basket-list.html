@@ -75,7 +75,7 @@
           <span class="text-base md:text-xl font-bold justify-center md:justify-start flex w-full mb-2">Сумма заказа</span>
 
           <div class="flex justify-between mb-2 border-b border-gray-200 py-2">
-            <span class="text-sm lg:text-lg">{{ summary().items_count }} товара на сумму</span>
+            <span class="text-sm lg:text-lg">{{ summary().items_count }} {{ summary().items_count > 1 ? 'товара' :  'товар' }} на сумму</span>
             <span class="text-sm lg:text-lg font-bold">{{ summary().total | tuiFormatNumber | async }} p.</span>
           </div>
 

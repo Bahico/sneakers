@@ -19,6 +19,16 @@
   </div>
 </div>
 
+<div class="border border-primary rounded w-full md:w-100 items-center justify-center gap-4 px-4 py-2 md:py-3 flex">
+  <span class="md:text-xl">Оставить отзыв</span>
+  <div class="select-none bg-gray-100 flex gap-2 p-2 rounded-md items-center cursor-pointer">
+    <div class="bg-primary text-white rounded-md py-1 px-2 text-xs">
+      S
+    </div>
+    <span>+500 за покупку</span>
+  </div>
+</div>
+
 @for (comment of [1, 2]; track comment) {
   <comment-detail class="border-b border-gray-200" [class.border-b-0]="$last" />
 }

@@ -25,7 +25,7 @@ export class ImageZoom {
     afterNextRender(() => {
       setTimeout(() => {
         this.imageZoom('myimage', 'myresult');
-      }, 400);
+      }, 1000);
     })
   }
 
