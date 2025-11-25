@@ -118,12 +118,14 @@
         Добавить в корзину
       }
     </button>
-    <div class="flex flex-col items-center" routerLink="/">
-      <icon-list class="h-7" icon="home" />
+    <div class="flex flex-col items-center navbar-item" routerLink="/home" routerLinkActive="active">
+      <icon-list class="h-7 unactive" icon="home" />
+      <icon-list class="h-7 active" icon="home-active" />
       <span class="text-xs">Главная</span>
     </div>
-    <div class="flex flex-col items-center" routerLink="/product/filter">
-      <icon-list class="h-7" icon="search"/>
+    <div class="flex flex-col items-center navbar-item" routerLink="/product/filter" routerLinkActive="active">
+      <icon-list class="h-7 unactive" icon="search"/>
+      <icon-list class="h-7 active" icon="search-active"/>
       <span class="text-xs">Поиск</span>
     </div>
     @if (basketProductCount()) {
@@ -136,21 +138,24 @@
         </tui-badge-notification>
         <div
           routerLink="/basket"
-          class="flex flex-col items-center text-xl"
+          routerLinkActive="active"
+          class="flex flex-col items-center text-xl navbar-item"
         >
-          <icon-list class="h-7 flex items-center" icon="basket"/>
+          <icon-list class="h-7 flex items-center unactive" icon="basket"/>
+          <icon-list class="h-7 flex items-center active" icon="basket-active"/>
           <span class="text-xs text-primary">Корзина</span>
         </div>
       </tui-badged-content>
     } @else {
-      <div class="flex flex-col items-center text-xl">
+      <div class="flex flex-col items-center text-xl navbar-item">
         <icon-list class="h-7 flex items-center" icon="basket"/>
         <span class="text-xs">Корзина</span>
       </div>
     }
     @if (isAuthed()) {
-      <div class="flex flex-col items-center" routerLink="/profile">
-        <icon-list class="h-7" icon="profile"/>
+      <div class="flex flex-col items-center navbar-item" routerLink="/profile" routerLinkActive="active">
+        <icon-list class="h-7 unactive" icon="profile"/>
+        <icon-list class="h-7 active" icon="profile-active"/>
         <span class="text-xs">Профиль</span>
       </div>
     } @else {

@@ -28,7 +28,19 @@ export default class BasketList {
   private readonly cartStore = inject(CartStore);
   protected readonly cartService = inject(CartService);
 
-  summary = signal<Partial<Summary>>({});
+  protected readonly summary = signal<Partial<Summary>>({});
+  protected readonly itemsCountText = computed(() => {
+    const n = this.summary().items_count;
+    if (n % 100 >= 11 && n % 100 <= 14) {
+       return "товаров"
+    } else if (n % 10 == 1) {
+      return "товар"
+    } else if (n % 10 >= 2 && n % 10 <= 4) {
+      return "товара"
+    } else {
+      return "товаров"
+    }
+  })
 
   protected readonly carts = computed(() => this.cartStore.carts());
   protected readonly items = [
@@ -55,10 +67,6 @@ export default class BasketList {
 
   removeCart(cartId: number) {
     this.cartService.deleteCart(cartId).subscribe(() => this.loadSummary())
-  }
-
-  checkout() {
-
   }
 
   decrease(id: number) {

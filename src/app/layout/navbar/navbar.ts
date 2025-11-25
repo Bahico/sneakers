@@ -5,7 +5,7 @@ import {TuiDropdownDirective, TuiDropdownManual, TuiDropdownOptionsDirective, Tu
 import {TuiActiveZone, TuiObscured} from '@taiga-ui/cdk';
 import {AccountStore} from '@/account';
 import {AuthenticationOpen} from '@/components/authentication/authentication-open';
-import {Router, RouterLink} from '@angular/router';
+import {Router, RouterLink, RouterLinkActive} from '@angular/router';
 import {TuiBadgedContentComponent, TuiBadgeNotification} from '@taiga-ui/kit';
 import {CartStore} from '@/cart';
 import {ProductDetailStore} from '@/product/detail/services/product-detail-store';
@@ -26,7 +26,8 @@ import {ProductDetailStore} from '@/product/detail/services/product-detail-store
     RouterLink,
     TuiBadgedContentComponent,
     TuiBadgeNotification,
-    TuiIconPipe
+    TuiIconPipe,
+    RouterLinkActive
   ],
   host: {
     class: 'flex w-full justify-center'

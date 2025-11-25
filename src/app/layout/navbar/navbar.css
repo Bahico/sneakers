@@ -57,3 +57,18 @@
 .burger.active span::after {
   transform: rotateZ(-45deg) translateY(0);
 }
+
+.navbar-item {
+  .active {
+    @apply hidden;
+  }
+
+  &.active {
+    .unactive {
+      @apply hidden;
+    }
+    .active {
+      @apply flex;
+    }
+  }
+}
