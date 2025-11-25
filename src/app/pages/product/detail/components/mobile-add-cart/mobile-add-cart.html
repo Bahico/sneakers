@@ -1,6 +1,6 @@
 <h3 class="text-xl font-semibold mb-2">Добавлено в корзину</h3>
 
-<div class="flex gap-4">
+<div class="flex gap-4 w-full">
   <div class="w-30 h-24 bg-gray-200 rounded-md">
     <img
       [src]="detail().images?.[0]"
@@ -10,8 +10,8 @@
     >
   </div>
 
-  <div class="flex flex-col justify-between">
-    <span class="text-lg font-semibold">{{detail().name}}</span>
+  <div class="flex flex-col justify-between w-[calc(100%-120px)]">
+    <span class="line-clamp-2 text-lg font-semibold w-full">{{detail().name}}</span>
 
     <div class="flex flex-col gap-1">
       <span class="text-gray-500 text-sm">EU {{selectedSku().size.primary}} - RU {{selectedSku().size['ru']}}</span>

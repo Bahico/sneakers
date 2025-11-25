@@ -1,4 +1,4 @@
-import {Component, computed, inject, signal, ViewEncapsulation} from '@angular/core';
+import {afterNextRender, Component, computed, inject, signal, ViewEncapsulation} from '@angular/core';
 import {TuiBreadcrumbs, TuiCheckbox, TuiSwitch} from '@taiga-ui/kit';
 import {TuiDialogService, TuiFormatNumberPipe, TuiLink} from '@taiga-ui/core';
 import {TuiItem} from '@taiga-ui/cdk';
@@ -41,6 +41,12 @@ export default class BasketCreate {
   protected readonly openDeliveryPlace = signal(false);
   protected readonly hideText = signal(false);
   protected readonly openMoreInfo = signal(false);
+
+  constructor() {
+    afterNextRender(() => {
+      setTimeout(() => document.getElementById('form').scrollIntoView({behavior: 'smooth'}), 1000)
+    })
+  }
 
   openModal() {
     if (window.innerWidth < 768) {

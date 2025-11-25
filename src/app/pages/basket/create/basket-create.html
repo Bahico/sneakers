@@ -49,7 +49,8 @@
         </div>
       }
     </div>
-    <h3 class="text-lg md:text-2xl font-semibold">Способ доставки</h3>
+
+    <h3 class="text-lg md:text-2xl font-semibold" id="form">Способ доставки</h3>
     <delivery-type-inputs [readonly]="true" (openModal)="openModal()" />
     <h3 class="text-lg md:text-2xl font-semibold">Получатель</h3>
     <div class="grid grid-cols-2 gap-4">
@@ -124,8 +125,6 @@
       </div>
     </div>
     <div class="flex gap-2">
-
-
       <div class="flex flex-col gap-1">
         <div class="flex relative items-center">
           <span class="flex mt-1 mr-3 min-w-6 h-6 justify-center items-center border border-primary rounded">
