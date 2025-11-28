@@ -1,4 +1,4 @@
-import {afterNextRender, Component, ElementRef, inject, input, signal, viewChildren} from '@angular/core';
+import {afterNextRender, Component, effect, ElementRef, inject, input, signal, viewChildren} from '@angular/core';
 import {MouseLeaveDirective} from '@/components/image-zoom/check-mouse-leave';
 import {TUI_IS_MOBILE} from '@taiga-ui/cdk';
 
@@ -22,17 +22,16 @@ export class ImageZoom {
   zooming = signal(false);
 
   constructor() {
-    afterNextRender(() => {
-      setTimeout(() => {
-        this.imageZoom('myimage', 'myresult');
-      }, 1000);
-    })
+    effect(() => {
+      if (this.urlImage())
+        setTimeout(() => this.imageZoom('myimage', 'myresult'), 400)
+    });
   }
 
   imageZoom(imgID: string, resultID: string) {
-    if (document.querySelector('.img-zoom-lens')) {
-      return;
-    }
+    // if (document.querySelector('.img-zoom-lens')) {
+    //   return;
+    // }
 
     var img, lens, result, cx, cy;
     img = document.getElementById(imgID);

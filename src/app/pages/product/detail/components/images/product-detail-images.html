@@ -26,10 +26,10 @@
 
 </div>
 
-<div class="relative">
+<div class="relative md:hidden">
   <div
     #mobileScrollContainer
-    class="w-full bg-secondary rounded-2xl h-74 md:hidden flex overflow-x-auto hidden-scrollbar snap-x snap-mandatory"
+    class="w-full bg-secondary rounded-2xl h-74 flex overflow-x-auto hidden-scrollbar snap-x snap-mandatory"
   >
     @for (image of images(); track $index) {
       <img
