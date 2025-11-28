@@ -1,7 +1,7 @@
 import {afterNextRender, Component, ElementRef, inject, signal, ViewChild} from '@angular/core';
 import {AuthenticationType} from './authentication.type';
 import {IconComponent} from '@/components/icon/icon';
-import {FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormControl, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AuthService} from '@/services/auth.service';
 import {OnlyNumber} from '@/directives/only-number';
 import {TokenStore} from '@/token';
@@ -27,7 +27,8 @@ export type TGUser = {
   imports: [
     IconComponent,
     ReactiveFormsModule,
-    OnlyNumber
+    OnlyNumber,
+    FormsModule
   ]
 })
 export class AuthenticationMain {

@@ -16,8 +16,9 @@
       <icon-list icon="email"/>
     </div>
   } @else if (enterCode()) {
-    <div class="w-full flex flex-col">
-      <p class="text-sm mb-6 flex">На ваш электронный адрес был отправлен код. Пожалуйста, проверьте свою почту и введите этот код для продолжения.</p>
+    <form class="w-full flex flex-col" (ngSubmit)="sendCode()">
+      <p class="text-sm mb-6 flex">На ваш электронный адрес был отправлен код. Пожалуйста, проверьте свою почту и
+        введите этот код для продолжения.</p>
 
       <div class="sn-control w-full">
         <icon-list icon="key" class="sn-control-icon"/>
@@ -44,52 +45,55 @@
 
 
       <div class="grid md:grid-cols-2 w-full gap-2 mt-4">
-        <button class="sn-btn secondary flex items-center justify-center gap-2 !px-2 border-none">
+        <button type="button" class="sn-btn secondary flex items-center justify-center gap-2 !px-2 border-none">
           <span class="font-semibold">Войти через Telegram</span>
-          <icon-list icon="telegram-outline" />
+          <icon-list icon="telegram-outline"/>
         </button>
 
         <button
           class="sn-btn font-semibold order-first md:order-last"
-          (click)="sendCode()"
+          type="submit"
           [disabled]="code.invalid"
         >
           Войти
         </button>
       </div>
-    </div>
+    </form>
   } @else {
-    <div class="sn-control w-full">
+    <form (ngSubmit)="sendEmail()">
+
+      <div class="sn-control w-full">
       <span class="sn-control-icon">
         {{ '@' }}
       </span>
-      <input
-        type="email"
-        placeholder="Введите свою почту"
-        [formControl]="email"
-      >
-    </div>
-    @if (email.invalid && email.touched) {
-      @if (email.hasError('required')) {
-        <span class="sn-error w-full">Необходимо указать адрес электронной почты.</span>
-      } @else if (email.hasError('email')) {
-        <span class="sn-error w-full">Введите корректную почту</span>
+        <input
+          type="email"
+          placeholder="Введите свою почту"
+          [formControl]="email"
+        >
+      </div>
+      @if (email.invalid && email.touched) {
+        @if (email.hasError('required')) {
+          <span class="sn-error w-full">Необходимо указать адрес электронной почты.</span>
+        } @else if (email.hasError('email')) {
+          <span class="sn-error w-full">Введите корректную почту</span>
+        }
       }
-    }
 
-    <div class="grid md:grid-cols-2 w-full gap-2 mt-4">
-      <button class="sn-btn secondary flex items-center justify-center gap-2 !px-2 border-none">
-        <span class="font-semibold">Войти через Telegram</span>
-        <icon-list icon="telegram-outline" />
-      </button>
+      <div class="grid md:grid-cols-2 w-full gap-2 mt-4">
+        <button type="button" class="sn-btn secondary flex items-center justify-center gap-2 !px-2 border-none">
+          <span class="font-semibold">Войти через Telegram</span>
+          <icon-list icon="telegram-outline"/>
+        </button>
 
-      <button
-        class="sn-btn font-semibold order-first md:order-last"
-        (click)="sendEmail()"
-        [disabled]="email.invalid"
-      >
-        Отправить код
-      </button>
-    </div>
+        <button
+          class="sn-btn font-semibold order-first md:order-last"
+          type="submit"
+          [disabled]="email.invalid"
+        >
+          Отправить код
+        </button>
+      </div>
+    </form>
   }
 </div>
