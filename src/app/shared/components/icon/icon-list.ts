@@ -37,7 +37,7 @@ export const ICON_LIST: IconList[] = [
   {
     name: 'basket',
     icon: `
-    <svg width="24" height="20" viewBox="0 0 24 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="26" height="26" viewBox="0 0 24 26" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M1.97134 10.4082C2.01958 9.80683 2.29261 9.24565 2.73613 8.83639C3.17951 8.42729 3.76084 8.20005 4.3642 8.2002H18.8339C19.4372 8.20005 20.0186 8.42729 20.4619 8.83639C20.9053 9.24565 21.1785 9.80683 21.2267 10.4082L22.1902 22.4084C22.2167 22.7386 22.1747 23.0707 22.0665 23.3839C21.9584 23.6971 21.7865 23.9844 21.5618 24.2279C21.3372 24.4714 21.0646 24.6657 20.7612 24.7987C20.4576 24.9316 20.13 25.0003 19.7987 25.0005H3.3994C3.06805 25.0003 2.74045 24.9316 2.4369 24.7987C2.13349 24.6657 1.86089 24.4714 1.63625 24.2279C1.41146 23.9844 1.23967 23.6971 1.13153 23.3839C1.02338 23.0707 0.981189 22.7386 1.00769 22.4084L1.97134 10.4082Z" stroke="#222222" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M16.3999 11.8001V5.80002C16.3999 4.52704 15.8942 3.30605 14.994 2.40589C14.0939 1.50574 12.8729 1 11.5999 1C10.3268 1 9.10598 1.50574 8.20583 2.40589C7.30554 3.30605 6.7998 4.52704 6.7998 5.80002V11.8001" stroke="#222222" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
@@ -46,7 +46,7 @@ export const ICON_LIST: IconList[] = [
   {
     name: 'basket-active',
     icon: `
-      <svg width="24" height="22" viewBox="0 0 15 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg width="26" height="26" viewBox="0 0 15 17" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M1.09171 6.72199C1.12357 6.32109 1.30389 5.94697 1.59681 5.67413C1.88963 5.40139 2.27357 5.2499 2.67206 5.25H12.2284C12.6269 5.2499 13.0108 5.40139 13.3037 5.67413C13.5965 5.94697 13.7769 6.32109 13.8088 6.72199L14.4451 14.7222C14.4626 14.9423 14.4348 15.1637 14.3634 15.3725C14.292 15.5813 14.1784 15.7728 14.0301 15.9351C13.8817 16.0975 13.7017 16.227 13.5013 16.3157C13.3008 16.4043 13.0845 16.4501 12.8656 16.4502H2.03486C1.81602 16.4501 1.59966 16.4043 1.39918 16.3157C1.1988 16.227 1.01876 16.0975 0.870402 15.9351C0.721944 15.7728 0.608484 15.5813 0.537061 15.3725C0.465638 15.1637 0.437772 14.9423 0.455271 14.7222L1.09171 6.72199Z" fill="black" stroke="#222222" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M10.6191 7.6503V3.65021C10.6191 2.80156 10.2851 1.98756 9.69062 1.38746C9.09612 0.787352 8.28974 0.450195 7.44902 0.450195C6.6082 0.450195 5.8019 0.787352 5.20741 1.38746C4.61282 1.98756 4.27881 2.80156 4.27881 3.65021V7.6503" stroke="#222222" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
@@ -63,7 +63,7 @@ export const ICON_LIST: IconList[] = [
   {
     name: 'search',
     icon: `
-      <svg width="24" height="28" viewBox="0 0 19 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg width="28" height="28" viewBox="0 0 19 20" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M8.32815 3.18555C6.72183 3.18555 5.18128 3.82373 4.04544 4.95969C2.9096 6.09565 2.27148 7.63635 2.27148 9.24285C2.27148 10.8494 2.9096 12.3901 4.04544 13.526C5.18128 14.662 6.72183 15.3001 8.32815 15.3001C9.9345 15.3001 11.475 14.662 12.6109 13.526C13.7467 12.3901 14.3848 10.8494 14.3848 9.24285C14.3848 7.63635 13.7467 6.09565 12.6109 4.95969C11.475 3.82373 9.9345 3.18555 8.32815 3.18555Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M15.8991 16.8142L12.6055 13.5205" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
@@ -72,7 +72,7 @@ export const ICON_LIST: IconList[] = [
   {
     name: 'search-active',
     icon: `
-      <svg width="24" height="28" viewBox="0 0 19 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg width="28" height="28" viewBox="0 0 19 20" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M8.32815 3.18555C6.72183 3.18555 5.18128 3.82373 4.04544 4.95969C2.9096 6.09565 2.27148 7.63635 2.27148 9.24285C2.27148 10.8494 2.9096 12.3901 4.04544 13.526C5.18128 14.662 6.72183 15.3001 8.32815 15.3001C9.9345 15.3001 11.475 14.662 12.6109 13.526C13.7467 12.3901 14.3848 10.8494 14.3848 9.24285C14.3848 7.63635 13.7467 6.09565 12.6109 4.95969C11.475 3.82373 9.9345 3.18555 8.32815 3.18555Z" fill="black" stroke="#222222" stroke-width="0.908595" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M15.8991 16.8147L12.6055 13.521" stroke="#222222" stroke-width="0.908595" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
@@ -81,7 +81,7 @@ export const ICON_LIST: IconList[] = [
   {
     name: 'home',
     icon: `
-      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg width="28" height="28" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M17.4167 9.16667V17.4167C17.4167 18.4292 16.5959 19.25 15.5833 19.25H6.41667C5.40414 19.25 4.58333 18.4292 4.58333 17.4167V9.16667M19.25 11L11 2.75L2.75 11" stroke="black" stroke-width="0.916667" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     `
@@ -89,7 +89,7 @@ export const ICON_LIST: IconList[] = [
   {
     name: 'home-active',
     icon: `
-      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg width="28" height="28" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M15.5833 19.25H6.41667C5.40414 19.25 4.58333 18.4292 4.58333 17.4167V9.16667L11 2.75L17.4167 9.16667V17.4167C17.4167 18.4292 16.5959 19.25 15.5833 19.25Z" fill="black"/>
         <path d="M17.4167 9.16667V17.4167C17.4167 18.4292 16.5959 19.25 15.5833 19.25H6.41667C5.40414 19.25 4.58333 18.4292 4.58333 17.4167V9.16667M19.25 11L11 2.75L2.75 11" stroke="black" stroke-width="0.916667" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>

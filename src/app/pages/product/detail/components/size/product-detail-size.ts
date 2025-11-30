@@ -5,12 +5,14 @@ import {ProductDetailStore} from '@/product/detail/services/product-detail-store
 import {SizeTable} from '@/models/size-table.model';
 import {CartStore} from '@/cart';
 import {Skus} from '@/models/skus.model';
+import {RouterLink} from '@angular/router';
 
 @Component({
   templateUrl: 'product-detail-size.html',
   imports: [
     TuiTabs,
-    NgClass
+    NgClass,
+    RouterLink
   ],
   selector: 'product-detail-size'
 })

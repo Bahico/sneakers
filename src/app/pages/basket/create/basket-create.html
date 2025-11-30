@@ -130,7 +130,7 @@
           <span class="flex mt-1 mr-3 min-w-6 h-6 justify-center items-center border border-primary rounded">
             <i class="fa fa-info" aria-hidden="true"></i>
           </span>
-          <span class="text-lg font-semibold">Зачем мои паспортные данные?</span>
+          <span class="text-lg font-semibold text-wrap max-w-[80%]">Зачем мои паспортные данные?</span>
 
           <button class="flex h-6 w-6 items-center justify-center absolute right-0 top-1/2 -translate-y-1/2 cursor-pointer" (click)="hideText.set(!hideText())">
             <icon-list [icon]="hideText() ? 'plus' : 'minus'" />
@@ -141,7 +141,7 @@
           [class.max-h-0]="hideText()"
           [class.max-h-70]="!hideText()"
         >
-          <p>Все посылки в рамках международных отправлений проходят процедуру таможенного оформления. Для товаров личного пользования используется реестр экспресс-грузов, который, согласно приказу ФТС(федеральная таможенная служба) №1060 от 05.07.18, должен содержать в себе сведения о документе, удостоверяющем личность физического лица – паспортные данные и ИНН. Sneaker team действует в рамках таможенного законодательства и организует процесс сбора паспортных данных в личном кабинете на сайте. Мы не храним паспортные данные, вся информация передается по безопасным каналам связи.</p>
+          <p>Все посылки в рамках международных отправлений проходят процедуру таможенного оформления. Для товаров личного пользования используется реестр экспресс-грузов, который, согласно приказу ФТС(федеральная таможенная служба) №1060 от 05.07.18, должен содержать в себе сведения о документе, удостоверяющем личность физического лица – паспортные данные и ИНН. Sneaker Team действует в рамках таможенного законодательства и организует процесс сбора паспортных данных в личном кабинете на сайте. Мы не храним паспортные данные, вся информация передается по безопасным каналам связи.</p>
         </div>
       </div>
     </div>
@@ -154,7 +154,7 @@
       <input type="number" placeholder="Промокод">
     </div>
     <div class="flex w-full justify-between items-center">
-      <span class="text-lg">У вас есть <strong>356 Sneaker Coins</strong>. Списать?</span>
+      <span class="text-sm md:text-lg">У вас есть <strong>356 Sneaker Coins</strong>. Списать?</span>
       <input
         tuiSwitch
         type="checkbox"
@@ -164,7 +164,7 @@
       />
     </div>
     <div class="flex w-full justify-between items-center">
-      <span class="text-lg">Сплит: Половину оплачиваете сейчас, а вторую половину после того, как мы пришлём Вам фото отчёт заказа со склада в Китае</span>
+      <span class="text-sm md:text-lg">Сплит: Половину оплачиваете сейчас, а вторую половину после того, как мы пришлём Вам фото отчёт заказа со склада в Китае</span>
       <input
         tuiSwitch
         type="checkbox"

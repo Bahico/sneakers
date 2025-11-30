@@ -201,10 +201,10 @@
     <span>Обувь</span>
     <span>Одежда</span>
     <span>Аксессуары</span>
-    <span class="cursor-pointer" routerLink="/information/reviews">Отзывы</span>
-    <span class="cursor-pointer" routerLink="/information/payment">Доставка и оплата</span>
+    <span class="cursor-pointer" (click)="openMobileNavbar.set(false)" routerLink="/information/reviews">Отзывы</span>
+    <span class="cursor-pointer" (click)="openMobileNavbar.set(false)" routerLink="/information/payment">Доставка и оплата</span>
     <span>Блог</span>
-    <span class="cursor-pointer" routerLink="/information/contact">Контакты</span>
+    <span class="cursor-pointer" (click)="openMobileNavbar.set(false)" routerLink="/information/contact">Контакты</span>
   </div>
   <span class="flex gap-2 items-center px-6 py-4 mx-4 text-lg cursor-pointer">
     Избранные

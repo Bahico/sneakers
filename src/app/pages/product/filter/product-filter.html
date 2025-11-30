@@ -117,7 +117,7 @@
             <h4 class="text-xs md:text-sm text-gray-400 truncate mb-2 underline">Перейти в Telegram</h4>
           </div>
         </a>
-        <a target="_blank" href="https://t.me/sneakerteamru">
+        <div routerLink="/information/gift-certificate">
           <img ngSrc="images/product/give-cert.png" alt="" class="w-full object-cover h-76 mb-2 hidden md:block" height="600"
                width="531">
           <img ngSrc="images/product/give-cert-sm.png" alt="" class="w-full object-cover min-h-50 h-50 mb-2 md:hidden object-top" height="600"
@@ -127,7 +127,7 @@
             <h4 class="md:text-2xl font-semibold mb-2 md:mb-4">Подарочный сертификат</h4>
             <h4 class="text-xs md:text-sm text-gray-400 truncate mb-2 underline">Оформить в 2 клика</h4>
           </div>
-        </a>
+        </div>
 
         @for (product of products(); track product.spuId) {
           <product-list-detail [detail]="product"/>
