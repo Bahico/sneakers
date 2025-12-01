@@ -1,5 +1,5 @@
 <div class="container hidden md:flex justify-between items-center py-4 gap-4">
-  <div class="flex gap-10 items-center md:w-1/2 xl:w-[70%]">
+  <div class="flex gap-10 items-center md:w-1/2 xl:!w-[80%]">
     <img
       ngSrc="images/logo/logo.png"
       alt="site logo"
@@ -24,7 +24,7 @@
     </div>
   </div>
 
-  <div class="flex gap-2 items-center w-1/2 xl:w-[30%] justify-end">
+  <div class="flex gap-2 items-center w-1/2 xl:!w-[40%] justify-end">
     <div class="sn-control !w-110 !py-1">
       <icon-list icon="search" class="sn-control-icon"/>
       <input
@@ -47,7 +47,7 @@
           class="py-1 px-2 cursor-pointer"
           routerLink="/basket"
         >
-          <icon-list icon="basket"/>
+          <icon-list icon="basket-sm"/>
         </div>
       </tui-badged-content>
     } @else {
@@ -118,12 +118,12 @@
         Добавить в корзину
       }
     </button>
-    <div class="flex flex-col items-center navbar-item" routerLink="/home" routerLinkActive="active">
+    <div (click)="openMobileNavbar.set(false)" class="flex flex-col items-center navbar-item" routerLink="/home" routerLinkActive="active">
       <icon-list class="h-7 unactive" icon="home" />
       <icon-list class="h-7 active" icon="home-active" />
       <span class="text-xs">Главная</span>
     </div>
-    <div class="flex flex-col items-center navbar-item" routerLink="/product/filter" routerLinkActive="active">
+    <div (click)="openMobileNavbar.set(false)" class="flex flex-col items-center navbar-item" routerLink="/product/filter" routerLinkActive="active">
       <icon-list class="h-7 unactive" icon="search"/>
       <icon-list class="h-7 active" icon="search-active"/>
       <span class="text-xs">Поиск</span>
@@ -138,6 +138,7 @@
         </tui-badge-notification>
         <div
           routerLink="/basket"
+          (click)="openMobileNavbar.set(false)"
           routerLinkActive="active"
           class="flex flex-col items-center text-xl navbar-item"
         >
@@ -153,7 +154,7 @@
       </div>
     }
     @if (isAuthed()) {
-      <div class="flex flex-col items-center navbar-item" routerLink="/profile" routerLinkActive="active">
+      <div class="flex flex-col items-center navbar-item" (click)="openMobileNavbar.set(false)" routerLink="/profile" routerLinkActive="active">
         <icon-list class="h-7 unactive" icon="profile"/>
         <icon-list class="h-7 active" icon="profile-active"/>
         <span class="text-xs">Профиль</span>
