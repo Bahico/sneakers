@@ -1,10 +1,13 @@
 import {Component, inject} from '@angular/core';
 import {AccountStore} from '@/account';
-import {Router} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 
 @Component({
   templateUrl: 'profile-menu.html',
   selector: 'profile-menu',
+  imports: [
+    RouterLink
+  ],
   styleUrl: 'profile-menu.css'
 })
 export class ProfileMenu {

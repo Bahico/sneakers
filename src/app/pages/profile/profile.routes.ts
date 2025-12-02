@@ -13,5 +13,9 @@ export default [
   {
     path: 'edit',
     loadComponent: () => import('./pages/edit/profile-edit')
+  },
+  {
+    path: 'loyalty-program',
+    loadComponent: () => import('./pages/loyalty-program/loyalty-program')
   }
 ] satisfies Routes;
