@@ -2,13 +2,14 @@ import {Component, inject} from '@angular/core';
 import {injectContext} from '@taiga-ui/polymorpheus';
 import {TuiDialogContext} from '@taiga-ui/core';
 import {AuthenticationOpen} from '@/components/authentication/authentication-open';
-import {ConfigInfos} from '@/components/config-infos/config-infos';
+import {NgOptimizedImage} from '@angular/common';
 
 @Component({
   templateUrl: 'buy-coin.html',
+  styleUrls: ['./buy-coin.css'],
   selector: 'buy-coin',
   imports: [
-    ConfigInfos
+    NgOptimizedImage
   ]
 })
 export class BuyCoin {
