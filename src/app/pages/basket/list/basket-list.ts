@@ -29,8 +29,9 @@ export default class BasketList {
   protected readonly cartService = inject(CartService);
 
   protected readonly summary = signal<Partial<Summary>>({});
+  protected readonly itemsCount = computed(() => this.carts().results.reduce((a, b) => a + b.quantity, 0));
   protected readonly itemsCountText = computed(() => {
-    const n = this.summary().items_count;
+    const n = this.itemsCount();
     if (n % 100 >= 11 && n % 100 <= 14) {
        return "товаров"
     } else if (n % 10 == 1) {
