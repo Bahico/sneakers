@@ -39,6 +39,8 @@
     "@taiga-ui/icons-material": "^4.61.0",
     "@taiga-ui/kit": "^4.58.0",
     "angular8-yandex-maps": "^20.0.0",
+    "dgram": "^1.0.1",
+    "elysia": "^1.4.17",
     "express": "^5.1.0",
     "less": "^4.4.2",
     "ngx-cookie-service": "^20.1.1",
