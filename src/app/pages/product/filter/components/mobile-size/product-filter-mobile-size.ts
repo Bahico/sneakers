@@ -1,20 +1,19 @@
 import {Component} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {TuiCheckbox, TuiTab, TuiTabsHorizontal} from '@taiga-ui/kit';
+import {TuiTab, TuiTabsHorizontal} from '@taiga-ui/kit';
 import {SIZE_TABLE, SIZES} from '@/product/filter/product-filter.constans';
 
 @Component({
-  templateUrl: 'product-filter-size.html',
-  selector: 'product-filter-size',
+  templateUrl: 'product-filter-mobile-size.html',
+  selector: 'product-filter-mobile-size',
   imports: [
     ReactiveFormsModule,
-    TuiCheckbox,
     TuiTab,
     TuiTabsHorizontal,
     FormsModule
   ]
 })
-export class ProductFilterSize {
+export class ProductFilterMobileSize {
   protected readonly sizes = SIZES;
   protected readonly sizeTable = SIZE_TABLE;
 }

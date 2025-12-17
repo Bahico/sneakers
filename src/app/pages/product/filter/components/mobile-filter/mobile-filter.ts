@@ -2,11 +2,11 @@ import {Component, input, output, signal} from '@angular/core';
 import {IconComponent} from '@/components/icon/icon';
 import {ProductFilterPrice} from '@/product/filter/components/price/product-filter-price';
 import {ProductFilterBrand} from '@/product/filter/components/brand/product-filter-brand';
-import {ProductFilterSize} from '@/product/filter/components/size/product-filter-size';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {TuiLabel} from '@taiga-ui/core';
 import {TuiRadioComponent, TuiRadioDirective} from '@taiga-ui/kit';
 import {SORT} from '@/product/filter/product-filter.constans';
+import {ProductFilterMobileSize} from '@/product/filter/components/mobile-size/product-filter-mobile-size';
 
 @Component({
   templateUrl: 'mobile-filter.html',
@@ -20,12 +20,12 @@ import {SORT} from '@/product/filter/product-filter.constans';
     IconComponent,
     ProductFilterPrice,
     ProductFilterBrand,
-    ProductFilterSize,
     ReactiveFormsModule,
     TuiLabel,
     TuiRadioDirective,
     FormsModule,
-    TuiRadioComponent
+    TuiRadioComponent,
+    ProductFilterMobileSize
   ]
 })
 export class MobileFilter {
