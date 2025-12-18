@@ -49,21 +49,9 @@ export default class ProductDetail implements OnDestroy, OnInit {
   private readonly productService = inject(ProductService);
   private readonly route = inject(ActivatedRoute);
   private readonly destroyRef = inject(DestroyRef);
-  private readonly productDetailStore = inject(ProductDetailStore);
+  protected readonly productDetailStore = inject(ProductDetailStore);
   private readonly injector = inject(Injector);
   private readonly platformId = inject(PLATFORM_ID);
-
-
-
-  protected items = signal([
-    {
-      caption: 'В каталог',
-      routerLink: '/product/filter',
-    },
-    {
-      caption: 'Current'
-    },
-  ]);
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
@@ -95,12 +83,6 @@ export default class ProductDetail implements OnDestroy, OnInit {
           this.productDetailStore.update = res;
           const size = res.sizeTable[0];
           this.productDetailStore.sizeType.set(size.primary ? 'primary' : size.type);
-          this.items.update(items => [
-            items[0],
-            {
-              caption: res.name
-            }
-          ]);
         })
       })
   }

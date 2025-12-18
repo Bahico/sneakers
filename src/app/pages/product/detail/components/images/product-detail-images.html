@@ -27,9 +27,18 @@
 </div>
 
 <div class="relative md:hidden">
+  <span class="absolute left-4 top-4">
+    < В каталог
+  </span>
+  <span class="absolute right-4 top-4">
+    <tui-icon
+      icon="@tui.heart"
+    />
+  </span>
   <div
     #mobileScrollContainer
-    class="w-full bg-secondary rounded-2xl h-74 flex overflow-x-auto hidden-scrollbar snap-x snap-mandatory"
+    (click)="openModal()"
+    class="w-full bg-secondary  -74 flex overflow-x-auto hidden-scrollbar snap-x snap-mandatory"
   >
     @for (image of images(); track $index) {
       <img
@@ -72,3 +81,22 @@
   }
 </div>
 
+
+@if (isOpen()) {
+  <div
+    class="image-modal !bg-white"
+  >
+    <button
+      (click)="closeModal()"
+      class="fixed top-2 right-2"
+    >
+      <icon-list icon="close" />
+    </button>
+    <img
+      [src]="images()?.[activeIndex()]"
+      class="modal-image mix-bland-multiply"
+      (click)="$event.stopPropagation()"
+    />
+  </div>
+
+}

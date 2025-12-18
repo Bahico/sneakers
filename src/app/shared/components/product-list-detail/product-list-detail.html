@@ -4,10 +4,16 @@
 >
   <div class="flex justify-between">
     <span [class.hidden]="!onHome()"></span>
-    <span [class.hidden]="onHome()" class="px-1 md:px-2 flex items-center text-xs md:text-sm rounded-xl bg-orange-500 text-white">Быстро разбирают</span>
+    <span
+      [class.hidden]="onHome()"
+      class="px-1 md:px-2 flex items-center h-4 md:h-6 text-[9px] md:text-xs rounded-xl bg-orange-500 text-white"
+    >
+      Быстро разбирают
+    </span>
 
     <tui-icon
       icon="@tui.heart"
+      [style.font-size.rem]="isMobile() ? 1.5 : 2"
     />
   </div>
 

@@ -2,13 +2,15 @@ import {afterNextRender, Component, computed, ElementRef, inject, signal, viewCh
 import {ProductDetailStore} from '@/product/detail/services/product-detail-store';
 import {ImageZoom} from '@/components/image-zoom/image-zoom';
 import {TuiIcon} from '@taiga-ui/core';
-
+import {IconComponent} from '@/components/icon/icon';
 
 @Component({
   templateUrl: 'product-detail-images.html',
+  styleUrl: 'product-detail-images.css',
   imports: [
     ImageZoom,
-    TuiIcon
+    TuiIcon,
+    IconComponent
   ],
   selector: 'product-images'
 })
@@ -21,6 +23,7 @@ export class ProductDetailImages {
 
   images = computed<string[]>(() => this.productDetailStore.detail().images);
   activeIndex = signal(0);
+  isOpen = signal(false);
 
   protected readonly disablePrevious = computed(() => this.activeIndex() === 0);
   protected readonly disableNext = computed(() => this.activeIndex() === this.images()?.length - 1);
@@ -87,5 +90,15 @@ export class ProductDetailImages {
     const containerWidth = container.clientWidth;
     const scrollPosition = index * containerWidth;
     container.scrollTo({ left: scrollPosition, behavior: 'smooth' });
+  }
+
+  openModal() {
+    this.isOpen.set(true);
+    document.body.style.overflow = 'hidden';
+  }
+
+  closeModal() {
+    this.isOpen.set(false);
+    document.body.style.overflow = '';
   }
 }

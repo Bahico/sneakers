@@ -1,0 +1,22 @@
+.product-img {
+  cursor: zoom-in;
+}
+
+.image-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 9999;
+
+  overflow: auto;
+  display: flex;
+  /*justify-content: center;*/
+  align-items: center;
+}
+
+.modal-image {
+  width: 300vw;
+  height: auto;
+  max-width: none;
+  cursor: zoom-out;
+}
