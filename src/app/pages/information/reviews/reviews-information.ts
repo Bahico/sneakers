@@ -1,10 +1,11 @@
-import {afterNextRender, Component, computed, ElementRef, signal, viewChild} from '@angular/core';
+import {afterNextRender, Component, computed, ElementRef, inject, signal, viewChild} from '@angular/core';
 import {NgClass, NgOptimizedImage} from '@angular/common';
 import { IconComponent } from '@/components/icon/icon';
 import { TuiBreadcrumbs } from '@taiga-ui/kit';
 import { TuiItem } from '@taiga-ui/cdk';
 import { TuiLink } from '@taiga-ui/core';
 import { RouterLink } from '@angular/router';
+import {ResponsiveBreakpointsService} from '@/services/responsive-breakpoints.service';
 
 @Component({
   selector: 'reviews-information',
@@ -21,6 +22,8 @@ import { RouterLink } from '@angular/router';
   ]
 })
 export default class ReviewsInformation {
+  private readonly rbs = inject(ResponsiveBreakpointsService);
+
   scrollContainer = viewChild<ElementRef<HTMLDivElement>>('scrollContainer');
 
   scrolling = signal(0);
@@ -31,10 +34,10 @@ export default class ReviewsInformation {
 
   constructor() {
     afterNextRender(() => {
-      if (window.innerWidth < 768) {
+      if (this.rbs.isMobile()) {
         this.scrollSize.set(280);
       }
-      
+
       const container = this.scrollContainer()?.nativeElement;
       if (container) {
         container.addEventListener('scroll', () => this.onScroll());
@@ -51,7 +54,7 @@ export default class ReviewsInformation {
     const containerRect = container.getBoundingClientRect();
     const containerCenter = containerRect.left + containerRect.width / 2;
     const children = Array.from(container.children) as HTMLElement[];
-    
+
     const distances = children.map((child, index) => {
       const childRect = child.getBoundingClientRect();
       const childCenter = childRect.left + childRect.width / 2;

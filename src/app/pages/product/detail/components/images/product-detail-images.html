@@ -38,14 +38,14 @@
   <div
     #mobileScrollContainer
     (click)="openModal()"
-    class="w-full bg-secondary  -74 flex overflow-x-auto hidden-scrollbar snap-x snap-mandatory"
+    class="w-full bg-secondary h-90 flex overflow-x-auto py-4 hidden-scrollbar snap-x snap-mandatory"
   >
     @for (image of images(); track $index) {
       <img
         #mobileImage
         [src]="image"
         alt="product image item"
-        class="min-w-full w-full h-full object-contain snap-center mix-blend-multiply"
+        class="min-w-full w-full h-full object-contain snap-center mix-blend-multiply px-2"
       >
     }
   </div>

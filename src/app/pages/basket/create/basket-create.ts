@@ -10,6 +10,7 @@ import {FormsModule} from '@angular/forms';
 import {DeliveryPlace} from './delivery-place/delivery-place';
 import {DeliveryTypeInputs} from '@/basket/create/delivery-type-inputs/delivery-type-inputs';
 import {PolymorpheusComponent} from '@taiga-ui/polymorpheus';
+import {ResponsiveBreakpointsService} from '@/services/responsive-breakpoints.service';
 
 @Component({
   templateUrl: 'basket-create.html',
@@ -35,6 +36,7 @@ import {PolymorpheusComponent} from '@taiga-ui/polymorpheus';
 export default class BasketCreate {
   private readonly cartStore = inject(CartStore);
   private readonly dialogs = inject(TuiDialogService);
+  private readonly rbs = inject(ResponsiveBreakpointsService);
 
   protected readonly carts = computed(() => this.cartStore.carts());
 
@@ -49,7 +51,7 @@ export default class BasketCreate {
   }
 
   openModal() {
-    if (window.innerWidth < 768) {
+    if (this.rbs.isMobile()) {
       this.dialogs.open(
         new PolymorpheusComponent(DeliveryPlace),
       ).subscribe()
