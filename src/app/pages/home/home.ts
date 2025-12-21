@@ -27,7 +27,7 @@ export default class Home {
 
   constructor() {
     afterNextRender(() => {
-      this.productService.query({}).subscribe();
+      this.productService.query({page:1,limit: 20, sort_by: 'created_at'}).subscribe();
       this.activatedRoute.params.subscribe(params => this.gender.set(params['gender']));
     })
   }

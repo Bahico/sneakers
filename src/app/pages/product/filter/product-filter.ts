@@ -1,8 +1,8 @@
-import {Component, effect, inject, OnInit, signal} from '@angular/core';
+import {afterNextRender, Component, effect, inject, OnInit, signal} from '@angular/core';
 import {TuiBreadcrumbs, TuiRadioComponent} from '@taiga-ui/kit';
 import {TuiDropdown, TuiLink} from '@taiga-ui/core';
 import {TuiActiveZone, TuiItem, TuiObscured} from '@taiga-ui/cdk';
-import {RouterLink} from '@angular/router';
+import {ActivatedRoute, RouterLink, UrlSegment} from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {IconComponent} from '@/components/icon/icon';
 import {PRODUCT_FILTER_BREAD_CRUMBS, SORT} from '@/product/filter/product-filter.constans';
@@ -42,7 +42,7 @@ import {NgOptimizedImage} from '@angular/common';
     TuiActiveZone
   ]
 })
-export default class ProductFilter implements OnInit {
+export default class ProductFilter {
   private readonly productService = inject(ProductService);
   private readonly productFilterStore = inject(ProductFilterStore);
 
@@ -62,6 +62,9 @@ export default class ProductFilter implements OnInit {
   products = signal<ProductListDetailModel[]>([]);
 
   constructor() {
+    afterNextRender(() => {
+      // this.loadProduct();
+    })
     effect(() => {
       if (typeof document === 'undefined' || !document.body) {
         return;
@@ -73,10 +76,6 @@ export default class ProductFilter implements OnInit {
         document.body.style.overflow = '';
       }
     });
-  }
-
-  ngOnInit() {
-    this.loadProduct();
   }
 
   loadProduct() {

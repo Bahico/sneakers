@@ -11,5 +11,11 @@ export default [
   {
     path: 'filter',
     loadComponent: () => import('./filter/product-filter'),
+    children: [
+      {
+        path: '**',
+        loadComponent: () => import('./filter/components/category-slug/category-slug')
+      }
+    ]
   }
 ] satisfies import('@angular/router').Routes;
