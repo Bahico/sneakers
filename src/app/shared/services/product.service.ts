@@ -1,7 +1,7 @@
 import {inject, Injectable, signal} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {getEndpoint} from '@/get-endpoint';
-import {ProductListDetailModel, ProductModel} from '@/models/product.model';
+import {ProductListDetailModel, ProductListModel, ProductModel} from '@/models/product.model';
 import {ListResult} from '@/models/list-result';
 import {tap} from 'rxjs';
 
@@ -17,9 +17,9 @@ export class ProductService {
   }
 
   query(params: any) {
-    // return this.http.get<ListResult<ProductListDetailModel>>(getEndpoint('products/'), {params})
-    return this.http.get<ListResult<ProductListDetailModel>>('faker/products.json', {params})
-      .pipe(tap(res => this.products$.set(res.results)));
+    return this.http.get<ProductListModel>(getEndpoint('products/'), {params})
+    // return this.http.get<ProductListModel>('faker/products.json', {params})
+      .pipe(tap(res => this.products$.set(res.products)));
   }
 
   withCategory(params: {category1?: string, category2?: string; category3?: string}) {

@@ -85,7 +85,7 @@ export default class ProductFilter implements OnInit {
         page: this.productFilterStore.currentPage()
       })
       .subscribe(res => {
-        this.products.update(items => [...items, ...res.results]);
+        this.products.update(items => [...items, ...res.products]);
         // this.products.update(items => res.results);
       })
   }

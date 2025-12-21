@@ -96,7 +96,7 @@ export default class ProductDetail implements OnDestroy, OnInit {
         category3: detail.category.category3,
       })
       .subscribe(res => {
-        this.productDetailStore.updateSimilar = res.results.splice(0, 8);
+        this.productDetailStore.updateSimilar = res.products.splice(0, 8);
       })
   }
 }

@@ -63,3 +63,20 @@ export interface ProductListDetailModel {
   first_image: string;
   skus: Skus[];
 }
+
+export interface ProductListModel {
+  products: ProductListDetailModel[];
+  total: number;
+  page: number;
+  limit: number;
+  pages: number;
+  category: {
+    id: string;
+    full_slug: string;
+    name: {
+      MALE: string;
+      FEMALE: string;
+      UNISEX: string;
+    }
+  }
+}
