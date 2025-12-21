@@ -1,12 +1,11 @@
 import {
   afterNextRender,
   Component,
-  computed,
   DestroyRef,
-  inject, Injector,
+  inject,
+  Injector,
   OnDestroy, OnInit, PLATFORM_ID,
-  runInInjectionContext,
-  signal
+  runInInjectionContext
 } from '@angular/core';
 import {ProductService} from '@/services/product.service';
 import {ActivatedRoute, RouterLink} from '@angular/router';
@@ -68,20 +67,20 @@ export default class ProductDetail implements OnDestroy, OnInit {
       .params
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(params => {
-        if (params['spuId']) {
-          this.loadProduct(params['spuId']);
+        if (params['id']) {
+          this.loadProduct(params['id']);
         }
       })
   }
 
-  loadProduct(spuId: number) {
+  loadProduct(id: string) {
     this.productService
-      .detail(spuId)
+      .detail(id)
       .pipe(finalize(() => this.loadSimilarOnes()))
       .subscribe(res => {
         runInInjectionContext(this.injector, () => {
           this.productDetailStore.update = res;
-          const size = res.sizeTable[0];
+          const size = res.size_table[0];
           this.productDetailStore.sizeType.set(size.primary ? 'primary' : size.type);
         })
       })
@@ -91,9 +90,7 @@ export default class ProductDetail implements OnDestroy, OnInit {
     const detail = this.productDetailStore.detail();
     this.productService
       .query({
-        category1: detail.category.category1,
-        category2: detail.category.category2,
-        category3: detail.category.category3,
+        category_slug: detail.category.full_slug
       })
       .subscribe(res => {
         this.productDetailStore.updateSimilar = res.products.splice(0, 8);

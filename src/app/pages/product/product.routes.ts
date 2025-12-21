@@ -5,11 +5,11 @@ export default [
     pathMatch: 'full',
   },
   {
-    path: 'detail/:spuId',
+    path: 'detail/:id',
     loadComponent: () => import('./detail/product-detail'),
   },
   {
-    path: 'filter',
+    path: ':gender',
     loadComponent: () => import('./filter/product-filter'),
     children: [
       {

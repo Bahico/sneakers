@@ -44,12 +44,12 @@ export default class Navbar {
   protected open = false;
   protected readonly openMobileNavbar = signal(false);
 
-  protected readonly basketProductCount = computed(() => this.cartStore.carts().count);
+  protected readonly basketProductCount = computed(() => this.cartStore.carts().total_items);
 
   openCartBtn = computed(() => !!this.productDetailStore.selectedSkus());
   addedCart = computed(() =>
     this.productDetailStore.selectedSkus() &&
-    this.cartStore.carts()?.results?.find(item => item.sku.skuId === this.productDetailStore.selectedSkus()?.skuId)
+    this.cartStore.carts()?.items?.find(item => item.sku.id === this.productDetailStore.selectedSkus()?.id)
   );
 
   logout() {

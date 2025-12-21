@@ -1,13 +1,18 @@
-import {ProductListDetailModel} from '@/models/product.model';
-import {Skus} from '@/models/skus.model';
+import {ProductListDetailModel, Variant} from '@/models/product.model';
 
-export interface CartList {
+export interface CartListDetail {
   id: number;
   created_at: Date | string;
   product: ProductListDetailModel;
   quantity: number;
   size: string;
-  sku: Skus;
+  sku: Variant;
+}
+
+export interface CartList {
+  items: CartListDetail[];
+  total_items: number;
+  total_price: number;
 }
 
 export interface CartAdd {

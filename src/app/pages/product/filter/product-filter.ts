@@ -63,7 +63,7 @@ export default class ProductFilter {
 
   constructor() {
     afterNextRender(() => {
-      // this.loadProduct();
+      this.loadProduct();
     })
     effect(() => {
       if (typeof document === 'undefined' || !document.body) {
@@ -81,7 +81,9 @@ export default class ProductFilter {
   loadProduct() {
     this.productService
       .query({
-        page: this.productFilterStore.currentPage()
+        page: this.productFilterStore.currentPage(),
+        limit: 20,
+        sort_by: 'created_at'
       })
       .subscribe(res => {
         this.products.update(items => [...items, ...res.products]);

@@ -129,7 +129,7 @@
           </div>
         </div>
 
-        @for (product of products(); track product.spuId) {
+        @for (product of products(); track product.id) {
           <product-list-detail [detail]="product"/>
         }
       </div>

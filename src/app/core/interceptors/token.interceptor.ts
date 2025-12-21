@@ -9,7 +9,7 @@ export default function (req: HttpRequest<unknown>, next: HttpHandlerFn): Observ
   if (tokenService.token()) {
     req = req.clone({
       setHeaders: {
-        Authorization: `Bearer ${tokenService.token().access}`
+        Authorization: `Bearer ${tokenService.token().access_token}`
       },
     })
   }

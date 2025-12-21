@@ -22,7 +22,7 @@ export class ProductDetailOrder {
 
   protected readonly selectedSkus = this.productDetailStore.selectedSkus;
   protected readonly cart = this.productDetailStore.cart;
-  protected readonly data$ = computed(() => this.selectedSkus() || this.productDetailStore.detail()?.skus?.[0]);
+  protected readonly data$ = computed(() => this.selectedSkus() || this.productDetailStore.detail()?.variants?.[0]);
 
   decrease() {
     this.cartService.decrease(this.cart().id).subscribe();

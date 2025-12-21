@@ -12,8 +12,8 @@ export class ProductService {
   private readonly products$ = signal<ProductListDetailModel[]>([])
   readonly products = this.products$.asReadonly();
 
-  detail(spuId: number) {
-    return this.http.get<ProductModel>(getEndpoint(`products/${spuId}`));
+  detail(id: string) {
+    return this.http.get<ProductModel>(getEndpoint(`products/id/${id}`));
   }
 
   query(params: any) {

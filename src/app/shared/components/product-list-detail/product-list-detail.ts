@@ -1,8 +1,9 @@
-import {afterNextRender, Component, input, signal} from '@angular/core';
+import {afterNextRender, Component, inject, input, signal} from '@angular/core';
 import {ProductListDetailModel} from '@/models/product.model';
 import {AsyncPipe} from '@angular/common';
 import {RouterLink} from '@angular/router';
 import {TuiFormatNumberPipe, TuiIcon} from '@taiga-ui/core';
+import {ResponsiveBreakpointsService} from '@/services/responsive-breakpoints.service';
 
 @Component({
   selector: 'product-list-detail',
@@ -15,15 +16,9 @@ import {TuiFormatNumberPipe, TuiIcon} from '@taiga-ui/core';
   ]
 })
 export class ProductListDetail {
+  private readonly rbs = inject(ResponsiveBreakpointsService);
+
   detail = input.required<ProductListDetailModel>();
   onHome = input(false);
-  isMobile = signal(false);
-
-  constructor() {
-    afterNextRender(() => {
-      if (window?.innerWidth <= 640) {
-        this.isMobile.set(true);
-      }
-    })
-  }
+  isMobile = this.rbs.isMobile;
 }

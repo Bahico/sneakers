@@ -19,8 +19,8 @@ export class TokenStore {
       this.token$.set(null)
       return;
     }
-    this.cookieService.set(this.accessCol, value.access, new Date(Date.now() + 1000 * 60 * 60 * 24 * 30), '/');
-    this.cookieService.set(this.refreshCol, value.refresh, new Date(Date.now() + 1000 * 60 * 60 * 24 * 30), '/');
+    this.cookieService.set(this.accessCol, value.access_token, new Date(Date.now() + 1000 * 60 * 60 * 24 * 30), '/');
+    this.cookieService.set(this.refreshCol, value.refresh_token, new Date(Date.now() + 1000 * 60 * 60 * 24 * 30), '/');
     this.token$.set(value);
   }
 
@@ -31,8 +31,8 @@ export class TokenStore {
       this.cookieService.get(this.refreshCol)
     ) {
       this.token$.set({
-        access: this.cookieService.get(this.accessCol),
-        refresh: this.cookieService.get(this.refreshCol)
+        access_token: this.cookieService.get(this.accessCol),
+        refresh_token: this.cookieService.get(this.refreshCol)
       })
     }
     return this.token$.asReadonly();

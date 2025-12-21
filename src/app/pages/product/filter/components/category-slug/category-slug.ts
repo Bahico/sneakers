@@ -11,6 +11,7 @@ export default class CategorySlug {
   fullPath: string[] = [];
 
   constructor() {
+    console.log('aaa')
     afterNextRender(() =>{
       console.log('aaaa')
       this.loadCategory()

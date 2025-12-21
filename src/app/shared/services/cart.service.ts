@@ -2,7 +2,7 @@ import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {getEndpoint} from '@/get-endpoint';
 import {ListResult} from '@/models/list-result';
-import {CartAdd, CartList, Summary} from '@/models/cart';
+import {CartAdd, CartList, CartListDetail, Summary} from '@/models/cart';
 import {CartStore} from '@/cart';
 import {finalize, Observable, tap} from 'rxjs';
 
@@ -12,7 +12,7 @@ export class CartService {
   private readonly cartStore = inject(CartStore);
 
   loadCart() {
-    return this.http.get<ListResult<CartList>>(getEndpoint('cart/'))
+    return this.http.get<CartList>(getEndpoint('cart/'))
       .pipe(tap(res => {
         this.cartStore.update = res;
       }))
@@ -34,7 +34,7 @@ export class CartService {
     return this.updateSize(this.http.post<{quantity: number}>(getEndpoint(`cart/${id}/increase/`), {}), id);
   }
 
-  updateCart(data: CartList) {
+  updateCart(data: CartListDetail) {
     return this.updateFn(this.http.put(getEndpoint(`cart/${data.id}/`), data));
   }
 
@@ -51,7 +51,7 @@ export class CartService {
       .pipe(tap((res) => {
         this.cartStore.update = {
           ...this.cartStore.carts(),
-          results: this.cartStore.carts().results.map(item => {
+          items: this.cartStore.carts().items.map(item => {
             if (item.id === id) {
               return {
                 ...item,

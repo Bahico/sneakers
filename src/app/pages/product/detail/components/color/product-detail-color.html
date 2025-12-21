@@ -26,12 +26,12 @@
         [ngClass]="{
           'border-primary': $index === activeIndex()
         }"
-        routerLink="/product/detail/{{color.spuId}}"
+        routerLink="/product/detail/{{color.id}}"
         (click)="setActiveIndex($index)"
         class="w-1/3 min-w-1/3 h-full border-black/20 border rounded-md"
       >
         <img
-          [src]="color.first_image"
+          [src]="color.images?.[0]"
           class="w-full h-full object-contain"
           alt=""
           [style.mix-blend-mode]="'multiply'"

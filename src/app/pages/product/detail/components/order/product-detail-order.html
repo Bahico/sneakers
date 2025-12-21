@@ -5,8 +5,8 @@
 <div class="mb-2 bg-primary rounded-xl w-full p-4 text-white relative">
 
   <div class="flex mb-4 items-center justify-between">
-    <span class="text-lg flex">{{ data?.deliveryTime?.min }}-{{ data?.deliveryTime?.min }} дней</span>
-    <span class="bg-white p-1 px-2 rounded-md text-primary font-bold">{{ data?.priceV2?.priceWithoutDiscount | tuiFormatNumber | async }} р.</span>
+    <span class="text-lg flex">{{ data?.delivery_min_days }}-{{ data?.delivery_max_days }} дней</span>
+    <span class="bg-white p-1 px-2 rounded-md text-primary font-bold">{{ data?.price_without_discount | tuiFormatNumber | async }} р.</span>
   </div>
 
   <span>
@@ -16,9 +16,9 @@
 
 <div class="mb-6 bg-white border-primary border rounded-xl w-full p-4 relative">
   <div class="flex mb-2 items-center justify-between">
-    <span class="text-lg flex">~{{ data?.deliveryTime?.express_min }}-{{ data?.deliveryTime?.express_max }} дней</span>
+    <span class="text-lg flex">~{{ data?.express_min_days }}-{{ data?.express_max_days }} дней</span>
 
-    <span class="bg-primary text-white p-1 px-2 rounded-md font-bold">{{data?.priceV2?.priceWithExpress | tuiFormatNumber | async}} р.</span>
+    <span class="bg-primary text-white p-1 px-2 rounded-md font-bold">{{data?.price_express_without_discount | tuiFormatNumber | async}} р.</span>
   </div>
 
   <span class="text-gray-500">
@@ -56,7 +56,7 @@
 
 <div class="border-primary border opacity-60 rounded-md px-4 py-2 w-full mt-3 flex justify-between items-center text-lg">
   <span class="text-sm md:text-base">СПЛИТ</span>
-  <span class="text-sm md:text-base">по {{data?.priceV2?.priceWithoutDiscount / 2 | tuiFormatNumber | async}} р х 2 платежа</span>
+  <span class="text-sm md:text-base">по {{data?.price_without_discount / 2 | tuiFormatNumber | async}} р х 2 платежа</span>
   <span class="cursor-pointer text-primary" routerLink="/information/payment">
     <svg width="34" height="34" viewBox="0 0 34 34" class="hidden md:block" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect x="0.5" y="0.5" width="33" height="33" rx="16.5" stroke="#222222"/>

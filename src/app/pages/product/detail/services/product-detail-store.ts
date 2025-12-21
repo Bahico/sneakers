@@ -1,6 +1,5 @@
 import {computed, inject, Injectable, signal} from '@angular/core';
-import {ProductListDetailModel, ProductModel} from '@/models/product.model';
-import {Skus} from '@/models/skus.model';
+import {ProductListDetailModel, ProductModel, Variant} from '@/models/product.model';
 import {AuthenticationOpen} from '@/components/authentication/authentication-open';
 import {AccountStore} from '@/account';
 import {CartService} from '@/services/cart.service';
@@ -26,11 +25,11 @@ export class ProductDetailStore {
   readonly sizeType = signal<string>(null);
   readonly sizeValue = signal<string>(null);
 
-  readonly selectedSkus = computed<Skus>(() =>
-    this.productDetail$().skus?.find(item => item.size[this.sizeType()?.toLowerCase()] === this.sizeValue())
+  readonly selectedSkus = computed<Variant>(() =>
+    this.productDetail$().variants?.find(item => item.size[this.sizeType()?.toLowerCase()] === this.sizeValue())
   );
 
-  readonly cart = computed(() => this.cartStore.carts()?.results?.find(item => item.sku.skuId === this.selectedSkus()?.skuId))
+  readonly cart = computed(() => this.cartStore.carts()?.items?.find(item => item.sku.id === this.selectedSkus()?.id))
 
   get detail() {
     return this.productDetail$.asReadonly();
@@ -52,10 +51,10 @@ export class ProductDetailStore {
     if (!this.isAuthed()) {
       return this.authenticationService.openModal();
     }
-    this.cartService.addCart({
-      sku_id: this.selectedSkus().skuId,
-      quantity: 1
-    }).subscribe();
+    // this.cartService.addCart({
+    //   sku_id: this.selectedSkus().id,
+    //   quantity: 1
+    // }).subscribe();
   }
 
   mobileAddCart() {
@@ -66,12 +65,12 @@ export class ProductDetailStore {
     if (this.cart()) {
       this.openMobileModal().subscribe()
     } else {
-      this.cartService.addCart({
-        sku_id: this.selectedSkus().skuId,
-        quantity: 1
-      })
-        .pipe(concatMap(() => this.openMobileModal()))
-        .subscribe()
+      // this.cartService.addCart({
+      //   sku_id: this.selectedSkus().skuId,
+      //   quantity: 1
+      // })
+      //   .pipe(concatMap(() => this.openMobileModal()))
+      //   .subscribe()
     }
   }
 

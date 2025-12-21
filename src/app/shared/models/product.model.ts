@@ -1,67 +1,92 @@
-import {Skus} from './skus.model';
 import {SizeTable} from './size-table.model';
 import {Series} from './series.model';
-import {ProductProperty} from './product-property.model';
+import {Brand} from '@/models/brand';
+import {Category} from '@/models/category';
 
 export interface ProductModel {
+  id: string;
   fit: string;
-  spuId: number;
   price: number;
   description: string;
   name: string;
+  slug: string;
+  parsed_spu_id: number;
   article: string;
-  brand: string;
-  brandId: number;
-  availability: string;
-  category1: string;
-  category2: string;
-  category3: string;
-  category: {
-    category1: string;
-    category2: string;
-    category3: string;
-  };
-  primarySizeType: string;
-  fromAvailability: boolean;
-  colorTheme: string;
+  availability: boolean;
+  from_availability: boolean;
+  price_from_availability: null;
   returnable: boolean;
+  discount: boolean;
+  shoplaza: boolean;
+  large_sized: boolean;
   images: string[];
+  created_at: Date;
+  updated_at: Date;
+  brand: Brand;
+  category: Category;
   series: Series;
-  skus: Skus[];
-  sizeTable: SizeTable[];
-  metaData: {
-    shoplaza: boolean;
-  };
-  productProperties: ProductProperty[];
-  properties: Properties;
+  size_table: SizeTable[];
+  variants: Variant[];
+  properties: Properties[];
 }
 
 interface Properties {
-  skus: {
-    skuId: number;
-    properties: [];
-  }[];
-  propertyValues: [];
-  propertyTypes: [];
+  id: string;
+  key: string;
+  value: string[];
+  definition_id: string;
+  is_filterable: boolean;
+}
+
+export interface Variant {
+  id: string;
+  api_id: number;
+  price: number;
+  price_without_discount: number;
+  discount: boolean;
+  price_express: number;
+  price_express_without_discount: number;
+  price_from_availability: number;
+  previous_price_from_availability: number;
+  discount_from_availability: boolean;
+  cny_price: number;
+  split_first: number;
+  split_second: number;
+  size: any;
+  delivery_min_days: number;
+  delivery_max_days: number;
+  express_min_days: number;
+  express_max_days: number;
+  is_main: boolean;
+  from_availability: boolean;
+  large_sized: boolean;
+  shoplaza: boolean;
+  availability: boolean;
+  max_price: number;
+  variant_images: string[];
 }
 
 export interface ProductListDetailModel {
+  id: string;
   slug: string;
   name: string;
-  spuId: number;
-  brand: string;
-  availability: string;
+  brand: Brand;
+  availability: boolean;
   category: {
     category1: string;
     category2: string;
     category3: string;
   };
   fit: 'MALE' | 'MAN';
+  discount: boolean;
+  returnable: boolean;
+  large_sized: boolean;
+  shoplaza: boolean;
   price: number;
   article: string;
   split: number;
-  first_image: string;
-  skus: Skus[];
+  images: string[];
+  main_variant: Variant;
 }
 
 export interface ProductListModel {

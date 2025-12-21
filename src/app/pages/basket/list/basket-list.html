@@ -12,20 +12,20 @@
     }
   </tui-breadcrumbs>
 
-  @if (carts()?.count) {
+  @if (carts()?.total_items) {
     <div class="grid grid-cols-1 md:grid-cols-8 lg:grid-cols-12 gap-6">
       <div class="col-span-1 md:col-span-5 lg:col-span-8">
         <h1 class="text-3xl font-bold text-primary mb-6">Корзина</h1>
 
         <div class="p-4 border flex flex-col gap-3 w-full border-gray-200 rounded-xl">
-          @for (cart of carts().results; track cart.id) {
+          @for (cart of carts().items; track cart.id) {
             <div class="w-full flex gap-4 border-b border-gray-200 last:border-b-0 pb-4 last:pb-0 relative h-40">
               <div
-                routerLink="/product/detail/{{cart.product.spuId}}"
+                routerLink="/product/detail/{{cart.product.id}}"
                 class="w-40 h-full rounded-xl bg-gray-200 px-2 cursor-pointer"
               >
                 <img
-                  [src]="cart.product.first_image"
+                  [src]="cart.product.images?.[0]"
                   style="mix-blend-mode: multiply;"
                   class="flex w-full h-full object-contain"
                   alt=""

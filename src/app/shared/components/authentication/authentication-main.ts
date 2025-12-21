@@ -78,7 +78,7 @@ export class AuthenticationMain {
           this.tokenStore.update = token;
           this.context.$implicit.complete();
           this.accountStore.getAccount().subscribe();
-          this.cartService.loadCart().subscribe();
+          // this.cartService.loadCart().subscribe();
         },
         error: () => {
           this.errorCode.set(true);

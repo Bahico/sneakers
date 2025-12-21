@@ -1,11 +1,11 @@
-import {Component, computed, inject, model, OnInit} from '@angular/core';
+import {Component, computed, inject, model} from '@angular/core';
 import {TuiTabs} from '@taiga-ui/kit';
 import {NgClass} from '@angular/common';
 import {ProductDetailStore} from '@/product/detail/services/product-detail-store';
 import {SizeTable} from '@/models/size-table.model';
 import {CartStore} from '@/cart';
-import {Skus} from '@/models/skus.model';
 import {RouterLink} from '@angular/router';
+import {Variant} from '@/models/product.model';
 
 @Component({
   templateUrl: 'product-detail-size.html',
@@ -26,13 +26,13 @@ export class ProductDetailSize {
   protected readonly activeItemIndex = model<number>(0);
 
   protected readonly sizeTable = computed(() =>
-    this.detail()?.sizeTable?.filter(size =>
-      this.detail().skus.some(sku => sku.size[this.getName(size).toLowerCase()])
+    this.detail()?.size_table?.filter(size =>
+      this.detail().variants.some(sku => sku.size[this.getName(size).toLowerCase()])
     )
   );
 
   protected readonly sizes = computed(() =>
-    this.detail().sizeTable?.[this.activeItemIndex()]?.values?.map(size => {
+    this.sizeTable()?.[this.activeItemIndex()]?.values?.map(size => {
       const sku = this.getSku(size);
       return {
         value: size,
@@ -43,7 +43,7 @@ export class ProductDetailSize {
   )
 
   onChangeIndex() {
-    const size = this.detail().sizeTable[this.activeItemIndex()];
+    const size = this.sizeTable()[this.activeItemIndex()];
     this.productDetailStore.sizeType.set(this.getName(size));
   }
 
@@ -52,10 +52,10 @@ export class ProductDetailSize {
   }
 
   getSku(size: string) {
-    return this.detail().skus.find(sku => sku.size[this.activeType()] === size)
+    return this.detail().variants.find(sku => sku.size[this.activeType().toLowerCase()] === size)
   }
 
-  added(sku: Skus) {
-    return this.cartStore.carts()?.results?.some(item => item.sku.skuId === sku.skuId)
+  added(variant: Variant) {
+    return this.cartStore.carts()?.items?.some(item => item.sku.id === variant.id)
   }
 }

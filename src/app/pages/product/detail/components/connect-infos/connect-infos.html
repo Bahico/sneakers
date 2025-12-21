@@ -64,9 +64,9 @@
     <span class="text-primary text-xl font-bold">Описание</span>
 
     @if (openDescription()) {
-      <icon-list icon="minus" />
+      <icon-list icon="minus" class="w-8  h-8 flex items-center justify-center" />
     } @else {
-      <icon-list icon="plus" />
+      <icon-list icon="plus" class="w-8 h-8 flex items-center justify-center" />
     }
   </div>
   <p>{{detail().description}}</p>
@@ -83,17 +83,17 @@
     <span class="text-primary text-xl font-bold">Характеристики</span>
 
     @if (openProperties()) {
-      <icon-list icon="minus" />
+      <icon-list icon="minus" class="w-8  h-8 flex items-center justify-center" />
     } @else {
-      <icon-list icon="plus" />
+      <icon-list icon="plus" class="w-8 h-8 flex items-center justify-center" />
     }
   </div>
   <div class="flex flex-col gap-1">
-    @for (property of detail().productProperties; track property.key) {
+    @for (property of detail().properties; track property.key) {
       <div>
-        <span class="text-primary">{{property.translatedKey}}:</span>
+        <span class="text-primary">{{property.key}}:</span>
         <span class="text-primary">
-          @for (value of property.translatedValue; track value) {
+          @for (value of property.value; track value) {
             {{value}}@if (!$last) {,}
           }
         </span>
