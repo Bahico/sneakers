@@ -7,13 +7,14 @@ export const SORT = [
   },
   {
     name: 'Сначала новые',
+    key: 'created_at'
   },
   {
-    key: 'price_asc',
+    key: 'price',
     name: 'По возрастанию цены',
   },
   {
-    key: 'price_desc',
+    key: '-price',
     name: 'По убыванию цены',
   },
 ];

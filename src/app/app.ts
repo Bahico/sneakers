@@ -7,6 +7,7 @@ import {CartService} from '@/services/cart.service';
 import {AccountStore} from '@/account';
 import {mergeMap} from 'rxjs';
 import {FavoriteService} from '@/services/favorite.service';
+import {TokenStore} from '@/token';
 
 @Component({
   selector: 'app-root',
@@ -18,12 +19,14 @@ export class App {
   private readonly cartService = inject(CartService);
   private readonly accountStore = inject(AccountStore);
   private readonly favoritesService = inject(FavoriteService);
+  private readonly tokenStore = inject(TokenStore);
 
   constructor() {
     afterNextRender(() => {
+      if (this.tokenStore.token()?.access_token)
       this.accountStore.getAccount()
         .pipe(
-          mergeMap(() => this.cartService.loadCart()),
+          // mergeMap(() => this.cartService.loadCart()),
           mergeMap(() => this.favoritesService.loadFavorites()))
         .subscribe();
     })

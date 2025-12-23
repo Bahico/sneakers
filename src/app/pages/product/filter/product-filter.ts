@@ -1,8 +1,8 @@
-import {afterNextRender, Component, effect, inject, OnInit, signal} from '@angular/core';
+import {Component, DestroyRef, effect, inject, OnInit, PLATFORM_ID, signal} from '@angular/core';
 import {TuiBreadcrumbs, TuiRadioComponent} from '@taiga-ui/kit';
 import {TuiDropdown, TuiLink} from '@taiga-ui/core';
 import {TuiActiveZone, TuiItem, TuiObscured} from '@taiga-ui/cdk';
-import {ActivatedRoute, RouterLink, UrlSegment} from '@angular/router';
+import {ActivatedRoute, NavigationEnd, Router, RouterLink, UrlSegment} from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {IconComponent} from '@/components/icon/icon';
 import {PRODUCT_FILTER_BREAD_CRUMBS, SORT} from '@/product/filter/product-filter.constans';
@@ -14,8 +14,11 @@ import {ProductFilterSize} from '@/product/filter/components/size/product-filter
 import {ProductFilterBrand} from '@/product/filter/components/brand/product-filter-brand';
 import {MobileFilter} from '@/product/filter/components/mobile-filter/mobile-filter';
 import {InfiniteScrollDirective} from 'ngx-infinite-scroll';
+import {isPlatformBrowser, NgOptimizedImage} from '@angular/common';
+import {Gender} from '@/models/gender';
+import {filter} from 'rxjs';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {ProductFilterStore} from '@/product/filter/product-filter-store';
-import {NgOptimizedImage} from '@angular/common';
 
 @Component({
   selector: 'product-filter',
@@ -42,17 +45,24 @@ import {NgOptimizedImage} from '@angular/common';
     TuiActiveZone
   ]
 })
-export default class ProductFilter {
+export default class ProductFilter implements OnInit {
   private readonly productService = inject(ProductService);
-  private readonly productFilterStore = inject(ProductFilterStore);
+  private readonly productFilterService = inject(ProductFilterStore);
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly platformId = inject(PLATFORM_ID);
 
   protected readonly items = PRODUCT_FILTER_BREAD_CRUMBS;
   protected readonly throttle = 10;
   protected readonly scrollDistance = 2;
   protected readonly sorts = SORT;
 
+  currentPage = signal(1);
   protected readonly sort = signal(SORT[0]);
   protected readonly openFilter = signal(false);
+  private fullPath: string[] = [];
+  private gender: Gender = 'male';
   protected open = false;
   protected readonly openFilters = signal({
     size: true,
@@ -62,9 +72,6 @@ export default class ProductFilter {
   products = signal<ProductListDetailModel[]>([]);
 
   constructor() {
-    afterNextRender(() => {
-      this.loadProduct();
-    })
     effect(() => {
       if (typeof document === 'undefined' || !document.body) {
         return;
@@ -78,21 +85,62 @@ export default class ProductFilter {
     });
   }
 
-  loadProduct() {
-    this.productService
-      .query({
-        page: this.productFilterStore.currentPage(),
-        limit: 20,
-        sort_by: 'created_at'
-      })
-      .subscribe(res => {
-        this.products.update(items => [...items, ...res.products]);
-        // this.products.update(items => res.results);
+  ngOnInit() {
+    if (isPlatformBrowser(this.platformId)) {
+      this.subscribeRouteChange();
+      this.loadCategory();
+    }
+  }
+
+  subscribeRouteChange() {
+    this.router.events
+      .pipe(
+        filter((event) => event instanceof NavigationEnd),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe((_) => {
+        this.currentPage.set(1);
+        this.products.set([]);
+
+        this.loadCategory();
       })
   }
 
+  loadCategory() {
+    this.gender = <Gender>this.route.snapshot.params['gender'];
+
+    this.route.children[0].url.subscribe((segments: UrlSegment[]) => {
+      this.fullPath = segments.map(s => s.path);
+      this.loadProduct();
+      this.getBrands();
+      this.getSizeTables();
+    });
+  }
+
+  loadProduct() {
+    this.productService
+      .query(this.rowFilter)
+      .subscribe(res => {
+        this.products.update(items => [...items, ...res.products]);
+      })
+  }
+
+  get rowFilter() {
+    const filter = {
+      page: this.currentPage(),
+      limit: 20,
+      category_slug: this.fullPath.join('/'),
+      fit: this.gender.toUpperCase()
+    }
+
+    if (this.sort().key) {
+      filter['sort_by'] = this.sort().key
+    }
+    return filter
+  }
+
   nextPage() {
-    this.productFilterStore.currentPage.update(page => page + 1);
+    this.currentPage.update(page => page + 1);
     this.loadProduct();
   }
 
@@ -102,6 +150,27 @@ export default class ProductFilter {
         [key]: !filters[key]
       })
     );
+  }
+
+  getBrands() {
+    this.productService
+      .brands({
+        limit: 100,
+        category_slug: this.fullPath.join('/')
+      })
+      .subscribe(res => {
+        this.productFilterService.brands.set(res);
+      })
+  }
+
+  getSizeTables() {
+    this.productService
+      .sizes({
+        category_slug: this.fullPath.join('/')
+      })
+      .subscribe(res => {
+        this.productFilterService.sizeTables.set(res.size_table);
+      })
   }
 
   protected onClick(): void {

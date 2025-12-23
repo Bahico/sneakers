@@ -4,6 +4,8 @@ import {getEndpoint} from '@/get-endpoint';
 import {ProductListDetailModel, ProductListModel, ProductModel} from '@/models/product.model';
 import {ListResult} from '@/models/list-result';
 import {tap} from 'rxjs';
+import {Brand} from '@/models/brand';
+import {SizeTable} from '@/models/size-table.model';
 
 @Injectable({providedIn: 'root'})
 export class ProductService {
@@ -17,12 +19,15 @@ export class ProductService {
   }
 
   query(params: any) {
-    return this.http.get<ProductListModel>(getEndpoint('products/'), {params})
-    // return this.http.get<ProductListModel>('faker/products.json', {params})
+    return this.http.get<ProductListModel>(getEndpoint('products'), {params})
       .pipe(tap(res => this.products$.set(res.products)));
   }
 
-  withCategory(params: {category1?: string, category2?: string; category3?: string}) {
-    return this.http.get<ListResult<ProductListDetailModel>>(getEndpoint('products_actual/'), {params});
+  brands(query: {limit: number; category_slug: string}) {
+    return this.http.get<Brand[]>(getEndpoint('brands'), {params: query});
+  }
+
+  sizes(query: {category_slug: string; brand_id?: string}) {
+    return this.http.get<{size_table: SizeTable[]}>(getEndpoint('products/filters/sizes'), {params: query});
   }
 }

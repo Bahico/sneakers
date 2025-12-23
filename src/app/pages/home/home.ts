@@ -9,8 +9,9 @@ import {NgOptimizedImage} from '@angular/common';
 import {TuiDialogService} from '@taiga-ui/core';
 import {PolymorpheusComponent} from '@taiga-ui/polymorpheus';
 import {PoizonProductCalculate} from '@/home/components/poizon-product-calculate/poizon-product-calculate';
+import {Gender} from '@/models/gender';
+import {HomeStore} from '@/home.store';
 
-export type Gender = 'male' | 'female';
 
 @Component({
   templateUrl: 'home.html',
@@ -22,8 +23,9 @@ export default class Home {
   private readonly productService = inject(ProductService);
   private readonly dialogs = inject(TuiDialogService);
   private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly homeStore = inject(HomeStore);
 
-  gender = signal<Gender>('male');
+  gender = this.homeStore.gender;
 
   constructor() {
     afterNextRender(() => {

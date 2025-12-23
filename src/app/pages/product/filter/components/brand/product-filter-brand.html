@@ -8,19 +8,20 @@
   </div>
 
   <div class="flex flex-col gap-2 mt-4">
-    @for (_ of [0, 1, 2]; track $index) {
+    @for (letter of lettersArraySorted(); track letter) {
       <div class="flex flex-col gap-1">
-        <span class="font-semibold">A</span>
+        <span class="font-semibold">{{letter}}</span>
 
-        @for (brand of brands; track $index) {
+        @for (brand of letters()[letter]; track $index) {
           <div class="flex gap-1">
             <input
               tuiCheckbox
               type="checkbox"
               [ngModel]="false"
               size="s"
+              [id]="brand.id"
             />
-            <label>{{ brand }}</label>
+            <label class="cursor-pointer" [for]="brand.id">{{ brand.name }}</label>
           </div>
         }
       </div>

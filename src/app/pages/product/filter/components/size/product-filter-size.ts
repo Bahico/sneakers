@@ -1,7 +1,7 @@
-import {Component} from '@angular/core';
+import {Component, inject, signal} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {TuiCheckbox, TuiTab, TuiTabsHorizontal} from '@taiga-ui/kit';
-import {SIZE_TABLE, SIZES} from '@/product/filter/product-filter.constans';
+import {ProductFilterStore} from '@/product/filter/product-filter-store';
 
 @Component({
   templateUrl: 'product-filter-size.html',
@@ -15,6 +15,8 @@ import {SIZE_TABLE, SIZES} from '@/product/filter/product-filter.constans';
   ]
 })
 export class ProductFilterSize {
-  protected readonly sizes = SIZES;
-  protected readonly sizeTable = SIZE_TABLE;
+  protected readonly productFilterStore = inject(ProductFilterStore);
+
+  protected readonly sizeTables = this.productFilterStore.sizeTables;
+  protected readonly activeIndex = signal(0);
 }

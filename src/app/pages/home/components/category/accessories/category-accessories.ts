@@ -1,17 +1,20 @@
-import {Component, input} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {NgOptimizedImage} from '@angular/common';
 import {CategoryDetail} from '@/home/components/category/detail/category-detail';
-import {Gender} from '@/home/home';
+import {HomeStore} from '@/home.store';
+import {RouterLink} from '@angular/router';
 
 @Component({
   templateUrl: 'category-accessories.html',
   imports: [
     NgOptimizedImage,
-    CategoryDetail
+    CategoryDetail,
+    RouterLink
   ],
   selector: 'category-accessories'
 })
 export class CategoryAccessories {
-  gender = input.required<Gender>();
+  private readonly homeStore = inject(HomeStore);
 
+  protected readonly gender = this.homeStore.gender;
 }

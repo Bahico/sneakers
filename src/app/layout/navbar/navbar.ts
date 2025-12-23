@@ -9,6 +9,7 @@ import {Router, RouterLink, RouterLinkActive} from '@angular/router';
 import {TuiBadgedContentComponent, TuiBadgeNotification} from '@taiga-ui/kit';
 import {CartStore} from '@/cart';
 import {ProductDetailStore} from '@/product/detail/services/product-detail-store';
+import {HomeStore} from '@/home.store';
 
 @Component({
   selector: 'navbar',
@@ -39,12 +40,14 @@ export default class Navbar {
   private readonly cartStore = inject(CartStore);
   private readonly productDetailStore = inject(ProductDetailStore);
   private readonly router = inject(Router);
+  private readonly homeStore = inject(HomeStore);
 
   protected readonly isAuthed = computed(() => !!this.accountStore.account());
   protected open = false;
   protected readonly openMobileNavbar = signal(false);
 
   protected readonly basketProductCount = computed(() => this.cartStore.carts().total_items);
+  protected readonly gender = this.homeStore.gender.asReadonly();
 
   openCartBtn = computed(() => !!this.productDetailStore.selectedSkus());
   addedCart = computed(() =>

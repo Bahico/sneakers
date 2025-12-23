@@ -15,7 +15,7 @@ import {interceptors} from '@/interceptors';
 import {AngularYandexMapsModule, YaConfig} from 'angular8-yandex-maps';
 
 const config: YaConfig = {
-  apikey: '2d99c38b-e576-4360-bdf7-b3a1717e4cad',
+  apikey: '76109729-bc49-47c6-b10d-6a78a66b5376',
 };
 
 export const appConfig: ApplicationConfig = {

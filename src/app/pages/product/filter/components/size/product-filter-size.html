@@ -1,25 +1,26 @@
 <div class="flex flex-col gap-2 overflow-hidden px-2">
-  <tui-tabs>
-    @for (size of sizeTable; track $index) {
+  <tui-tabs [(activeItemIndex)]="activeIndex">
+    @for (size of sizeTables(); track size.type) {
       <button
         tuiTab
         type="button"
       >
-        {{size}}
+        {{size.type}}
       </button>
     }
   </tui-tabs>
 
   <div class="grid grid-cols-2 gap-2 mt-2">
-    @for (size of sizes; track $index) {
+    @for (size of sizeTables()?.[activeIndex()]?.values; track size) {
       <div class="flex gap-1">
         <input
           tuiCheckbox
           type="checkbox"
           [ngModel]="false"
           size="s"
+          [id]="size"
         />
-        <label>{{size}}</label>
+        <label class="cursor-pointer" [for]="size">{{size}}</label>
       </div>
     }
   </div>

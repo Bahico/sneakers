@@ -14,7 +14,7 @@ export default [
     children: [
       {
         path: '**',
-        loadComponent: () => import('./filter/components/category-slug/category-slug')
+        loadComponent: () => import('./filter/product-filter')
       }
     ]
   }

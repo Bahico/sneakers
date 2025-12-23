@@ -10,13 +10,23 @@
     >
     <div class="flex gap-6 overflow-x-auto">
       <span
-        routerLink="/product/filter"
+        [routerLink]="['product', gender(), 'footwear']"
         class="text-base font-medium color-base cursor-pointer"
       >
         Обувь
       </span>
-      <span class="text-base font-medium color-base">Одежда</span>
-      <span class="text-base font-medium color-base">Аксессуары</span>
+      <span
+        class="text-base font-medium color-base cursor-pointer"
+        [routerLink]="['product', gender(), 'apparel']"
+      >
+        Одежда
+      </span>
+      <span
+        class="text-base font-medium color-base cursor-pointer"
+        [routerLink]="['product', gender(), 'accessories']"
+      >
+        Аксессуары
+      </span>
       <span class="text-base font-medium color-base cursor-pointer" routerLink="/information/reviews">Отзывы</span>
       <span class="text-base font-medium color-base cursor-pointer text-nowrap" routerLink="/information/payment">Доставка и оплата</span>
       <span class="text-base font-medium color-base">Блог</span>
