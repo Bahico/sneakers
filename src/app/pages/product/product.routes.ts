@@ -10,7 +10,6 @@ export default [
   },
   {
     path: ':gender',
-    pathMatch: 'full',
     loadComponent: () => import('./filter/product-filter'),
     children: [
       {
