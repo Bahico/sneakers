@@ -10,6 +10,10 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Client
   },
   {
+    path: 'product/:gender',
+    renderMode: RenderMode.Client
+  },
+  {
     path: 'home/:gender',
     renderMode: RenderMode.Client
   },
