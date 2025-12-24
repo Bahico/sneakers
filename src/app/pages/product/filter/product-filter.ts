@@ -126,7 +126,7 @@ export default class ProductFilter implements OnInit {
         if (initial) {
           this.productFilterService.maxPrice.set(res.max_price);
           this.productFilterService.minPrice.set(res.min_price);
-          this.productFilterService.minMaxControl.set([res.min_price, res.max_price]);
+          this.productFilterService.filter.minMax().setControlValue([res.min_price, res.max_price]);
         }
       })
   }

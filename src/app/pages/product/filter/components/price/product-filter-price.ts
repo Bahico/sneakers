@@ -4,6 +4,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ProductFilterStore} from '@/product/filter/product-filter-store';
 import {AsyncPipe} from '@angular/common';
 import {TuiFormatNumberPipe} from '@taiga-ui/core';
+import {Field} from '@angular/forms/signals';
 
 @Component({
   templateUrl: 'product-filter-price.html',
@@ -13,7 +14,8 @@ import {TuiFormatNumberPipe} from '@taiga-ui/core';
     ReactiveFormsModule,
     FormsModule,
     AsyncPipe,
-    TuiFormatNumberPipe
+    TuiFormatNumberPipe,
+    Field
   ]
 })
 export class ProductFilterPrice {
