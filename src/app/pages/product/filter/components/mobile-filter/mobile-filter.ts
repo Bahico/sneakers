@@ -14,6 +14,7 @@ import {ProductFilterMobileSize} from '@/product/filter/components/mobile-size/p
   host: {
     class: 'bg-white absolute overflow-hidden top-0 left-0 right-0 bottom-0 overflow-y-auto w-full h-screen z-10 duration-300',
     '[class.max-h-screen]': 'openFilter()',
+    '[class.pb-40]': 'openFilter()',
     '[class.max-h-0]': '!openFilter()',
   },
   imports: [

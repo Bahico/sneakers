@@ -26,7 +26,7 @@ export class App {
       if (this.tokenStore.token()?.access_token)
       this.accountStore.getAccount()
         .pipe(
-          // mergeMap(() => this.cartService.loadCart()),
+          mergeMap(() => this.cartService.loadCart()),
           mergeMap(() => this.favoritesService.loadFavorites()))
         .subscribe();
     })

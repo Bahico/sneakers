@@ -111,17 +111,23 @@ export default class ProductFilter implements OnInit {
 
     this.route.children[0].url.subscribe((segments: UrlSegment[]) => {
       this.fullPath = segments.map(s => s.path);
-      this.loadProduct();
+      this.loadProduct(true);
       this.getBrands();
       this.getSizeTables();
     });
   }
 
-  loadProduct() {
+  loadProduct(initial = false) {
     this.productService
       .query(this.rowFilter)
       .subscribe(res => {
         this.products.update(items => [...items, ...res.products]);
+
+        if (initial) {
+          this.productFilterService.maxPrice.set(res.max_price);
+          this.productFilterService.minPrice.set(res.min_price);
+          this.productFilterService.minMaxControl.set([res.min_price, res.max_price]);
+        }
       })
   }
 

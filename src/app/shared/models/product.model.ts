@@ -95,6 +95,8 @@ export interface ProductListModel {
   page: number;
   limit: number;
   pages: number;
+  max_price: number;
+  min_price: number;
   category: {
     id: string;
     full_slug: string;
