@@ -1,12 +1,13 @@
-import {Component, input, output, signal} from '@angular/core';
+import {Component, inject, input, output, signal} from '@angular/core';
 import {IconComponent} from '@/components/icon/icon';
 import {ProductFilterPrice} from '@/product/filter/components/price/product-filter-price';
 import {ProductFilterBrand} from '@/product/filter/components/brand/product-filter-brand';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {TuiLabel} from '@taiga-ui/core';
-import {TuiRadioComponent, TuiRadioDirective} from '@taiga-ui/kit';
+import {TuiRadioComponent} from '@taiga-ui/kit';
 import {SORT} from '@/product/filter/product-filter.constans';
 import {ProductFilterMobileSize} from '@/product/filter/components/mobile-size/product-filter-mobile-size';
+import {ProductFilterStore} from '@/product/filter/product-filter-store';
 
 @Component({
   templateUrl: 'mobile-filter.html',
@@ -23,23 +24,23 @@ import {ProductFilterMobileSize} from '@/product/filter/components/mobile-size/p
     ProductFilterBrand,
     ReactiveFormsModule,
     TuiLabel,
-    TuiRadioDirective,
     FormsModule,
     TuiRadioComponent,
     ProductFilterMobileSize
   ]
 })
 export class MobileFilter {
+  protected readonly productFilterStore = inject(ProductFilterStore);
+
   openFilter = input(false);
   openFilterChange = output<boolean>();
 
   protected readonly sorts = SORT;
 
-  protected readonly sort = signal(SORT[0]);
   typeView = signal<'size' | 'brand' | null>(null);
 
-  protected identityMatcher = (a: {name: string}, b: {name: string}): boolean =>
-    a?.name === b?.name;
+  protected identityMatcher = (a: {name: string; key: string}, b: {name: string; key: string}): boolean =>
+    a?.key === b?.key;
 
   back() {
     if (this.typeView()) {

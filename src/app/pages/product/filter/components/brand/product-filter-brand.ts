@@ -2,7 +2,6 @@ import {Component, computed, effect, inject, signal} from '@angular/core';
 import {IconComponent} from '@/components/icon/icon';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {TuiCheckbox} from '@taiga-ui/kit';
-import {BRANDS} from '@/product/filter/product-filter.constans';
 import {ProductFilterStore} from '@/product/filter/product-filter-store';
 import {Brand} from '@/models/brand';
 
@@ -26,9 +25,24 @@ export class ProductFilterBrand {
     effect(() => {
       const letters: {[key: string]: Brand[]} = {};
       for (const brand of this.productFilterStore.brands()) {
-        letters[brand.name[0].toUpperCase()] = [...(letters[brand.name[0].toUpperCase()] || []), brand];
+        letters[brand.name[0]?.toUpperCase()] = [...(letters[brand.name[0]?.toUpperCase()] || []), brand];
       }
       this.letters.set(letters);
     });
+  }
+
+  checkBrand(id: string) {
+    return this.productFilterStore.filter.controls.brand_ids.value.includes(id);
+  }
+
+  clickBrand(id: string) {
+    const brand_ids = this.productFilterStore.filter.controls.brand_ids.value
+    if (this.checkBrand(id)) {
+      const indexOf = brand_ids.indexOf(id);
+      brand_ids.splice(indexOf, 1);
+    } else {
+      brand_ids.push(id);
+    }
+    this.productFilterStore.filter.controls.brand_ids.setValue(brand_ids);
   }
 }

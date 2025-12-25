@@ -19,4 +19,19 @@ export class ProductFilterSize {
 
   protected readonly sizeTables = this.productFilterStore.sizeTables;
   protected readonly activeIndex = signal(0);
+
+  checkSize(id: string) {
+    return this.productFilterStore.filter.controls.sizes.value.includes(id);
+  }
+
+  clickSize(id: string) {
+    const sizes = this.productFilterStore.filter.controls.sizes.value
+    if (this.checkSize(id)) {
+      const indexOf = sizes.indexOf(id);
+      sizes.splice(indexOf, 1);
+    } else {
+      sizes.push(id);
+    }
+    this.productFilterStore.filter.controls.sizes.setValue(sizes);
+  }
 }

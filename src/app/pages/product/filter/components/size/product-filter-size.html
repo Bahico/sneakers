@@ -16,7 +16,9 @@
         <input
           tuiCheckbox
           type="checkbox"
-          [ngModel]="false"
+          [ngModel]="checkSize(size)"
+          [ngModelOptions]="{standalone: true}"
+          (ngModelChange)="clickSize(size)"
           size="s"
           [id]="size"
         />

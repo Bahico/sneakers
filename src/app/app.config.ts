@@ -12,7 +12,7 @@ import {provideEventPlugins} from '@taiga-ui/event-plugins';
 
 import {provideClientHydration, withEventReplay} from '@angular/platform-browser';
 import {interceptors} from '@/interceptors';
-import {AngularYandexMapsModule, YaConfig} from 'angular8-yandex-maps';
+import {provideYaConfig, YaConfig} from 'angular8-yandex-maps';
 
 const config: YaConfig = {
   apikey: '76109729-bc49-47c6-b10d-6a78a66b5376',
@@ -31,6 +31,6 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(withEventReplay()),
     provideHttpClient(withInterceptors(interceptors)),
     provideEventPlugins(),
-    importProvidersFrom(AngularYandexMapsModule.forRoot(config))
+    provideYaConfig(config)
   ]
 };

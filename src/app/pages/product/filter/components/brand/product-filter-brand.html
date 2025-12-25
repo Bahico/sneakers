@@ -17,11 +17,13 @@
             <input
               tuiCheckbox
               type="checkbox"
-              [ngModel]="false"
+              [ngModel]="checkBrand(brand.id)"
+              [ngModelOptions]="{standalone: true}"
+              (ngModelChange)="clickBrand(brand.id)"
               size="s"
               [id]="brand.id"
             />
-            <label class="cursor-pointer" [for]="brand.id">{{ brand.name }}</label>
+            <label class="cursor-pointer" [for]="brand.id">{{ brand.name }}a</label>
           </div>
         }
       </div>

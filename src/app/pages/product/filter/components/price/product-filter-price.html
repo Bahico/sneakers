@@ -1,13 +1,13 @@
 <div class="flex w-full items-center gap-1">
-  <span class="flex px-3 py-0.5 bg-gray-100 rounded-xl text-nowrap w-24">От {{productFilterStore.filter.minMax().value()?.[0] | tuiFormatNumber | async}} р.</span>
+  <span class="flex px-3 py-0.5 bg-gray-100 rounded-xl text-nowrap min-w-24 w-24">От {{minPrice | async | tuiFormatNumber | async}} р.</span>
   <tui-range
     size="m"
     [max]="productFilterStore.maxPrice()"
     [min]="productFilterStore.minPrice()"
-    [field]="productFilterStore.filter.minMax"
+    [formControl]="productFilterStore.filter.controls.min_max_price"
     class="w-full"
     [style.--tui-thickness.rem]="0.5"
     [style.--tui-background-accent-1]="'#222'"
   />
-  <span class="flex px-3 py-0.5 bg-gray-100 rounded-xl text-nowrap w-24">До {{productFilterStore.filter.minMax().value()?.[1] | tuiFormatNumber | async}} р.</span>
+  <span class="flex px-3 py-0.5 bg-gray-100 rounded-xl text-nowrap min-w-24 w-24">До {{maxPrice | async | tuiFormatNumber | async}} р.</span>
 </div>

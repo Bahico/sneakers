@@ -16,7 +16,7 @@ import {MobileFilter} from '@/product/filter/components/mobile-filter/mobile-fil
 import {InfiniteScrollDirective} from 'ngx-infinite-scroll';
 import {isPlatformBrowser, NgOptimizedImage} from '@angular/common';
 import {Gender} from '@/models/gender';
-import {filter} from 'rxjs';
+import {combineLatest, combineLatestAll, combineLatestWith, debounceTime, filter, Subject, takeUntil} from 'rxjs';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {ProductFilterStore} from '@/product/filter/product-filter-store';
 
@@ -47,7 +47,7 @@ import {ProductFilterStore} from '@/product/filter/product-filter-store';
 })
 export default class ProductFilter implements OnInit {
   private readonly productService = inject(ProductService);
-  private readonly productFilterService = inject(ProductFilterStore);
+  protected readonly productFilterStore = inject(ProductFilterStore);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
@@ -58,9 +58,9 @@ export default class ProductFilter implements OnInit {
   protected readonly scrollDistance = 2;
   protected readonly sorts = SORT;
 
-  currentPage = signal(1);
-  protected readonly sort = signal(SORT[0]);
+  protected readonly currentPage = signal(1);
   protected readonly openFilter = signal(false);
+
   private fullPath: string[] = [];
   private gender: Gender = 'male';
   protected open = false;
@@ -70,6 +70,9 @@ export default class ProductFilter implements OnInit {
   });
 
   products = signal<ProductListDetailModel[]>([]);
+
+  private readonly destroyer = new Subject<void>();
+  private readonly initialLoadEvent = new Subject<void>();
 
   constructor() {
     effect(() => {
@@ -87,46 +90,48 @@ export default class ProductFilter implements OnInit {
 
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
-      this.subscribeRouteChange();
-      this.loadCategory();
+      this.subscribeEvents();
     }
   }
 
-  subscribeRouteChange() {
-    this.router.events
+  subscribeEvents() {
+    combineLatest([this.router.events, this.route.children[0].url])
       .pipe(
-        filter((event) => event instanceof NavigationEnd),
-        takeUntilDestroyed(this.destroyRef)
+        takeUntilDestroyed(this.destroyRef),
+        debounceTime(500)
       )
-      .subscribe((_) => {
-        this.currentPage.set(1);
-        this.products.set([]);
-
-        this.loadCategory();
+      .subscribe(([_, segments]) => {
+        this.initialLoad();
+        this.loadCategory(segments);
       })
   }
 
-  loadCategory() {
+  initialLoad() {
+    this.currentPage.set(1);
+    this.products.set([]);
+    this.destroyer.next();
+    this.loadProduct(true);
+  }
+
+  loadCategory(segments: UrlSegment[]) {
     this.gender = <Gender>this.route.snapshot.params['gender'];
 
-    this.route.children[0].url.subscribe((segments: UrlSegment[]) => {
-      this.fullPath = segments.map(s => s.path);
-      this.loadProduct(true);
-      this.getBrands();
-      this.getSizeTables();
-    });
+    this.fullPath = segments.map(s => s.path);
+    this.initialLoadEvent.next();
+    this.getBrands();
+    this.getSizeTables();
   }
 
   loadProduct(initial = false) {
     this.productService
       .query(this.rowFilter)
+      .pipe(takeUntil(this.destroyer))
       .subscribe(res => {
         this.products.update(items => [...items, ...res.products]);
 
         if (initial) {
-          this.productFilterService.maxPrice.set(res.max_price);
-          this.productFilterService.minPrice.set(res.min_price);
-          this.productFilterService.filter.minMax().setControlValue([res.min_price, res.max_price]);
+          this.productFilterStore.maxPrice.set(res.max_price);
+          this.productFilterStore.minPrice.set(res.min_price);
         }
       })
   }
@@ -136,11 +141,13 @@ export default class ProductFilter implements OnInit {
       page: this.currentPage(),
       limit: 20,
       category_slug: this.fullPath.join('/'),
-      fit: this.gender.toUpperCase()
+      fit: this.gender.toUpperCase(),
+      ...this.productFilterStore.filter.getRawValue()
     }
 
-    if (this.sort().key) {
-      filter['sort_by'] = this.sort().key
+    const sortBy = filter.sort_by;
+    if (!sortBy) {
+      delete filter.sort_by;
     }
     return filter
   }
@@ -164,8 +171,9 @@ export default class ProductFilter implements OnInit {
         limit: 100,
         category_slug: this.fullPath.join('/')
       })
+      .pipe(takeUntil(this.destroyer))
       .subscribe(res => {
-        this.productFilterService.brands.set(res);
+        this.productFilterStore.brands.set(res);
       })
   }
 
@@ -174,8 +182,9 @@ export default class ProductFilter implements OnInit {
       .sizes({
         category_slug: this.fullPath.join('/')
       })
+      .pipe(takeUntil(this.destroyer))
       .subscribe(res => {
-        this.productFilterService.sizeTables.set(res.size_table);
+        this.productFilterStore.sizeTables.set(res.size_table);
       })
   }
 

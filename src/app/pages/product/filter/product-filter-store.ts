@@ -1,8 +1,7 @@
 import {Injectable, signal} from '@angular/core';
 import {Brand} from '@/models/brand';
 import {SizeTable} from '@/models/size-table.model';
-import {FormControl} from '@angular/forms';
-import {form} from '@angular/forms/signals';
+import {FormArray, FormControl, FormGroup} from '@angular/forms';
 
 @Injectable({providedIn: 'root'})
 export class ProductFilterStore {
@@ -11,7 +10,10 @@ export class ProductFilterStore {
   readonly minPrice = signal(0);
   readonly maxPrice = signal(10);
 
-  readonly filter = form(signal({
-    minMax: [4, 6],
-  }))
+  readonly filter = new FormGroup({
+    min_max_price: new FormControl([0, 0]),
+    sizes: new FormControl([]),
+    brand_ids: new FormControl([]),
+    sort_by: new FormControl(null)
+  });
 }
