@@ -67,8 +67,8 @@
       <button
         class="sn-btn default !py-1 !bg-gray-100 border-none w-30 justify-center hidden md:flex items-center gap-2 hover:!text-primary mb-4"
         [tuiDropdown]="dropdownContent"
-        [tuiDropdownManual]="open"
-        [tuiObscuredEnabled]="open"
+        [tuiDropdownManual]="sortOpen()"
+        [tuiObscuredEnabled]="sortOpen()"
         (click)="onClick()"
         (tuiActiveZoneChange)="onActiveZone($event)"
         (tuiObscured)="onObscured($event)"
@@ -76,7 +76,7 @@
         Сортировка
         <span
           class="text-xl duration-300 transition-transform"
-          [class.rotate-180]="open"
+          [class.rotate-180]="sortOpen()"
         >
             <i class="fa fa-angle-down" aria-hidden="true"></i>
           </span>

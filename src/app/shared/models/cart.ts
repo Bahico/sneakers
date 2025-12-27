@@ -1,12 +1,12 @@
 import {ProductListDetailModel, Variant} from '@/models/product.model';
 
 export interface CartListDetail {
-  id: number;
-  created_at: Date | string;
-  product: ProductListDetailModel;
+  id: string;
+  product: Omit<ProductListDetailModel, 'main_variant'>;
+  variant: Variant
   quantity: number;
-  size: string;
-  sku: Variant;
+  total_price: number;
+  price_snapshot: number;
 }
 
 export interface CartList {
@@ -16,12 +16,7 @@ export interface CartList {
 }
 
 export interface CartAdd {
-  sku_id: number;
+  product_id: string;
+  variant_id: string;
   quantity: number;
-}
-
-export interface Summary {
-  total: number;
-  items_count: number;
-  currency: number;
 }

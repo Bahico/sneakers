@@ -52,7 +52,7 @@ export default class Navbar {
   openCartBtn = computed(() => !!this.productDetailStore.selectedSkus());
   addedCart = computed(() =>
     this.productDetailStore.selectedSkus() &&
-    this.cartStore.carts()?.items?.find(item => item.sku.id === this.productDetailStore.selectedSkus()?.id)
+    this.cartStore.carts()?.items?.find(item => item.variant.id === this.productDetailStore.selectedSkus()?.id)
   );
 
   logout() {

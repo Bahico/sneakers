@@ -1,4 +1,4 @@
-import {afterNextRender, Component, computed, inject, signal} from '@angular/core';
+import {Component, computed, inject} from '@angular/core';
 import {TuiBreadcrumbs} from '@taiga-ui/kit';
 import {TuiFormatNumberPipe, TuiLink} from '@taiga-ui/core';
 import {RouterLink} from '@angular/router';
@@ -7,7 +7,7 @@ import {CartStore} from '@/cart';
 import {AsyncPipe, NgOptimizedImage} from '@angular/common';
 import {CartService} from '@/services/cart.service';
 import {IconComponent} from '@/components/icon/icon';
-import {Summary} from '@/models/cart';
+import {CartListDetail} from '@/models/cart';
 
 @Component({
   templateUrl: 'basket-list.html',
@@ -28,7 +28,6 @@ export default class BasketList {
   private readonly cartStore = inject(CartStore);
   protected readonly cartService = inject(CartService);
 
-  protected readonly summary = signal<Partial<Summary>>({});
   protected readonly itemsCount = computed(() => this.carts().items.reduce((a, b) => a + b.quantity, 0));
   protected readonly itemsCountText = computed(() => {
     const n = this.itemsCount();
@@ -43,7 +42,7 @@ export default class BasketList {
     }
   })
 
-  protected readonly carts = computed(() => this.cartStore.carts());
+  protected readonly carts = this.cartStore.carts;
   protected readonly items = [
     {
       caption: 'Главная',
@@ -54,27 +53,15 @@ export default class BasketList {
     },
   ];
 
-  constructor() {
-    afterNextRender(() => {
-      this.loadSummary();
-    })
+  removeCart(cartId: string) {
+    this.cartService.deleteCart(cartId).subscribe()
   }
 
-  loadSummary() {
-    this.cartService
-      .summary()
-      .subscribe(data => this.summary.set(data))
+  decrease(cart: CartListDetail) {
+    this.cartService.changeQuantity(cart.id, cart.quantity-1).subscribe();
   }
 
-  removeCart(cartId: number) {
-    this.cartService.deleteCart(cartId).subscribe(() => this.loadSummary())
-  }
-
-  decrease(id: number) {
-    this.cartService.decrease(id).subscribe(() => this.loadSummary());
-  }
-
-  increase(id: number) {
-    this.cartService.increase(id).subscribe(() => this.loadSummary());
+  increase(cart: CartListDetail) {
+    this.cartService.changeQuantity(cart.id, cart.quantity+1).subscribe();
   }
 }

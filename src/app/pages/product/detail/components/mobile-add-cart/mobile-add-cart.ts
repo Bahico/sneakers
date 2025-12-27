@@ -24,11 +24,11 @@ export class MobileAddCart {
   selectedSku = this.productDetailStore.selectedSkus;
 
   decrease() {
-    this.cartService.decrease(this.cart().id).subscribe();
+    this.cartService.changeQuantity(this.cart().id, this.cart().quantity-1).subscribe();
   }
 
   increase() {
-    this.cartService.increase(this.cart().id).subscribe();
+    this.cartService.changeQuantity(this.cart().id, this.cart().quantity+1).subscribe();
   }
 
   removeFromCart() {

@@ -25,11 +25,11 @@ export class ProductDetailOrder {
   protected readonly data$ = computed(() => this.selectedSkus() || this.productDetailStore.detail()?.variants?.[0]);
 
   decrease() {
-    this.cartService.decrease(this.cart().id).subscribe();
+    this.cartService.changeQuantity(this.cart().id, this.cart().quantity-1).subscribe();
   }
 
   increase() {
-    this.cartService.increase(this.cart().id).subscribe();
+    this.cartService.changeQuantity(this.cart().id, this.cart().quantity+1).subscribe();
   }
 
   removeFromCart() {

@@ -56,6 +56,6 @@ export class ProductDetailSize {
   }
 
   added(variant: Variant) {
-    return this.cartStore.carts()?.items?.some(item => item.sku.id === variant.id)
+    return this.cartStore.carts()?.items?.some(item => item.variant.id === variant.id)
   }
 }

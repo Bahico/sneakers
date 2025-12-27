@@ -1,4 +1,4 @@
-import {Component, DestroyRef, effect, inject, OnInit, PLATFORM_ID, signal} from '@angular/core';
+import {afterNextRender, Component, DestroyRef, effect, inject, OnInit, PLATFORM_ID, signal} from '@angular/core';
 import {TuiBreadcrumbs, TuiRadioComponent} from '@taiga-ui/kit';
 import {TuiDropdown, TuiLink} from '@taiga-ui/core';
 import {TuiActiveZone, TuiItem, TuiObscured} from '@taiga-ui/cdk';
@@ -63,7 +63,8 @@ export default class ProductFilter implements OnInit {
 
   private fullPath: string[] = [];
   private gender: Gender = 'male';
-  protected open = false;
+  protected readonly sortOpen = signal(false);
+  protected readonly timeStable = signal(false);
   protected readonly openFilters = signal({
     size: true,
     brand: true,
@@ -72,7 +73,6 @@ export default class ProductFilter implements OnInit {
   products = signal<ProductListDetailModel[]>([]);
 
   private readonly destroyer = new Subject<void>();
-  private readonly initialLoadEvent = new Subject<void>();
 
   constructor() {
     effect(() => {
@@ -86,11 +86,18 @@ export default class ProductFilter implements OnInit {
         document.body.style.overflow = '';
       }
     });
+
+    afterNextRender(() => {
+      setTimeout(() => {
+        this.timeStable.set(true);
+      }, 1000)
+    })
   }
 
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
       this.subscribeEvents();
+      this.subscribeFilter();
     }
   }
 
@@ -106,6 +113,18 @@ export default class ProductFilter implements OnInit {
       })
   }
 
+  subscribeFilter() {
+    combineLatest([this.productFilterStore.filter.valueChanges])
+      .pipe(
+        filter(() => this.timeStable()),
+        takeUntilDestroyed(this.destroyRef),
+        debounceTime(500)
+      )
+      .subscribe(() => {
+        this.initialLoad();
+      })
+  }
+
   initialLoad() {
     this.currentPage.set(1);
     this.products.set([]);
@@ -117,7 +136,6 @@ export default class ProductFilter implements OnInit {
     this.gender = <Gender>this.route.snapshot.params['gender'];
 
     this.fullPath = segments.map(s => s.path);
-    this.initialLoadEvent.next();
     this.getBrands();
     this.getSizeTables();
   }
@@ -171,7 +189,7 @@ export default class ProductFilter implements OnInit {
         limit: 100,
         category_slug: this.fullPath.join('/')
       })
-      .pipe(takeUntil(this.destroyer))
+      .pipe(takeUntil(this.destroyer), takeUntilDestroyed(this.destroyRef))
       .subscribe(res => {
         this.productFilterStore.brands.set(res);
       })
@@ -182,23 +200,23 @@ export default class ProductFilter implements OnInit {
       .sizes({
         category_slug: this.fullPath.join('/')
       })
-      .pipe(takeUntil(this.destroyer))
+      .pipe(takeUntil(this.destroyer), takeUntilDestroyed(this.destroyRef))
       .subscribe(res => {
         this.productFilterStore.sizeTables.set(res.size_table);
       })
   }
 
   protected onClick(): void {
-    this.open = !this.open;
+    this.sortOpen.set(!this.sortOpen());
   }
 
   protected onObscured(obscured: boolean): void {
     if (obscured) {
-      this.open = false;
+      this.sortOpen.set(false);
     }
   }
 
   protected onActiveZone(active: boolean): void {
-    this.open = active && this.open;
+    this.sortOpen.set(active && this.sortOpen());
   }
 }

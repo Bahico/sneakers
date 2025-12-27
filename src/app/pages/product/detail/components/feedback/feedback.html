@@ -1,41 +1,41 @@
 <form
   class="flex flex-col w-full items-center gap-4 mt-5 md:mt-0 md:gap-8"
   [formGroup]="form"
-  (ngSubmit)="success.set(true)"
+  (ngSubmit)="onSubmit()"
   [class.hidden]="success()"
 >
   <h1 class="text-lg md:text-2xl font-semibold text-center md:w-2/3">Поделитесь впечатлениями о покупке и получите <br class="md:hidden">500 Sneaker Coins</h1>
 
-  <div class="flex gap-4 text-3xl md:text-5xl">
-    <div class="cursor-pointer" (click)="setStar(1)">
+    <div class="flex gap-4 text-3xl md:text-5xl">
+    <div class="cursor-pointer" [class.opacity-50]="loading()" [class.cursor-not-allowed]="loading()" (click)="!loading() && setStar(1)">
       <i
         class="fa"
         [class.fa-star-o]="form.controls.star.value < 1"
         [class.fa-star]="form.controls.star.value >= 1"
       ></i>
     </div>
-    <div class="cursor-pointer" (click)="setStar(2)">
+    <div class="cursor-pointer" [class.opacity-50]="loading()" [class.cursor-not-allowed]="loading()" (click)="!loading() && setStar(2)">
       <i
         class="fa"
         [class.fa-star-o]="form.controls.star.value < 2"
         [class.fa-star]="form.controls.star.value >= 2"
       ></i>
     </div>
-    <div class="cursor-pointer" (click)="setStar(3)">
+    <div class="cursor-pointer" [class.opacity-50]="loading()" [class.cursor-not-allowed]="loading()" (click)="!loading() && setStar(3)">
       <i
         class="fa"
         [class.fa-star-o]="form.controls.star.value < 3"
         [class.fa-star]="form.controls.star.value >= 3"
       ></i>
     </div>
-    <div class="cursor-pointer" (click)="setStar(4)">
+    <div class="cursor-pointer" [class.opacity-50]="loading()" [class.cursor-not-allowed]="loading()" (click)="!loading() && setStar(4)">
       <i
         class="fa"
         [class.fa-star-o]="form.controls.star.value < 4"
         [class.fa-star]="form.controls.star.value >= 4"
       ></i>
     </div>
-    <div class="cursor-pointer" (click)="setStar(5)">
+    <div class="cursor-pointer" [class.opacity-50]="loading()" [class.cursor-not-allowed]="loading()" (click)="!loading() && setStar(5)">
       <i
         class="fa"
         [class.fa-star-o]="form.controls.star.value != 5"
@@ -54,7 +54,7 @@
           <span class="sn-control-icon">
             <i class="fa fa-user-o" aria-hidden="true"></i>
           </span>
-          <input type="text" formControlName="name" placeholder="Введите имя">
+          <input type="text" formControlName="name" placeholder="Введите имя" [disabled]="loading()">
         </div>
         @if (form.controls.name.touched && form.controls.name.invalid) {
           <span class="sn-error">Заполните поле</span>
@@ -62,26 +62,31 @@
       </div>
       <div class="sn-control w-1/2">
         <span class="sn-control-icon">{{ '@' }}</span>
-        <input type="text" formControlName="email" placeholder="Введите свой ник из Telegram">
+        <input type="text" formControlName="email" placeholder="Введите свой ник из Telegram" [disabled]="loading()">
       </div>
     </div>
 
     <div class="flex flex-col gap-1">
       <div class="sn-control">
         <icon-list icon="comment"/>
-        <textarea name="" placeholder="Напишите отзыв" formControlName="comment" id="" cols="30" rows="3"></textarea>
+        <textarea name="" placeholder="Напишите отзыв" formControlName="comment" id="" cols="30" rows="3" [disabled]="loading()"></textarea>
       </div>
       @if (form.controls.comment.touched && form.controls.comment.invalid) {
         <span class="sn-error">Пожалуйста, напишите что-нибудь о вашем опыте покупки или о продукте</span>
       }
     </div>
 
-    <div class="w-full bg-gray-100 rounded flex justify-center items-center gap-2 py-3 cursor-pointer" (click)="fileInput.click()">
+    <div 
+      class="w-full bg-gray-100 rounded flex justify-center items-center gap-2 py-3 cursor-pointer" 
+      [class.opacity-50]="loading()"
+      [class.cursor-not-allowed]="loading()"
+      (click)="!loading() && fileInput.click()"
+    >
       <icon-list icon="link"/>
       <span>Прикрепить фото (максимум 3)</span>
     </div>
 
-    <input type="file" accept="image/*" class="hidden" multiple #fileInput max="3" (change)="onFileChange($event)">
+    <input type="file" accept="image/*" class="hidden" multiple #fileInput max="3" (change)="onFileChange($event)" [disabled]="loading()">
 
     <div class="flex gap-2">
       @for (image of images(); track image) {
@@ -106,7 +111,23 @@
     </div>
   </div>
 
-  <button class="sn-btn w-full md:w-2/3" [disabled]="form.invalid || !agree()">Опубликовать</button>
+  @if (error()) {
+    <div class="w-full md:w-2/3 text-red-500 text-sm text-center">
+      {{ error() }}
+    </div>
+  }
+
+  <button 
+    class="sn-btn w-full md:w-2/3" 
+    [disabled]="form.invalid || !agree() || loading()"
+    type="submit"
+  >
+    @if (loading()) {
+      Отправка...
+    } @else {
+      Опубликовать
+    }
+  </button>
 </form>
 
 <div

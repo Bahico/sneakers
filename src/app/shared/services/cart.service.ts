@@ -1,8 +1,7 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {getEndpoint} from '@/get-endpoint';
-import {ListResult} from '@/models/list-result';
-import {CartAdd, CartList, CartListDetail, Summary} from '@/models/cart';
+import {CartAdd, CartList} from '@/models/cart';
 import {CartStore} from '@/cart';
 import {finalize, Observable, tap} from 'rxjs';
 
@@ -18,49 +17,26 @@ export class CartService {
       }))
   }
 
-  summary() {
-    return this.http.get<Summary>(getEndpoint('cart/summary/'))
-  }
-
   addCart(data: CartAdd) {
-    return this.updateFn(this.http.post(getEndpoint('cart/'), data));
+    return this.updateFn(this.http.post<CartList>(getEndpoint('cart/add'), data));
   }
 
-  decrease(id: number) {
-    return this.updateSize(this.http.post<{quantity: number}>(getEndpoint(`cart/${id}/decrease/`), {}), id)
+  changeQuantity(id: string, quantity = 1) {
+    return this.updateSize(this.http.patch<CartList>(getEndpoint(`cart/item/${id}`), {quantity}))
   }
 
-  increase(id: number) {
-    return this.updateSize(this.http.post<{quantity: number}>(getEndpoint(`cart/${id}/increase/`), {}), id);
-  }
-
-  updateCart(data: CartListDetail) {
-    return this.updateFn(this.http.put(getEndpoint(`cart/${data.id}/`), data));
-  }
-
-  deleteCart(id: number) {
-    return this.updateFn(this.http.delete(getEndpoint(`cart/${id}/`)));
+  deleteCart(id: string) {
+    return this.updateSize(this.http.delete<CartList>(getEndpoint(`cart/item/${id}`)));
   }
 
   clear() {
     return this.updateFn(this.http.delete(getEndpoint(`cart/clear/`)));
   }
 
-  private updateSize(source: Observable<{quantity: number}>, id: number) {
+  private updateSize(source: Observable<CartList>) {
     return source
       .pipe(tap((res) => {
-        this.cartStore.update = {
-          ...this.cartStore.carts(),
-          items: this.cartStore.carts().items.map(item => {
-            if (item.id === id) {
-              return {
-                ...item,
-                quantity: res.quantity
-              }
-            }
-            return item;
-          })
-        };
+        this.cartStore.update = res
 
       }));
   }

@@ -29,7 +29,7 @@ export class ProductDetailStore {
     this.productDetail$().variants?.find(item => item.size[this.sizeType()?.toLowerCase()] === this.sizeValue())
   );
 
-  readonly cart = computed(() => this.cartStore.carts()?.items?.find(item => item.sku.id === this.selectedSkus()?.id))
+  readonly cart = computed(() => this.cartStore.carts()?.items?.find(item => item.variant.id === this.selectedSkus()?.id))
 
   get detail() {
     return this.productDetail$.asReadonly();
@@ -51,10 +51,11 @@ export class ProductDetailStore {
     if (!this.isAuthed()) {
       return this.authenticationService.openModal();
     }
-    // this.cartService.addCart({
-    //   sku_id: this.selectedSkus().id,
-    //   quantity: 1
-    // }).subscribe();
+    this.cartService.addCart({
+      product_id: this.productDetail$().id,
+      variant_id: this.selectedSkus().id,
+      quantity: 1
+    }).subscribe();
   }
 
   mobileAddCart() {
@@ -65,12 +66,13 @@ export class ProductDetailStore {
     if (this.cart()) {
       this.openMobileModal().subscribe()
     } else {
-      // this.cartService.addCart({
-      //   sku_id: this.selectedSkus().skuId,
-      //   quantity: 1
-      // })
-      //   .pipe(concatMap(() => this.openMobileModal()))
-      //   .subscribe()
+      this.cartService.addCart({
+        product_id: this.productDetail$().id,
+        variant_id: this.selectedSkus().id,
+        quantity: 1
+      })
+        .pipe(concatMap(() => this.openMobileModal()))
+        .subscribe()
     }
   }
 
