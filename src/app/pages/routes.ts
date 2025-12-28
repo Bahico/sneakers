@@ -30,5 +30,9 @@ export default [
   {
     path: 'profile',
     loadChildren: () => import('./profile/profile.routes'),
+  },
+  {
+    path: 'favorites',
+    loadComponent: () => import('./favorites/favorites')
   }
 ] satisfies Routes;

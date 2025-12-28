@@ -1,12 +1,16 @@
-import {Component} from '@angular/core';
+import {afterNextRender, Component, inject, signal} from '@angular/core';
 import {RouterLink} from '@angular/router';
 import {TuiBreadcrumbs, TuiCheckbox} from '@taiga-ui/kit';
 import {TuiLink} from '@taiga-ui/core';
 import {TuiItem} from '@taiga-ui/cdk';
 import {ProfileMenu} from '@/profile/components/menu/profile-menu';
 import {IconComponent} from '@/components/icon/icon';
-import {FormControl, FormGroup, FormsModule} from '@angular/forms';
-import {Profile} from '@/models/profile';
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {AuthService} from '@/services/auth.service';
+import {AccountStore} from '@/account';
+import {catchError, forkJoin, of} from 'rxjs';
+import {PassportData} from '@/models/passport';
+import {DateComponent} from '@/components/date/date';
 
 @Component({
   templateUrl: 'profile-edit.html',
@@ -20,17 +24,135 @@ import {Profile} from '@/models/profile';
     ProfileMenu,
     IconComponent,
     TuiCheckbox,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
+    DateComponent
   ]
 })
 export default class ProfileEdit {
-  checked = false;
+  private readonly authService = inject(AuthService);
+  private readonly accountStore = inject(AccountStore);
 
-  form = new FormGroup<{[key in keyof Profile]?: any}>({
-    username: new FormControl(null),
-    phone: new FormControl(null),
-    first_name: new FormControl(null),
+  checked = signal(false);
+  loading = signal(false);
+  error = signal<string | null>(null);
+  success = signal(false);
+  hasPassportData = signal(false);
+
+  profileForm = new FormGroup({
+    email: new FormControl<string | null>(null),
+    phone: new FormControl<string | null>(null),
+    username: new FormControl<string | null>(null),
+    telegram_id: new FormControl<string | null>(null),
+    first_name: new FormControl<string | null>(null),
     last_name: new FormControl(null),
-    surname: new FormControl(null),
-  })
+  });
+
+  passportForm = new FormGroup({
+    id: new FormControl(null),
+    name: new FormControl<string | null>(null),
+    surname: new FormControl<string | null>(null),
+    f_name: new FormControl<string | null>(null),
+    date_of_birth: new FormControl<string | null>(null),
+    passport_number: new FormControl<string | null>(null),
+    passport_series: new FormControl<string | null>(null),
+    date_of_give: new FormControl<string | null>(null),
+  });
+
+  constructor() {
+    afterNextRender(() => {
+      this.loadUserData();
+      this.loadPassportData();
+    })
+  }
+
+  loadUserData() {
+    const account = this.accountStore.account();
+    if (account) {
+      this.profileForm.patchValue({
+        username: account.username || null,
+        telegram_id: account.telegram_id || null,
+      });
+    } else {
+      this.accountStore.getAccount()
+        .pipe(catchError(() => of(null)))
+        .subscribe(account => {
+          if (account) {
+            this.profileForm.patchValue({
+              username: account.username || null,
+              telegram_id: account.telegram_id || null,
+            });
+          }
+        });
+    }
+  }
+
+  loadPassportData() {
+    this.authService.getPassportData()
+      .pipe(
+        catchError(() => of(null))
+      )
+      .subscribe(data => {
+        if (data) {
+          this.hasPassportData.set(true);
+          this.passportForm.patchValue(data);
+          if (!data.surname) {
+            this.checked.set(true);
+          }
+        }
+      });
+  }
+
+  onSurnameCheckboxChange(checked: boolean) {
+    this.checked.set(checked);
+    if (checked) {
+      this.passportForm.patchValue({surname: null});
+    }
+  }
+
+  onSave() {
+    if (this.profileForm.invalid || this.passportForm.invalid) {
+      this.profileForm.markAllAsTouched();
+      this.passportForm.markAllAsTouched();
+      return;
+    }
+
+    this.loading.set(true);
+    this.error.set(null);
+    this.success.set(false);
+
+    const profileData = {
+      username: this.profileForm.value.username || undefined,
+      phone: this.profileForm.value.phone || undefined,
+      telegram_id: this.profileForm.value.telegram_id || undefined,
+      email: this.profileForm.value.email || undefined,
+    };
+
+    const passportData = <PassportData>this.passportForm.getRawValue();
+
+    const profileUpdate$ = this.authService.updateUserProfile(profileData);
+    const passportUpdate$ = this.hasPassportData()
+      ? this.authService.updatePassportData(passportData)
+      : this.authService.createPassportData(passportData);
+
+    forkJoin({
+      profile: profileUpdate$,
+      passport: passportUpdate$
+    })
+      .pipe(
+        catchError(error => {
+          this.error.set(error?.error?.message || 'Ошибка при сохранении данных');
+          return of(null);
+        })
+      )
+      .subscribe(result => {
+        this.loading.set(false);
+        if (result) {
+          this.success.set(true);
+          if (!this.hasPassportData()) {
+            this.hasPassportData.set(true);
+          }
+        }
+      });
+  }
 }

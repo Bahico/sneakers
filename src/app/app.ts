@@ -6,7 +6,6 @@ import {TuiRoot} from '@taiga-ui/core';
 import {CartService} from '@/services/cart.service';
 import {AccountStore} from '@/account';
 import {mergeMap} from 'rxjs';
-import {FavoriteService} from '@/services/favorite.service';
 import {TokenStore} from '@/token';
 
 @Component({
@@ -18,7 +17,6 @@ import {TokenStore} from '@/token';
 export class App {
   private readonly cartService = inject(CartService);
   private readonly accountStore = inject(AccountStore);
-  private readonly favoritesService = inject(FavoriteService);
   private readonly tokenStore = inject(TokenStore);
 
   constructor() {
@@ -26,8 +24,8 @@ export class App {
       if (this.tokenStore.token()?.access_token)
       this.accountStore.getAccount()
         .pipe(
-          mergeMap(() => this.cartService.loadCart()),
-          mergeMap(() => this.favoritesService.loadFavorites()))
+          mergeMap(() => this.cartService.loadCart())
+        )
         .subscribe();
     })
   }

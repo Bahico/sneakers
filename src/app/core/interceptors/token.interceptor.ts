@@ -2,11 +2,12 @@ import {HttpErrorResponse, HttpEvent, HttpHandlerFn, HttpRequest} from '@angular
 import {catchError, Observable, throwError} from 'rxjs';
 import {inject} from '@angular/core';
 import {TokenStore} from '@/token';
+import {environment} from 'environments';
 
 export default function (req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
   const tokenService = inject(TokenStore);
 
-  if (tokenService.token()) {
+  if (tokenService.token() && !req.url.includes(environment.CDEK.API)) {
     req = req.clone({
       setHeaders: {
         Authorization: `Bearer ${tokenService.token().access_token}`

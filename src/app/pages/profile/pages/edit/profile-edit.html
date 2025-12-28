@@ -9,98 +9,89 @@
   <h1 class="text-xl text-center md:text-start md:text-2xl lg:text-4xl font-semibold mb-4 md:mb-10">Изменить данные</h1>
   <div class="flex flex-col md:flex-row justify-between w-full gap-10">
     <div class="flex flex-col gap-4 w-full md:max-w-150">
-      <div class="sn-control w-full">
-        <span class="sn-control-icon">
-          {{ '@' }}
-        </span>
-        <input type="text" placeholder="Email">
-      </div>
-      <div class="sn-control w-full">
-        <span class="sn-control-icon">
-          <icon-list icon="call"/>
-        </span>
-        <input type="text" placeholder="Номер телефона">
-      </div>
+      <form [formGroup]="profileForm" class="flex flex-col gap-4">
+        <div class="sn-control w-full">
+          <span class="sn-control-icon">
+            {{ '@' }}
+          </span>
+          <input type="text" formControlName="email" placeholder="Email">
+        </div>
+        <div class="sn-control w-full">
+          <span class="sn-control-icon">
+            <icon-list icon="call"/>
+          </span>
+          <input type="text" formControlName="phone" placeholder="Номер телефона">
+        </div>
 
-      <span class="line"></span>
+        <span class="line"></span>
 
-      <span class="text-xl font-semibold">Телеграм</span>
+        <span class="text-xl font-semibold">Телеграм</span>
 
-      <div class="sn-control w-full">
-        <span class="sn-control-icon">
-          {{ '@' }}
-        </span>
-        <input type="text" placeholder="Username Telegram">
-      </div>
+        <div class="sn-control w-full">
+          <span class="sn-control-icon">
+            {{ '@' }}
+          </span>
+          <input type="text" formControlName="telegram_id" placeholder="Username Telegram">
+        </div>
+      </form>
 
       <span class="line"></span>
 
       <span class="text-xl font-semibold">Паспортные данные</span>
 
-      <div class="grid grid-cols-2 gap-4">
-        <div class="sn-control">
-          <span class="sn-control-icon">
-            <i class="fa fa-user-o" aria-hidden="true"></i>
-          </span>
-          <input type="text" placeholder="Фамилия">
+      <form [formGroup]="passportForm" class="flex flex-col gap-4">
+        <div class="grid grid-cols-2 gap-4">
+          <div class="sn-control">
+            <span class="sn-control-icon">
+              <i class="fa fa-user-o" aria-hidden="true"></i>
+            </span>
+            <input type="text" formControlName="surname" placeholder="Фамилия">
+          </div>
+
+          <div class="sn-control">
+            <span class="sn-control-icon">
+              <i class="fa fa-user-o" aria-hidden="true"></i>
+            </span>
+            <input type="text" formControlName="name" placeholder="Имя">
+          </div>
+
+          <div class="sn-control" [class.hidden]="checked()">
+            <span class="sn-control-icon">
+              <i class="fa fa-user-o" aria-hidden="true"></i>
+            </span>
+            <input type="text" formControlName="f_name" placeholder="Отчество (если есть)" [disabled]="checked()">
+          </div>
+
+          <div class="flex gap-2 items-center">
+            <input
+              tuiCheckbox
+              type="checkbox"
+              [ngModel]="checked()"
+              (ngModelChange)="onSurnameCheckboxChange($event)"
+              [ngModelOptions]="{standalone: true}"
+            />
+            <span>Нет отчества</span>
+          </div>
+
+          <app-date class="col-span-2" formControlName="date_of_birth" placeholder="Дата рождения" />
+
+          <div class="sn-control">
+            <span class="sn-control-icon">
+              <icon-list icon="calendar"/>
+            </span>
+            <input type="text" formControlName="passport_series" placeholder="Серия паспорта">
+          </div>
+
+          <div class="sn-control">
+            <span class="sn-control-icon">
+              <icon-list icon="calendar"/>
+            </span>
+            <input type="text" formControlName="passport_number" placeholder="Номер паспорта">
+          </div>
+
+          <app-date class="col-span-2" formControlName="date_of_give" placeholder="Дата выдачи паспорта" />
         </div>
-        <div class="sn-control">
-          <span class="sn-control-icon">
-            <i class="fa fa-user-o" aria-hidden="true"></i>
-          </span>
-          <input type="text" placeholder="Имя">
-        </div>
-        <div class="sn-control">
-          <span class="sn-control-icon">
-            <i class="fa fa-user-o" aria-hidden="true"></i>
-          </span>
-          <input type="text" placeholder="Отчество (если есть)">
-        </div>
-        <div class="flex gap-2 items-center">
-          <input
-            tuiCheckbox
-            type="checkbox"
-            [ngModel]="checked"
-          />
-          <span>Нет отчества</span>
-        </div>
-        <div class="sn-control col-span-2">
-          <span class="sn-control-icon">
-            <icon-list icon="calendar"/>
-          </span>
-          <input type="text" placeholder="Дата рождения">
-        </div>
-        <div class="sn-control">
-          <span class="sn-control-icon">
-            <icon-list icon="calendar"/>
-          </span>
-          <input type="text" placeholder="Серия паспорта">
-        </div>
-        <div class="sn-control">
-          <span class="sn-control-icon">
-            <icon-list icon="calendar"/>
-          </span>
-          <input type="text" placeholder="Номер паспорта">
-        </div>
-        <div class="sn-control col-span-2">
-          <span class="sn-control-icon">
-            <icon-list icon="calendar"/>
-          </span>
-          <input type="text" placeholder="Дата выдачи паспорта">
-        </div>
-        <div class="sn-control col-span-2">
-          <span class="sn-control-icon">
-            <icon-list icon="calendar"/>
-          </span>
-          <textarea rows="3" placeholder="Кем выдан"></textarea>
-        </div>
-        <div class="sn-control col-span-2">
-          <span class="sn-control-icon">
-            <icon-list icon="calendar"/>
-          </span>
-          <input type="number" placeholder="Код подразделения">
-        </div>
-      </div>
+      </form>
 
       <div class="flex gap-2">
         <span class="flex mt-1 min-w-6 h-6 justify-center items-center border border-primary rounded">
@@ -109,13 +100,41 @@
 
         <div class="flex flex-col gap-1">
           <span class="text-lg font-semibold">Зачем мои паспортные данные?</span>
-          <p>Все посылки в рамках международных отправлений проходят процедуру таможенного оформления. Для товаров личного пользования используется реестр экспресс-грузов, который, согласно приказу ФТС(федеральная таможенная служба) №1060 от 05.07.18, должен содержать в себе сведения о документе, удостоверяющем личность физического лица – паспортные данные и ИНН. Poizon действует в рамках таможенного законодательства и организует процесс сбора паспортных данных в личном кабинете на сайте. Мы не храним паспортные данные, вся информация передается по безопасным каналам связи.</p>
+          <p>Все посылки в рамках международных отправлений проходят процедуру таможенного оформления. Для товаров
+            личного пользования используется реестр экспресс-грузов, который, согласно приказу ФТС(федеральная
+            таможенная служба) №1060 от 05.07.18, должен содержать в себе сведения о документе, удостоверяющем личность
+            физического лица – паспортные данные и ИНН. Poizon действует в рамках таможенного законодательства и
+            организует процесс сбора паспортных данных в личном кабинете на сайте. Мы не храним паспортные данные, вся
+            информация передается по безопасным каналам связи.</p>
         </div>
       </div>
 
-      <button class="sn-btn w-full !py-3">Сохранить изменения</button>
+      @if (error()) {
+        <div class="w-full text-red-500 text-sm">
+          {{ error() }}
+        </div>
+      }
+
+      @if (success()) {
+        <div class="w-full text-green-500 text-sm">
+          Данные успешно сохранены!
+        </div>
+      }
+
+      <button
+        type="button"
+        class="sn-btn w-full !py-3"
+        [disabled]="loading()"
+        (click)="onSave()"
+      >
+        @if (loading()) {
+          Сохранение...
+        } @else {
+          Сохранить изменения
+        }
+      </button>
     </div>
 
-    <profile-menu />
+    <profile-menu/>
   </div>
 </div>

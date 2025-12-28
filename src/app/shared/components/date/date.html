@@ -1,0 +1,25 @@
+<div
+  class="sn-control items-center"
+  [class.cursor-pointer]="!disabled()"
+  [class.cursor-not-allowed]="disabled()"
+  [class.opacity-50]="disabled()"
+  [tuiDropdown]="dropdown"
+  [tuiDropdownOpen]="open()"
+  (tuiDropdownOpenChange)="!disabled() && open.set($event)">
+  <div class="sn-control-icon">
+    <icon-list icon="calendar"/>
+  </div>
+  @if (selectedDate()) {
+    <div>
+      {{ selectedDate()!.toLocalNativeDate().toLocaleDateString('ru-RU') }}
+    </div>
+  } @else {
+    <div class="text-gray-500">
+      {{placeholder()}}
+    </div>
+  }
+</div>
+
+<ng-template #dropdown>
+  <tui-calendar [value]="selectedDate()" (dayClick)="onDayClick($event)" />
+</ng-template>

@@ -1,8 +1,18 @@
-import {afterNextRender, Component, DestroyRef, effect, inject, OnInit, PLATFORM_ID, signal} from '@angular/core';
+import {
+  afterNextRender,
+  Component,
+  DestroyRef,
+  effect,
+  inject,
+  OnDestroy,
+  OnInit,
+  PLATFORM_ID,
+  signal
+} from '@angular/core';
 import {TuiBreadcrumbs, TuiRadioComponent} from '@taiga-ui/kit';
 import {TuiDropdown, TuiLink} from '@taiga-ui/core';
 import {TuiActiveZone, TuiItem, TuiObscured} from '@taiga-ui/cdk';
-import {ActivatedRoute, NavigationEnd, Router, RouterLink, UrlSegment} from '@angular/router';
+import {ActivatedRoute, Router, RouterLink, UrlSegment} from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {IconComponent} from '@/components/icon/icon';
 import {PRODUCT_FILTER_BREAD_CRUMBS, SORT} from '@/product/filter/product-filter.constans';
@@ -16,7 +26,7 @@ import {MobileFilter} from '@/product/filter/components/mobile-filter/mobile-fil
 import {InfiniteScrollDirective} from 'ngx-infinite-scroll';
 import {isPlatformBrowser, NgOptimizedImage} from '@angular/common';
 import {Gender} from '@/models/gender';
-import {combineLatest, combineLatestAll, combineLatestWith, debounceTime, filter, Subject, takeUntil} from 'rxjs';
+import {combineLatest, debounceTime, filter, Subject, takeUntil} from 'rxjs';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {ProductFilterStore} from '@/product/filter/product-filter-store';
 
@@ -45,7 +55,7 @@ import {ProductFilterStore} from '@/product/filter/product-filter-store';
     TuiActiveZone
   ]
 })
-export default class ProductFilter implements OnInit {
+export default class ProductFilter implements OnInit, OnDestroy {
   private readonly productService = inject(ProductService);
   protected readonly productFilterStore = inject(ProductFilterStore);
   private readonly route = inject(ActivatedRoute);
@@ -99,6 +109,11 @@ export default class ProductFilter implements OnInit {
       this.subscribeEvents();
       this.subscribeFilter();
     }
+  }
+
+  ngOnDestroy() {
+    this.destroyer.next();
+    this.productFilterStore.filter.reset();
   }
 
   subscribeEvents() {

@@ -1,0 +1,26 @@
+<div class="w-full md:container mb-10">
+  <tui-breadcrumbs class="mb-4 !hidden md:!block">
+    <a
+      *tuiItem
+      tuiLink
+      routerLink="/product/filter"
+    >
+      В каталог
+    </a>
+    <a
+      *tuiItem
+      tuiLink
+      class="truncate !text-primary"
+    >
+      Избранные
+    </a>
+  </tui-breadcrumbs>
+
+  <h1 class="text-lg md:text-2xl lg:text-3xl font-bold text-primary mb-2 md:mb-4">Избранные</h1>
+
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+    @for (favorite of favorites(); track favorite.id) {
+      <product-list-detail [detail]="favorite.product" />
+    }
+  </div>
+</div>
