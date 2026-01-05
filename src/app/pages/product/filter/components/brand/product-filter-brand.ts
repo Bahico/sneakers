@@ -18,17 +18,34 @@ import {Brand} from '@/models/brand';
 export class ProductFilterBrand {
   private readonly productFilterStore = inject(ProductFilterStore);
 
+  protected readonly search = signal('');
   protected readonly letters = signal<{[key: string]: Brand[]}>({});
   protected readonly lettersArraySorted = computed(() => Object.keys(this.letters()).sort());
 
+  protected readonly brands = signal<Brand[]>([]);
+
   constructor() {
     effect(() => {
-      const letters: {[key: string]: Brand[]} = {};
-      for (const brand of this.productFilterStore.brands()) {
-        letters[brand.name[0]?.toUpperCase()] = [...(letters[brand.name[0]?.toUpperCase()] || []), brand];
-      }
-      this.letters.set(letters);
+      this.setLetters();
     });
+    effect(() => {
+      this.brands.set(this.productFilterStore.brands());
+    });
+  }
+
+  setLetters() {
+    const letters: {[key: string]: Brand[]} = {};
+    for (const brand of this.brands()) {
+      letters[brand.name[0]?.toUpperCase()] = [...(letters[brand.name[0]?.toUpperCase()] || []), brand];
+    }
+    this.letters.set(letters);
+  }
+
+  searchBrand() {
+    this.brands.set(
+      this.productFilterStore.brands().filter(brand => brand.name.toLowerCase().includes(this.search().toLowerCase()))
+    );
+    this.setLetters();
   }
 
   checkBrand(id: string) {

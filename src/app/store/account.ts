@@ -24,7 +24,9 @@ export class AccountStore {
 
   getAccount() {
     return this.http.get<Account>(getEndpoint('auth/me'))
-      .pipe(tap(value => this.update = value))
+      .pipe(tap(value => {
+        this.update = value;
+      }))
   }
 
   logout() {

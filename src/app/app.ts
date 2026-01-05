@@ -22,11 +22,14 @@ export class App {
   constructor() {
     afterNextRender(() => {
       if (this.tokenStore.token()?.access_token)
-      this.accountStore.getAccount()
-        .pipe(
-          mergeMap(() => this.cartService.loadCart())
-        )
-        .subscribe();
+        this.accountStore.getAccount()
+          .pipe(
+            mergeMap(() => this.cartService.loadCart())
+          )
+          .subscribe();
+
+      if (this.cartService.getCartId())
+        this.cartService.loadCart().subscribe();
     })
   }
 }

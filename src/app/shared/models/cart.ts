@@ -10,6 +10,7 @@ export interface CartListDetail {
 }
 
 export interface CartList {
+  id: string;
   items: CartListDetail[];
   total_items: number;
   total_price: number;

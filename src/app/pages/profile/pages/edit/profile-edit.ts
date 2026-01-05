@@ -56,6 +56,7 @@ export default class ProfileEdit {
     date_of_birth: new FormControl<string | null>(null),
     passport_number: new FormControl<string | null>(null),
     passport_series: new FormControl<string | null>(null),
+    inn: new FormControl<string | null>(null),
     date_of_give: new FormControl<string | null>(null),
   });
 

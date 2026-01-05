@@ -8,6 +8,7 @@ import {PolymorpheusComponent} from '@taiga-ui/polymorpheus';
 import {MobileAddCart} from '@/product/detail/components/mobile-add-cart/mobile-add-cart';
 import {concatMap} from 'rxjs';
 import {CartStore} from '@/cart';
+import {BuyCoin} from '@/product/detail/components/buy-coin/buy-coin';
 
 @Injectable({providedIn: 'root'})
 export class ProductDetailStore {
@@ -47,9 +48,18 @@ export class ProductDetailStore {
     this.productSimilar$.set(value);
   }
 
-  addToCart() {
-    if (!this.isAuthed()) {
-      return this.authenticationService.openModal();
+  addToCart(): void {
+    if (!this.isAuthed() && !this.cartService.getCartId()) {
+      this.dialogs
+        .open(
+          new PolymorpheusComponent(BuyCoin),
+          {
+            label: null,
+            size: 'l'
+          },
+        )
+        .subscribe();
+      return
     }
     this.cartService.addCart({
       product_id: this.productDetail$().id,

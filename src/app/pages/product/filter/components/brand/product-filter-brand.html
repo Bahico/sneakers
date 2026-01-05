@@ -4,13 +4,19 @@
       <icon-list icon="search"/>
     </span>
 
-    <input type="text" placeholder="Введите бренд">
+    <input
+      type="text"
+      [(ngModel)]="search"
+      [ngModelOptions]="{standalone: true}"
+      (ngModelChange)="searchBrand()"
+      placeholder="Введите бренд"
+    >
   </div>
 
   <div class="flex flex-col gap-2 mt-4">
     @for (letter of lettersArraySorted(); track letter) {
       <div class="flex flex-col gap-1">
-        <span class="font-semibold">{{letter}}</span>
+        <span class="font-semibold">{{ letter }}</span>
 
         @for (brand of letters()[letter]; track $index) {
           <div class="flex gap-1">
