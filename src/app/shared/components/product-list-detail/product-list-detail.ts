@@ -1,4 +1,4 @@
-import {Component, inject, input} from '@angular/core';
+import {Component, inject, input, model} from '@angular/core';
 import {ProductListDetailModel} from '@/models/product.model';
 import {AsyncPipe} from '@angular/common';
 import {RouterLink} from '@angular/router';
@@ -20,11 +20,19 @@ export class ProductListDetail {
   private readonly rbs = inject(ResponsiveBreakpointsService);
   private readonly favoritesService = inject(FavoritesService);
 
-  detail = input.required<ProductListDetailModel>();
+  detail = model.required<ProductListDetailModel>();
   onHome = input(false);
   isMobile = this.rbs.isMobile;
 
   clickFavor() {
-    this.favoritesService.add(this.detail().id).subscribe()
+    if (this.detail().is_favorite) {
+      this.favoritesService.delete(this.detail().id).subscribe(() => {
+        this.detail.set({...this.detail(), is_favorite: false});
+      });
+    } else {
+      this.favoritesService.add(this.detail().id).subscribe(() => {
+        this.detail.set({...this.detail(), is_favorite: true});
+      });
+    }
   }
 }

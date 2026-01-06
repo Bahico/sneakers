@@ -48,23 +48,6 @@
   }
 
   <div class="w-full md:w-[80%] flex flex-col gap-4">
-    <div class="flex flex-col md:flex-row gap-4">
-      <div class="min-w-1/2 flex flex-col gap-1">
-        <div class="sn-control w-full">
-          <span class="sn-control-icon">
-            <i class="fa fa-user-o" aria-hidden="true"></i>
-          </span>
-          <input type="text" formControlName="name" placeholder="Введите имя" [disabled]="loading()">
-        </div>
-        @if (form.controls.name.touched && form.controls.name.invalid) {
-          <span class="sn-error">Заполните поле</span>
-        }
-      </div>
-      <div class="sn-control w-1/2">
-        <span class="sn-control-icon">{{ '@' }}</span>
-        <input type="text" formControlName="email" placeholder="Введите свой ник из Telegram" [disabled]="loading()">
-      </div>
-    </div>
 
     <div class="flex flex-col gap-1">
       <div class="sn-control">

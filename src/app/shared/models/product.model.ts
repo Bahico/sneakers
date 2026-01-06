@@ -82,6 +82,7 @@ export interface ProductListDetailModel {
   returnable: boolean;
   large_sized: boolean;
   shoplaza: boolean;
+  is_favorite: boolean;
   price: number;
   article: string;
   split: number;

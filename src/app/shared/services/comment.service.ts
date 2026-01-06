@@ -1,7 +1,7 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {getEndpoint} from '@/get-endpoint';
-import {Comment, CommentListResult, CreateCommentDto, UpdateCommentDto} from '@/models/comment';
+import {Comment, CommentListResult, CreateCommentDto} from '@/models/comment';
 import {ListResult} from '@/models/list-result';
 import {Observable} from 'rxjs';
 
@@ -40,19 +40,9 @@ export class CommentService {
   createComment(data: CreateCommentDto): Observable<Comment> {
     const images = new FormData();
     for (const image of data.images || []) {
-      images.append('images', image);
+      images.append('files', image);
     }
-    return this.http.post<Comment>(`${this.endpoint}${data.product_id}/create/`, images, {params: {rating: data.rating}});
-  }
-
-  /**
-   * Update an existing comment/review
-   * @param id - The comment ID
-   * @param data - Updated comment data
-   * @returns Observable of the updated comment
-   */
-  updateComment(id: string, data: UpdateCommentDto): Observable<Comment> {
-    return this.http.patch<Comment>(`${this.endpoint}${id}`, data);
+    return this.http.post<Comment>(`${this.endpoint}${data.product_id}/create/`, images, {params: {rating: data.rating, text: data.text}});
   }
 
   /**

@@ -11,17 +11,10 @@ export interface Comment {
 }
 
 export interface CreateCommentDto {
-  user_name: string;
   product_id: string;
   rating: number;
   text: string;
-  images?: string[];
-}
-
-export interface UpdateCommentDto {
-  rating?: number;
-  text?: string;
-  images?: string[];
+  images?: File[];
 }
 
 export interface CommentListResult {

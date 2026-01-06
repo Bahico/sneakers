@@ -28,7 +28,7 @@ export class App {
           )
           .subscribe();
 
-      if (this.cartService.getCartId())
+      if (this.cartService.getCartId() && !this.tokenStore.token()?.access_token)
         this.cartService.loadCart().subscribe();
     })
   }

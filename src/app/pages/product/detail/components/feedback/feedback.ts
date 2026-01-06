@@ -26,7 +26,6 @@ export class Feedback {
   
   protected readonly form = new FormGroup({
     name: new FormControl(null, [Validators.required]),
-    email: new FormControl(null),
     comment: new FormControl(null, [Validators.required]),
     star: new FormControl(0, [Validators.required, Validators.min(1), Validators.max(5)]),
   });
@@ -86,11 +85,10 @@ export class Feedback {
     try {
 
       this.commentService.createComment({
-        user_name: this.form.value.name,
         product_id: productId,
         rating: this.form.value.star,
         text: this.form.value.comment,
-        images: this.images()
+        images: this.imageFiles()
       })
         .pipe(
           catchError(error => {

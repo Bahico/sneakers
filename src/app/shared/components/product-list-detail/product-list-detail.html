@@ -12,7 +12,7 @@
     </span>
 
     <tui-icon
-      icon="@tui.heart"
+      [icon]="detail().is_favorite ? '@tui.heart-filled' : '@tui.heart'"
       [style.font-size.rem]="isMobile() ? 1.5 : 2"
       (click)="$event.stopPropagation(); clickFavor()"
     />

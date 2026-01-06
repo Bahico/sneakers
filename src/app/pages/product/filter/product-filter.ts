@@ -123,8 +123,8 @@ export default class ProductFilter implements OnInit, OnDestroy {
         debounceTime(500)
       )
       .subscribe(([_, segments]) => {
-        this.initialLoad();
         this.loadCategory(segments);
+        this.initialLoad();
       })
   }
 
@@ -171,7 +171,7 @@ export default class ProductFilter implements OnInit, OnDestroy {
 
   get rowFilter() {
     const rawFilter = this.productFilterStore.filter.getRawValue();
-
+    console.log(this.fullPath);
     const filter = {
       page: this.currentPage(),
       limit: 20,
@@ -224,6 +224,14 @@ export default class ProductFilter implements OnInit, OnDestroy {
       .subscribe(res => {
         this.productFilterStore.sizeTables.set(res.size_table);
       })
+  }
+
+  detailChange(detail: ProductListDetailModel, $index: number) {
+    this.products.update(products => {
+      const newProducts = [...products];
+      newProducts[$index] = detail;
+      return newProducts;
+    });
   }
 
   protected onClick(): void {
