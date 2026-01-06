@@ -3,18 +3,29 @@ import {HttpClient} from '@angular/common/http';
 import {getEndpoint} from '@/get-endpoint';
 import {TokenModel} from '@/models/token.model';
 import {PassportData, UpdateUserProfileDto} from '@/models/passport';
-import {Observable} from 'rxjs';
+import {Observable, tap} from 'rxjs';
+import { TokenStore } from '@/token';
 
 @Injectable({ providedIn: 'root'})
 export class AuthService {
   private readonly http = inject(HttpClient);
-
+  private readonly tokenStore = inject(TokenStore);
+  
   emailLogin(email: string) {
     return this.http.post<{email: string}>(getEndpoint('auth/request-code'), {}, {params: {email}})
   }
 
   sendCode(data: {email: string, code: string}) {
     return this.http.post<TokenModel>(getEndpoint('auth/verify-code'), data)
+  }
+
+  refresh() {
+    return this.http.post<TokenModel>(getEndpoint('auth/refresh'), {})
+      .pipe(
+        tap(res => {
+          this.tokenStore.update = res;
+        })
+      )
   }
 
   updateUserProfile(data: UpdateUserProfileDto) {

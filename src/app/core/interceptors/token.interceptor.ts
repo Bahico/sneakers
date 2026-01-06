@@ -1,40 +1,71 @@
 import {HttpErrorResponse, HttpEvent, HttpHandlerFn, HttpRequest} from '@angular/common/http';
-import {catchError, Observable, throwError} from 'rxjs';
+import {catchError, Observable, throwError, switchMap} from 'rxjs';
 import {inject} from '@angular/core';
 import {TokenStore} from '@/token';
 import {environment} from 'environments';
+import {AuthService} from '@/services/auth.service';
+
+const RETRY_HEADER = 'X-Refresh-Attempt';
 
 export default function (req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
   const tokenService = inject(TokenStore);
+  const authService = inject(AuthService);
 
-  if (tokenService.token() && !req.url.includes(environment.CDEK.API)) {
+  const currentToken = tokenService.token();
+
+  if (currentToken && !req.url.includes(environment.CDEK.API)) {
     req = req.clone({
       setHeaders: {
-        Authorization: `Bearer ${tokenService.token().access_token}`
+        Authorization: `Bearer ${currentToken.access_token}`
       },
-    })
+    });
   }
 
   return next(req)
     .pipe(
       catchError((error: HttpErrorResponse) => {
-        // Error response ni tekshirish
-        console.log('Xato maʼlumotlari:', {
-          status: error.status,
-          statusText: error.statusText,
-          url: req.url,
-          headers: req.headers,
-          errorBody: error.error,
-          message: error.message
-        });
-
-        // 401 xatosini qayta ishlash
-        if (error.status === 401) {
-          tokenService.update = null;
+        // Non-auth errors: just rethrow
+        if (error.status !== 401) {
+          return throwError(() => createHttpError(error));
         }
 
-        // Xatoni qayta throw qilish
-        return throwError(() => createHttpError(error));
+        // If this request is already a retry or is the refresh call itself,
+        // treat this 401 as final: logout and propagate error.
+        if (req.headers.has(RETRY_HEADER) || req.url.includes('auth/refresh')) {
+          tokenService.update = null;
+          return throwError(() => createHttpError(error));
+        }
+
+        // First 401: try to refresh token
+        return authService.refresh().pipe(
+          switchMap(() => {
+            const updatedToken = tokenService.token();
+
+            if (!updatedToken) {
+              tokenService.update = null;
+              return throwError(() => createHttpError(error));
+            }
+
+            const retryReq = req.clone({
+              setHeaders: {
+                Authorization: `Bearer ${updatedToken.access_token}`,
+                [RETRY_HEADER]: 'true'
+              },
+            });
+
+            return next(retryReq);
+          }),
+          catchError((refreshError: unknown) => {
+            // Refresh failed (including 401) -> logout and propagate.
+            tokenService.update = null;
+
+            const httpError = refreshError instanceof HttpErrorResponse
+              ? refreshError
+              : error;
+
+            return throwError(() => createHttpError(httpError));
+          })
+        );
       })
     );
 }

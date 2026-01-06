@@ -113,7 +113,7 @@ export default class ProductFilter implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.destroyer.next();
-    this.productFilterStore.filter.reset();
+    this.productFilterStore.filter.reset({brand_ids: [], sizes: []});
   }
 
   subscribeEvents() {
@@ -170,13 +170,18 @@ export default class ProductFilter implements OnInit, OnDestroy {
   }
 
   get rowFilter() {
+    const rawFilter = this.productFilterStore.filter.getRawValue();
+
     const filter = {
       page: this.currentPage(),
       limit: 20,
       category_slug: this.fullPath.join('/'),
       fit: this.gender.toUpperCase(),
-      ...this.productFilterStore.filter.getRawValue()
-    }
+      ...rawFilter,
+      min_max_price: Array.isArray(rawFilter.min_max_price) ? rawFilter.min_max_price : [],
+      sizes: Array.isArray(rawFilter.sizes) ? rawFilter.sizes : [],
+      brand_ids: Array.isArray(rawFilter.brand_ids) ? rawFilter.brand_ids : [],
+    };
 
     const sortBy = filter.sort_by;
     if (!sortBy) {
