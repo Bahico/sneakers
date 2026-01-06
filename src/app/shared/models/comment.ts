@@ -5,7 +5,7 @@ export interface Comment {
   rating: number;
   text: string;
   status: number;
-  images: string[];
+  images: {url: string;}[];
   created_at?: Date;
   updated_at?: Date;
 }

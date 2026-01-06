@@ -16,7 +16,7 @@
     @if (commentData.images && commentData.images.length > 0) {
       <div class="flex gap-2 w-full flex-wrap">
         @for (image of commentData.images; track image) {
-          <img [src]="image" [alt]="'Comment image ' + $index" class="h-20 md:h-32 w-24 md:w-44 object-cover rounded-xl">
+          <img [src]="image.url" [alt]="'Comment image ' + $index" class="h-20 md:h-32 w-24 md:w-44 object-cover rounded-xl">
         }
       </div>
     }

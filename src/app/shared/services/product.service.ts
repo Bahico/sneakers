@@ -14,13 +14,17 @@ export class ProductService {
   private readonly products$ = signal<ProductListDetailModel[]>([])
   readonly products = this.products$.asReadonly();
 
+  setProducts(products: ProductListDetailModel[]) {
+    this.products$.set(products);
+  }
+
   detail(id: string) {
     return this.http.get<ProductModel>(getEndpoint(`products/id/${id}`));
   }
 
   query(params: any) {
     return this.http.get<ProductListModel>(getEndpoint('products'), {params})
-      .pipe(tap(res => this.products$.set(res.products)));
+      .pipe(tap(res => this.setProducts(res.products)));
   }
 
   brands(query: {limit: number; category_slug: string}) {

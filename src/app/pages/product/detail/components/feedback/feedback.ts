@@ -25,7 +25,6 @@ export class Feedback {
   protected readonly context = injectContext<TuiDialogContext<string, string>>();
   
   protected readonly form = new FormGroup({
-    name: new FormControl(null, [Validators.required]),
     comment: new FormControl(null, [Validators.required]),
     star: new FormControl(0, [Validators.required, Validators.min(1), Validators.max(5)]),
   });

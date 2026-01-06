@@ -1,6 +1,7 @@
 import {Component, ElementRef, inject, viewChild} from '@angular/core';
 import {ProductService} from '@/services/product.service';
 import {ProductListDetail} from '@/components/product-list-detail/product-list-detail';
+import { ProductListDetailModel } from '@/models/product.model';
 
 
 @Component({
@@ -30,5 +31,9 @@ export class CategoryDetail {
     if (container) {
       container.scrollBy({ left: 300, behavior: 'smooth' });
     }
+  }
+
+  detailChange(detail: ProductListDetailModel, $index: number) {
+    this.productService.setProducts(this.products().map((product, index) => index === $index ? detail : product));
   }
 }
