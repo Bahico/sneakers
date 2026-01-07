@@ -19,4 +19,13 @@ export class FavoritesService {
   delete(product_id: string) {
     return this.http.delete(`${this.endpoint}/${product_id}`);
   }
+
+  /**
+   * Check if a product is in the favorites
+   * @param product_id - The product ID
+   * @returns Observable of {is_favorite: boolean}
+   */
+  check(product_id: string) {
+    return this.http.get<{is_favorite: boolean}>(`${this.endpoint}/${product_id}/check`);
+  }
 }

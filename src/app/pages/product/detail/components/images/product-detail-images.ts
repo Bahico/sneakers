@@ -1,8 +1,9 @@
-import {afterNextRender, Component, computed, ElementRef, inject, signal, viewChild, viewChildren} from '@angular/core';
+import {afterNextRender, Component, computed, effect, ElementRef, inject, signal, viewChild, viewChildren} from '@angular/core';
 import {ProductDetailStore} from '@/product/detail/services/product-detail-store';
 import {ImageZoom} from '@/components/image-zoom/image-zoom';
 import {TuiIcon} from '@taiga-ui/core';
 import {IconComponent} from '@/components/icon/icon';
+import { FavoritesService } from '@/services/favorites.service';
 
 @Component({
   templateUrl: 'product-detail-images.html',
@@ -16,6 +17,7 @@ import {IconComponent} from '@/components/icon/icon';
 })
 export class ProductDetailImages {
   private readonly productDetailStore = inject(ProductDetailStore);
+  private readonly favoritesService = inject(FavoritesService);
 
   thumbs = viewChildren<ElementRef>('thumb');
   mobileScrollContainer = viewChild<ElementRef<HTMLElement>>('mobileScrollContainer');
@@ -24,6 +26,7 @@ export class ProductDetailImages {
   images = computed<string[]>(() => this.productDetailStore.detail().images);
   activeIndex = signal(0);
   isOpen = signal(false);
+  isFavorite = signal(false);
 
   protected readonly disablePrevious = computed(() => this.activeIndex() === 0);
   protected readonly disableNext = computed(() => this.activeIndex() === this.images()?.length - 1);
@@ -37,6 +40,26 @@ export class ProductDetailImages {
         }
       }, 400);
     });
+
+    effect(() => {
+      if (this.productDetailStore.detail().id) {
+        this.favoritesService.check(this.productDetailStore.detail().id).subscribe((res) => {
+          this.isFavorite.set(res.is_favorite);
+        });
+      }
+    });
+  }
+
+  clickFavor() {
+    if (this.isFavorite()) {
+      this.favoritesService.delete(this.productDetailStore.detail().id).subscribe(() => {
+        this.isFavorite.set(false);
+      });
+    } else {
+      this.favoritesService.add(this.productDetailStore.detail().id).subscribe(() => {
+        this.isFavorite.set(true);
+      });
+    }
   }
 
   onMobileScroll() {
