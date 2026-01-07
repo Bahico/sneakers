@@ -16,9 +16,40 @@
     @if (commentData.images && commentData.images.length > 0) {
       <div class="flex gap-2 w-full flex-wrap">
         @for (image of commentData.images; track image) {
-          <img [src]="image.url" [alt]="'Comment image ' + $index" class="h-20 md:h-32 w-24 md:w-44 object-cover rounded-xl">
+          <img
+            [src]="image.url"
+            [alt]="'Comment image ' + $index"
+            (click)="previewVisible.set(true); index.set($index)"
+            class="h-20 md:h-32 w-24 md:w-44 object-cover rounded-xl cursor-pointer"
+          >
         }
       </div>
     }
+
+
+    <ng-template [(tuiPreviewDialog)]="previewVisible">
+      <tui-preview>
+        <tui-preview-pagination
+          [length]="commentData.images.length"
+          [(index)]="index"
+        />
+
+        <button
+          iconStart="@tui.x"
+          tuiIconButton
+          tuiPreviewAction
+          type="button"
+          (click)="previewVisible.set(false)"
+        >
+          Close
+        </button>
+
+        <img
+          *polymorpheusOutlet="commentData.images[index()] as src"
+          alt="preview"
+          [src]="src.url"
+        />
+      </tui-preview>
+    </ng-template>
   </div>
 }

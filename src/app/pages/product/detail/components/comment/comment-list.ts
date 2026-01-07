@@ -62,7 +62,7 @@ export class CommentList {
     this.error.set(null);
 
     this.commentService
-      .getComments(this.detail().id, {limit: 10, offset: 0})
+      .getComments(this.detail().id, {limit: 4, offset: 0})
       .pipe(
         catchError(err => {
           this.error.set(err.message || 'Failed to load comments');
