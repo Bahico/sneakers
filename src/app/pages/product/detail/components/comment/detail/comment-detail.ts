@@ -1,17 +1,28 @@
-import {Component, computed, input} from '@angular/core';
+import {Component, computed, input, signal} from '@angular/core';
 import {IconComponent} from '@/components/icon/icon';
 import {Comment} from '@/models/comment';
+import {TuiPreviewComponent, TuiPreviewDialogDirective, TuiPreviewPagination} from '@taiga-ui/kit';
+import {TuiButton} from '@taiga-ui/core';
+import {PolymorpheusOutlet} from '@taiga-ui/polymorpheus';
 
 @Component({
   templateUrl: 'comment-detail.html',
   selector: 'comment-detail',
   host: {class: 'pb-6'},
   imports: [
-    IconComponent
+    IconComponent,
+    TuiPreviewDialogDirective,
+    TuiPreviewComponent,
+    TuiButton,
+    PolymorpheusOutlet,
+    TuiPreviewPagination
   ]
 })
 export class CommentDetail {
   comment = input<Comment>();
+
+  previewVisible = signal(false);
+  index = signal(0);
 
   protected readonly stars = computed(() => {
     const rating = this.comment()?.rating || 0;
