@@ -82,7 +82,9 @@ export default class ProductFilter implements OnInit, OnDestroy {
 
   products = signal<ProductListDetailModel[]>([]);
 
-  private readonly destroyer = new Subject<void>();
+  // Separate destroyer for product requests only
+  // Brand/size requests use takeUntilDestroyed to avoid cancellation on filter changes
+  private readonly productRequestDestroyer = new Subject<void>();
 
   constructor() {
     effect(() => {
@@ -112,7 +114,8 @@ export default class ProductFilter implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.destroyer.next();
+    this.productRequestDestroyer.next();
+    this.productRequestDestroyer.complete();
     this.productFilterStore.filter.reset({brand_ids: [], sizes: []});
   }
 
@@ -129,7 +132,7 @@ export default class ProductFilter implements OnInit, OnDestroy {
   }
 
   subscribeFilter() {
-    combineLatest([this.productFilterStore.filter.valueChanges])
+    this.productFilterStore.filter.valueChanges
       .pipe(
         filter(() => this.timeStable()),
         takeUntilDestroyed(this.destroyRef),
@@ -143,14 +146,14 @@ export default class ProductFilter implements OnInit, OnDestroy {
   initialLoad() {
     this.currentPage.set(1);
     this.products.set([]);
-    this.destroyer.next();
+    this.productRequestDestroyer.next();
     this.loadProduct(true);
   }
 
   loadCategory(segments: UrlSegment[]) {
     this.gender = <Gender>this.route.snapshot.params['gender'];
-
     this.fullPath = segments.map(s => s.path);
+    
     this.getBrands();
     this.getSizeTables();
   }
@@ -158,11 +161,11 @@ export default class ProductFilter implements OnInit, OnDestroy {
   loadProduct(initial = false) {
     this.productService
       .query(this.rowFilter)
-      .pipe(takeUntil(this.destroyer))
+      .pipe(takeUntil(this.productRequestDestroyer), takeUntilDestroyed(this.destroyRef))
       .subscribe(res => {
         this.products.update(items => [...items, ...res.products]);
 
-        if (initial) {
+        if (this.productFilterStore.maxPrice() === 0) {
           this.productFilterStore.maxPrice.set(res.max_price);
           this.productFilterStore.minPrice.set(res.min_price);
         }
@@ -171,7 +174,6 @@ export default class ProductFilter implements OnInit, OnDestroy {
 
   get rowFilter() {
     const rawFilter = this.productFilterStore.filter.getRawValue();
-    console.log(this.fullPath);
     const filter = {
       page: this.currentPage(),
       limit: 20,
@@ -209,7 +211,8 @@ export default class ProductFilter implements OnInit, OnDestroy {
         limit: 100,
         category_slug: this.fullPath.join('/')
       })
-      .pipe(takeUntil(this.destroyer), takeUntilDestroyed(this.destroyRef))
+      // Use takeUntilDestroyed only - won't be cancelled by filter changes
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(res => {
         this.productFilterStore.brands.set(res);
       })
@@ -220,7 +223,8 @@ export default class ProductFilter implements OnInit, OnDestroy {
       .sizes({
         category_slug: this.fullPath.join('/')
       })
-      .pipe(takeUntil(this.destroyer), takeUntilDestroyed(this.destroyRef))
+      // Use takeUntilDestroyed only - won't be cancelled by filter changes
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(res => {
         this.productFilterStore.sizeTables.set(res.size_table);
       })

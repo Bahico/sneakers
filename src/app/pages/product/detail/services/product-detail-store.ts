@@ -1,14 +1,13 @@
-import {computed, inject, Injectable, signal} from '@angular/core';
-import {ProductListDetailModel, ProductModel, Variant} from '@/models/product.model';
-import {AuthenticationOpen} from '@/components/authentication/authentication-open';
-import {AccountStore} from '@/account';
-import {CartService} from '@/services/cart.service';
-import {TuiDialogService} from '@taiga-ui/core';
-import {PolymorpheusComponent} from '@taiga-ui/polymorpheus';
-import {MobileAddCart} from '@/product/detail/components/mobile-add-cart/mobile-add-cart';
-import {concatMap} from 'rxjs';
-import {CartStore} from '@/cart';
-import {BuyCoin} from '@/product/detail/components/buy-coin/buy-coin';
+import { AccountStore } from '@/account';
+import { CartStore } from '@/cart';
+import { AuthenticationOpen } from '@/components/authentication/authentication-open';
+import { ProductListDetailModel, ProductModel, Variant } from '@/models/product.model';
+import { MobileAddCart } from '@/product/detail/components/mobile-add-cart/mobile-add-cart';
+import { CartService } from '@/services/cart.service';
+import { computed, inject, Injectable, signal } from '@angular/core';
+import { TuiDialogService } from '@taiga-ui/core';
+import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
+import { concatMap } from 'rxjs';
 
 @Injectable({providedIn: 'root'})
 export class ProductDetailStore {
@@ -50,16 +49,7 @@ export class ProductDetailStore {
 
   addToCart(): void {
     if (!this.isAuthed() && !this.cartService.getCartId()) {
-      this.dialogs
-        .open(
-          new PolymorpheusComponent(BuyCoin),
-          {
-            label: null,
-            size: 'l'
-          },
-        )
-        .subscribe();
-      return
+      return this.authenticationService.openModal();
     }
     this.cartService.addCart({
       product_id: this.productDetail$().id,

@@ -8,7 +8,7 @@ export class ProductFilterStore {
   readonly brands = signal<Brand[]>([]);
   readonly sizeTables = signal<SizeTable[]>([]);
   readonly minPrice = signal(0);
-  readonly maxPrice = signal(10);
+  readonly maxPrice = signal(0);
 
   readonly filter = new FormGroup({
     min_max_price: new FormControl([0, 0]),

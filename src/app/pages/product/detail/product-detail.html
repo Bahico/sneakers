@@ -3,7 +3,7 @@
       <a
         *tuiItem
         tuiLink
-        routerLink="/product/filter"
+        [routerLink]="['/product', productDetailStore.detail().fit?.toLowerCase(), productDetailStore.detail().category?.full_slug]"
       >
         В каталог
       </a>

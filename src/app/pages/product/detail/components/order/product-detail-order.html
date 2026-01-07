@@ -45,14 +45,14 @@
     </div>
   </div>
   <button
-    class="sn-btn w-full !py-4 hidden md:block"
+    class="sn-btn w-full py-4! hidden md:block"
     routerLink="/basket"
   >
     Перейти в корзину
   </button>
 } @else {
   <button
-    class="sn-btn w-full !py-4 hidden md:block"
+    class="sn-btn w-full py-4! hidden md:block"
     [disabled]="!selectedSkus()"
     (click)="productDetailStore.addToCart()"
   >

@@ -4,6 +4,9 @@ import {ImageZoom} from '@/components/image-zoom/image-zoom';
 import {TuiIcon} from '@taiga-ui/core';
 import {IconComponent} from '@/components/icon/icon';
 import { FavoritesService } from '@/services/favorites.service';
+import { AccountStore } from '@/account';
+import { AuthenticationOpen } from '@/components/authentication/authentication-open';
+import { RouterLink } from '@angular/router';
 
 @Component({
   templateUrl: 'product-detail-images.html',
@@ -11,19 +14,23 @@ import { FavoritesService } from '@/services/favorites.service';
   imports: [
     ImageZoom,
     TuiIcon,
-    IconComponent
+    IconComponent,
+    RouterLink
   ],
   selector: 'product-images'
 })
 export class ProductDetailImages {
   private readonly productDetailStore = inject(ProductDetailStore);
   private readonly favoritesService = inject(FavoritesService);
+  private readonly accountStore = inject(AccountStore);
+  private readonly authenticationOpen = inject(AuthenticationOpen);
 
   thumbs = viewChildren<ElementRef>('thumb');
   mobileScrollContainer = viewChild<ElementRef<HTMLElement>>('mobileScrollContainer');
   mobileImages = viewChildren<ElementRef<HTMLImageElement>>('mobileImage');
 
   images = computed<string[]>(() => this.productDetailStore.detail().images);
+  detail = computed(() => this.productDetailStore.detail());
   activeIndex = signal(0);
   isOpen = signal(false);
   isFavorite = signal(false);
@@ -42,7 +49,7 @@ export class ProductDetailImages {
     });
 
     effect(() => {
-      if (this.productDetailStore.detail().id) {
+      if (this.productDetailStore.detail().id && this.accountStore.account()?.id) {
         this.favoritesService.check(this.productDetailStore.detail().id).subscribe((res) => {
           this.isFavorite.set(res.is_favorite);
         });
@@ -51,6 +58,10 @@ export class ProductDetailImages {
   }
 
   clickFavor() {
+    if (!this.accountStore.account()?.id) {
+      return this.authenticationOpen.openModal();
+    }
+
     if (this.isFavorite()) {
       this.favoritesService.delete(this.productDetailStore.detail().id).subscribe(() => {
         this.isFavorite.set(false);

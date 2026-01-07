@@ -20,8 +20,7 @@ import {map} from 'rxjs';
 export class ProductFilterPrice {
   readonly productFilterStore = inject(ProductFilterStore);
 
-  protected readonly minPrice = this.productFilterStore.filter.controls.min_max_price.valueChanges.pipe(map(item => item[0] as number));
-  protected readonly maxPrice = this.productFilterStore.filter.controls.min_max_price.valueChanges.pipe(map(item => item[1] as number));
+  protected readonly min_max_price = this.productFilterStore.filter.controls.min_max_price;
 
   constructor() {
     effect(() => {

@@ -1,5 +1,5 @@
 <div class="flex w-full items-center gap-1">
-  <span class="flex px-3 py-0.5 bg-gray-100 rounded-xl text-nowrap min-w-24 w-24">От {{minPrice | async | tuiFormatNumber | async}} р.</span>
+  <span class="flex px-3 py-0.5 bg-gray-100 rounded-xl text-nowrap min-w-24 w-24">От {{min_max_price.value[0] | tuiFormatNumber | async}} р.</span>
   <tui-range
     size="m"
     [max]="productFilterStore.maxPrice()"
@@ -9,5 +9,5 @@
     [style.--tui-thickness.rem]="0.5"
     [style.--tui-background-accent-1]="'#222'"
   />
-  <span class="flex px-3 py-0.5 bg-gray-100 rounded-xl text-nowrap min-w-24 w-24">До {{maxPrice | async | tuiFormatNumber | async}} р.</span>
+  <span class="flex px-3 py-0.5 bg-gray-100 rounded-xl text-nowrap min-w-24 w-24">До {{min_max_price.value[1] | tuiFormatNumber | async}} р.</span>
 </div>

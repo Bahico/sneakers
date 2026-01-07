@@ -28,7 +28,8 @@ export class BuyCoin {
   }
 
   getCart(): void {
-    this.cartService.setCartId(crypto.randomUUID());
-    this.cartService.loadCart().subscribe(() => this.close());
+    this.close();
+    // this.cartService.setCartId(crypto.randomUUID());
+    // this.cartService.loadCart().subscribe(() => this.close());
   }
 }
