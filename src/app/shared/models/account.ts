@@ -3,7 +3,7 @@ export interface Account {
   last_login: Date;
   first_name: string;
   last_name: string;
-  username: string;
+  email: string;
   telegram_id: string;
   password: string;
   user_permissions: number[];

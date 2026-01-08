@@ -16,11 +16,23 @@
           </span>
           <input type="text" formControlName="email" placeholder="Email">
         </div>
-        <div class="sn-control w-full">
-          <span class="sn-control-icon">
-            <icon-list icon="call"/>
-          </span>
-          <input type="text" formControlName="phone" placeholder="Номер телефона">
+        <div class="flex gap-2">
+          <div class="sn-control w-20! h-10">
+            <img
+              alt="ru"
+              [src]="'ru' | tuiFlag"
+              class="rounded-sm h-full w-10 object-cover"
+            />
+            <span class=" font-semibold">+7</span>
+          </div>
+          <div class="sn-control w-full">
+            <input
+              type="text"
+              formControlName="phone"
+              mask="(000) 000-00-00"
+              placeholder="(912) 345-67-89"
+            >
+          </div>
         </div>
 
       </form>
@@ -66,9 +78,6 @@
           <span class="text-xl font-semibold col-span-2 ">Паспортные данные</span>
 
           <span class="line col-span-2"></span>
-
-
-          <app-date class="col-span-2" formControlName="date_of_birth" placeholder="Дата рождения" />
 
           <div class="sn-control">
             <span class="sn-control-icon">
