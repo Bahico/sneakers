@@ -2,7 +2,7 @@ import {afterNextRender, Component, inject, signal} from '@angular/core';
 import {RouterLink} from '@angular/router';
 import {TuiBreadcrumbs, TuiCheckbox} from '@taiga-ui/kit';
 import {TuiFlagPipe, TuiLink} from '@taiga-ui/core';
-import {TuiItem} from '@taiga-ui/cdk';
+import {TuiDay, TuiItem} from '@taiga-ui/cdk';
 import {ProfileMenu} from '@/profile/components/menu/profile-menu';
 import {IconComponent} from '@/components/icon/icon';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -42,6 +42,8 @@ export default class ProfileEdit {
   success = signal(false);
   hasPassportData = signal(false);
 
+  readonly maxDate = signal<TuiDay | null>(null);
+
   profileForm = new FormGroup({
     email: new FormControl<string | null>(null),
     phone: new FormControl<string | null>(null),
@@ -65,7 +67,13 @@ export default class ProfileEdit {
     afterNextRender(() => {
       this.loadUserData();
       this.loadPassportData();
+      this.loadMaxDate();
     })
+  }
+
+  loadMaxDate() {
+    const date = new Date();
+    this.maxDate.set(new TuiDay(date.getFullYear(), date.getMonth(), date.getDate()));
   }
 
   loadUserData() {

@@ -83,24 +83,39 @@
             <span class="sn-control-icon">
               <icon-list icon="calendar"/>
             </span>
-            <input type="text" formControlName="passport_series" placeholder="Серия паспорта">
+            <input
+              type="text"
+              formControlName="passport_series"
+              placeholder="Серия паспорта"
+              mask="00"
+            >
           </div>
 
           <div class="sn-control">
             <span class="sn-control-icon">
               <icon-list icon="calendar"/>
             </span>
-            <input type="text" formControlName="passport_number" placeholder="Номер паспорта">
+            <input
+              type="text"
+              formControlName="passport_number"
+              placeholder="Номер паспорта"
+              mask="000000"
+            >
           </div>
 
           <div class="sn-control col-span-2">
             <span class="sn-control-icon">
               <icon-list icon="calendar"/>
             </span>
-            <input type="text" formControlName="inn" placeholder="ИНН">
+            <input
+              type="text"
+              formControlName="inn"
+              placeholder="ИНН"
+              mask="000000000000"
+            >
           </div>
 
-          <app-date class="col-span-2" formControlName="date_of_give" placeholder="Дата выдачи паспорта" />
+          <app-date class="col-span-2" formControlName="date_of_give" [maxDate]="maxDate()" placeholder="Дата выдачи паспорта" />
         </div>
       </form>
 
