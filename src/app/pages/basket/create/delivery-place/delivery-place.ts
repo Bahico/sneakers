@@ -1,5 +1,5 @@
 import {Component, model} from '@angular/core';
-import {YaMapComponent, YaPlacemarkDirective} from 'angular8-yandex-maps';
+import {YaEvent, YaMapComponent, YaPlacemarkDirective} from 'angular8-yandex-maps';
 import {NgClass, NgTemplateOutlet} from '@angular/common';
 import {DeliveryTypeInputs} from '@/basket/create/delivery-type-inputs/delivery-type-inputs';
 import {IconComponent} from '@/components/icon/icon';
@@ -18,4 +18,8 @@ import {IconComponent} from '@/components/icon/icon';
 })
 export class DeliveryPlace {
   open = model(false);
+
+  onChange(event: YaEvent<ymaps.Map>) {
+    console.log(event.target.getCenter());
+  }
 }
