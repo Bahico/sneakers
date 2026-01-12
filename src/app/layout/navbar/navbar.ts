@@ -1,15 +1,17 @@
-import {Component, computed, inject, signal} from '@angular/core';
-import {NgClass, NgOptimizedImage} from '@angular/common';
+import {afterNextRender, Component, computed, DestroyRef, inject, signal} from '@angular/core';
+import {Location, NgClass, NgOptimizedImage} from '@angular/common';
 import {IconComponent} from '@/components/icon/icon';
 import {TuiDropdownDirective, TuiDropdownManual, TuiDropdownOptionsDirective, TuiIconPipe} from '@taiga-ui/core';
 import {TuiActiveZone, TuiObscured} from '@taiga-ui/cdk';
 import {AccountStore} from '@/account';
 import {AuthenticationOpen} from '@/components/authentication/authentication-open';
-import {Router, RouterLink, RouterLinkActive} from '@angular/router';
+import {NavigationEnd, Router, RouterLink, RouterLinkActive} from '@angular/router';
 import {TuiBadgedContentComponent, TuiBadgeNotification} from '@taiga-ui/kit';
 import {CartStore} from '@/cart';
 import {ProductDetailStore} from '@/product/detail/services/product-detail-store';
 import {HomeStore} from '@/home.store';
+import {filter} from 'rxjs';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'navbar',
@@ -41,6 +43,8 @@ export default class Navbar {
   private readonly productDetailStore = inject(ProductDetailStore);
   private readonly router = inject(Router);
   private readonly homeStore = inject(HomeStore);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly location = inject(Location);
 
   protected readonly isAuthed = computed(() => !!this.accountStore.account());
   protected open = false;
@@ -50,10 +54,29 @@ export default class Navbar {
   protected readonly gender = this.homeStore.gender.asReadonly();
 
   openCartBtn = computed(() => !!this.productDetailStore.selectedSkus());
+  isSearchPage = signal(false);
   addedCart = computed(() =>
     this.productDetailStore.selectedSkus() &&
     this.cartStore.carts()?.items?.find(item => item.variant.id === this.productDetailStore.selectedSkus()?.id)
   );
+
+  constructor() {
+    afterNextRender(() => {
+      this.router
+        .events
+        .pipe(
+          filter(event => event instanceof NavigationEnd),
+          takeUntilDestroyed(this.destroyRef)
+        )
+        .subscribe(() => {
+          if (location.pathname.includes('product/search')) {
+            this.isSearchPage.set(true);
+          } else {
+            this.isSearchPage.set(false);
+          }
+        })
+    })
+  }
 
   logout() {
     this.accountStore.logout();
@@ -62,6 +85,16 @@ export default class Navbar {
 
   openAuthentication() {
     this.authenticationService.openModal()
+  }
+
+  goBack() {
+    if (this.isSearchPage()) {
+      this.location.back();
+    }
+  }
+
+  openMobileCart() {
+    this.productDetailStore.mobileAddCart();
   }
 
   protected onClick(): void {
@@ -76,9 +109,5 @@ export default class Navbar {
 
   protected onActiveZone(active: boolean): void {
     this.open = active && this.open;
-  }
-
-  openMobileCart() {
-    this.productDetailStore.mobileAddCart();
   }
 }

@@ -147,18 +147,18 @@ export default class ProductFilter implements OnInit, OnDestroy {
     this.currentPage.set(1);
     this.products.set([]);
     this.productRequestDestroyer.next();
-    this.loadProduct(true);
+    this.loadProduct();
   }
 
   loadCategory(segments: UrlSegment[]) {
     this.gender = <Gender>this.route.snapshot.params['gender'];
     this.fullPath = segments.map(s => s.path);
-    
+
     this.getBrands();
     this.getSizeTables();
   }
 
-  loadProduct(initial = false) {
+  loadProduct() {
     this.productService
       .query(this.rowFilter)
       .pipe(takeUntil(this.productRequestDestroyer), takeUntilDestroyed(this.destroyRef))

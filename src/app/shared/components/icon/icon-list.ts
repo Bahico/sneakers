@@ -17,6 +17,14 @@ export const ICON_LIST: IconList[] = [
     `
   },
   {
+    name: 'close-sm',
+    icon: `
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1 1L23 23M1 23L23 1" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    `
+  },
+  {
     name: 'profile-active',
     icon: `
       <svg width="25" height="26" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -73,6 +81,15 @@ export const ICON_LIST: IconList[] = [
     name: 'search',
     icon: `
       <svg width="28" height="28" viewBox="0 0 19 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8.32815 3.18555C6.72183 3.18555 5.18128 3.82373 4.04544 4.95969C2.9096 6.09565 2.27148 7.63635 2.27148 9.24285C2.27148 10.8494 2.9096 12.3901 4.04544 13.526C5.18128 14.662 6.72183 15.3001 8.32815 15.3001C9.9345 15.3001 11.475 14.662 12.6109 13.526C13.7467 12.3901 14.3848 10.8494 14.3848 9.24285C14.3848 7.63635 13.7467 6.09565 12.6109 4.95969C11.475 3.82373 9.9345 3.18555 8.32815 3.18555Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M15.8991 16.8142L12.6055 13.5205" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    `
+  },
+  {
+    name: 'search-sm',
+    icon: `
+      <svg width="20" height="20" viewBox="0 0 19 20" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M8.32815 3.18555C6.72183 3.18555 5.18128 3.82373 4.04544 4.95969C2.9096 6.09565 2.27148 7.63635 2.27148 9.24285C2.27148 10.8494 2.9096 12.3901 4.04544 13.526C5.18128 14.662 6.72183 15.3001 8.32815 15.3001C9.9345 15.3001 11.475 14.662 12.6109 13.526C13.7467 12.3901 14.3848 10.8494 14.3848 9.24285C14.3848 7.63635 13.7467 6.09565 12.6109 4.95969C11.475 3.82373 9.9345 3.18555 8.32815 3.18555Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M15.8991 16.8142L12.6055 13.5205" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
