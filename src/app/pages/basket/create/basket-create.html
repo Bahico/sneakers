@@ -199,4 +199,6 @@
   </div>
 </div>
 
-<delivery-place class="hidden md:block" [(open)]="openDeliveryPlace" />
+@defer (on timer(100ms)) {
+  <delivery-place class="hidden md:block" [(open)]="openDeliveryPlace" />
+}

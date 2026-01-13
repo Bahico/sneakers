@@ -26,6 +26,7 @@ import {TuiDay} from '@taiga-ui/cdk';
 })
 export class DateComponent implements ControlValueAccessor {
   placeholder = input<string>();
+  maxDate = input<TuiDay>();
 
   open = signal(false);
   selectedDate = signal<TuiDay | null>(null);

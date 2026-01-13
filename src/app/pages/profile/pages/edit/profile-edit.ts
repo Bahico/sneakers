@@ -1,8 +1,8 @@
 import {afterNextRender, Component, inject, signal} from '@angular/core';
 import {RouterLink} from '@angular/router';
 import {TuiBreadcrumbs, TuiCheckbox} from '@taiga-ui/kit';
-import {TuiLink} from '@taiga-ui/core';
-import {TuiItem} from '@taiga-ui/cdk';
+import {TuiFlagPipe, TuiLink} from '@taiga-ui/core';
+import {TuiDay, TuiItem} from '@taiga-ui/cdk';
 import {ProfileMenu} from '@/profile/components/menu/profile-menu';
 import {IconComponent} from '@/components/icon/icon';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -11,6 +11,7 @@ import {AccountStore} from '@/account';
 import {catchError, forkJoin, of} from 'rxjs';
 import {PassportData} from '@/models/passport';
 import {DateComponent} from '@/components/date/date';
+import {NgxMaskDirective} from 'ngx-mask';
 
 @Component({
   templateUrl: 'profile-edit.html',
@@ -26,7 +27,9 @@ import {DateComponent} from '@/components/date/date';
     TuiCheckbox,
     FormsModule,
     ReactiveFormsModule,
-    DateComponent
+    DateComponent,
+    TuiFlagPipe,
+    NgxMaskDirective
   ]
 })
 export default class ProfileEdit {
@@ -39,10 +42,11 @@ export default class ProfileEdit {
   success = signal(false);
   hasPassportData = signal(false);
 
+  readonly maxDate = signal<TuiDay | null>(null);
+
   profileForm = new FormGroup({
     email: new FormControl<string | null>(null),
     phone: new FormControl<string | null>(null),
-    username: new FormControl<string | null>(null),
     telegram_id: new FormControl<string | null>(null),
     first_name: new FormControl<string | null>(null),
     last_name: new FormControl(null),
@@ -53,7 +57,6 @@ export default class ProfileEdit {
     name: new FormControl<string | null>(null),
     surname: new FormControl<string | null>(null),
     f_name: new FormControl<string | null>(null),
-    date_of_birth: new FormControl<string | null>(null),
     passport_number: new FormControl<string | null>(null),
     passport_series: new FormControl<string | null>(null),
     inn: new FormControl<string | null>(null),
@@ -64,14 +67,20 @@ export default class ProfileEdit {
     afterNextRender(() => {
       this.loadUserData();
       this.loadPassportData();
+      this.loadMaxDate();
     })
+  }
+
+  loadMaxDate() {
+    const date = new Date();
+    this.maxDate.set(new TuiDay(date.getFullYear(), date.getMonth(), date.getDate()));
   }
 
   loadUserData() {
     const account = this.accountStore.account();
     if (account) {
       this.profileForm.patchValue({
-        username: account.username || null,
+        email: account.email || null,
         telegram_id: account.telegram_id || null,
       });
     } else {
@@ -80,7 +89,7 @@ export default class ProfileEdit {
         .subscribe(account => {
           if (account) {
             this.profileForm.patchValue({
-              username: account.username || null,
+              email: account.email || null,
               telegram_id: account.telegram_id || null,
             });
           }
@@ -123,10 +132,9 @@ export default class ProfileEdit {
     this.success.set(false);
 
     const profileData = {
-      username: this.profileForm.value.username || undefined,
-      phone: this.profileForm.value.phone || undefined,
-      telegram_id: this.profileForm.value.telegram_id || undefined,
       email: this.profileForm.value.email || undefined,
+      phone: this.profileForm.value.phone || undefined,
+      telegram_id: this.profileForm.value.telegram_id || undefined
     };
 
     const passportData = <PassportData>this.passportForm.getRawValue();

@@ -43,6 +43,7 @@
     "less": "^4.4.2",
     "ngx-cookie-service": "^21.1.0",
     "ngx-infinite-scroll": "^21.0.0",
+    "ngx-mask": "^20.0.3",
     "rxjs": "~7.8.0",
     "taiga-ui": "^4.58.0",
     "tslib": "^2.3.0"

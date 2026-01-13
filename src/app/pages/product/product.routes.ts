@@ -9,6 +9,10 @@ export default [
     loadComponent: () => import('./detail/product-detail'),
   },
   {
+    path: 'search',
+    loadComponent: () => import('./search/product-search')
+  },
+  {
     path: ':gender',
     loadComponent: () => import('./filter/product-filter'),
     children: [

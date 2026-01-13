@@ -11,7 +11,6 @@ import {DeliveryPlace} from './delivery-place/delivery-place';
 import {DeliveryTypeInputs} from '@/basket/create/delivery-type-inputs/delivery-type-inputs';
 import {PolymorpheusComponent} from '@taiga-ui/polymorpheus';
 import {ResponsiveBreakpointsService} from '@/services/responsive-breakpoints.service';
-import {CdekService} from '@/services/cdek.service';
 
 @Component({
   templateUrl: 'basket-create.html',
@@ -38,7 +37,6 @@ export default class BasketCreate {
   private readonly cartStore = inject(CartStore);
   private readonly dialogs = inject(TuiDialogService);
   private readonly rbs = inject(ResponsiveBreakpointsService);
-  private readonly cdekService = inject(CdekService);
 
   protected readonly carts = computed(() => this.cartStore.carts());
 
@@ -49,7 +47,6 @@ export default class BasketCreate {
   constructor() {
     afterNextRender(() => {
       setTimeout(() => document.getElementById('form').scrollIntoView({behavior: 'smooth'}), 1000);
-      this.cdekService.getDeliveryPointsByAddress('Москва').subscribe();
     })
   }
 

@@ -73,6 +73,7 @@ export default class ProductFilter implements OnInit, OnDestroy {
 
   private fullPath: string[] = [];
   private gender: Gender = 'male';
+  protected readonly search = signal('');
   protected readonly sortOpen = signal(false);
   protected readonly timeStable = signal(false);
   protected readonly openFilters = signal({
@@ -82,8 +83,6 @@ export default class ProductFilter implements OnInit, OnDestroy {
 
   products = signal<ProductListDetailModel[]>([]);
 
-  // Separate destroyer for product requests only
-  // Brand/size requests use takeUntilDestroyed to avoid cancellation on filter changes
   private readonly productRequestDestroyer = new Subject<void>();
 
   constructor() {
@@ -147,18 +146,18 @@ export default class ProductFilter implements OnInit, OnDestroy {
     this.currentPage.set(1);
     this.products.set([]);
     this.productRequestDestroyer.next();
-    this.loadProduct(true);
+    this.loadProduct();
   }
 
   loadCategory(segments: UrlSegment[]) {
     this.gender = <Gender>this.route.snapshot.params['gender'];
     this.fullPath = segments.map(s => s.path);
-    
+
     this.getBrands();
     this.getSizeTables();
   }
 
-  loadProduct(initial = false) {
+  loadProduct() {
     this.productService
       .query(this.rowFilter)
       .pipe(takeUntil(this.productRequestDestroyer), takeUntilDestroyed(this.destroyRef))
@@ -183,6 +182,7 @@ export default class ProductFilter implements OnInit, OnDestroy {
       min_max_price: Array.isArray(rawFilter.min_max_price) ? rawFilter.min_max_price : [],
       sizes: Array.isArray(rawFilter.sizes) ? rawFilter.sizes : [],
       brand_ids: Array.isArray(rawFilter.brand_ids) ? rawFilter.brand_ids : [],
+      search: this.search()
     };
 
     const sortBy = filter.sort_by;

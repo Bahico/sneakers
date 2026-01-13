@@ -9,13 +9,13 @@
   class="fixed top-1/2 left-1/2 transform -translate-x-1/2 z-40 hidden md:flex justify-center items-center transition-all duration-300 opacity-0"
   [ngClass]="{
     'pointer-events-none translate-y-10': !open(),
-    '!opacity-100 -translate-y-1/2': open()
+    'opacity-100! -translate-y-1/2': open()
   }"
 >
   <span class="absolute -right-10 md:-right-14 -top-2 cursor-pointer">
     <icon-list icon="close" class="w-10 h-10 text-white" (click)="open.set(false)" />
   </span>
-  <div class="grid md:grid-cols-2 p-0 md:p-4 w-[80vw] gap-4 md:h-200 md:!w-[70vw] xl:!min-w-[1000px] bg-white rounded-xl overflow-hidden">
+  <div class="grid md:grid-cols-2 p-0 md:p-4 w-[80vw] gap-4 md:h-200 md:w-[70vw]! xl:min-w-250! bg-white rounded-xl overflow-hidden">
     <ng-container *ngTemplateOutlet="content" />
   </div>
 </div>
@@ -31,7 +31,7 @@
     <delivery-type-inputs />
   </div>
   <div class="h-100 md:h-full">
-    <ya-map [center]="[55.751952, 37.600739]" [zoom]="12">
+    <ya-map [center]="[55.751952, 37.600739]" [zoom]="12" (boundschange)="onChange($event)">
       <ya-placemark [geometry]="[55.751952, 37.600739]"></ya-placemark>
     </ya-map>
   </div>

@@ -1,5 +1,5 @@
 <div class="container hidden md:flex justify-between items-center py-4 gap-4">
-  <div class="flex gap-10 items-center md:w-1/2 xl:!w-[80%]">
+  <div class="flex gap-10 items-center md:w-1/2 xl:w-[80%]!">
     <img
       ngSrc="images/logo/logo.png"
       alt="site logo"
@@ -34,13 +34,9 @@
     </div>
   </div>
 
-  <div class="flex gap-2 items-center w-1/2 xl:!w-[40%] justify-end">
-    <div class="sn-control !w-110 !py-1">
-      <icon-list icon="search" class="sn-control-icon"/>
-      <input
-        type="text"
-        placeholder="Введите бренд или название модели"
-      >
+  <div class="flex gap-2 items-center w-1/2 xl:w-[20%]! justify-end">
+    <div class="py-1! cursor-pointer" [routerLink]="['/product', 'search']" (click)="goBack()">
+      <icon-list [icon]="isSearchPage() ? 'close-sm' : 'search'" class="sn-control-icon max-h-8"/>
     </div>
     <div class="py-1 px-2 cursor-pointer" routerLink="/favorites">
       <icon-list icon="favorite"/>
