@@ -1,0 +1,144 @@
+<div class="container mb-10 mt-5 md:mt-0">
+  <tui-breadcrumbs class="mb-4">
+    <a *tuiItem tuiLink routerLink="/">
+      Главная
+    </a>
+    <div *tuiItem class="text-primary">Реферальная программа</div>
+  </tui-breadcrumbs>
+
+  <h1 class="text-xl text-center md:text-start md:text-2xl lg:text-4xl font-semibold mb-4 md:mb-10">Реферальная
+    программа</h1>
+
+  <div class="flex flex-col md:flex-row justify-between w-full gap-10">
+    <div class="flex flex-col w-full md:max-w-150 gap-4">
+      @if (myLink()) {
+        <h3 class="text-xl font-semibold">Доход</h3>
+        <h2 class="text-4xl font-semibold mb-4">{{ myLink().total_revenue }} р.</h2>
+        <h3 class="text-xl font-semibold">Статистика</h3>
+        <div class="flex w-full gap-2 mb-2">
+          <div class="flex w-1/4 border border-black/10 rounded-md px-3 py-4 flex-col justify-between">
+            <span class="text-4xl font-bold">{{ myLink().clicks }}</span>
+            <span class="text-black/40">Переходов</span>
+          </div>
+          <div class="flex w-1/4 border border-black/10 rounded-md px-3 py-4 flex-col justify-between">
+            <span class="text-4xl font-bold">{{ myLink().unique_clients }}</span>
+            <span class="text-black/40">Клиентов</span>
+          </div>
+          <div class="flex w-1/4 border border-black/10 rounded-md px-3 py-4 flex-col justify-between">
+            <span class="text-4xl font-bold">{{ myLink().orders }}</span>
+            <span class="text-black/40">Заказов</span>
+          </div>
+          <div class="flex w-1/4 border border-black/10 rounded-md px-3 py-4 flex-col justify-between">
+            <span class="text-4xl font-bold">{{ myLink().conversion_rate }}</span>
+            <span class="text-black/40">CR (средний)</span>
+          </div>
+        </div>
+      }
+      <h3 class="text-xl font-semibold">Получай доход по реферальная ссылке</h3>
+      <p class="text-lg">Создавай и публикуй партнерскую ссылку. Ты получишь 5% от каждой покупки клиента. Доход за
+        покупку начисляется через 14 дней после вручения товара.</p>
+      <div class="mb-4">
+        <button class="sn-btn default">Создать новую ссылку +</button>
+      </div>
+
+      <table
+        tuiTable
+        class="table w-full"
+        [columns]="columns"
+        size="s"
+      >
+        <thead>
+        <tr tuiThGroup>
+          <th
+            tuiTh
+            class="bg-[#F2F2F2]! text-primary!"
+          >
+            <span class="flex-nowrap">Название ссылки</span>
+          </th>
+          <th
+            tuiTh
+            class="bg-[#F2F2F2]! text-primary!"
+            [maxWidth]="500"
+            [minWidth]="120"
+          >
+            Ссылка
+          </th>
+          <th tuiTh class="bg-[#F2F2F2]! text-primary!">Переходов</th>
+          <th tuiTh class="bg-[#F2F2F2]! text-primary!">Клиентов</th>
+          <th tuiTh class="bg-[#F2F2F2]! text-primary!">Заказов</th>
+          <th tuiTh class="bg-[#F2F2F2]! text-primary!">CR</th>
+          <th tuiTh class="bg-[#F2F2F2]! text-primary!">Доход</th>
+        </tr>
+        </thead>
+        <tbody
+          tuiTbody
+          [data]="links()"
+        >
+          @for (item of links(); track item.id) {
+            <tr
+              tuiTr
+            >
+              <td
+                *tuiCell="'name'"
+                tuiTd
+              >
+                {{ item.name }}
+              </td>
+              <td
+                *tuiCell="'code'"
+                tuiTd
+              >
+                <div
+                  class="flex items-center gap-2 cursor-pointer"
+                  [cdkCopyToClipboard]="item.code"
+                  (cdkCopyToClipboardCopied)="copyLink(item.code)"
+                >
+                  @if (copySuccess() === item.code) {
+                    <icon-list icon="checked-sm"/>
+                  } @else {
+                    <icon-list icon="copy-sm"/>
+                  }
+                  {{ item.code }}
+                </div>
+              </td>
+              <td
+                *tuiCell="'clicks'"
+                tuiTd
+              >
+                {{ item.clicks | tuiFormatNumber | async }}
+              </td>
+              <td
+                *tuiCell="'unique_clients'"
+                tuiTd
+              >
+                {{ item.unique_clients | tuiFormatNumber | async }}
+              </td>
+              <td
+                *tuiCell="'orders'"
+                tuiTd
+              >
+                {{ item.orders | tuiFormatNumber | async }}
+              </td>
+              <td
+                *tuiCell="'conversion_rate'"
+                tuiTd
+              >
+                <span class="text-nowrap">
+                  {{ item.conversion_rate | tuiFormatNumber | async }} %
+                </span>
+              </td>
+              <td
+                *tuiCell="'total_revenue'"
+                tuiTd
+              >
+                {{ item.total_revenue }}
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <profile-menu/>
+  </div>
+</div>

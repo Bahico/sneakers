@@ -17,5 +17,9 @@ export default [
   {
     path: 'loyalty-program',
     loadComponent: () => import('./pages/loyalty-program/loyalty-program')
-  }
+  },
+  {
+    path: 'referrals',
+    loadComponent: () => import('./pages/referrals/referrals')
+  },
 ] satisfies Routes;
