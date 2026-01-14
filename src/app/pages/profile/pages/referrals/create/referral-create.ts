@@ -24,7 +24,7 @@ export class ReferralCreate {
 
   onSubmit() {
     this.referralService.generateLink(this.rowValue)
-      .subscribe(data => {
+      .subscribe(() => {
         this.close()
       })
   }
