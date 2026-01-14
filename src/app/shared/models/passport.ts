@@ -23,3 +23,8 @@ export interface UpdateUserProfileDto {
   email?: string;
 }
 
+export interface UserCoins {
+  equivalent_rubles: number;
+  sneaker_coins: number;
+}
+

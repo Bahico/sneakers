@@ -5,7 +5,7 @@ import {TuiFlagPipe, TuiLink} from '@taiga-ui/core';
 import {TuiDay, TuiItem} from '@taiga-ui/cdk';
 import {ProfileMenu} from '@/profile/components/menu/profile-menu';
 import {IconComponent} from '@/components/icon/icon';
-import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AuthService} from '@/services/auth.service';
 import {AccountStore} from '@/account';
 import {catchError, forkJoin, of} from 'rxjs';
@@ -54,13 +54,13 @@ export default class ProfileEdit {
 
   passportForm = new FormGroup({
     id: new FormControl(null),
-    name: new FormControl<string | null>(null),
-    surname: new FormControl<string | null>(null),
+    name: new FormControl<string | null>(null, Validators.required),
+    surname: new FormControl<string | null>(null, Validators.required),
     f_name: new FormControl<string | null>(null),
-    passport_number: new FormControl<string | null>(null),
-    passport_series: new FormControl<string | null>(null),
-    inn: new FormControl<string | null>(null),
-    date_of_give: new FormControl<string | null>(null),
+    passport_number: new FormControl<string | null>(null, Validators.required),
+    passport_series: new FormControl<string | null>(null, Validators.required),
+    inn: new FormControl<string | null>(null, Validators.required),
+    date_of_give: new FormControl<string | null>(null, Validators.required),
   });
 
   constructor() {
@@ -116,7 +116,7 @@ export default class ProfileEdit {
   onSurnameCheckboxChange(checked: boolean) {
     this.checked.set(checked);
     if (checked) {
-      this.passportForm.patchValue({surname: null});
+      this.passportForm.patchValue({f_name: null});
     }
   }
 

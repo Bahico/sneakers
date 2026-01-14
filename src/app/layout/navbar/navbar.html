@@ -95,10 +95,10 @@
         <div class="menu-item">
           Заказы
         </div>
-        <div class="menu-item">
+        <div class="menu-item" routerLink="/profile/referrals">
           Реферальная ссылка
         </div>
-        <div class="menu-item !border-gray-400" routerLink="/profile/loyalty-program">
+        <div class="menu-item border-gray-400!" routerLink="/profile/loyalty-program">
           Программа лояльности
         </div>
         <div class="menu-item border-none" (click)="logout()">
@@ -109,10 +109,10 @@
   </div>
 </div>
 
-<div class="fixed bottom-0 left-0 right-0 py-4 bg-gray-100 z-20 w-[100wv] h-[80px] flex justify-center md:hidden">
+<div class="fixed bottom-0 left-0 right-0 py-4 bg-gray-100 z-20 w-[100wv] h-20 flex justify-center md:hidden">
   <div class="w-[90%] flex justify-between items-end relative">
     <button
-      class="sn-btn !py-4.5 absolute left-0 top-1/2 -translate-y-1/2 w-[85%] overflow-hidden duration-300 transition-all text-nowrap z-20"
+      class="sn-btn py-4.5! absolute left-0 top-1/2 -translate-y-1/2 w-[85%] overflow-hidden duration-300 transition-all text-nowrap z-20"
       [class.max-w-[85%]]="openCartBtn()"
       [class.max-w-0]="!openCartBtn()"
       [class.!px-0]="!openCartBtn()"

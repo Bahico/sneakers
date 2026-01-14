@@ -1,16 +1,19 @@
-import {inject, Injectable} from '@angular/core';
+import {inject, Injectable, signal} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {getEndpoint} from '@/get-endpoint';
 import {TokenModel} from '@/models/token.model';
-import {PassportData, UpdateUserProfileDto} from '@/models/passport';
-import {Observable, tap} from 'rxjs';
+import {PassportData, UpdateUserProfileDto, UserCoins} from '@/models/passport';
+import {Observable, of, tap} from 'rxjs';
 import { TokenStore } from '@/token';
 
 @Injectable({ providedIn: 'root'})
 export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly tokenStore = inject(TokenStore);
-  
+
+  private readonly coins$ = signal<UserCoins>(null);
+  coins = this.coins$.asReadonly();
+
   emailLogin(email: string) {
     return this.http.post<{email: string}>(getEndpoint('auth/request-code'), {}, {params: {email}})
   }
@@ -42,5 +45,12 @@ export class AuthService {
 
   getPassportData(): Observable<PassportData> {
     return this.http.get<PassportData>(getEndpoint('auth/passport/me'));
+  }
+
+  getCoins(force: boolean = false): void {
+    if (!this.coins$() || force) {
+      this.http.get<UserCoins>(getEndpoint('auth/coins'))
+        .subscribe(data => this.coins$.set(data));
+    }
   }
 }
