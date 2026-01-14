@@ -1,12 +1,13 @@
-import {Component, computed, inject} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {ProductDetailStore} from '@/product/detail/services/product-detail-store';
 import {AsyncPipe} from '@angular/common';
-import {TuiDialogService, TuiFormatNumberPipe} from '@taiga-ui/core';
+import {TuiFormatNumberPipe} from '@taiga-ui/core';
 import {Feedback} from '@/product/detail/components/feedback/feedback';
 import {PolymorpheusComponent} from '@taiga-ui/polymorpheus';
 import {BuyCoin} from '@/product/detail/components/buy-coin/buy-coin';
 import {AccountStore} from '@/account';
 import {AuthenticationOpen} from '@/components/authentication/authentication-open';
+import {DialogService} from '@/services/dialog.service';
 
 @Component({
   templateUrl: 'product-detail-name.html',
@@ -19,7 +20,7 @@ import {AuthenticationOpen} from '@/components/authentication/authentication-ope
 export class ProductDetailName {
   private readonly accountStore = inject(AccountStore);
   private readonly productDetailStore = inject(ProductDetailStore);
-  private readonly dialogs = inject(TuiDialogService);
+  private readonly dialogs = inject(DialogService);
   private readonly authenticationService = inject(AuthenticationOpen);
 
 

@@ -1,4 +1,4 @@
-import {afterNextRender, Component, inject, signal} from '@angular/core';
+import {afterNextRender, Component, inject} from '@angular/core';
 import {ActivatedRoute, RouterLink, RouterLinkActive} from "@angular/router";
 import {CategoryShoes} from '@/home/components/category/shoes/category-shoes';
 import {ProductService} from '@/services/product.service';
@@ -6,11 +6,10 @@ import {CategoryCloth} from '@/home/components/category/cloth/category-cloth';
 import {CategoryAccessories} from '@/home/components/category/accessories/category-accessories';
 import {Banner} from "./components/banner/banner";
 import {NgOptimizedImage} from '@angular/common';
-import {TuiDialogService} from '@taiga-ui/core';
 import {PolymorpheusComponent} from '@taiga-ui/polymorpheus';
 import {PoizonProductCalculate} from '@/home/components/poizon-product-calculate/poizon-product-calculate';
-import {Gender} from '@/models/gender';
 import {HomeStore} from '@/home.store';
+import {DialogService} from '@/services/dialog.service';
 
 
 @Component({
@@ -21,7 +20,7 @@ import {HomeStore} from '@/home.store';
 })
 export default class Home {
   private readonly productService = inject(ProductService);
-  private readonly dialogs = inject(TuiDialogService);
+  private readonly dialogs = inject(DialogService);
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly homeStore = inject(HomeStore);
 

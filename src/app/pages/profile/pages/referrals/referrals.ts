@@ -1,17 +1,21 @@
 import {ReferralsService} from '@/services/referrals.service';
-import {Component, computed, DestroyRef, inject, signal} from '@angular/core';
+import {Component, DestroyRef, inject, signal} from '@angular/core';
 import {RouterLink} from '@angular/router';
 import {TuiBreadcrumbs} from '@taiga-ui/kit';
-import {TuiFormatNumberPipe} from '@taiga-ui/core';
+import {TuiFormatNumberPipe, TuiLink} from '@taiga-ui/core';
 import {TuiTable} from '@taiga-ui/addon-table';
 import {ProfileMenu} from '@/profile/components/menu/profile-menu';
 import {ReferralLink} from '@/models/referral';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {catchError, of} from 'rxjs';
 import {AsyncPipe} from '@angular/common';
 import {CdkCopyToClipboard} from '@angular/cdk/clipboard';
 import {IconComponent} from '@/components/icon/icon';
+import {TuiItem} from '@taiga-ui/cdk';
+import {DialogService} from '@/services/dialog.service';
+import {ReferralCreate} from '@/profile/pages/referrals/create/referral-create';
+import {PolymorpheusComponent} from '@taiga-ui/polymorpheus';
 
 @Component({
   templateUrl: 'referrals.html',
@@ -23,25 +27,20 @@ import {IconComponent} from '@/components/icon/icon';
     TuiFormatNumberPipe, TuiTable,
     ProfileMenu,
     FormsModule,
-    ReactiveFormsModule, AsyncPipe, CdkCopyToClipboard, IconComponent
+    ReactiveFormsModule, AsyncPipe, CdkCopyToClipboard, IconComponent, TuiItem, TuiLink
   ]
 })
 export default class Referrals {
   protected readonly referralsService = inject(ReferralsService);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly dialogs = inject(DialogService);
 
   loading = signal(false);
   links = signal<ReferralLink[]>([]);
   myLink = signal<ReferralLink | null>(null);
-  showGenerateForm = signal(false);
   copySuccess = signal<string | null>(null);
 
   protected readonly columns: (keyof ReferralLink)[] = ['name', 'code', 'clicks', 'unique_clients', 'orders', 'conversion_rate', 'total_revenue'];
-
-  generateForm = new FormGroup({
-    name: new FormControl<string>(''),
-    code: new FormControl<string>('')
-  });
 
   constructor() {
     this.loadReferralLinks();
@@ -75,29 +74,6 @@ export default class Referrals {
       });
   }
 
-  generateLink() {
-    const {name, code} = this.generateForm.value;
-    if (!name || !code) return;
-
-    this.loading.set(true);
-    this.referralsService.generateLink({name, code})
-      .pipe(
-        takeUntilDestroyed(this.destroyRef),
-        catchError(() => {
-          this.loading.set(false);
-          return of(null);
-        })
-      )
-      .subscribe(link => {
-        if (link) {
-          this.links.update(links => [link, ...links]);
-          this.generateForm.reset();
-          this.showGenerateForm.set(false);
-        }
-        this.loading.set(false);
-      });
-  }
-
   copyLink(linkId: string) {
     this.copySuccess.set(linkId);
     setTimeout(() => {
@@ -105,14 +81,11 @@ export default class Referrals {
     }, 3000);
   }
 
-  toggleGenerateForm() {
-    this.showGenerateForm.update(val => !val);
-  }
-
-  protected formatDate(date: Date | string | undefined): string {
-    if (!date) return '';
-    const d = typeof date === 'string' ? new Date(date) : date;
-    if (isNaN(d.getTime())) return '';
-    return d.toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' });
+  openCreateDialog() {
+    const dialog = this.dialogs.open(new PolymorpheusComponent(ReferralCreate), {
+      label: null,
+      size: 'm',
+    });
+    dialog.subscribe(() => this.loadReferralLinks())
   }
 }

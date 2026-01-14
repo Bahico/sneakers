@@ -1,20 +1,20 @@
-import { AccountStore } from '@/account';
-import { CartStore } from '@/cart';
-import { AuthenticationOpen } from '@/components/authentication/authentication-open';
-import { ProductListDetailModel, ProductModel, Variant } from '@/models/product.model';
-import { MobileAddCart } from '@/product/detail/components/mobile-add-cart/mobile-add-cart';
-import { CartService } from '@/services/cart.service';
-import { computed, inject, Injectable, signal } from '@angular/core';
-import { TuiDialogService } from '@taiga-ui/core';
-import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
-import { concatMap } from 'rxjs';
+import {AccountStore} from '@/account';
+import {CartStore} from '@/cart';
+import {AuthenticationOpen} from '@/components/authentication/authentication-open';
+import {ProductListDetailModel, ProductModel, Variant} from '@/models/product.model';
+import {MobileAddCart} from '@/product/detail/components/mobile-add-cart/mobile-add-cart';
+import {CartService} from '@/services/cart.service';
+import {computed, inject, Injectable, signal} from '@angular/core';
+import {PolymorpheusComponent} from '@taiga-ui/polymorpheus';
+import {concatMap} from 'rxjs';
+import {DialogService} from '@/services/dialog.service';
 
 @Injectable({providedIn: 'root'})
 export class ProductDetailStore {
   private readonly accountStore = inject(AccountStore);
   private readonly authenticationService = inject(AuthenticationOpen);
   private readonly cartService = inject(CartService);
-  private readonly dialogs = inject(TuiDialogService);
+  private readonly dialogs = inject(DialogService);
   private readonly cartStore = inject(CartStore, {optional: true});
 
   private readonly productDetail$ = signal<Partial<ProductModel>>({});

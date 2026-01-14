@@ -1,6 +1,6 @@
 import {afterNextRender, Component, computed, inject, signal, ViewEncapsulation} from '@angular/core';
 import {TuiBreadcrumbs, TuiCheckbox, TuiSwitch} from '@taiga-ui/kit';
-import {TuiDialogService, TuiFormatNumberPipe, TuiLink} from '@taiga-ui/core';
+import {TuiFormatNumberPipe, TuiLink} from '@taiga-ui/core';
 import {TuiItem} from '@taiga-ui/cdk';
 import {RouterLink} from '@angular/router';
 import {AsyncPipe} from '@angular/common';
@@ -11,6 +11,7 @@ import {DeliveryPlace} from './delivery-place/delivery-place';
 import {DeliveryTypeInputs} from '@/basket/create/delivery-type-inputs/delivery-type-inputs';
 import {PolymorpheusComponent} from '@taiga-ui/polymorpheus';
 import {ResponsiveBreakpointsService} from '@/services/responsive-breakpoints.service';
+import {DialogService} from '@/services/dialog.service';
 
 @Component({
   templateUrl: 'basket-create.html',
@@ -35,7 +36,7 @@ import {ResponsiveBreakpointsService} from '@/services/responsive-breakpoints.se
 })
 export default class BasketCreate {
   private readonly cartStore = inject(CartStore);
-  private readonly dialogs = inject(TuiDialogService);
+  private readonly dialogs = inject(DialogService);
   private readonly rbs = inject(ResponsiveBreakpointsService);
 
   protected readonly carts = computed(() => this.cartStore.carts());

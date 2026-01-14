@@ -21,7 +21,7 @@ export class CartService {
   }
 
   loadCart() {
-    return this.http.get<CartList>(getEndpoint('cart')) // {params: {session_id: this.getCartId()}}
+    return this.http.get<CartList>(getEndpoint('cart/')) // {params: {session_id: this.getCartId()}}
       .pipe(tap(res => {
         this.cartStore.update = res;
       }))

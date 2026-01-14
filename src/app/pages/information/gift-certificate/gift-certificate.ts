@@ -1,13 +1,14 @@
 import {Component, inject, signal} from '@angular/core';
 import {RouterLink} from '@angular/router';
 import {TuiBreadcrumbs, TuiRadioComponent} from '@taiga-ui/kit';
-import {TuiDialogService, TuiDropdown, TuiFormatNumberPipe, TuiLink} from '@taiga-ui/core';
+import {TuiDropdown, TuiFormatNumberPipe, TuiLink} from '@taiga-ui/core';
 import {TuiActiveZone, TuiItem, TuiObscured} from '@taiga-ui/cdk';
 import {AsyncPipe, NgOptimizedImage} from '@angular/common';
 import {IconComponent} from '@/components/icon/icon';
 import {FormsModule} from '@angular/forms';
 import {PolymorpheusComponent} from '@taiga-ui/polymorpheus';
 import {GiftOrder} from '@/information/gift-certificate/order/gift-order';
+import {DialogService} from '@/services/dialog.service';
 
 @Component({
   templateUrl: 'gift-certificate.html',
@@ -31,7 +32,7 @@ import {GiftOrder} from '@/information/gift-certificate/order/gift-order';
   ]
 })
 export default class GiftCertificate {
-  private readonly dialogs = inject(TuiDialogService);
+  private readonly dialogs = inject(DialogService);
 
   protected readonly activeIndex = signal<number | null>(null);
   protected readonly amount = signal(15000);

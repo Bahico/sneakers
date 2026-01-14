@@ -1,11 +1,11 @@
 import {inject, Injectable} from '@angular/core';
-import {TuiDialogService} from '@taiga-ui/core';
 import {PolymorpheusComponent} from '@taiga-ui/polymorpheus';
 import {OriginalCertificate} from './original-certificate';
+import {DialogService} from '@/services/dialog.service';
 
 @Injectable({ providedIn: 'root'})
 export class OriginalCertificateOpen {
-  private readonly dialogs = inject(TuiDialogService);
+  private readonly dialogs = inject(DialogService);
 
   openModal() {
     this.dialogs

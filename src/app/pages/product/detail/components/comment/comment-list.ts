@@ -1,13 +1,13 @@
-import {afterNextRender, Component, computed, effect, inject, signal} from '@angular/core';
+import {Component, computed, effect, inject, signal} from '@angular/core';
 import {CommentDetail} from '@/product/detail/components/comment/detail/comment-detail';
 import {ProductDetailStore} from '@/product/detail/services/product-detail-store';
 import {PolymorpheusComponent} from '@taiga-ui/polymorpheus';
 import {Feedback} from '@/product/detail/components/feedback/feedback';
-import {TuiDialogService} from '@taiga-ui/core';
 import {CommentService} from '@/services/comment.service';
 import {Comment} from '@/models/comment';
 import {catchError, of} from 'rxjs';
 import {IconComponent} from '@/components/icon/icon';
+import {DialogService} from '@/services/dialog.service';
 
 @Component({
   templateUrl: 'comment-list.html',
@@ -20,7 +20,7 @@ import {IconComponent} from '@/components/icon/icon';
 })
 export class CommentList {
   private readonly productDetailStore = inject(ProductDetailStore);
-  private readonly dialogs = inject(TuiDialogService);
+  private readonly dialogs = inject(DialogService);
   private readonly commentService = inject(CommentService);
 
   protected readonly detail = this.productDetailStore.detail;
