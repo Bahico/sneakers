@@ -79,19 +79,13 @@ export default class ProfileEdit {
   loadUserData() {
     const account = this.accountStore.account();
     if (account) {
-      this.profileForm.patchValue({
-        email: account.email || null,
-        telegram_id: account.telegram_id || null,
-      });
+      this.profileForm.patchValue(account);
     } else {
       this.accountStore.getAccount()
         .pipe(catchError(() => of(null)))
         .subscribe(account => {
           if (account) {
-            this.profileForm.patchValue({
-              email: account.email || null,
-              telegram_id: account.telegram_id || null,
-            });
+            this.profileForm.patchValue(account);
           }
         });
     }
