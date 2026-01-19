@@ -12,6 +12,8 @@ import {DeliveryTypeInputs} from '@/basket/create/delivery-type-inputs/delivery-
 import {PolymorpheusComponent} from '@taiga-ui/polymorpheus';
 import {ResponsiveBreakpointsService} from '@/services/responsive-breakpoints.service';
 import {DialogService} from '@/services/dialog.service';
+import {OrderService} from '@/services/order.service';
+import {finalize} from 'rxjs';
 
 @Component({
   templateUrl: 'basket-create.html',
@@ -37,6 +39,7 @@ import {DialogService} from '@/services/dialog.service';
 export default class BasketCreate {
   private readonly cartStore = inject(CartStore);
   private readonly dialogs = inject(DialogService);
+  private readonly orderService = inject(OrderService);
   private readonly rbs = inject(ResponsiveBreakpointsService);
 
   protected readonly carts = computed(() => this.cartStore.carts());
@@ -44,6 +47,9 @@ export default class BasketCreate {
   protected readonly openDeliveryPlace = signal(false);
   protected readonly hideText = signal(false);
   protected readonly openMoreInfo = signal(false);
+  protected readonly promoCodeSuccess = signal(false);
+  protected readonly promoCodeLoading = signal(false);
+  protected readonly promoCode = signal('');
 
   constructor() {
     afterNextRender(() => {
@@ -59,5 +65,15 @@ export default class BasketCreate {
     } else {
       this.openDeliveryPlace.set(true)
     }
+  }
+
+  checkPromoCode() {
+    this.promoCodeLoading.set(true);
+    this.orderService
+      .checkPromocode({promocode: this.promoCode()})
+      .pipe(finalize(() => this.promoCodeLoading.set(false)))
+      .subscribe(() => {
+        this.promoCodeSuccess.set(true);
+      })
   }
 }
