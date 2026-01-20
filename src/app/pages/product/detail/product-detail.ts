@@ -89,9 +89,8 @@ export default class ProductDetail implements OnDestroy, OnInit {
   loadSimilarOnes() {
     const detail = this.productDetailStore.detail();
     this.productService
-      .query({
-        category_slug: detail.category.full_slug
-      })
+      .similar(detail.id, {limit: 8})
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(res => {
         this.productDetailStore.updateSimilar = res.products.splice(0, 8);
       })

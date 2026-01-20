@@ -28,8 +28,11 @@ export class ProductService {
   }
 
   frequentlySearched(params: any) {
-    return this.http.get<ProductListModel>(getEndpoint('products/frequently-searched/'), {params})
-      .pipe(tap(res => this.setProducts(res.products)));
+    return this.http.get<ProductListModel>(getEndpoint('products/frequently-searched/'), {params});
+  }
+
+  similar(product_id: string, params: any = {limit: 12}) {
+    return this.http.get<ProductListModel>(getEndpoint(`products/${product_id}/similar/`), {params});
   }
 
   brands(query: {limit: number; category_slug: string}) {
