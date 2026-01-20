@@ -1,8 +1,8 @@
 <div class="mb-10 md:mt-0 py-6 bg-[#FBFBFB] border-y border-[#D8D8D8] flex w-full justify-center">
   <div class="container">
     <form (ngSubmit)="loadProduct()">
-      <div class="flex w-full py-2 px-2 md:px-4 border-b border-primary justify-between mb-6" >
-        <div class="flex gap-2 md:gap-4 items-center">
+      <div class="flex w-full py-2 px-2 md:px-4 border-b border-primary justify-between mb-6">
+        <div class="flex gap-2 md:gap-4 items-center w-full">
           <icon-list icon="search-sm"/>
           <input
             [(ngModel)]="search"
@@ -22,6 +22,19 @@
 
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
       @for (product of products(); track product.id) {
+        <product-list-detail [detail]="product" (detailChange)="detailChange($event, $index)"/>
+      }
+    </div>
+  </div>
+</div>
+
+<div class="mb-10 md:mt-0 py-6 flex w-full justify-center">
+  <div class="container">
+    <div class="flex justify-between">
+      <h1 class="text-lg md:text-xl lg:text-2xl font-semibold ">Часто ищут</h1>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      @for (product of frequentlySearched(); track product.id) {
         <product-list-detail [detail]="product" (detailChange)="detailChange($event, $index)"/>
       }
     </div>

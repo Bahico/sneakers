@@ -27,6 +27,11 @@ export class ProductService {
       .pipe(tap(res => this.setProducts(res.products)));
   }
 
+  frequentlySearched(params: any) {
+    return this.http.get<ProductListModel>(getEndpoint('products/frequently-searched/'), {params})
+      .pipe(tap(res => this.setProducts(res.products)));
+  }
+
   brands(query: {limit: number; category_slug: string}) {
     return this.http.get<Brand[]>(getEndpoint('brands'), {params: query});
   }
