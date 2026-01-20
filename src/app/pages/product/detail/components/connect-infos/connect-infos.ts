@@ -5,6 +5,7 @@ import {CdkCopyToClipboard} from '@angular/cdk/clipboard';
 import {NgOptimizedImage} from '@angular/common';
 import {OriginalCertificateOpen} from '@/components/original-certificate/original-certificate-open';
 import {RouterLink} from '@angular/router';
+import {ContactsProduct} from '@/product/detail/components/contacts/contacts-product';
 
 @Component({
   templateUrl: 'connect-infos.html',
@@ -13,7 +14,8 @@ import {RouterLink} from '@angular/router';
     IconComponent,
     CdkCopyToClipboard,
     NgOptimizedImage,
-    RouterLink
+    RouterLink,
+    ContactsProduct
   ]
 })
 export class ConnectInfos {

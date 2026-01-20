@@ -105,8 +105,8 @@ export default class BasketCreate {
     name: new FormControl<string | null>(null, Validators.required),
     surname: new FormControl<string | null>(null, Validators.required),
     f_name: new FormControl<string | null>(null),
-    passport_number: new FormControl<string | null>(null, Validators.required),
-    passport_series: new FormControl<string | null>(null, Validators.required),
+    passport_number: new FormControl<string | null>(null),
+    passport_series: new FormControl<string | null>(null),
     inn: new FormControl<string | null>(null, Validators.required),
     date_of_give: new FormControl<string | null>(null, Validators.required),
   });

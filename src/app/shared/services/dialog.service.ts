@@ -11,7 +11,7 @@ export class DialogService<T, K = void> {
   private readonly sheetDialogService = inject(TuiSheetDialogService);
   private readonly dialogService = inject(TuiDialogService);
 
-  isMobile = this.rbs.isMobile;
+  private readonly isMobile = this.rbs.isMobile;
 
   open<G = void>(content: PolymorpheusContent<T & TuiPopoverContext<K extends void ? G : K>>, options?: Partial<T>) {
     if (this.isMobile())

@@ -4,21 +4,25 @@ import {NgClass} from '@angular/common';
 import {ProductDetailStore} from '@/product/detail/services/product-detail-store';
 import {SizeTable} from '@/models/size-table.model';
 import {CartStore} from '@/cart';
-import {RouterLink} from '@angular/router';
+import {Router} from '@angular/router';
 import {Variant} from '@/models/product.model';
+import {DialogService} from '@/services/dialog.service';
+import {PolymorpheusComponent} from '@taiga-ui/polymorpheus';
+import {ContactsProduct} from '@/product/detail/components/contacts/contacts-product';
 
 @Component({
   templateUrl: 'product-detail-size.html',
   imports: [
     TuiTabs,
-    NgClass,
-    RouterLink
+    NgClass
   ],
   selector: 'product-detail-size'
 })
 export class ProductDetailSize {
   private readonly productDetailStore = inject(ProductDetailStore);
+  private readonly dialog = inject(DialogService);
   private readonly cartStore = inject(CartStore);
+  private readonly router = inject(Router)
 
   protected readonly detail = this.productDetailStore.detail;
   protected readonly active = this.productDetailStore.sizeValue;
@@ -57,5 +61,19 @@ export class ProductDetailSize {
 
   added(variant: Variant) {
     return this.cartStore.carts()?.items?.some(item => item.variant.id === variant.id)
+  }
+
+  clickInfoSize() {
+    if (this.detail().category.full_slug.includes('footwear')) {
+      this.router.navigateByUrl('information/choose-size').then();
+    } else {
+      this.dialog.open(
+        new PolymorpheusComponent(ContactsProduct),
+        {
+          label: null,
+          size: 's'
+        },
+      ).subscribe()
+    }
   }
 }
