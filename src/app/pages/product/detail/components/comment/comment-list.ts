@@ -8,6 +8,9 @@ import {Comment} from '@/models/comment';
 import {catchError, of} from 'rxjs';
 import {IconComponent} from '@/components/icon/icon';
 import {DialogService} from '@/services/dialog.service';
+import {AuthService} from '@/services/auth.service';
+import {AuthenticationOpen} from '@/components/authentication/authentication-open';
+import {AccountStore} from '@/account';
 
 @Component({
   templateUrl: 'comment-list.html',
@@ -22,6 +25,8 @@ export class CommentList {
   private readonly productDetailStore = inject(ProductDetailStore);
   private readonly dialogs = inject(DialogService);
   private readonly commentService = inject(CommentService);
+  private readonly accountStore = inject(AccountStore);
+  private readonly authenticationOpen = inject(AuthenticationOpen);
 
   protected readonly detail = this.productDetailStore.detail;
   protected readonly comments = signal<Comment[]>([]);
@@ -40,7 +45,6 @@ export class CommentList {
   });
 
   protected readonly totalComments = computed(() => this.comments().length);
-
   protected readonly starsArray = computed(() => Array.from({length: 5}));
 
   protected isStarFilled(index: number): boolean {
@@ -77,17 +81,21 @@ export class CommentList {
   }
 
   openFeedback() {
-    this.dialogs
-      .open(
-        new PolymorpheusComponent(Feedback),
-        {
-          label: null,
-          size: 'l'
-        },
-      )
-      .subscribe(() => {
-        // Reload comments after feedback is submitted
-        this.loadComments();
-      });
+    if (this.accountStore.account()) {
+      this.dialogs
+        .open(
+          new PolymorpheusComponent(Feedback),
+          {
+            label: null,
+            size: 'l'
+          },
+        )
+        .subscribe(() => {
+          // Reload comments after feedback is submitted
+          this.loadComments();
+        });
+    } else {
+      this.authenticationOpen.openModal()
+    }
   }
 }

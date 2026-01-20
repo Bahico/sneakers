@@ -35,7 +35,8 @@ export default class ReviewsInformation {
   constructor() {
     afterNextRender(() => {
       if (this.rbs.isMobile()) {
-        this.scrollSize.set(280);
+        console.log(document.querySelector('.review').clientWidth)
+        this.scrollSize.set(document.querySelector('.review').clientWidth);
       }
 
       const container = this.scrollContainer()?.nativeElement;
