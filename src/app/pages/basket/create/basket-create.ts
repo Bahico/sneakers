@@ -6,7 +6,7 @@ import {RouterLink} from '@angular/router';
 import {AsyncPipe} from '@angular/common';
 import {CartStore} from '@/cart';
 import {IconComponent} from '@/components/icon/icon';
-import {FormsModule} from '@angular/forms';
+import {FormGroup, FormsModule} from '@angular/forms';
 import {DeliveryPlace} from './delivery-place/delivery-place';
 import {DeliveryTypeInputs} from '@/basket/create/delivery-type-inputs/delivery-type-inputs';
 import {PolymorpheusComponent} from '@taiga-ui/polymorpheus';
@@ -50,6 +50,10 @@ export default class BasketCreate {
   protected readonly promoCodeSuccess = signal(false);
   protected readonly promoCodeLoading = signal(false);
   protected readonly promoCode = signal('');
+
+  form = new FormGroup({
+
+  })
 
   constructor() {
     afterNextRender(() => {
