@@ -10,7 +10,7 @@
     <a
       *tuiItem
       tuiLink
-      class="!text-primary"
+      class="text-primary!"
     >
       Оформление заказa
     </a>
@@ -57,14 +57,40 @@
     <delivery-type-inputs [readonly]="true" (openModal)="openModal()"/>
     <h3 class="text-lg md:text-2xl font-semibold">Получатель</h3>
     <div class="flex flex-col gap-4">
-      <form [formGroup]="profileForm" class="flex flex-col gap-4">
-        <div class="sn-control w-full">
-          <span class="sn-control-icon">
-            {{ '@' }}
-          </span>
-          <input type="text" formControlName="email" placeholder="Email">
+      <form [formGroup]="profileForm" class="grid grid-cols-2 gap-4">
+        <div class="sn-control">
+            <span class="sn-control-icon">
+              <i class="fa fa-user-o" aria-hidden="true"></i>
+            </span>
+          <input type="text" [formControl]="passportForm.controls.surname" placeholder="Фамилия">
         </div>
-        <div class="flex gap-2">
+
+        <div class="sn-control">
+            <span class="sn-control-icon">
+              <i class="fa fa-user-o" aria-hidden="true"></i>
+            </span>
+          <input type="text" [formControl]="passportForm.controls.name" placeholder="Имя">
+        </div>
+
+        <div class="sn-control" [class.!hidden]="checked()">
+            <span class="sn-control-icon">
+              <i class="fa fa-user-o" aria-hidden="true"></i>
+            </span>
+          <input type="text" [formControl]="passportForm.controls.f_name" placeholder="Отчество (если есть)" [disabled]="checked()">
+        </div>
+
+        <div class="flex gap-2 items-center h-10">
+          <input
+            tuiCheckbox
+            type="checkbox"
+            [ngModel]="checked()"
+            (ngModelChange)="onSurnameCheckboxChange($event)"
+            [ngModelOptions]="{standalone: true}"
+          />
+          <span>Нет отчества</span>
+        </div>
+
+        <div class="flex col-span-2 gap-2">
           <div class="sn-control w-20! h-10">
             <img
               alt="ru"
@@ -83,49 +109,21 @@
           </div>
         </div>
 
+        <div class="sn-control col-span-2 w-full">
+          <span class="sn-control-icon">
+            {{ '@' }}
+          </span>
+          <input type="text" formControlName="email" placeholder="Email">
+        </div>
+
       </form>
 
       <span class="line"></span>
 
-      <span class="text-xl font-semibold">Паспортные данные</span>
-
       <form [formGroup]="passportForm" class="flex flex-col gap-4">
         <div class="grid grid-cols-2 gap-4">
-          <div class="sn-control">
-            <span class="sn-control-icon">
-              <i class="fa fa-user-o" aria-hidden="true"></i>
-            </span>
-            <input type="text" formControlName="surname" placeholder="Фамилия">
-          </div>
 
-          <div class="sn-control">
-            <span class="sn-control-icon">
-              <i class="fa fa-user-o" aria-hidden="true"></i>
-            </span>
-            <input type="text" formControlName="name" placeholder="Имя">
-          </div>
-
-          <div class="sn-control" [class.!hidden]="checked()">
-            <span class="sn-control-icon">
-              <i class="fa fa-user-o" aria-hidden="true"></i>
-            </span>
-            <input type="text" formControlName="f_name" placeholder="Отчество (если есть)" [disabled]="checked()">
-          </div>
-
-          <div class="flex gap-2 items-center h-10">
-            <input
-              tuiCheckbox
-              type="checkbox"
-              [ngModel]="checked()"
-              (ngModelChange)="onSurnameCheckboxChange($event)"
-              [ngModelOptions]="{standalone: true}"
-            />
-            <span>Нет отчества</span>
-          </div>
-
-          <span class="text-xl font-semibold col-span-2 ">Паспортные данные</span>
-
-          <span class="line col-span-2"></span>
+          <span class="text-xl font-semibold col-span-2 ">Для таможни</span>
 
           <div class="sn-control">
             <span class="sn-control-icon">
