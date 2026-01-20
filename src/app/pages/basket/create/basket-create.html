@@ -20,7 +20,7 @@
     <h1 class="w-full text-center md:text-start text-xl md:text-3xl font-bold text-primary mb-2">Оформление заказa</h1>
 
     <div class="p-4 border flex flex-col gap-3 w-full border-gray-200 rounded-xl">
-      @for (cart of carts().items; track cart.id) {
+      @for (cart of carts()?.items; track cart.id) {
         <div class="w-full flex gap-4 border-b border-gray-200 last:border-b-0 pb-4 last:pb-0 relative h-40">
           <div
             routerLink="/product/detail/{{cart.product.id}}"
@@ -45,8 +45,9 @@
             </div>
 
             <span
-              class="text-lg md:text-xl lg:text-3xl font-bold text-primary">{{ cart.variant.price | tuiFormatNumber | async }}
-              р.</span>
+              class="text-lg md:text-xl lg:text-3xl font-bold text-primary">
+              {{ cart.variant.price | tuiFormatNumber | async }}р.
+            </span>
           </div>
         </div>
       }
@@ -55,77 +56,117 @@
     <h3 class="text-lg md:text-2xl font-semibold" id="form">Способ доставки</h3>
     <delivery-type-inputs [readonly]="true" (openModal)="openModal()"/>
     <h3 class="text-lg md:text-2xl font-semibold">Получатель</h3>
-    <div class="grid grid-cols-2 gap-4">
-      <div class="sn-control">
+    <div class="flex flex-col gap-4">
+      <form [formGroup]="profileForm" class="flex flex-col gap-4">
+        <div class="sn-control w-full">
           <span class="sn-control-icon">
-            <i class="fa fa-user-o" aria-hidden="true"></i>
+            {{ '@' }}
           </span>
-        <input type="text" placeholder="Фамилия">
-      </div>
-      <div class="sn-control">
-          <span class="sn-control-icon">
-            <i class="fa fa-user-o" aria-hidden="true"></i>
-          </span>
-        <input type="text" placeholder="Имя">
-      </div>
-      <div class="sn-control">
-          <span class="sn-control-icon">
-            <i class="fa fa-user-o" aria-hidden="true"></i>
-          </span>
-        <input type="text" placeholder="Отчество">
-      </div>
-      <div class="flex gap-2 items-center">
-        <input
-          tuiCheckbox
-          type="checkbox"
-          id=""
-          [ngModel]="false"
-        />
-        <label for="">Нет отчества</label>
-      </div>
-      <div class="sn-control col-span-2">
-          <span class="sn-control-icon">
-            <icon-list icon="call"/>
-          </span>
-        <input type="text" placeholder="Номер телефона">
-      </div>
-      <span class="border-b border-gray-200 col-span-2"></span>
-      <div class="sn-control col-span-2">
-          <span class="sn-control-icon">
-            <icon-list icon="calendar"/>
-          </span>
-        <input type="text" placeholder="Дата рождения">
-      </div>
-      <div class="sn-control">
-          <span class="sn-control-icon">
-            <icon-list icon="calendar"/>
-          </span>
-        <input type="text" placeholder="Серия паспорта">
-      </div>
-      <div class="sn-control">
-          <span class="sn-control-icon">
-            <icon-list icon="calendar"/>
-          </span>
-        <input type="text" placeholder="Номер паспорта">
-      </div>
-      <div class="sn-control col-span-2">
-          <span class="sn-control-icon">
-            <icon-list icon="calendar"/>
-          </span>
-        <input type="text" placeholder="Дата выдачи паспорта">
-      </div>
-      <div class="sn-control col-span-2">
-          <span class="sn-control-icon">
-            <icon-list icon="calendar"/>
-          </span>
-        <textarea rows="3" placeholder="Кем выдан"></textarea>
-      </div>
-      <div class="sn-control col-span-2">
-          <span class="sn-control-icon">
-            <icon-list icon="calendar"/>
-          </span>
-        <input type="number" placeholder="Код подразделения">
-      </div>
+          <input type="text" formControlName="email" placeholder="Email">
+        </div>
+        <div class="flex gap-2">
+          <div class="sn-control w-20! h-10">
+            <img
+              alt="ru"
+              [src]="'ru' | tuiFlag"
+              class="rounded-sm h-full w-10 object-cover"
+            />
+            <span class=" font-semibold">+7</span>
+          </div>
+          <div class="sn-control w-full">
+            <input
+              type="text"
+              formControlName="phone"
+              mask="(000) 000-00-00"
+              placeholder="(912) 345-67-89"
+            >
+          </div>
+        </div>
+
+      </form>
+
+      <span class="line"></span>
+
+      <span class="text-xl font-semibold">Паспортные данные</span>
+
+      <form [formGroup]="passportForm" class="flex flex-col gap-4">
+        <div class="grid grid-cols-2 gap-4">
+          <div class="sn-control">
+            <span class="sn-control-icon">
+              <i class="fa fa-user-o" aria-hidden="true"></i>
+            </span>
+            <input type="text" formControlName="surname" placeholder="Фамилия">
+          </div>
+
+          <div class="sn-control">
+            <span class="sn-control-icon">
+              <i class="fa fa-user-o" aria-hidden="true"></i>
+            </span>
+            <input type="text" formControlName="name" placeholder="Имя">
+          </div>
+
+          <div class="sn-control" [class.!hidden]="checked()">
+            <span class="sn-control-icon">
+              <i class="fa fa-user-o" aria-hidden="true"></i>
+            </span>
+            <input type="text" formControlName="f_name" placeholder="Отчество (если есть)" [disabled]="checked()">
+          </div>
+
+          <div class="flex gap-2 items-center h-10">
+            <input
+              tuiCheckbox
+              type="checkbox"
+              [ngModel]="checked()"
+              (ngModelChange)="onSurnameCheckboxChange($event)"
+              [ngModelOptions]="{standalone: true}"
+            />
+            <span>Нет отчества</span>
+          </div>
+
+          <span class="text-xl font-semibold col-span-2 ">Паспортные данные</span>
+
+          <span class="line col-span-2"></span>
+
+          <div class="sn-control">
+            <span class="sn-control-icon">
+              <icon-list icon="calendar"/>
+            </span>
+            <input
+              type="text"
+              formControlName="passport_series"
+              placeholder="Серия паспорта"
+              mask="00"
+            >
+          </div>
+
+          <div class="sn-control">
+            <span class="sn-control-icon">
+              <icon-list icon="calendar"/>
+            </span>
+            <input
+              type="text"
+              formControlName="passport_number"
+              placeholder="Номер паспорта"
+              mask="000000"
+            >
+          </div>
+
+          <div class="sn-control col-span-2">
+            <span class="sn-control-icon">
+              <icon-list icon="calendar"/>
+            </span>
+            <input
+              type="text"
+              formControlName="inn"
+              placeholder="ИНН"
+              mask="000000000000"
+            >
+          </div>
+
+          <app-date class="col-span-2" formControlName="date_of_give" [maxDate]="maxDate()"
+                    placeholder="Дата выдачи паспорта"/>
+        </div>
+      </form>
     </div>
     <div class="flex gap-2">
       <div class="flex flex-col gap-1">
@@ -148,7 +189,8 @@
         >
           <p>Все посылки в рамках международных отправлений проходят процедуру таможенного оформления. Для товаров
             личного пользования используется реестр экспресс-грузов, который, согласно приказу ФТС(федеральная
-            таможенная служба) №1060 от 05.07.18, должен содержать в себе сведения о документе, удостоверяющем личность
+            таможенная служба) №1060 от 05.07.18, должен содержать в себе сведения о документе, удостоверяющем
+            личность
             физического лица – паспортные данные и ИНН. Sneaker Team действует в рамках таможенного законодательства и
             организует процесс сбора паспортных данных в личном кабинете на сайте. Мы не храним паспортные данные, вся
             информация передается по безопасным каналам связи.</p>
@@ -184,12 +226,13 @@
       </div>
     </div>
     <div class="flex w-full justify-between items-center">
-      <span class="text-sm md:text-lg">У вас есть <strong>356 Sneaker Coins</strong>. Списать?</span>
+      <span class="text-sm md:text-lg">У вас есть <strong>{{coins()?.sneaker_coins}} Sneaker Coins</strong>. Списать?</span>
       <input
         tuiSwitch
         type="checkbox"
         [showIcons]="false"
-        [ngModel]="false"
+        [formControl]="form.controls.use_sneaker_coins"
+        [disabled]="!coins()?.sneaker_coins"
         size="m"
       />
     </div>
@@ -199,7 +242,7 @@
         tuiSwitch
         type="checkbox"
         [showIcons]="false"
-        [ngModel]="false"
+        [formControl]="form.controls.use_split_payment"
         size="m"
       />
     </div>
@@ -209,13 +252,25 @@
     </div>
     <div class="flex w-full justify-between items-center">
       <span>Товары</span>
-      <span>40 900 р.</span>
+      <span>{{ carts()?.total_price | tuiFormatNumber | async}} р.</span>
     </div>
-    <div class="flex w-full justify-between items-center">
-      <span class="text-xl font-semibold">Итого</span>
-      <span class="text-xl font-semibold">40 900 р.</span>
-    </div>
-    <button class="sn-btn !py-4">Оплатить</button>
+    @if (form.controls.use_split_payment.value) {
+      <div class="flex w-full justify-between items-center">
+        <span class="text-xl font-semibold">К оплате сейчас</span>
+        <span class="text-xl font-semibold">{{ carts()?.total_price / 2 | tuiFormatNumber | async}} р.</span>
+      </div>
+      <div class="flex w-full justify-between items-center">
+        <span class="text-xl font-semibold">Остаток после фотоотчёта</span>
+        <span class="text-xl font-semibold">{{ carts()?.total_price / 2 | tuiFormatNumber | async}} р.</span>
+      </div>
+    } @else {
+      <div class="flex w-full justify-between items-center">
+        <span class="text-xl font-semibold">Итого</span>
+        <span class="text-xl font-semibold">{{ carts()?.total_price | tuiFormatNumber | async}} р.</span>
+      </div>
+    }
+
+    <button class="sn-btn !py-4" (click)="onSubmit()">Оплатить</button>
     <p class="text-xs text-gray-500">
       Нажимая «Оплатить», вы соглашаетесь с условиями Пользовательского соглашения
       @if (openMoreInfo()) {
@@ -223,7 +278,6 @@
       } @else {
         <span class="underline cursor-pointer hover:text-gray-700" (click)="openMoreInfo.set(true)">подробнее</span>
       }
-
     </p>
   </div>
 </div>
