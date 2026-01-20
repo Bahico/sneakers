@@ -1,5 +1,5 @@
 export const environment = {
-  API_URL: 'http://185.28.85.192:8000',
+  API_URL: 'https://api.sneakerteam.ru',
   CDEK: {
     API: 'https://api.cdek.ru',
     CLIENT_ID: 'FDj3Ouxtiss5SHwxT2BKwV09ErIopDYw',
