@@ -5,7 +5,8 @@ import {ProductListDetailModel} from '@/models/product.model';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {ProductService} from '@/services/product.service';
 import {FormsModule} from '@angular/forms';
-import {Subject, takeUntil} from 'rxjs';
+import {debounceTime, Subject, takeUntil} from 'rxjs';
+import {Router} from '@angular/router';
 
 @Component({
   templateUrl: 'product-search.html',
@@ -19,17 +20,29 @@ import {Subject, takeUntil} from 'rxjs';
 export default class ProductSearch {
   private readonly productService = inject(ProductService);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly router = inject(Router);
 
   search = signal<string>('');
   products = signal<ProductListDetailModel[]>([]);
   frequentlySearched = signal<ProductListDetailModel[]>([]);
 
   private readonly destroy$ = new Subject<void>();
+  private readonly searchEvent$ = new Subject<void>();
 
   constructor() {
     afterNextRender(() => {
       this.loadFrequentlySearched();
+      this.searchEvent$
+        .pipe(
+          takeUntilDestroyed(this.destroyRef),
+          debounceTime(500)
+        )
+        .subscribe(() => this.loadProduct());
     })
+  }
+
+  searchChanged() {
+    this.searchEvent$.next();
   }
 
   loadFrequentlySearched() {
@@ -68,5 +81,9 @@ export default class ProductSearch {
       newProducts[$index] = detail;
       return newProducts;
     });
+  }
+
+  navigateToSearchPage() {
+    this.router.navigate(['/product/search-page'], {queryParams: {search: this.search()}});
   }
 }

@@ -13,8 +13,18 @@ export default [
     loadComponent: () => import('./search/product-search')
   },
   {
+    path: 'search-page',
+    loadComponent: () => import('./filter/product-filter'),
+    data: {
+      mode: 'search'
+    }
+  },
+  {
     path: ':gender',
     loadComponent: () => import('./filter/product-filter'),
+    data: {
+      mode: 'category'
+    },
     children: [
       {
         path: '**',

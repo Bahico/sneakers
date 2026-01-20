@@ -26,7 +26,7 @@ import {MobileFilter} from '@/product/filter/components/mobile-filter/mobile-fil
 import {InfiniteScrollDirective} from 'ngx-infinite-scroll';
 import {isPlatformBrowser, NgOptimizedImage} from '@angular/common';
 import {Gender} from '@/models/gender';
-import {combineLatest, debounceTime, filter, Subject, takeUntil} from 'rxjs';
+import {combineLatest, debounceTime, filter, of, Subject, takeUntil} from 'rxjs';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {ProductFilterStore} from '@/product/filter/product-filter-store';
 
@@ -76,6 +76,7 @@ export default class ProductFilter implements OnInit, OnDestroy {
   protected readonly search = signal('');
   protected readonly sortOpen = signal(false);
   protected readonly timeStable = signal(false);
+  protected readonly mode = signal<'category' | 'search'>('category');
   protected readonly openFilters = signal({
     size: true,
     brand: true,
@@ -86,19 +87,11 @@ export default class ProductFilter implements OnInit, OnDestroy {
   private readonly productRequestDestroyer = new Subject<void>();
 
   constructor() {
-    effect(() => {
-      if (typeof document === 'undefined' || !document.body) {
-        return;
-      }
-
-      if (this.openFilter()) {
-        document.body.style.overflow = 'hidden';
-      } else {
-        document.body.style.overflow = '';
-      }
-    });
+    this.onFilterOpenHidden();
 
     afterNextRender(() => {
+      this.mode.set(this.route.snapshot.data['mode']);
+      this.search.set(this.route.snapshot.queryParams['search'] || '');
       setTimeout(() => {
         this.timeStable.set(true);
       }, 1000)
@@ -118,8 +111,22 @@ export default class ProductFilter implements OnInit, OnDestroy {
     this.productFilterStore.filter.reset({brand_ids: [], sizes: []});
   }
 
+  onFilterOpenHidden() {
+    effect(() => {
+      if (typeof document === 'undefined' || !document.body) {
+        return;
+      }
+
+      if (this.openFilter()) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = '';
+      }
+    });
+  }
+
   subscribeEvents() {
-    combineLatest([this.router.events, this.route.children[0].url])
+    combineLatest([this.router.events, this.route.children[0]?.url || of([])])
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         debounceTime(500)
@@ -151,7 +158,7 @@ export default class ProductFilter implements OnInit, OnDestroy {
 
   loadCategory(segments: UrlSegment[]) {
     this.gender = <Gender>this.route.snapshot.params['gender'];
-    this.fullPath = segments.map(s => s.path);
+    this.fullPath = segments?.map(s => s.path);
 
     this.getBrands();
     this.getSizeTables();
@@ -177,7 +184,7 @@ export default class ProductFilter implements OnInit, OnDestroy {
       page: this.currentPage(),
       limit: 20,
       category_slug: this.fullPath.join('/'),
-      fit: this.gender.toUpperCase(),
+      fit: this.gender?.toUpperCase(),
       ...rawFilter,
       min_max_price: Array.isArray(rawFilter.min_max_price) ? rawFilter.min_max_price : [],
       sizes: Array.isArray(rawFilter.sizes) ? rawFilter.sizes : [],
@@ -185,10 +192,12 @@ export default class ProductFilter implements OnInit, OnDestroy {
       search: this.search()
     };
 
-    const sortBy = filter.sort_by;
-    if (!sortBy) {
-      delete filter.sort_by;
+    for (const key in filter) {
+      if (filter[key] === undefined || !filter[key]) {
+        delete filter[key];
+      }
     }
+
     return filter
   }
 
