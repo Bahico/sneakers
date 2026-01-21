@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  var url = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/geolocate/postal_unit";
+  var token = "4c58255bbc6b63d411bb06ebf3ccaeb326c97ebd";
+  var query = "почта";
+
+  var options = {
+    method: "POST",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+      "Authorization": "Token " + token
+    },
+    body: JSON.stringify({ "lat": 55.7374239, "lon": 37.5553986, "radius_meters": 1000, query: query })
+  }
+
+  fetch(url, options)
+    .then(response => response.json())
+    .then(result => console.log(result))
+    .catch(error => console.log("error", error));
+</script>
+</body>
+</html>
