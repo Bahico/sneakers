@@ -13,7 +13,7 @@ import {ProductFilterStore} from '@/product/filter/product-filter-store';
   templateUrl: 'mobile-filter.html',
   selector: 'mobile-filter',
   host: {
-    class: 'bg-white absolute overflow-hidden top-0 left-0 right-0 bottom-0 overflow-y-auto w-full h-screen z-10 duration-300',
+    class: 'bg-white overflow-hidden fixed top-0 p-2 left-0 right-0 bottom-0 overflow-y-auto w-full h-screen z-100 duration-300',
     '[class.max-h-screen]': 'openFilter()',
     '[class.pb-40]': 'openFilter()',
     '[class.max-h-0]': '!openFilter()',

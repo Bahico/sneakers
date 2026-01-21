@@ -29,6 +29,8 @@
     </form>
   }
 
+  <mobile-filter [(openFilter)]="openFilter"/>
+
   <div class="sticky top-0 z-10 py-2 bg-white">
     <button
       (click)="openFilter.set(true)"
@@ -39,52 +41,53 @@
     </button>
   </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 relative">
-    <div class="col-span-1">
-      <div class="hidden md:flex flex-col gap-4">
-        <h3 class="text-2xl font-semibold">Фильтры</h3>
+  <div class="flex flex-col md:flex-row gap-6 relative">
+    <div class="w-full md:w-1/3 lg:w-1/4 sticky top-10">
+      <div class="hidden-scrollbar sticky -mx-1 h-fit overflow-y-auto" style="max-height: calc(-0px + 100dvh); top: 10px;">
+        <div class="hidden px-1 md:flex flex-col gap-4">
+          <h3 class="text-2xl font-semibold">Фильтры</h3>
 
-        <product-filter-price/>
+          <product-filter-price/>
 
-        <div class="flex flex-col overflow-hidden w-full">
-          <div class="flex gap-2 w-full items-center cursor-pointer" (click)="changeOpen( 'size')">
-            <icon-list [icon]="openFilters().size ? 'minus' : 'plus'"
-                       class="text-primary w-10 h-10 flex items-center justify-center"/>
-            <span class="text-lg text-primary font-semibold">Размер</span>
+          <div class="flex flex-col overflow-hidden w-full">
+            <div class="flex gap-2 w-full items-center cursor-pointer" (click)="changeOpen( 'size')">
+              <icon-list [icon]="openFilters().size ? 'minus' : 'plus'"
+                         class="text-primary w-10 h-10 flex items-center justify-center"/>
+              <span class="text-lg text-primary font-semibold">Размер</span>
+            </div>
+
+            <div
+              class="overflow-hidden w-full duration-300"
+              [class.max-h-0]="!openFilters().size"
+              [class.max-h-screen]="openFilters().size"
+            >
+              <product-filter-size/>
+            </div>
           </div>
 
-          <div
-            class="overflow-hidden w-full duration-300"
-            [class.max-h-0]="!openFilters().size"
-            [class.max-h-screen]="openFilters().size"
-          >
-            <product-filter-size/>
-          </div>
-        </div>
+          <div class="flex flex-col overflow-hidden w-full">
+            <div class="flex gap-2 w-full items-center cursor-pointer" (click)="changeOpen( 'brand')">
+              <icon-list [icon]="openFilters().brand ? 'minus' : 'plus'"
+                         class="text-primary w-10 h-10 flex items-center justify-center"/>
+              <span class="text-lg text-primary font-semibold">Бренд</span>
+            </div>
 
-        <div class="flex flex-col overflow-hidden w-full">
-          <div class="flex gap-2 w-full items-center cursor-pointer" (click)="changeOpen( 'brand')">
-            <icon-list [icon]="openFilters().brand ? 'minus' : 'plus'"
-                       class="text-primary w-10 h-10 flex items-center justify-center"/>
-            <span class="text-lg text-primary font-semibold">Бренд</span>
-          </div>
-
-          <div
-            class="overflow-hidden w-full duration-300"
-            [class.max-h-0]="!openFilters().brand"
-            [class.max-h-[200vh]]="openFilters().brand"
-          >
-            <product-filter-brand/>
+            <div
+              class="overflow-hidden w-full duration-300"
+              [class.max-h-0]="!openFilters().brand"
+              [class.max-h-[200vh]]="openFilters().brand"
+            >
+              <product-filter-brand/>
+            </div>
           </div>
         </div>
       </div>
 
-      <mobile-filter [(openFilter)]="openFilter"/>
     </div>
 
-    <div class="md:col-span-2 lg:col-span-3">
+    <div class="w-full md:w-2/3 lg:w-3/4">
       <button
-        class="sn-btn default !py-1 !bg-gray-100 border-none w-30 justify-center hidden md:flex items-center gap-2 hover:!text-primary mb-4"
+        class="sn-btn default py-1! bg-gray-100! border-none w-30 justify-center hidden md:flex items-center gap-2 hover:text-primary! mb-4"
         [tuiDropdown]="dropdownContent"
         [tuiDropdownManual]="sortOpen()"
         [tuiObscuredEnabled]="sortOpen()"
