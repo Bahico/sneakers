@@ -32,34 +32,9 @@
   <div class="mt-4" (click)="openModal.emit(true)">
     @switch (delivery_type) {
       @case ('cdek_pickup') {
-        <div
-          class="sn-control w-full cursor-pointer"
-          [tuiDropdown]="dropdown"
-          [tuiDropdownManual]="openSuggestions()"
-          [tuiObscuredEnabled]="openSuggestions()"
-          (click)="openSuggestions.set(true)"
-          (tuiActiveZoneChange)="onActiveZone($event)"
-          (tuiObscured)="onObscured($event)"
-        >
-          <icon-list icon="location" class="sn-control-icon"/>
-          <input
-            type="text"
-            [readOnly]="readonly()"
-            placeholder="Пункт выдачи"
-            [(ngModel)]="suggestionSearch"
-            [ngModelOptions]="{standalone: true}"
-            (ngModelChange)="suggestionSearchEvent$.next()"
-          >
-
-          <ng-template #dropdown>
-            <tui-data-list>
-              @for (item of suggestions(); track item.value) {
-                <button tuiOption (click)="selectSuggestion(item)">
-                  {{ item.value }} {{item.unrestricted_value}}
-                </button>
-              }
-            </tui-data-list>
-          </ng-template>
+        <div class="sn-control w-full cursor-pointer">
+          <icon-list icon="location" class="sn-control-icon" />
+          <input type="text" [readOnly]="readonly()" placeholder="Введите город, пункт выдачи">
         </div>
       }
       @case ('cdek_courier') {
@@ -87,9 +62,34 @@
         </div>
       }
       @default {
-        <div class="sn-control w-full cursor-pointer">
+        <div
+          class="sn-control w-full cursor-pointer"
+          [tuiDropdown]="dropdown"
+          [tuiDropdownManual]="openSuggestions()"
+          [tuiObscuredEnabled]="openSuggestions()"
+          (click)="openSuggestions.set(true)"
+          (tuiActiveZoneChange)="onActiveZone($event)"
+          (tuiObscured)="onObscured($event)"
+        >
           <icon-list icon="location" class="sn-control-icon"/>
-          <input type="text" [readOnly]="readonly()" placeholder="Найдите адрес">
+          <input
+            type="text"
+            [readOnly]="readonly()"
+            placeholder="Найдите адрес"
+            [(ngModel)]="suggestionSearch"
+            [ngModelOptions]="{standalone: true}"
+            (ngModelChange)="suggestionSearchEvent$.next()"
+          >
+
+          <ng-template #dropdown>
+            <tui-data-list>
+              @for (item of suggestions(); track item.value) {
+                <button tuiOption (click)="selectSuggestion(item)">
+                  {{ item.value }} {{item.unrestricted_value}}
+                </button>
+              }
+            </tui-data-list>
+          </ng-template>
         </div>
       }
     }

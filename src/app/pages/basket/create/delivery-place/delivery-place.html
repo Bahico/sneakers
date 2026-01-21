@@ -39,7 +39,7 @@
       (yaclick)="onMapClick($event)"
     >
       @switch (delivery_type()) {
-        @case ('cdek_pickup') {
+        @case ('russian_post') {
           @for (suggestion of suggestions(); track suggestion.value) {
             <ya-placemark
               [geometry]="[suggestion.data.geo_lat, suggestion.data.geo_lon]"
