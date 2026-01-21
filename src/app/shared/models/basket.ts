@@ -1,4 +1,5 @@
 import {DeliveryType} from '@/models/order';
+import {FormControl} from '@angular/forms';
 
 export interface PaymentModel {
   delivery_type: DeliveryType;
@@ -17,4 +18,23 @@ export interface PaymentModel {
   referral_code: string;
   promocode: string;
   use_sneaker_coins: boolean;
+}
+
+export type PaymentForm = { [k in keyof PaymentModel]?: FormControl<PaymentModel[k]> };
+
+export interface PaymentRes {
+  success: boolean;
+  order_id: string;
+  order_number: string;
+  total_amount: number;
+  is_split_payment: boolean;
+  first_payment_amount: number;
+  payment: {
+    payment_id: string;
+    payment_url: string;
+    amount: number;
+    currency: string;
+    description: string;
+  },
+  message: string;
 }

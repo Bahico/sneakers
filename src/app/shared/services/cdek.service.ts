@@ -1,63 +1,71 @@
 import {inject, Injectable} from '@angular/core';
-import {environment} from 'environments';
 import {HttpClient} from '@angular/common/http';
-import {Observable, switchMap} from 'rxjs';
-import {Cdek} from '@/models/cdek';
-
-interface TokenResponse {
-  access_token: string;
-  expires_in: number;
-  token_type?: string;
-}
+import {getEndpoint} from '@/get-endpoint';
+import {Cdek, CdekCredentials, Suggestion} from '@/models/cdek';
+import {YaEvent, YaReadyEvent} from 'angular8-yandex-maps';
 
 @Injectable({providedIn: 'root'})
 export class CdekService {
   private readonly http = inject(HttpClient);
-  private readonly cdekUrl = `${environment.CDEK.API}/v2`;
 
-  private token: string;
-  private expiresIn: number;
-  private tokenDate: Date;
+  cdeks(params: CdekCredentials) {
+    return this.http.get<Cdek[]>(getEndpoint('orders/cdek/delivery-points'), {params: {...params}});
+  }
 
-  getDeliveryPointsByAddress(address: string): Observable<Cdek[]> {
-    if (!this.token || this.isTokenExpired()) {
-      return this.getToken()
-        .pipe(
-          switchMap(({access_token, expires_in}) => {
-            this.token = access_token;
-            this.expiresIn = expires_in;
-            this.tokenDate = new Date();
-            return this.getDeliveryPoints(address)
-          })
-        )
+  async suggestions(params: { lat?: number; lon?: number; radius_meters?: number; }): Promise<{
+    suggestions: Suggestion[]
+  }> {
+    const url = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/geolocate/postal_unit";
+    const token = "4c58255bbc6b63d411bb06ebf3ccaeb326c97ebd";
+    const query = "почта";
+
+    const options: RequestInit = {
+      method: "POST",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Authorization": "Token " + token
+      },
+      body: JSON.stringify({...params, query})
     }
-    return this.getDeliveryPoints(address);
+
+    const response = await fetch(url, options);
+    return await response.json();
   }
 
-  private isTokenExpired(): boolean {
-    if (!this.token || !this.tokenDate || !this.expiresIn) {
-      return true;
+  async suggestionsWithQuery(query: string): Promise<{ suggestions: Suggestion[] }> {
+    const url = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/postal_unit";
+    const token = "4c58255bbc6b63d411bb06ebf3ccaeb326c97ebd";
+
+    const options: RequestInit = {
+      method: "POST",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Authorization": "Token " + token
+      },
+      body: JSON.stringify({query})
     }
-    const now = new Date();
-    const expirationTime = new Date(this.tokenDate.getTime() + this.expiresIn * 1000);
-    // Add a 60 second buffer to refresh before actual expiration
-    return now.getTime() >= (expirationTime.getTime() - 60000);
+
+    const response = await fetch(url, options);
+    return await response.json();
   }
 
-  private getToken() {
-    return this.http.post<TokenResponse>(`${this.cdekUrl}/oauth/token`, new URLSearchParams({
-      grant_type: 'client_credentials',
-      client_id: environment.CDEK.CLIENT_ID,
-      client_secret: environment.CDEK.CLIENT_SECRET
-    }), {
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-    });
-  }
+  getVisibleRadiusMeters(map: YaEvent<ymaps.Map> | YaReadyEvent<ymaps.Map>) {
+    const center = map.target.getCenter(); // [lat, lon]
+    const bounds = map.target.getBounds(); // [[swLat, swLon], [neLat, neLon]]
 
-  private getDeliveryPoints(address: string) {
-    return this.http.get<Cdek[]>(`${this.cdekUrl}/deliverypoints`, {
-      params: {country_code: 'RU', address},
-      headers: this.token ? {Authorization: `Bearer ${this.token}`} : {}
-    });
+    const ne = bounds[1];
+
+    const topCenter = [ne[0], center[1]];
+
+    const rightCenter = [center[0], ne[1]];
+
+    const distTop = ymaps.coordSystem.geo.getDistance(center, topCenter);
+    const distRight = ymaps.coordSystem.geo.getDistance(center, rightCenter);
+
+    return Math.max(distTop, distRight);
   }
 }

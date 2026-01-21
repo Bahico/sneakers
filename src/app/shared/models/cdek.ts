@@ -39,3 +39,33 @@ export interface Cdek {
     distance: number;
     fulfillment: boolean;
 }
+
+export interface CdekCredentials {
+  city_code?: number;
+  country_code: string;
+  radius: number;
+  latitude: number;
+  longitude: number;
+}
+
+export interface Suggestion {
+  value: string;
+  unrestricted_value: string;
+  data: {
+    postal_code: string;
+    is_closed: boolean;
+    type_code: 'ГОПС' | 'УДПП';
+    address_str: string;
+    address_kladr_id: string;
+    address_qc: string;
+    geo_lat: number;
+    geo_lon: number;
+    schedule_mon: Date;
+    schedule_tue: Date;
+    schedule_wed: Date;
+    schedule_thu: Date;
+    schedule_fri: Date;
+    schedule_sat?: Date;
+    schedule_sun?: Date;
+  }
+}

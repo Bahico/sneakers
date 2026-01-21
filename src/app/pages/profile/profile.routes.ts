@@ -22,4 +22,8 @@ export default [
     path: 'referrals',
     loadComponent: () => import('./pages/referrals/referrals')
   },
+  {
+    path: 'orders',
+    loadComponent: () => import('./pages/orders/order-list')
+  },
 ] satisfies Routes;

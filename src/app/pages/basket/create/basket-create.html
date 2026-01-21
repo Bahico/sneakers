@@ -54,7 +54,9 @@
     </div>
 
     <h3 class="text-lg md:text-2xl font-semibold" id="form">Способ доставки</h3>
-    <delivery-type-inputs [readonly]="true" (openModal)="openModal()"/>
+
+    <delivery-type-inputs [form]="form" [readonly]="true" (openModal)="openModal()"/>
+
     <h3 class="text-lg md:text-2xl font-semibold">Получатель</h3>
     <div class="flex flex-col gap-4">
       <form [formGroup]="profileForm" class="grid grid-cols-2 gap-4">
@@ -248,7 +250,7 @@
     </div>
     <span class="border-b border-gray-200 col-span-2"></span>
     <div class="sn-control">
-      <textarea placeholder="Комментарий к заказу (не обязательно)" rows="4"></textarea>
+      <textarea placeholder="Комментарий к заказу (не обязательно)" rows="4" [formControl]="form.controls.customer_comment"></textarea>
     </div>
     <div class="flex w-full justify-between items-center">
       <span>Товары</span>
@@ -283,5 +285,5 @@
 </div>
 
 @defer (on timer(100ms)) {
-  <delivery-place class="hidden md:block" [(open)]="openDeliveryPlace"/>
+  <delivery-place [form]="form" class="hidden md:block" [(open)]="openDeliveryPlace"/>
 }

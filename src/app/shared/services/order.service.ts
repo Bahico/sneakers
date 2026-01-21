@@ -1,7 +1,7 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {getEndpoint} from '@/get-endpoint';
-import {PaymentModel} from '@/models/basket';
+import {PaymentModel, PaymentRes} from '@/models/basket';
 
 @Injectable({providedIn: 'root'})
 export class OrderService {
@@ -10,7 +10,7 @@ export class OrderService {
   private readonly endpoint = getEndpoint('orders/payment');
 
   payment(data: PaymentModel) {
-    return this.http.post(this.endpoint + '/', data);
+    return this.http.post<PaymentRes>(this.endpoint + '/', data);
   }
 
   checkPromocode(data: {promocode: string; product_id?: string}) {

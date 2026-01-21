@@ -27,6 +27,17 @@ export type OrderType = 'pending_payment' | 'partially_paid' | 'paid' | 'customs
 
 export type DeliveryType = 'cdek_pickup' | 'cdek_courier' | 'russian_post';
 
+export enum DeliveryTypeKeys {
+  cdek_pickup,
+  cdek_courier,
+  russian_post,
+}
+export const deliveryTypeValues = {
+  0: 'cdek_pickup',
+  1: 'cdek_courier',
+  2: 'russian_post',
+}
+
 export type PaymentType = 'full' | 'split_first' | 'split_second';
 
 export type PaymentStatus = 'pending' | 'processing' | 'completed' | 'failed' | 'refunded' | 'cancelled';

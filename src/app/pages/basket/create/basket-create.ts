@@ -1,12 +1,12 @@
-import {afterNextRender, Component, computed, effect, inject, signal, ViewEncapsulation} from '@angular/core';
+import {afterNextRender, Component, effect, inject, signal, ViewEncapsulation} from '@angular/core';
 import {TuiBreadcrumbs, TuiCheckbox, TuiSwitch} from '@taiga-ui/kit';
 import {TuiFlagPipe, TuiFormatNumberPipe, TuiLink} from '@taiga-ui/core';
 import {TuiDay, TuiItem} from '@taiga-ui/cdk';
-import {RouterLink} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import {AsyncPipe} from '@angular/common';
 import {CartStore} from '@/cart';
 import {IconComponent} from '@/components/icon/icon';
-import {AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {DeliveryPlace} from './delivery-place/delivery-place';
 import {DeliveryTypeInputs} from '@/basket/create/delivery-type-inputs/delivery-type-inputs';
 import {PolymorpheusComponent} from '@taiga-ui/polymorpheus';
@@ -14,7 +14,7 @@ import {ResponsiveBreakpointsService} from '@/services/responsive-breakpoints.se
 import {DialogService} from '@/services/dialog.service';
 import {OrderService} from '@/services/order.service';
 import {catchError, concatMap, finalize, forkJoin, Observable, of, tap} from 'rxjs';
-import {PaymentModel} from '@/models/basket';
+import {PaymentForm, PaymentModel} from '@/models/basket';
 import {DeliveryType} from '@/models/order';
 import {DateComponent} from '@/components/date/date';
 import {NgxMaskDirective} from 'ngx-mask';
@@ -54,6 +54,7 @@ export default class BasketCreate {
   private readonly orderService = inject(OrderService);
   private readonly authService = inject(AuthService);
   private readonly accountStore = inject(AccountStore);
+  private readonly router = inject(Router);
 
 
   protected readonly carts = this.cartStore.carts;
@@ -74,23 +75,14 @@ export default class BasketCreate {
   protected readonly passportChanged = signal(false);
   protected readonly profileChanged = signal(false);
 
-  form = new FormGroup<{ [k in keyof PaymentModel]: FormControl<PaymentModel[k]> }>({
+  form = new FormGroup<PaymentForm>({
     delivery_type: new FormControl<DeliveryType>('cdek_pickup'),
     delivery_data: new FormControl(null),
-    customer_phone: new FormControl(null),
-    customer_email: new FormControl(null),
-    customer_comment: new FormControl(null),
-    customer_last_name: new FormControl(null),
-    customer_first_name: new FormControl(null),
-    customer_middle_name: new FormControl(null),
-    customer_no_middle_name: new FormControl(false),
-    customer_passport_series: new FormControl(null),
-    customer_passport_number: new FormControl(null),
-    customer_passport_issue_date: new FormControl(null),
     use_split_payment: new FormControl(false),
     referral_code: new FormControl(null),
     promocode: new FormControl(null),
     use_sneaker_coins: new FormControl(false),
+    customer_comment: new FormControl(null),
   });
 
   profileForm = new FormGroup({
@@ -214,13 +206,60 @@ export default class BasketCreate {
     const data = this.onSaveData();
     if (data) {
       data
-        .pipe(
-          concatMap(() =>
-            this.orderService.payment(this.form.getRawValue())
-          )
-        )
-        .subscribe()
+        .pipe(concatMap(() => this.orderService.payment(this.paymentRowValue)))
+        .subscribe(res => {
+          if (res?.success) {
+            this.openPaymentModal(res.payment.payment_url);
+          }
+        })
     }
+  }
+
+  openPaymentModal(payment_url: string) {
+    const width = 600;
+    const height = 600;
+    const left = (screen.width - width) / 2;
+    const top = (screen.height - height) / 2;
+
+    const features = 'width=700' + ', height=800' +
+      ', top=' + top + ', left=' + left +
+      ', resizable=yes, scrollbars=yes, status=no, menubar=no, toolbar=no';
+    const newWindow = window.open(payment_url, 'payment', features);
+
+    if (newWindow) {
+      newWindow.focus();
+      const polling = setInterval(() => {
+        if (newWindow.closed) {
+          clearInterval(polling);
+          this.router.navigate(['/profile', 'orders']);
+        }
+      }, 500);
+
+    }
+  }
+
+  get paymentRowValue(): PaymentModel {
+    const profile = this.profileForm.getRawValue();
+    const passport = this.passportForm.getRawValue();
+    const form = this.form.getRawValue();
+    return {
+      delivery_data: form.delivery_data,
+      delivery_type: form.delivery_type,
+      promocode: form.promocode,
+      referral_code: form.referral_code,
+      use_split_payment: form.use_split_payment,
+      use_sneaker_coins: form.use_sneaker_coins,
+      customer_comment: form.customer_comment,
+      customer_phone: profile.phone,
+      customer_email: profile.email,
+      customer_first_name: passport.name,
+      customer_last_name: passport.surname,
+      customer_middle_name: passport.f_name,
+      customer_no_middle_name: !passport.f_name,
+      customer_passport_series: passport.passport_series,
+      customer_passport_number: passport.passport_number,
+      customer_passport_issue_date: passport.date_of_give,
+    };
   }
 
   onSaveData(): Observable<any> | null {
@@ -232,7 +271,6 @@ export default class BasketCreate {
 
     this.loading.set(true);
     this.error.set(null);
-    // this.success.set(false);
 
     const profileData = {
       email: this.profileForm.value.email || undefined,
@@ -253,12 +291,13 @@ export default class BasketCreate {
       .pipe(
         catchError(error => {
           this.error.set(error?.error?.message || 'Ошибка при сохранении данных');
+          this.passportForm.markAllAsTouched();
+          this.profileForm.markAllAsTouched();
           return of(null);
         }),
         tap(result => {
           this.loading.set(false);
           if (result) {
-            // this.success.set(true);
             if (!this.hasPassportData()) {
               this.hasPassportData.set(true);
             }

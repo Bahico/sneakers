@@ -28,11 +28,40 @@
 
   <div class="md:p-4 flex flex-col gap-4">
     <h2 class="text-xl font-semibold">Выбери пункт выдачи</h2>
-    <delivery-type-inputs />
+    <delivery-type-inputs [form]="form()" />
   </div>
   <div class="h-100 md:h-full">
-    <ya-map [center]="[55.751952, 37.600739]" [zoom]="12" (boundschange)="onChange($event)">
-      <ya-placemark [geometry]="[55.751952, 37.600739]"></ya-placemark>
+    <ya-map
+      (ready)="onMapReady($event)"
+      [center]="[55.751952, 37.600739]"
+      [zoom]="12"
+      (boundschange)="onChange($event)"
+      (yaclick)="onMapClick($event)"
+    >
+      @switch (delivery_type()) {
+        @case ('cdek_pickup') {
+          @for (suggestion of suggestions(); track suggestion.value) {
+            <ya-placemark
+              [geometry]="[suggestion.data.geo_lat, suggestion.data.geo_lon]"
+              [properties]="{ id: suggestion.value }"
+              [options]="{
+                preset: suggestionId() === suggestion.value ? 'islands#redIcon' : 'islands#blueIcon'
+              }"
+              (ready)="onPlacemarkReady($event, suggestion)"
+            />
+          }
+        }
+        @case ('cdek_courier') {
+          @if (locationData()) {
+            <ya-placemark
+              [geometry]="[locationData().lat, locationData().lon]"
+              [options]="{
+                preset: 'islands#blueIcon'
+              }"
+            />
+          }
+        }
+      }
     </ya-map>
   </div>
 </ng-template>
