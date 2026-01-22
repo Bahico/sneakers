@@ -29,7 +29,7 @@
 
 <div class="relative md:hidden">
   <span class="absolute left-4 top-4 z-10">
-    <a 
+    <a
       [routerLink]="['/product', detail().fit?.toLowerCase(), detail().category?.full_slug]"
       class="text-primary"
       > < В каталог</a>
@@ -47,7 +47,6 @@
   >
     @for (image of images(); track $index) {
       <img
-        #mobileImage
         [src]="image"
         alt="product image item"
         class="min-w-full w-full h-full object-contain snap-center mix-blend-multiply px-2"
@@ -89,7 +88,7 @@
 
 @if (isOpen()) {
   <div
-    class="image-modal !bg-white"
+    class="image-modal bg-white!"
   >
     <button
       (click)="closeModal()"
@@ -98,6 +97,7 @@
       <icon-list icon="close" />
     </button>
     <img
+      alt=""
       [src]="images()?.[activeIndex()]"
       class="modal-image mix-bland-multiply"
       (click)="$event.stopPropagation()"

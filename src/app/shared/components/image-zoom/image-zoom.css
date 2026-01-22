@@ -2,8 +2,8 @@
   position: absolute;
   /*border: 1px solid #d4d4d4;*/
   /*set the size of the lens:*/
-  width: 20% !important;
-  height: 20% !important;
+  width: 50% !important;
+  height: 50% !important;
 }
 
 .img-zoom-result {

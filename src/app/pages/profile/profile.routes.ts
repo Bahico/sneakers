@@ -24,6 +24,12 @@ export default [
   },
   {
     path: 'orders',
-    loadComponent: () => import('./pages/orders/order-list')
+    loadComponent: () => import('./pages/orders/orders'),
+    children: [
+      {
+        path: '',
+        loadComponent: () => import('./pages/orders/pages/order-list')
+      }
+    ]
   },
 ] satisfies Routes;

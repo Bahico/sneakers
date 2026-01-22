@@ -27,7 +27,6 @@ export class ProductDetailImages {
 
   thumbs = viewChildren<ElementRef>('thumb');
   mobileScrollContainer = viewChild<ElementRef<HTMLElement>>('mobileScrollContainer');
-  mobileImages = viewChildren<ElementRef<HTMLImageElement>>('mobileImage');
 
   images = computed<string[]>(() => this.productDetailStore.detail().images);
   detail = computed(() => this.productDetailStore.detail());
