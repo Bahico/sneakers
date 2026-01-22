@@ -41,23 +41,59 @@
         <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
           <div class="sn-control col-span-2 md:col-span-4">
             <icon-list icon="location" class="sn-control-icon"/>
-            <input type="text" [readOnly]="readonly()" placeholder="Найдите адрес">
+            <input
+              type="text"
+              [readOnly]="readonly()"
+              placeholder="Найдите адрес"
+              [(ngModel)]="formService.courier.address"
+              (ngModelChange)="changeDeliveryData()"
+            >
           </div>
           <div class="sn-control">
-            <input type="text" [readOnly]="readonly()" placeholder="Квартира">
+            <input
+              type="text"
+              [readOnly]="readonly()"
+              placeholder="Квартира"
+              [(ngModel)]="formService.courier.apartment"
+              (ngModelChange)="changeDeliveryData()"
+            >
           </div>
           <div class="sn-control">
-            <input type="text" [readOnly]="readonly()" placeholder="Подъезд">
+            <input
+              type="text"
+              [readOnly]="readonly()"
+              placeholder="Подъезд"
+              [(ngModel)]="formService.courier.entrance"
+              (ngModelChange)="changeDeliveryData()"
+            >
           </div>
           <div class="sn-control">
-            <input type="text" [readOnly]="readonly()" placeholder="Этаж">
+            <input
+              type="text"
+              [readOnly]="readonly()"
+              placeholder="Этаж"
+              [(ngModel)]="formService.courier.floor"
+              (ngModelChange)="changeDeliveryData()"
+            >
           </div>
           <div class="sn-control">
-            <input type="text" [readOnly]="readonly()" placeholder="Домофон">
+            <input
+              type="text"
+              [readOnly]="readonly()"
+              placeholder="Домофон"
+              [(ngModel)]="formService.courier.intercom"
+              (ngModelChange)="changeDeliveryData()"
+            >
           </div>
           <div class="sn-control col-span-2 md:col-span-4">
             <icon-list icon="message" class="sn-control-icon"/>
-            <input type="text" [readOnly]="readonly()" placeholder="Введите комментарий для курьера">
+            <input
+              type="text"
+              [readOnly]="readonly()"
+              placeholder="Введите комментарий для курьера"
+              [(ngModel)]="formService.courier.comment"
+              (ngModelChange)="changeDeliveryData()"
+            >
           </div>
         </div>
       }

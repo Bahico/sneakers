@@ -1,14 +1,15 @@
-import {afterNextRender, Component, DestroyRef, inject, input, OnDestroy, output, signal} from '@angular/core';
+import {afterNextRender, Component, inject, input, OnDestroy, output, signal} from '@angular/core';
 import {IconComponent} from '@/components/icon/icon';
 import {TuiSegmented} from '@taiga-ui/kit';
 import {DeliveryTypeKeys, deliveryTypeValues} from '@/models/order';
-import {FormGroup, FormsModule} from '@angular/forms';
+import {FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {PaymentForm} from '@/models/basket';
 import {TuiDataList, TuiDropdownDirective, TuiDropdownManual} from '@taiga-ui/core';
 import {CdekService} from '@/services/cdek.service';
 import {Suggestion} from '@/models/cdek';
-import {debounceTime, Subject} from 'rxjs';
+import {debounceTime, filter, Subject} from 'rxjs';
 import {TuiActiveZone, TuiObscured} from '@taiga-ui/cdk';
+import {DeliveryTypeFormService} from './delivery-type-form.service';
 
 @Component({
   templateUrl: 'delivery-type-inputs.html',
@@ -21,11 +22,13 @@ import {TuiActiveZone, TuiObscured} from '@taiga-ui/cdk';
     FormsModule,
     TuiDropdownManual,
     TuiObscured,
-    TuiActiveZone
+    TuiActiveZone,
+    ReactiveFormsModule
   ]
 })
 export class DeliveryTypeInputs implements OnDestroy {
   private readonly cdekService = inject(CdekService);
+  protected readonly formService = inject(DeliveryTypeFormService);
 
   form = input.required<FormGroup<PaymentForm>>();
   readonly = input<boolean>(false);
@@ -41,6 +44,7 @@ export class DeliveryTypeInputs implements OnDestroy {
 
   constructor() {
     afterNextRender(() => {
+      this.formService.courier = {...this.formService.courier, ...(this.form().controls.delivery_data.value || {})};
       this.suggestionSearchEvent$
         .pipe(debounceTime(500))
         .subscribe(async () => {
@@ -51,6 +55,13 @@ export class DeliveryTypeInputs implements OnDestroy {
 
   ngOnDestroy() {
     this.suggestionSearchEvent$.complete();
+  }
+
+  changeDeliveryData() {
+    this.form().controls.delivery_data.setValue({
+      ...(this.form().controls.delivery_data.value || {}),
+      ...this.formService.courier
+    });
   }
 
   async loadSuggestions() {

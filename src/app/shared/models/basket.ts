@@ -3,7 +3,7 @@ import {FormControl} from '@angular/forms';
 
 export interface PaymentModel {
   delivery_type: DeliveryType;
-  delivery_data: unknown;
+  delivery_data: any;
   customer_phone: string;
   customer_email: string;
   customer_comment: string;
