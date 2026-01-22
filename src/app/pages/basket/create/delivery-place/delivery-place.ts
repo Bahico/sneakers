@@ -42,6 +42,7 @@ export class DeliveryPlace implements OnDestroy, OnInit {
   constructor() {
     afterNextRender(() => {
       this.mapChangeEvent.next(this.center());
+      this.loadCdek();
     })
   }
 

@@ -8,7 +8,6 @@ import {Comment} from '@/models/comment';
 import {catchError, of} from 'rxjs';
 import {IconComponent} from '@/components/icon/icon';
 import {DialogService} from '@/services/dialog.service';
-import {AuthService} from '@/services/auth.service';
 import {AuthenticationOpen} from '@/components/authentication/authentication-open';
 import {AccountStore} from '@/account';
 

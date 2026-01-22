@@ -5,7 +5,7 @@
     <h4 class="text-4xl font-semibold">{{averageRating().toFixed(1)}}</h4>
     <div>
       <span class="flex gap-0.5">
-        @for (star of starsArray(); track $index; let i = $index) {
+        @for (_ of starsArray(); track $index; let i = $index) {
           <icon-list icon="star" [class.opacity-30]="!isStarFilled(i)" />
         }
       </span>
@@ -23,7 +23,7 @@
     <div class="bg-primary text-white rounded-md py-1 px-2 text-xs">
       S
     </div>
-    <span>+500 за покупку</span>
+    <span>+250 за покупку</span>
   </div>
 </div>
 
@@ -43,7 +43,7 @@
   @for (comment of comments(); track comment.id || $index) {
     <comment-detail [comment]="comment" class="w-full border-b border-gray-200" [class.border-b-0]="$last" />
   }
-  <button class="sn-btn secondary w-full mt-2 !py-3 text-lg">
+  <button class="sn-btn secondary w-full mt-2 py-3! text-lg">
     Смотреть все отзывы
   </button>
 }
@@ -55,7 +55,7 @@
     <h4 class="text-4xl font-semibold">{{averageRating().toFixed(1)}}</h4>
     <div>
       <span class="flex gap-0.5">
-        @for (star of starsArray(); track $index; let i = $index) {
+        @for (_ of starsArray(); track $index; let i = $index) {
           <icon-list icon="star" [class.opacity-30]="!isStarFilled(i)" />
         }
       </span>
@@ -83,7 +83,7 @@
   @for (comment of comments(); track comment.id || $index) {
     <comment-detail [comment]="comment" class="border-b border-gray-200" [class.border-b-0]="$last" />
   }
-  <button class="sn-btn secondary w-full mt-2 !py-3 text-lg">
+  <button class="sn-btn secondary w-full mt-2 py-3! text-lg">
     Смотреть все отзывы
   </button>
 }

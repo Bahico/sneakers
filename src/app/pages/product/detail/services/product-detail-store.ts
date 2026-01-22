@@ -4,7 +4,7 @@ import {AuthenticationOpen} from '@/components/authentication/authentication-ope
 import {ProductListDetailModel, ProductModel, Variant} from '@/models/product.model';
 import {MobileAddCart} from '@/product/detail/components/mobile-add-cart/mobile-add-cart';
 import {CartService} from '@/services/cart.service';
-import {computed, inject, Injectable, signal} from '@angular/core';
+import {computed, inject, Injectable, linkedSignal, signal} from '@angular/core';
 import {PolymorpheusComponent} from '@taiga-ui/polymorpheus';
 import {concatMap} from 'rxjs';
 import {DialogService} from '@/services/dialog.service';
@@ -25,7 +25,7 @@ export class ProductDetailStore {
   readonly sizeType = signal<string>(null);
   readonly sizeValue = signal<string>(null);
 
-  readonly selectedSkus = computed<Variant>(() =>
+  readonly selectedSkus = linkedSignal<Variant>(() =>
     this.productDetail$().variants?.find(item => item.size[this.sizeType()?.toLowerCase()] === this.sizeValue())
   );
 
@@ -37,6 +37,9 @@ export class ProductDetailStore {
 
   set update(value: ProductModel) {
     this.productDetail$.set(value);
+    if (value.variants.length === 1) {
+        this.selectedSkus.set(value.variants[0]);
+    }
   }
 
   get similar() {
