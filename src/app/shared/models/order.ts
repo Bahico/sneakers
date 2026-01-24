@@ -10,7 +10,7 @@ export interface OrderItem {
   product_image_url: string;
 }
 
-export interface OrderListDetail {
+export interface OrderListDetailModel {
   id: string;
   order_number: string;
   status: OrderType;
@@ -24,6 +24,17 @@ export interface OrderListDetail {
   items: OrderItem[];
 }
 
+export interface OrderPayment {
+  id: string;
+  amount: number;
+  payment_type: 'full' | 'split_first' | 'split_second';
+  status: PaymentStatus,
+  transaction_id: string;
+  created_at: Date;
+  completed_at: Date;
+}
+
+export type PaymentStatus = 'pending' | 'completed' | 'processing' | 'cancelled' | 'refunded' | 'failed';
 export type OrderType = 'pending_payment' | 'partially_paid' | 'paid' | 'customs' | 'photo_report_ready' | 'in_transit' | 'ready_for_pickup' | 'delivering' | 'delivered' | 'cancelled';
 
 export type DeliveryType = 'cdek_pickup' | 'cdek_courier' | 'russian_post';
@@ -37,4 +48,31 @@ export const deliveryTypeValues = {
   0: 'cdek_pickup',
   1: 'cdek_courier',
   2: 'russian_post',
+}
+
+export interface OrderDetailModel {
+  id: string;
+  order_number: string;
+  status: OrderType;
+  subtotal: number;
+  total_amount: number;
+  is_split_payment: boolean;
+  first_payment_amount: number;
+  second_payment_amount: number;
+  first_payment_completed: boolean;
+  second_payment_completed: boolean;
+  delivery_type: DeliveryType;
+  delivery_data: any;
+  customer_first_name: string;
+  customer_last_name: string;
+  customer_middle_name: string;
+  customer_phone: string;
+  customer_comment: string;
+  photo_report_urls: string[];
+  cashback_amount: number;
+  created_at: Date;
+  updated_at: Date;
+  completed_at: Date;
+  items: OrderItem[];
+  payments: OrderPayment[];
 }

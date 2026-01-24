@@ -1,5 +1,5 @@
 import {Component, inject, signal} from '@angular/core';
-import {Router, RouterLink} from '@angular/router';
+import {Router, RouterLink, RouterOutlet} from '@angular/router';
 import {TuiBreadcrumbs} from '@taiga-ui/kit';
 import {TuiLink} from '@taiga-ui/core';
 import {TuiItem} from '@taiga-ui/cdk';
@@ -19,7 +19,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     ProfileMenu,
     IconComponent,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    RouterOutlet
   ]
 })
 export default class Orders {

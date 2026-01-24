@@ -28,8 +28,12 @@ export default [
     children: [
       {
         path: '',
-        loadComponent: () => import('./pages/orders/pages/order-list')
-      }
+        loadComponent: () => import('./pages/orders/pages/list/order-list')
+      },
+      {
+        path: ':id',
+        loadComponent: () => import('./pages/orders/pages/detail/order-detail')
+      },
     ]
   },
 ] satisfies Routes;
