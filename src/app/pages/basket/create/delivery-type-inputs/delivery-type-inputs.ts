@@ -38,12 +38,15 @@ export class DeliveryTypeInputs implements OnDestroy {
   suggestionSearch = signal<string>('');
   suggestions = signal<Suggestion[]>([]);
 
+  cdekName = signal('');
+
   protected readonly deliveryTypeKeys = DeliveryTypeKeys;
   protected readonly deliveryTypeValues = deliveryTypeValues;
   protected readonly suggestionSearchEvent$ = new Subject<void>();
 
   constructor() {
     afterNextRender(() => {
+      this.subscribeDeliveryDataEvent();
       this.formService.courier = {...this.formService.courier, ...(this.form().controls.delivery_data.value || {})};
       this.suggestionSearchEvent$
         .pipe(debounceTime(500))
@@ -55,6 +58,25 @@ export class DeliveryTypeInputs implements OnDestroy {
 
   ngOnDestroy() {
     this.suggestionSearchEvent$.complete();
+  }
+
+  subscribeDeliveryDataEvent() {
+    this.form()
+      .controls
+      .delivery_data
+      .valueChanges
+      .subscribe(data => {
+        console.log(data)
+        switch (this.form().controls.delivery_data.value) {
+          case 'cdek_pickup': {
+            this.cdekName.set(data?.['name'])
+            break;
+          } case 'russian_pickup': {
+            this.suggestionSearch.set(data?.['address']);
+            break;
+          }
+        }
+      })
   }
 
   changeDeliveryData() {

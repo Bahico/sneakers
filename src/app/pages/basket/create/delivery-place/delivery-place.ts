@@ -8,7 +8,7 @@ import {PaymentForm} from '@/models/basket';
 import {debounceTime, Subject} from 'rxjs';
 import {CdekService} from '@/services/cdek.service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {Suggestion} from '@/models/cdek';
+import {Cdek, Suggestion} from '@/models/cdek';
 import {DeliveryType} from '@/models/order';
 
 @Component({
@@ -32,6 +32,8 @@ export class DeliveryPlace implements OnDestroy, OnInit {
 
   center = signal<[number,number]>([55.751952, 37.600739]);
   radius_meter = signal(8270);
+  cdeks = signal<Cdek[]>([]);
+  cdekId = signal<string>(null);
   suggestions = signal<Suggestion[]>([]);
   suggestionId = signal<string>(null);
   locationData = signal<{lat: number; lon: number}>(null);
@@ -42,7 +44,6 @@ export class DeliveryPlace implements OnDestroy, OnInit {
   constructor() {
     afterNextRender(() => {
       this.mapChangeEvent.next(this.center());
-      this.loadCdek();
     })
   }
 
@@ -61,17 +62,30 @@ export class DeliveryPlace implements OnDestroy, OnInit {
       )
       .subscribe(async (data) => {
         this.center.set(data)
-        await this.loadSuggestions();
+        if (this.delivery_type() === 'cdek_pickup') {
+          this.loadCdek();
+
+        } else if (this.delivery_type() === 'russian_post') {
+          await this.loadSuggestions();
+        }
       });
     this.form().controls.delivery_data.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((data) => {
-        if (data) {
-          this.suggestionId.set(data?.['value']);
-          this.locationData.set({lat: data?.['lat'], lon: data?.['lon']});
+        if (this.delivery_type() === 'cdek_pickup') {
+          if (data) {
+            this.cdekId.set(data?.['value']);
+          } else {
+            this.cdekId.set(null);
+          }
         } else {
-          this.suggestionId.set(null);
-          this.locationData.set(null);
+          if (data) {
+            this.suggestionId.set(data?.['value']);
+            this.locationData.set({lat: data?.['lat'], lon: data?.['lon']});
+          } else {
+            this.suggestionId.set(null);
+            this.locationData.set(null);
+          }
         }
       });
     this.form().controls.delivery_type.valueChanges
@@ -100,8 +114,25 @@ export class DeliveryPlace implements OnDestroy, OnInit {
     })
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((data) => {
-        console.log(data);
+        this.cdeks.set(data);
       })
+  }
+
+  onPlacemarkReadyCdek(placemark: any, cdek: Cdek) {
+    placemark.target.events.add('click', () => {
+      this.onPlacemarkClickCdek(cdek);
+    });
+  }
+
+  onPlacemarkClickCdek(cdek: Cdek) {
+    this.form().controls.delivery_data.setValue({
+      value: cdek.uuid,
+      address: cdek.address_comment,
+      latitude: cdek.location.latitude,
+      longitude: cdek.location.longitude,
+      phones: cdek.phones,
+      name: cdek.name,
+    });
   }
 
   onPlacemarkReady(placemark: any, suggestion: Suggestion) {

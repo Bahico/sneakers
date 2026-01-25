@@ -61,6 +61,18 @@
             />
           }
         }
+        @default {
+          @for (cdek of cdeks(); track cdek.uuid) {
+            <ya-placemark
+              [geometry]="[cdek.location.latitude, cdek.location.longitude]"
+              [properties]="{ id: cdek.uuid }"
+              [options]="{
+                preset: cdekId() === cdek.uuid ? 'islands#redIcon' : 'islands#blueIcon'
+              }"
+              (ready)="onPlacemarkReadyCdek($event, cdek)"
+            />
+          }
+        }
       }
     </ya-map>
   </div>
