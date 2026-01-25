@@ -30,13 +30,13 @@ export class DeliveryPlace implements OnDestroy, OnInit {
   form = input.required<FormGroup<PaymentForm>>();
   open = model(false);
 
-  center = signal<[number,number]>([55.751952, 37.600739]);
+  center = signal<[number, number]>([55.751952, 37.600739]);
   radius_meter = signal(8270);
   cdeks = signal<Cdek[]>([]);
   cdekId = signal<string>(null);
   suggestions = signal<Suggestion[]>([]);
   suggestionId = signal<string>(null);
-  locationData = signal<{lat: number; lon: number}>(null);
+  locationData = signal<{ lat: number; lon: number }>(null);
   delivery_type = signal<DeliveryType>('cdek_pickup');
 
   private readonly mapChangeEvent = new Subject<[number, number]>();
@@ -44,6 +44,7 @@ export class DeliveryPlace implements OnDestroy, OnInit {
   constructor() {
     afterNextRender(() => {
       this.mapChangeEvent.next(this.center());
+      this.subscribeTypeEvent();
     })
   }
 
@@ -55,19 +56,22 @@ export class DeliveryPlace implements OnDestroy, OnInit {
     this.mapChangeEvent.complete();
   }
 
+  subscribeTypeEvent() {
+    this.form().controls.delivery_type.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(async () => {
+        await this.loadLocations();
+      })
+  }
+
   subscribeMapEvent() {
     this.mapChangeEvent
       .pipe(
         debounceTime(300),
       )
       .subscribe(async (data) => {
-        this.center.set(data)
-        if (this.delivery_type() === 'cdek_pickup') {
-          this.loadCdek();
-
-        } else if (this.delivery_type() === 'russian_post') {
-          await this.loadSuggestions();
-        }
+        this.center.set(data);
+        await this.loadLocations();
       });
     this.form().controls.delivery_data.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -94,6 +98,15 @@ export class DeliveryPlace implements OnDestroy, OnInit {
         this.delivery_type.set(data);
         this.setLocation();
       });
+  }
+
+  async loadLocations() {
+    if (this.delivery_type() === 'cdek_pickup') {
+      this.loadCdek();
+
+    } else if (this.delivery_type() === 'russian_post') {
+      await this.loadSuggestions();
+    }
   }
 
   async loadSuggestions() {
@@ -172,7 +185,7 @@ export class DeliveryPlace implements OnDestroy, OnInit {
     if (this.delivery_type() !== 'cdek_courier') {
       return;
     }
-    const { event } = e;
+    const {event} = e;
 
     if (!this.locationData()) {
       const coords = event.get('coords');
@@ -186,7 +199,7 @@ export class DeliveryPlace implements OnDestroy, OnInit {
     }
   }
 
-  setLocation(data?: {lat: number, lon: number}) {
+  setLocation(data?: { lat: number, lon: number }) {
     this.form().controls.delivery_data.setValue(data);
   }
 }

@@ -66,12 +66,12 @@ export class DeliveryTypeInputs implements OnDestroy {
       .delivery_data
       .valueChanges
       .subscribe(data => {
-        console.log(data)
-        switch (this.form().controls.delivery_data.value) {
+        console.log(data, this.form().controls.delivery_data.value)
+        switch (this.form().controls.delivery_type.value) {
           case 'cdek_pickup': {
             this.cdekName.set(data?.['name'])
             break;
-          } case 'russian_pickup': {
+          } case 'russian_post': {
             this.suggestionSearch.set(data?.['address']);
             break;
           }
