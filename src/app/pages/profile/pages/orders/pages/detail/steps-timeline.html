@@ -1,0 +1,38 @@
+<div class="w-full max-w-3xl">
+  <ul class="space-y-3">
+    @for (step of steps; track $index) {
+      <li
+        class="flex items-start gap-2"
+      >
+        <!-- LEFT: dot + line -->
+        <div class="relative flex w-6 justify-center">
+          <!-- dot -->
+          <div
+            class="h-3 w-3 rounded-full"
+            [ngClass]="dotClass(step)"
+          ></div>
+
+          <!-- line (pastga tushadigan) -->
+          @if (!$last) {
+            <div
+              class="absolute top-3 h-[calc(100%+1.5rem)] w-0.5"
+              [ngClass]="lineClass(step)"
+            ></div>
+          }
+        </div>
+
+        <!-- MIDDLE: title -->
+        <div class="flex-1 leading-5">
+          <div [ngClass]="textClass(step)">
+            {{ step.title }}
+          </div>
+        </div>
+
+        <!-- RIGHT: date / dash -->
+        <div class="min-w-27.5 text-right text-sm text-gray-400">
+          {{ step.date || '-' }}
+        </div>
+      </li>
+    }
+  </ul>
+</div>

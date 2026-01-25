@@ -1,0 +1,110 @@
+<div class="flex w-full justify-between mb-4">
+  <div class="hidden md:flex gap-2 rounded-4xl bg-secondary px-6 py-2 items-center cursor-pointer" routerLink="../">
+    <icon-list icon="right-arrow-sm"/>
+    <span>Вернуться ко всем заказам</span>
+  </div>
+  <div class="flex gap-2 rounded-2xl items-center text-xs md:text-base">
+    <span>Ожидается: 23.04.2025 г</span>
+  </div>
+  <div class="flex gap-2 rounded-2xl items-center text-xs md:text-base">
+    <span>Дней в пути: 11</span>
+  </div>
+</div>
+
+<div class="mb-6">
+  <h2 class="text-lg md:text-xl font-semibold mb-2">Фотоотчет</h2>
+  <p>К каждому выкупленному товару мы предоставим отчёт, который подтверждает, что товар был приобретён именно под ваш
+    индивидуальный запрос.</p>
+
+  <div class="flex gap-3 overflow-x-auto">
+    @for (photo of detail()?.photo_report_urls || []; track photo) {
+      <img [src]="photo" class="min-w-50 w-50 h-40 object-cover rounded-lg" alt="">
+    }
+  </div>
+</div>
+
+<div>
+  <h2 class="text-lg md:text-xl font-semibold mb-2">Стадия заказа</h2>
+  <steps
+    [steps]="orderSteps"
+    [activeIndex]="1"
+  />
+
+  <div class="flex flex-col gap-2 mt-4">
+    <label>Статус заказа:</label>
+    <steps-timeline [steps]="steps"/>
+  </div>
+
+  <div class="flex flex-col gap-1 mt-6">
+    <label for="order-number">Номер заказа:</label>
+    <div class="sn-control">
+      {{ detail()?.order_number }}
+    </div>
+  </div>
+
+  <div class="flex flex-col gap-1 mt-2">
+    <label for="order-number">Дата:</label>
+    <div class="sn-control">
+      {{ detail()?.created_at | date: 'dd.MM.yyyy' }}
+    </div>
+  </div>
+
+  <div class="flex flex-col gap-1 mt-2">
+    <label for="order-number">Способ оплаты:</label>
+    <div class="sn-control">
+      @if (detail()?.is_split_payment) {
+        Частичная оплата
+      } @else {
+        Полная оплата
+      }
+    </div>
+  </div>
+
+
+  <div class="flex flex-col gap-1 mt-6">
+    <label for="order-number">Получатель ФИО:</label>
+    <div class="sn-control">
+      {{ detail()?.customer_first_name }} {{ detail()?.customer_last_name }} {{ detail()?.customer_middle_name }}
+    </div>
+  </div>
+
+
+  <div class="flex flex-col gap-1 mt-2">
+    <label for="order-number">Телефон:</label>
+    <div class="sn-control">
+      +1 {{ detail()?.customer_phone | mask: '000 000 00 00' }}
+    </div>
+  </div>
+
+  <h2 class="text-lg md:text-xl font-semibold mb-2 mt-6">Товары в заказе:</h2>
+
+  <div class="flex flex-col gap-2 mb-2">
+    @for (item of (detail()?.items || []); track item.id) {
+      <div class="flex gap-4 items-center">
+        <div class="w-40 h-40 bg-secondary rounded-md">
+          <img
+            [src]="item.product_image_url"
+            alt=""
+            [style.mix-blend-mode]="'multiply'"
+            class="w-full h-full object-contain"
+          >
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <h4 class="text-lg font-semibold">{{item.product_name}}</h4>
+          <div class="flex flex-col">
+            <span>Размер: {{item.size?.['ru']}}</span>
+            <span>Артикул: {{item.product_article}}</span>
+            <span>Количество: {{item.quantity}}</span>
+          </div>
+          <h4 class=" font-semibold">{{item.total_price | tuiFormatNumber | async }} р.</h4>
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="flex justify-between">
+    <h2 class="text-lg md:text-xl font-semibold">Оплачено:</h2>
+    <h2 class="text-lg md:text-xl font-semibold">{{ paidSum() | tuiFormatNumber | async }} р.</h2>
+  </div>
+</div>

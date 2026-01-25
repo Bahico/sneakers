@@ -9,6 +9,7 @@ import {provideClientHydration, withEventReplay} from '@angular/platform-browser
 import {interceptors} from '@/interceptors';
 import {provideYaConfig, YaConfig} from 'angular8-yandex-maps';
 import {provideEnvironmentNgxMask} from 'ngx-mask';
+import {provideSvgIconsConfig} from '@ngneat/svg-icon';
 
 const config: YaConfig = {
   apikey: '76109729-bc49-47c6-b10d-6a78a66b5376',
@@ -28,6 +29,18 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptors(interceptors)),
     provideEventPlugins(),
     provideYaConfig(config),
-    provideEnvironmentNgxMask()
+    provideEnvironmentNgxMask(),
+    provideSvgIconsConfig({
+      sizes: {
+        xs: '10px',
+        sm: '12px',
+        md: '16px',
+        lg: '20px',
+        xl: '25px',
+        xxl: '30px',
+      },
+      defaultSize: 'md',
+      icons: [],
+    }),
   ]
 };

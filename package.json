@@ -3,12 +3,12 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --host=0.0.0.0",
-    "build": "ng build",
+    "start": "npm run svg && ng serve --host=0.0.0.0",
+    "build": "npm run svg && ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:sneakers": "node dist/sneakers/server/server.mjs",
-    "build:ssr": "ng build"
+    "svg": "svg-generator"
   },
   "prettier": {
     "printWidth": 100,
@@ -22,6 +22,22 @@
       }
     ]
   },
+  "svgGenerator": {
+    "outputPath": "./src/app/svg",
+    "srcPath": "./public/svg",
+    "svgoConfig": {
+      "plugins": [
+        "removeDimensions",
+        "cleanupAttrs",
+        {
+          "name": "convertColors",
+          "params": {
+            "currentColor": true
+          }
+        }
+      ]
+    }
+  },
   "private": true,
   "dependencies": {
     "@angular/common": "^21.0.0",
@@ -33,6 +49,8 @@
     "@angular/router": "^21.0.0",
     "@angular/ssr": "^21.1.0",
     "@ng-web-apis/universal": "^4.12.2",
+    "@ngneat/svg-generator": "^7.0.3",
+    "@ngneat/svg-icon": "^8.0.0",
     "@taiga-ui/addon-mobile": "^4.67.0",
     "@taiga-ui/addon-table": "^4.67.0",
     "@taiga-ui/cdk": "^4.67.0",

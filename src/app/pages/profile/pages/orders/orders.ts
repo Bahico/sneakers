@@ -1,11 +1,12 @@
-import {Component, inject, signal} from '@angular/core';
-import {Router, RouterLink, RouterOutlet} from '@angular/router';
+import {afterEveryRender, Component, inject, signal} from '@angular/core';
+import {ActivatedRoute, Router, RouterLink, RouterOutlet} from '@angular/router';
 import {TuiBreadcrumbs} from '@taiga-ui/kit';
 import {TuiLink} from '@taiga-ui/core';
 import {TuiItem} from '@taiga-ui/cdk';
 import {ProfileMenu} from '@/profile/components/menu/profile-menu';
 import {IconComponent} from '@/components/icon/icon';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {Subject, takeUntil} from 'rxjs';
 
 @Component({
   templateUrl: 'orders.html',
@@ -25,10 +26,31 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 })
 export default class Orders {
   private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
 
   search = signal<string>('');
 
-  navigateOrder() {
+  private readonly destroy$ = new Subject<void>();
+
+  constructor() {
+    afterEveryRender(() => {
+      this.subscribeRoute();
+    })
+  }
+
+  subscribeRoute(): void {
+    this.route
+      .firstChild
+      .params
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(params => {
+        if (params['id']) {
+          this.search.set(params['id']);
+        }
+      })
+  }
+
+  navigateOrder(): void {
     this.router.navigateByUrl(`/profile/orders/${this.search()}`);
   }
 }
