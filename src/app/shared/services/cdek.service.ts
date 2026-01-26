@@ -9,7 +9,7 @@ export class CdekService {
   private readonly http = inject(HttpClient);
 
   cdeks(params: CdekCredentials) {
-    return this.http.get<Cdek[]>(getEndpoint('orders/cdek/delivery-points'), {params: {...params}});
+    return this.http.get<Cdek[]>(getEndpoint('orders/cdek/delivery-points'), {params: {...params, type_code: "PVZ"}});
   }
 
   async suggestions(params: { lat?: number; lon?: number; radius_meters?: number; }): Promise<{
@@ -27,7 +27,7 @@ export class CdekService {
         "Accept": "application/json",
         "Authorization": "Token " + token
       },
-      body: JSON.stringify({...params, query})
+      body: JSON.stringify({...params, query, filters: [{type_code: "ГОПС"}]})
     }
 
     const response = await fetch(url, options);
