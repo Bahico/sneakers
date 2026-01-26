@@ -174,6 +174,9 @@ export default class BasketCreate {
     if (this.rbs.isMobile()) {
       this.dialogs.open(
         new PolymorpheusComponent(DeliveryPlace),
+        {
+          data: this.form
+        }
       ).subscribe()
     } else {
       this.openDeliveryPlace.set(true)

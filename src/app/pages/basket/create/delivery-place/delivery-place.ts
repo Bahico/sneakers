@@ -1,4 +1,15 @@
-import {afterNextRender, Component, DestroyRef, inject, input, model, OnDestroy, OnInit, signal} from '@angular/core';
+import {
+  afterNextRender,
+  Component,
+  DestroyRef,
+  effect,
+  inject,
+  input,
+  model,
+  OnDestroy,
+  OnInit,
+  signal
+} from '@angular/core';
 import {YaEvent, YaMapComponent, YaPlacemarkDirective, YaReadyEvent} from 'angular8-yandex-maps';
 import {NgClass, NgTemplateOutlet} from '@angular/common';
 import {DeliveryTypeInputs} from '@/basket/create/delivery-type-inputs/delivery-type-inputs';
@@ -10,6 +21,8 @@ import {CdekService} from '@/services/cdek.service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {Cdek, Suggestion} from '@/models/cdek';
 import {DeliveryType} from '@/models/order';
+import {injectContext} from '@taiga-ui/polymorpheus';
+import {TuiDialogContext} from '@taiga-ui/core';
 
 @Component({
   selector: 'delivery-place',
@@ -23,13 +36,15 @@ import {DeliveryType} from '@/models/order';
     YaPlacemarkDirective
   ],
 })
-export class DeliveryPlace implements OnDestroy, OnInit {
+export class DeliveryPlace implements OnDestroy {
+  protected readonly context = injectContext<TuiDialogContext<FormGroup<PaymentForm>, void>>({optional: true});
   private readonly cdekService = inject(CdekService);
   private readonly destroyRef = inject(DestroyRef);
 
-  form = input.required<FormGroup<PaymentForm>>();
+  formGroup = input<FormGroup<PaymentForm>>(null, {alias: 'form'});
   open = model(false);
 
+  form = signal<FormGroup<PaymentForm>>(null);
   center = signal<[number, number]>([55.751952, 37.600739]);
   radius_meter = signal(8270);
   cdeks = signal<Cdek[]>([]);
@@ -43,13 +58,18 @@ export class DeliveryPlace implements OnDestroy, OnInit {
 
   constructor() {
     afterNextRender(() => {
+      if (this.context?.data) {
+        this.form.set(this.context.data);
+      }
       this.mapChangeEvent.next(this.center());
       this.subscribeTypeEvent();
-    })
-  }
-
-  ngOnInit() {
-    this.subscribeMapEvent();
+      this.subscribeMapEvent();
+    });
+    effect(() => {
+      if (this.formGroup()) {
+        this.form.set(this.formGroup());
+      }
+    });
   }
 
   ngOnDestroy() {

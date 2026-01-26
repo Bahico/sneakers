@@ -3,7 +3,7 @@ import {ResponsiveBreakpointsService} from '@/services/responsive-breakpoints.se
 import type {PolymorpheusContent} from '@taiga-ui/polymorpheus';
 import {TuiSheetDialogService} from '@taiga-ui/addon-mobile';
 import {TuiPopoverContext} from '@taiga-ui/cdk';
-import {TuiDialogService} from '@taiga-ui/core';
+import {TuiDialogOptions, TuiDialogService} from '@taiga-ui/core';
 
 @Injectable({providedIn: 'root'})
 export class DialogService<T, K = void> {
@@ -13,7 +13,7 @@ export class DialogService<T, K = void> {
 
   private readonly isMobile = this.rbs.isMobile;
 
-  open<G = void>(content: PolymorpheusContent<T & TuiPopoverContext<K extends void ? G : K>>, options?: Partial<T>) {
+  open<G = void>(content: PolymorpheusContent<T & TuiPopoverContext<K extends void ? G : K>>, options?: Partial<TuiDialogOptions<any>>) {
     if (this.isMobile())
       return this.sheetDialogService.open(content, options);
 
