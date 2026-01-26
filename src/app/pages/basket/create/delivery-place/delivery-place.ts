@@ -50,9 +50,9 @@ export class DeliveryPlace implements OnDestroy {
       if (this.context?.data) {
         this.form.set(this.context.data);
       }
-      this.mapChangeEvent.next(this.center());
       this.subscribeTypeEvent();
       this.subscribeMapEvent();
+      this.mapChangeEvent.next(this.center());
     });
     effect(() => {
       if (this.formGroup()) {
@@ -68,7 +68,9 @@ export class DeliveryPlace implements OnDestroy {
   subscribeTypeEvent() {
     this.form().controls.delivery_type.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(async () => {
+      .subscribe(async (data) => {
+        this.delivery_type.set(data);
+        this.setLocation();
         await this.loadLocations();
       })
   }
@@ -101,18 +103,11 @@ export class DeliveryPlace implements OnDestroy {
           }
         }
       });
-    this.form().controls.delivery_type.valueChanges
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((data) => {
-        this.delivery_type.set(data);
-        this.setLocation();
-      });
   }
 
   async loadLocations() {
     if (this.delivery_type() === 'cdek_pickup') {
       this.loadCdek();
-
     } else if (this.delivery_type() === 'russian_post') {
       await this.loadSuggestions();
     }
@@ -149,7 +144,7 @@ export class DeliveryPlace implements OnDestroy {
   onPlacemarkClickCdek(cdek: Cdek) {
     this.form().controls.delivery_data.setValue({
       value: cdek.uuid,
-      address: cdek.address_comment,
+      address: cdek.location.address_full,
       latitude: cdek.location.latitude,
       longitude: cdek.location.longitude,
       phones: cdek.phones,
