@@ -1,15 +1,4 @@
-import {
-  afterNextRender,
-  Component,
-  DestroyRef,
-  effect,
-  inject,
-  input,
-  model,
-  OnDestroy,
-  OnInit,
-  signal
-} from '@angular/core';
+import {afterNextRender, Component, DestroyRef, effect, inject, input, model, OnDestroy, signal} from '@angular/core';
 import {YaEvent, YaMapComponent, YaPlacemarkDirective, YaReadyEvent} from 'angular8-yandex-maps';
 import {NgClass, NgTemplateOutlet} from '@angular/common';
 import {DeliveryTypeInputs} from '@/basket/create/delivery-type-inputs/delivery-type-inputs';

@@ -202,16 +202,15 @@
     <span class="border-b border-gray-200 col-span-2"></span>
 
     <div class="flex flex-col gap-2 mt-2">
-      <div class="sn-control">
+      <div class="flex gap-2">
+        <div class="sn-control">
         <span class="sn-control-icon">
           <icon-list icon="promocode"/>
         </span>
-        <input type="text" placeholder="Промокод" [(ngModel)]="promoCode" [ngModelOptions]="{standalone: true}">
-      </div>
-
-      <div class="flex items-center gap-6">
+          <input type="text" placeholder="Промокод" [(ngModel)]="promoCode" [ngModelOptions]="{standalone: true}">
+        </div>
         <button
-          class="sn-btn px-6! py-3! flex items-center text-center gap-2"
+          class="sn-btn flex items-center text-center gap-2 text-nowrap"
           (click)="checkPromoCode()"
           [disabled]="promoCodeLoading()"
         >
@@ -222,6 +221,9 @@
           }
           Проверить промокод
         </button>
+      </div>
+
+      <div class="flex items-center">
         @if (promoCodeSuccess()) {
           <span class="text-green-600 font-semibold">Промокод - активен</span>
         }

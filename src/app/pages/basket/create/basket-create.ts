@@ -80,7 +80,6 @@ export default class BasketCreate {
     delivery_data: new FormControl(null),
     use_split_payment: new FormControl(false),
     referral_code: new FormControl(null),
-    promocode: new FormControl(null),
     use_sneaker_coins: new FormControl(false),
     customer_comment: new FormControl(null),
   });
@@ -248,7 +247,7 @@ export default class BasketCreate {
     return {
       delivery_data: form.delivery_data,
       delivery_type: form.delivery_type,
-      promocode: form.promocode,
+      promocode: this.promoCodeSuccess() ? this.promoCode() : null,
       referral_code: form.referral_code,
       use_split_payment: form.use_split_payment,
       use_sneaker_coins: form.use_sneaker_coins,
