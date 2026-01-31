@@ -13,15 +13,16 @@
   }"
 >
   <span class="absolute -right-10 md:-right-14 -top-2 cursor-pointer">
-    <icon-list icon="close" class="w-10 h-10 text-white" (click)="open.set(false)" />
+    <icon-list icon="close" class="w-10 h-10 text-white" (click)="open.set(false)"/>
   </span>
-  <div class="grid md:grid-cols-2 w-[80vw] gap-4 md:h-200 md:w-[70vw]! xl:min-w-250! bg-white rounded-xl overflow-hidden">
-    <ng-container *ngTemplateOutlet="content" />
+  <div
+    class="grid md:grid-cols-2 w-[80vw] gap-4 md:h-200 md:w-[70vw]! xl:min-w-250! bg-white rounded-xl overflow-hidden">
+    <ng-container *ngTemplateOutlet="content"/>
   </div>
 </div>
 
 <div class="flex flex-col gap-4 md:hidden">
-  <ng-container *ngTemplateOutlet="content" />
+  <ng-container *ngTemplateOutlet="content"/>
 </div>
 
 <ng-template #content>
@@ -29,7 +30,7 @@
   <div class="md:p-4 flex flex-col gap-4">
     <h2 class="text-xl font-semibold">Выбери пункт выдачи</h2>
     @if (form()) {
-      <delivery-type-inputs [form]="form()" />
+      <delivery-type-inputs [form]="form()"/>
     }
     <button class="sn-btn w-full mt-auto hidden md:block h-12" (click)="open.set(false)">Выбрать адрес</button>
   </div>
@@ -48,7 +49,9 @@
               [geometry]="[suggestion.data.geo_lat, suggestion.data.geo_lon]"
               [properties]="{ id: suggestion.value }"
               [options]="{
-                preset: suggestionId() === suggestion.value ? 'islands#redIcon' : 'islands#blueIcon'
+                iconLayout: 'default#imageWithContent',
+                iconImageHref: 'images/logo/mail.png',
+                iconImageSize: [37, 47]
               }"
               (ready)="onPlacemarkReady($event, suggestion)"
             />
@@ -68,9 +71,13 @@
           @for (cdek of cdeks(); track cdek.uuid) {
             <ya-placemark
               [geometry]="[cdek.location.latitude, cdek.location.longitude]"
-              [properties]="{ id: cdek.uuid }"
+              [properties]="{
+                id: cdek.uuid,
+               }"
               [options]="{
-                preset: cdekId() === cdek.uuid ? 'islands#redIcon' : 'islands#blueIcon'
+                iconLayout: 'default#imageWithContent',
+                iconImageHref: 'images/logo/cdek.png',
+                iconImageSize: [37, 47]
               }"
               (ready)="onPlacemarkReadyCdek($event, cdek)"
             />

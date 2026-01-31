@@ -45,11 +45,11 @@ tui-tabs {
   height: 40px !important;
 
   &:before {
-    @apply !bg-primary;
+    @apply bg-primary!;
   }
 }
 
 .line {
-  @apply flex w-full h-[1px] bg-[#E8E8E8];
+  @apply flex w-full h-px bg-[#E8E8E8];
 }
 
