@@ -14,6 +14,14 @@ export class AuthService {
   private readonly coins$ = signal<UserCoins>(null);
   coins = this.coins$.asReadonly();
 
+  telegramLink() {
+    return this.http.post<{login_link: string; session_id: string; expires_in: number;}>(getEndpoint('auth/request-login'), {})
+  }
+
+  checkSession(session_id: string): Observable<TokenModel> {
+    return this.http.get<TokenModel>(getEndpoint(`auth/check-session/${session_id}`))
+  }
+
   emailLogin(email: string) {
     return this.http.post<{email: string}>(getEndpoint('auth/request-code'), {}, {params: {email}})
   }

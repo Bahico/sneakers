@@ -23,7 +23,7 @@ export class ProductService {
   }
 
   query(params: any) {
-    return this.http.get<ProductListModel>(getEndpoint('products/'), {params})
+    return this.http.get<ProductListModel>(getEndpoint('products/', 'v2'), {params})
       .pipe(tap(res => this.setProducts(res.products)));
   }
 

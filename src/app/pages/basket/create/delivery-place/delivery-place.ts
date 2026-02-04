@@ -78,7 +78,7 @@ export class DeliveryPlace implements OnDestroy {
   subscribeMapEvent() {
     this.mapChangeEvent
       .pipe(
-        debounceTime(300),
+        debounceTime(800),
       )
       .subscribe(async (data) => {
         this.center.set(data);

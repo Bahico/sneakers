@@ -1,5 +1,4 @@
-import {afterNextRender, Component, ElementRef, inject, signal, ViewChild} from '@angular/core';
-import {AuthenticationType} from './authentication.type';
+import {Component, inject, OnDestroy, signal} from '@angular/core';
 import {IconComponent} from '@/components/icon/icon';
 import {FormControl, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AuthService} from '@/services/auth.service';
@@ -31,34 +30,31 @@ export type TGUser = {
     FormsModule
   ]
 })
-export class AuthenticationMain {
+export class AuthenticationMain implements OnDestroy {
   private readonly authService = inject(AuthService);
   private readonly accountStore = inject(AccountStore);
   private readonly tokenStore = inject(TokenStore);
   private readonly cartService = inject(CartService);
   protected readonly context = injectContext<TuiDialogContext<string, string>>();
 
-
-  @ViewChild('telegramBtnRef') myDivElement!: ElementRef;
-
   protected readonly email = new FormControl(null, [Validators.email, Validators.required]);
   protected readonly code = new FormControl(null, [Validators.minLength(6), Validators.maxLength(6), Validators.required]);
 
-  loginType = signal<AuthenticationType | null>(null);
+  visibleLogin = signal<boolean>(false);
   enterCode = signal(false);
   restOfTime = signal(30);
   errorCode = signal(false);
 
-  constructor() {
-    afterNextRender(() => {
-      setTimeout(() => {
-        this.loginTelegram()
-      }, 1000)
-    })
+  interval: any;
+
+  ngOnDestroy() {
+    if (this.interval) {
+      clearInterval(this.interval);
+    }
   }
 
-  changeType(type: AuthenticationType) {
-    this.loginType.set(type);
+  changeType() {
+    this.visibleLogin.set(true);
   }
 
   sendEmail() {
@@ -75,10 +71,7 @@ export class AuthenticationMain {
       .sendCode({email: this.email.value, code: this.code.value})
       .subscribe({
         next: (token: TokenModel) => {
-          this.tokenStore.update = token;
-          this.context.$implicit.complete();
-          this.accountStore.getAccount().subscribe();
-          this.cartService.loadCart().subscribe();
+          this.setToken(token);
         },
         error: () => {
           this.errorCode.set(true);
@@ -87,12 +80,40 @@ export class AuthenticationMain {
   }
 
   startCountDown() {
-    const interval = setInterval(() => {
+    this.interval = setInterval(() => {
       this.restOfTime.update(time => time - 1);
       if (this.restOfTime() === 0) {
-        clearInterval(interval);
+        clearInterval(this.interval);
       }
     }, 1000);
+  }
+
+  navigateTelegram(): void {
+    this.authService
+      .telegramLink()
+      .subscribe(data => {
+        const a = document.createElement('a');
+        a.href = data.login_link;
+        a.target = '_blank';
+        a.click();
+        this.interval = setInterval(() => {
+          if (document.visibilityState !== 'hidden') {
+            this.authService
+              .checkSession(data.session_id)
+              .subscribe(token => {
+                this.setToken(token);
+              })
+            clearInterval(this.interval);
+          }
+        }, 100)
+      })
+  }
+
+  setToken(token: TokenModel) {
+    this.tokenStore.update = token;
+    this.context.$implicit.complete();
+    this.accountStore.getAccount().subscribe();
+    this.cartService.loadCart().subscribe();
   }
 
   loginTelegram() {
@@ -108,6 +129,6 @@ export class AuthenticationMain {
     script.setAttribute('data-onauth', 'TelegramOnAuthCb(user)');
     script.setAttribute('data-lang', 'ru');
 
-    this.myDivElement.nativeElement.appendChild(script);
+    // this.myDivElement.nativeElement.appendChild(script);
   }
 }

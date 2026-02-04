@@ -152,15 +152,21 @@ export default class BasketCreate {
       .pipe(
         catchError(() => of(null))
       )
-      .subscribe(data => {
-        if (data) {
-          this.hasPassportData.set(true);
-          this.passportForm.patchValue(data);
-          if (!data.f_name) {
-            this.checked.set(true);
-          }
+      .subscribe({
+        next: data => {
+            if (data) {
+              this.hasPassportData.set(true);
+              this.passportForm.patchValue(data);
+              if (!data.f_name) {
+                this.checked.set(true);
+              }
 
-          this.subscribePassportChanges();
+              this.subscribePassportChanges();
+            }
+          },
+        error: () => {
+          this.passportChanged.set(true);
+          this.hasPassportData.set(false);
         }
       });
   }
