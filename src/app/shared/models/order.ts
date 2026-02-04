@@ -35,7 +35,22 @@ export interface OrderPayment {
 }
 
 export type PaymentStatus = 'pending' | 'completed' | 'processing' | 'cancelled' | 'refunded' | 'failed';
-export type OrderType = 'pending_payment' | 'partially_paid' | 'paid' | 'customs' | 'photo_report_ready' | 'in_transit' | 'ready_for_pickup' | 'delivering' | 'delivered' | 'cancelled';
+export type OrderType =
+  'pending_payment' |
+  'partially_paid' |
+  'paid' |
+  'customs' |
+  'photo_report_ready' |
+  'purchasing' |
+  'china_warehouse' |
+  'arrived_in_country' |
+  'returned' |
+  'in_transit' |
+  'ready_for_pickup' |
+  'delivering' |
+  'delivering_by_courier' |
+  'delivered' |
+  'cancelled';
 
 export type DeliveryType = 'cdek_pickup' | 'cdek_courier' | 'russian_post';
 

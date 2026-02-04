@@ -26,13 +26,13 @@
 <div>
   <h2 class="text-lg md:text-xl font-semibold mb-2">Стадия заказа</h2>
   <steps
-    [steps]="orderSteps"
-    [activeIndex]="1"
+    [steps]="orderSteps()"
+    [activeIndex]="activeStep()"
   />
 
   <div class="flex flex-col gap-2 mt-4">
     <label>Статус заказа:</label>
-    <steps-timeline [steps]="steps"/>
+    <steps-timeline [steps]="steps()"/>
   </div>
 
   <div class="flex flex-col gap-1 mt-6">

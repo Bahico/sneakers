@@ -161,13 +161,9 @@ export default class BasketCreate {
                 this.checked.set(true);
               }
 
-              this.subscribePassportChanges();
             }
-          },
-        error: () => {
-          this.passportChanged.set(true);
-          this.hasPassportData.set(false);
-        }
+            this.subscribePassportChanges();
+          }
       });
   }
 
@@ -292,6 +288,7 @@ export default class BasketCreate {
       ? this.authService.updatePassportData(passportData)
       : this.authService.createPassportData(passportData);
 
+      console.log(this.profileChanged(), this.passportChanged());
     return forkJoin({
       profile: this.profileChanged() ? profileUpdate$ : of(null),
       passport: this.passportChanged() ? passportUpdate$ : of(null)

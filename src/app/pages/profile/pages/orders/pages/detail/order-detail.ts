@@ -1,5 +1,5 @@
 import {afterNextRender, Component, computed, inject, signal} from '@angular/core';
-import {OrderDetailModel} from '@/models/order';
+import {OrderDetailModel, OrderType} from '@/models/order';
 import {OrderService} from '@/services/order.service';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {IconComponent} from '@/components/icon/icon';
@@ -10,10 +10,11 @@ import {NgxMaskPipe} from 'ngx-mask';
 import {TuiFormatNumberPipe} from '@taiga-ui/core';
 import {StepItem, StepsTimeline} from '@/profile/pages/orders/pages/detail/steps-timeline';
 import {injectRegisterIcons} from '@ngneat/svg-icon';
-import {checkedIcon} from '../../../../../../svg/checked';
-import {boxIcon} from '../../../../../../svg/box';
-import {courierIcon} from '../../../../../../svg/courier';
-import {finishIcon} from '../../../../../../svg/finish';
+import {checkedIcon} from '@/checked';
+import {boxIcon} from '@/box';
+import {courierIcon} from '@/courier';
+import {finishIcon} from '@/finish';
+import { handMoneyIcon } from '@/hand-money';
 
 @Component({
   templateUrl: 'order-detail.html',
@@ -36,25 +37,95 @@ export default class OrderDetail {
 
   detail = signal<OrderDetailModel>(null);
 
-  orderSteps = [
-    { label: 'Оплачен', icon: 'checked' },
-    { label: 'На закупке', icon: 'box' },
-    { label: 'Доставляется', icon: 'courier' },
-    { label: 'Готов к выдаче', icon: 'finish' },
-    { label: 'Выдан', icon: 'checked' },
-  ];
+  orderSteps = computed(() => {
+    const baseSteps = [
+      { label: 'Оплачен', icon: 'checked' },
+      { label: 'На закупке', icon: 'box' },
+      { label: 'Доставляется', icon: 'courier' },
+      { label: 'Готов к выдаче', icon: 'finish' },
+      { label: 'Выдан', icon: 'checked' },
+    ];
 
-  steps: StepItem[] = [
-    { title: 'Оплачен', date: '12.12.2025', status: 'done' },
-    { title: 'На закупке', status: 'done' },
-    { title: 'На складе в Китае', status: 'pending' },
-    { title: 'Отправлено в РФ', status: 'pending' },
-    { title: 'Принят на складе в РФ', status: 'pending' },
-    { title: 'Передан в доставку до конечного пункта', status: 'pending' },
-    { title: 'Готов к выдаче', status: 'pending' },
-    { title: 'Вручен', status: 'pending' },
-  ];
+    const detail = this.detail();
+    if (detail?.is_split_payment) {
+      return [
+        { label: 'Част. оплачен', icon: 'hand-money' },
+        baseSteps[1], // 'На закупке' at index 1
+        baseSteps[0], // 'Оплачен' at index 2
+        ...baseSteps.slice(2), // Rest of the steps
+      ];
+    }
 
+    return baseSteps;
+  });
+
+  steps = computed(() => {
+    const detail = this.detail();
+    if (!detail) {
+      return [];
+    }
+
+    const status = detail.status;
+    const isSplitPayment = detail.is_split_payment;
+
+    // Define all possible steps
+    const allSteps: Array<{ title: string; statusKey: OrderType }> = [
+      { title: 'Част. оплачен', statusKey: 'partially_paid' },
+      { title: 'Оплачен', statusKey: 'paid' },
+      { title: 'На закупке', statusKey: 'purchasing' },
+      { title: 'На складе в Китае', statusKey: 'china_warehouse' },
+      { title: 'Отправлено в РФ', statusKey: 'arrived_in_country' },
+      { title: 'Принят на складе в РФ', statusKey: 'returned' },
+      { title: 'Передан в доставку до конечного пункта', statusKey: 'in_transit' },
+      { title: 'Готов к выдаче', statusKey: 'ready_for_pickup' },
+      { title: 'Вручен', statusKey: 'delivered' },
+    ];
+
+    // Filter steps based on split payment
+    let filteredSteps: Array<{ title: string; statusKey: OrderType }>;
+    if (isSplitPayment) {
+      // Include all steps for split payment
+      filteredSteps = allSteps;
+    } else {
+      // Exclude "Част. оплачен" for non-split payment
+      filteredSteps = allSteps.filter(step => step.statusKey !== 'partially_paid');
+    }
+
+    // Map status progression
+    const statusOrder: OrderType[] = isSplitPayment
+      ? ['partially_paid', 'paid', 'purchasing', 'china_warehouse', 'arrived_in_country', 'returned', 'in_transit', 'ready_for_pickup', 'delivered']
+      : ['paid', 'purchasing', 'china_warehouse', 'arrived_in_country', 'returned', 'in_transit', 'ready_for_pickup', 'delivered'];
+
+    const currentStatusIndex = statusOrder.indexOf(status);
+    const activeIndex = currentStatusIndex >= 0 ? currentStatusIndex : -1;
+
+    return filteredSteps.map((step) => {
+      let stepStatus: 'done' | 'active' | 'pending';
+      const stepStatusIndex = statusOrder.indexOf(step.statusKey);
+
+      if (stepStatusIndex === -1) {
+        // Step not in status order, mark as pending
+        stepStatus = 'pending';
+      } else if (activeIndex === -1) {
+        // Current status not found, mark all as pending
+        stepStatus = 'pending';
+      } else if (stepStatusIndex < activeIndex) {
+        // Step is before current status, mark as done
+        stepStatus = 'done';
+      } else if (stepStatusIndex === activeIndex) {
+        // Step matches current status, mark as active
+        stepStatus = 'active';
+      } else {
+        // Step is after current status, mark as pending
+        stepStatus = 'pending';
+      }
+
+      return {
+        title: step.title,
+        status: stepStatus,
+      };
+    });
+  });
 
   paidSum = computed(() => {
     const detail = this.detail();
@@ -71,15 +142,55 @@ export default class OrderDetail {
   });
 
   activeStep = computed(() => {
-    switch (this.detail().status) {
-      case 'partially_paid':
-      case 'paid':
-        return 0;
-      case 'delivering':
-        return 2;
+    const detail = this.detail();
+    if (!detail) {
+      return 0;
+    }
 
-      default:
-        return 1;
+    const status = detail.status;
+    const isSplitPayment = detail.is_split_payment;
+
+    // Map status to step index in orderSteps
+    if (isSplitPayment) {
+      switch (status) {
+        case 'partially_paid':
+          return 0; // 'Част. оплачен'
+        case 'paid':
+          return 2; // 'Оплачен'
+        case 'purchasing':
+          return 1; // 'На закупке'
+        case 'china_warehouse':
+        case 'arrived_in_country':
+        case 'returned':
+        case 'in_transit':
+          return 3; // 'Доставляется'
+        case 'ready_for_pickup':
+          return 4; // 'Готов к выдаче'
+        case 'delivered':
+          return 5; // 'Выдан'
+        default:
+          return 0;
+      }
+    } else {
+      switch (status) {
+        case 'paid':
+          return 0; // 'Оплачен'
+        case 'purchasing':
+          return 1; // 'На закупке'
+        case 'china_warehouse':
+        case 'arrived_in_country':
+        case 'returned':
+        case 'in_transit':
+        case 'delivering':
+        case 'delivering_by_courier':
+          return 2; // 'Доставляется'
+        case 'ready_for_pickup':
+          return 3; // 'Готов к выдаче'
+        case 'delivered':
+          return 4; // 'Выдан'
+        default:
+          return 0;
+      }
     }
   })
 
@@ -92,7 +203,8 @@ export default class OrderDetail {
       checkedIcon,
       boxIcon,
       courierIcon,
-      finishIcon
+      finishIcon,
+      handMoneyIcon
     ])
   }
 

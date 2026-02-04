@@ -12,7 +12,8 @@
         "app/pages/*",
         "app/config/*",
         "app/core/*",
-        "app/store/*"
+        "app/store/*",
+        "app/svg/*"
       ],
       "@app/svg/*": ["src/app/svg/*"],
       "environments": ["environment/environment.ts"],
