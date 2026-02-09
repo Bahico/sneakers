@@ -135,7 +135,7 @@
               type="text"
               formControlName="passport_series"
               placeholder="Серия паспорта"
-              mask="00"
+              mask="0000"
             >
           </div>
 
@@ -258,6 +258,12 @@
       <span>Товары</span>
       <span>{{ carts()?.total_price | tuiFormatNumber | async}} р.</span>
     </div>
+    @if (form.controls.use_sneaker_coins.value) {
+      <div class="flex w-full justify-between items-center">
+        <span>Скидка по Sneaker Coins</span>
+        <span>-{{ coins()?.sneaker_coins| tuiFormatNumber | async}} р.</span>
+      </div>
+    }
     @if (form.controls.use_split_payment.value) {
       <div class="flex w-full justify-between items-center">
         <span class="text-xl font-semibold">К оплате сейчас</span>

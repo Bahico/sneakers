@@ -119,6 +119,15 @@ export default class BasketCreate {
         this.form.controls.use_sneaker_coins.enable();
       }
     });
+
+    effect(() => {
+      if (this.carts()?.total_price > 20000) {
+        this.form.controls.use_split_payment.setValue(false);
+        this.form.controls.use_split_payment.disable();
+      } else {
+        this.form.controls.use_split_payment.enable();
+      }
+    });
   }
 
   loadMaxDate() {
