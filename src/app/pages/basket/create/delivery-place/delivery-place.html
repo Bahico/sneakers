@@ -49,9 +49,9 @@
               [geometry]="[suggestion.data.geo_lat, suggestion.data.geo_lon]"
               [properties]="{ id: suggestion.value }"
               [options]="{
-                iconLayout: 'default#imageWithContent',
+                iconLayout: 'default#image',
                 iconImageHref: 'images/logo/mail.png',
-                iconImageSize: [27, 37]
+                iconImageSize: [26, 32]
               }"
               (ready)="onPlacemarkReady($event, suggestion)"
             />
@@ -75,9 +75,9 @@
                 id: cdek.uuid,
                }"
               [options]="{
-                iconLayout: 'default#imageWithContent',
+                iconLayout: 'default#image',
                 iconImageHref: 'images/logo/cdek.png',
-                iconImageSize: [27, 37]
+                iconImageSize: [26, 32]
               }"
               (ready)="onPlacemarkReadyCdek($event, cdek)"
             />
