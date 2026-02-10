@@ -13,7 +13,7 @@ export class AuthenticationOpen {
         new PolymorpheusComponent(AuthenticationMain),
         {
           label: null,
-          size: 'm'
+          size: 'm',
         },
       )
       .subscribe();
