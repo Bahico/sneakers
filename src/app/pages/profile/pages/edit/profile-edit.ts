@@ -9,7 +9,7 @@ import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} fr
 import {AuthService} from '@/services/auth.service';
 import {AccountStore} from '@/account';
 import {catchError, forkJoin, of} from 'rxjs';
-import {PassportData} from '@/models/passport';
+import {PassportData, UpdateUserProfileDto} from '@/models/passport';
 import {DateComponent} from '@/components/date/date';
 import {NgxMaskDirective} from 'ngx-mask';
 
@@ -46,10 +46,7 @@ export default class ProfileEdit {
 
   profileForm = new FormGroup({
     email: new FormControl<string | null>(null),
-    phone: new FormControl<string | null>(null),
-    telegram_id: new FormControl<string | null>(null),
-    first_name: new FormControl<string | null>(null),
-    last_name: new FormControl(null),
+    phone: new FormControl<string | null>(null)
   });
 
   passportForm = new FormGroup({
@@ -127,10 +124,19 @@ export default class ProfileEdit {
     this.error.set(null);
     this.success.set(false);
 
+<<<<<<< HEAD
     const profileData = {
       phone: this.profileForm.value.phone || undefined,
       last_name: this.profileForm.value.last_name || undefined,
       first_name: this.profileForm.value.first_name || undefined,
+=======
+    const profileData: Partial<UpdateUserProfileDto> = {
+      // email: this.profileForm.value.email || undefined,
+      phone: this.profileForm.value.phone || undefined,
+      first_name: this.passportForm.value.name || undefined,
+      last_name: this.passportForm.value.surname || undefined,
+      // telegram_id: this.profileForm.value.telegram_id || undefined
+>>>>>>> 9c4a1889acd02a30bbc9e160b816dcdbf516685b
     };
 
     const passportData = <PassportData>this.passportForm.getRawValue();

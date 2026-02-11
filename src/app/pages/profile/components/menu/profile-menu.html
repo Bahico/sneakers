@@ -30,7 +30,7 @@
   </div>
 
   <div class="flex w-full flex-col md:px-3 py-3 md:py-4 gap-2 md:border border-gray-200 rounded-xl">
-    <span class="md:text-xl font-semibold">Баланс: 0 Sneaker Coins</span>
+    <span class="md:text-xl font-semibold">Баланс: {{coins()?.sneaker_coins}} Sneaker Coins</span>
     <span class="text-gray-500">{{coins()?.sneaker_coins}} Sneaker Coins = {{coins()?.equivalent_rubles}} ₽</span>
   </div>
 </div>
