@@ -11,17 +11,19 @@
   </div>
 </div>
 
-<div class="mb-6">
-  <h2 class="text-lg md:text-xl font-semibold mb-2">Фотоотчет</h2>
-  <p>К каждому выкупленному товару мы предоставим отчёт, который подтверждает, что товар был приобретён именно под ваш
-    индивидуальный запрос.</p>
-
-  <div class="flex gap-3 overflow-x-auto">
-    @for (photo of detail()?.photo_report_urls || []; track photo) {
-      <img [src]="photo" class="min-w-50 w-50 h-40 object-cover rounded-lg" alt="">
-    }
+@if (detail()?.is_split_payment) {
+  <div class="mb-6">
+    <h2 class="text-lg md:text-xl font-semibold mb-2">Фотоотчет</h2>
+    <p>К каждому выкупленному товару мы предоставим отчёт, который подтверждает, что товар был приобретён именно под ваш
+      индивидуальный запрос.</p>
+  
+    <div class="flex gap-3 overflow-x-auto">
+      @for (photo of detail()?.photo_report_urls || []; track photo) {
+        <img [src]="photo" class="min-w-50 w-50 h-40 object-cover rounded-lg" alt="">
+      }
+    </div>
   </div>
-</div>
+}
 
 <div>
   <h2 class="text-lg md:text-xl font-semibold mb-2">Стадия заказа</h2>

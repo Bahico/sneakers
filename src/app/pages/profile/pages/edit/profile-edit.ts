@@ -115,6 +115,8 @@ export default class ProfileEdit {
   }
 
   onSave() {
+    console.log(this.profileForm.invalid, this.passportForm.invalid);
+    
     if (this.profileForm.invalid || this.passportForm.invalid) {
       this.profileForm.markAllAsTouched();
       this.passportForm.markAllAsTouched();
@@ -126,9 +128,9 @@ export default class ProfileEdit {
     this.success.set(false);
 
     const profileData = {
-      email: this.profileForm.value.email || undefined,
       phone: this.profileForm.value.phone || undefined,
-      telegram_id: this.profileForm.value.telegram_id || undefined
+      last_name: this.profileForm.value.last_name || undefined,
+      first_name: this.profileForm.value.first_name || undefined,
     };
 
     const passportData = <PassportData>this.passportForm.getRawValue();
