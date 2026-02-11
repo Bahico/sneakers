@@ -124,19 +124,12 @@ export default class ProfileEdit {
     this.error.set(null);
     this.success.set(false);
 
-<<<<<<< HEAD
-    const profileData = {
-      phone: this.profileForm.value.phone || undefined,
-      last_name: this.profileForm.value.last_name || undefined,
-      first_name: this.profileForm.value.first_name || undefined,
-=======
     const profileData: Partial<UpdateUserProfileDto> = {
       // email: this.profileForm.value.email || undefined,
       phone: this.profileForm.value.phone || undefined,
       first_name: this.passportForm.value.name || undefined,
       last_name: this.passportForm.value.surname || undefined,
       // telegram_id: this.profileForm.value.telegram_id || undefined
->>>>>>> 9c4a1889acd02a30bbc9e160b816dcdbf516685b
     };
 
     const passportData = <PassportData>this.passportForm.getRawValue();
