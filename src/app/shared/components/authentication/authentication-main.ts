@@ -45,6 +45,10 @@ export class AuthenticationMain implements OnDestroy {
   restOfTime = signal(30);
   errorCode = signal(false);
 
+  doc = signal('');
+  nice = signal('');
+  veryNice = signal('');
+
   interval: any;
 
   ngOnDestroy() {
@@ -102,8 +106,8 @@ export class AuthenticationMain implements OnDestroy {
               .checkSession(data.session_id)
               .subscribe(token => {
                 this.setToken(token);
+                clearInterval(this.interval);
               })
-            clearInterval(this.interval);
           }
         }, 100)
       })
