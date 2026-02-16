@@ -14,7 +14,9 @@ export class AuthenticationOpen {
         {
           label: null,
           size: 'm',
-        },
+          offset: 16,
+          stops: ['29rem'],
+        } as any,
       )
       .subscribe();
   }
