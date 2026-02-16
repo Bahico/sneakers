@@ -12,23 +12,23 @@
     <div class="flex flex-col gap-4 w-full md:w-100">
       <div class="flex gap-2">
         <span class="flex w-10 h-10 justify-center items-center rounded-full bg-primary text-white">
-          ДС
+          {{ initials }}
         </span>
 
         <div class="flex flex-col gap-0.5">
-          <span class="text-lg font-semibold">Дмитрий Соловьёв</span>
-          <span class="text-sm text-gray-500">{{ '@d_solv2105' }}</span>
+          <span class="text-lg font-semibold">{{ fullName || '—' }}</span>
+          <span class="text-sm text-gray-500">{{ telegramHandle }}</span>
         </div>
       </div>
 
       <div class="flex flex-col gap-1">
         <div class="flex justify-between">
           <span class="font-semibold">Телефон:</span>
-          <span>+7 (917) 459-5673</span>
+          <span>{{ phone || 'Не указан' }}</span>
         </div>
         <div class="flex justify-between">
           <span class="font-semibold">Почта:</span>
-          <span>{{ 'd.solovyev@mail.ru' }}</span>
+          <span>{{ extendedAccount()?.email || 'Не указана' }}</span>
         </div>
       </div>
 

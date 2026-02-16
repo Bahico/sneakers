@@ -1,18 +1,21 @@
-<div class="steps grid! grid-cols-{{steps().length}} relative">
+<div
+ class="steps grid! relative"
+ [style.grid-template-columns]="`repeat(${steps().length}, 1fr)`"
+>
   @for (step of steps(); track $index) {
     <div class="step">
       <div class="circle w-10 h-10 md:w-16 md:h-16" [ngClass]="getState($index)">
           <svg-icon [key]="step.icon" [size]="rbs.isMobile() ? 'md' : 'xxl'" />
       </div>
 
-      <div class="label text-[8px] md:text-base" [ngClass]="getState($index)">
-        {{ step.label }}
+      <div class="label text-[8px] md:text-xs" [ngClass]="getState($index)">
+        <span style="white-space: pre-wrap;">{{ step.label }}</span>
       </div>
     </div>
   }
 
   <div class="flex absolute top-5 md:top-8 left-0 right-0 w-full px-6 -z-1">
-    <div class="grid grid-cols-{{steps().length-1}} w-full gap-2">
+    <div class="grid w-full gap-2" [style.grid-template-columns]="`repeat(${steps().length-1}, 1fr)`">
       @for (_ of steps(); track $index) {
         @if (!$last) {
           <div

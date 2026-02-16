@@ -112,6 +112,8 @@ export default class ProfileEdit {
   }
 
   onSave() {
+    console.log(this.profileForm.invalid, this.passportForm.invalid);
+    
     if (this.profileForm.invalid || this.passportForm.invalid) {
       this.profileForm.markAllAsTouched();
       this.passportForm.markAllAsTouched();
