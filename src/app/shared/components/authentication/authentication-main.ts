@@ -44,10 +44,7 @@ export class AuthenticationMain implements OnDestroy {
   enterCode = signal(false);
   restOfTime = signal(30);
   errorCode = signal(false);
-
-  doc = signal('');
-  nice = signal('');
-  veryNice = signal('');
+  isLoading = signal(false);
 
   interval: any;
 
@@ -62,22 +59,32 @@ export class AuthenticationMain implements OnDestroy {
   }
 
   sendEmail() {
+    this.isLoading.set(true);
     this.authService
       .emailLogin(this.email.value)
-      .subscribe(() => {
-        this.enterCode.set(true);
-        this.startCountDown();
+      .subscribe({
+        next: () => {
+          this.isLoading.set(false);
+          this.enterCode.set(true);
+          this.startCountDown();
+        },
+        error: err => {
+          this.isLoading.set(false);
+        }
       })
   }
 
   sendCode() {
+    this.isLoading.set(true);
     this.authService
       .sendCode({email: this.email.value, code: this.code.value})
       .subscribe({
         next: (token: TokenModel) => {
           this.setToken(token);
+          this.isLoading.set(false);
         },
         error: () => {
+          this.isLoading.set(false);
           this.errorCode.set(true);
         }
       })
