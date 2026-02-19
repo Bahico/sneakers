@@ -119,20 +119,4 @@ export class AuthenticationMain implements OnDestroy {
     this.accountStore.getAccount().subscribe();
     this.cartService.loadCart().subscribe();
   }
-
-  loginTelegram() {
-    (window as any).TelegramOnAuthCb = (user: TGUser) => console.log(user);
-
-
-    const script = document.createElement('script');
-    script.src = 'https://telegram.org/js/telegram-widget.js?22';
-    script.async = true;
-
-    script.setAttribute('data-telegram-login', 'sneaker_team_bot');
-    script.setAttribute('data-request-access', 'write');
-    script.setAttribute('data-onauth', 'TelegramOnAuthCb(user)');
-    script.setAttribute('data-lang', 'ru');
-
-    // this.myDivElement.nativeElement.appendChild(script);
-  }
 }
