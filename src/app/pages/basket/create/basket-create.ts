@@ -62,6 +62,7 @@ export default class BasketCreate {
 
   protected readonly openDeliveryPlace = signal(false);
   protected readonly hideText = signal(false);
+  protected readonly enterEmptyFields = signal(false);
   protected readonly openMoreInfo = signal(false);
   protected readonly checked = signal(false);
   protected readonly loading = signal(false);
@@ -70,6 +71,7 @@ export default class BasketCreate {
   protected readonly promoCodeSuccess = signal(false);
   protected readonly promoCodeLoading = signal(false);
   protected readonly promoCode = signal('');
+  protected readonly promoCodeData = signal<{discount: number; discount_type: 'percent' | 'fixed'} | null>(null);
   protected readonly maxDate = signal<TuiDay | null>(null);
 
   protected readonly passportChanged = signal(false);
@@ -77,7 +79,7 @@ export default class BasketCreate {
 
   form = new FormGroup<PaymentForm>({
     delivery_type: new FormControl<DeliveryType>('cdek_pickup'),
-    delivery_data: new FormControl(null),
+    delivery_data: new FormControl(null, Validators.required),
     use_split_payment: new FormControl(false),
     referral_code: new FormControl(null),
     use_sneaker_coins: new FormControl(false),
@@ -198,8 +200,9 @@ export default class BasketCreate {
     this.orderService
       .checkPromocode({promocode: this.promoCode()})
       .pipe(finalize(() => this.promoCodeLoading.set(false)))
-      .subscribe(() => {
+      .subscribe(res => {
         this.promoCodeSuccess.set(true);
+        this.promoCodeData.set({discount: res.message.discount_value, discount_type: res.message.promo_type});
       })
   }
 
@@ -213,6 +216,7 @@ export default class BasketCreate {
   onSubmit() {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
+      this.enterEmptyFields.set(true);
       return;
     }
 

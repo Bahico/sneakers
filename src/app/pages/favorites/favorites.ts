@@ -41,14 +41,11 @@ export default class Favorites {
     this.page.update(page => page + 1);
     this.favoritesService.get({page: this.page(), limit: 20}).subscribe({
       next: (response) => {
-        const products = response.items;
+          const products = response;
         this.favorites.update(currentProducts => [
           ...currentProducts,
-          ...(Array.isArray(products) ? products : []).map(product => ({...product, product: {...product.product, is_favorite: true}})),
+          ...products.map(product => ({...product, product: {...product.product, is_favorite: true}})),
         ]);
-      },
-      error: (error) => {
-        this.favorites.set([]);
       }
     });
   }

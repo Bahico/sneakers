@@ -15,14 +15,14 @@ export class OrderService {
   }
 
   checkPromocode(data: {promocode: string; product_id?: string}) {
-    return this.http.get(`${this.endpoint}/check-promocode`, {params: data});
+    return this.http.get<{message: {discount_value: number; promo_type: 'percent' | 'fixed'}}>(`${this.endpoint}/check-promocode`, {params: data});
   }
 
   orders(params: {limit: number; offset: number; status_filter?: OrderType}) {
     return this.http.get<OrderListDetailModel[]>(getEndpoint('orders/'), {params});
   }
 
-  detail(id: string) {
-    return this.http.get<OrderDetailModel>(getEndpoint(`orders/${id}`));
+  detail(order_number: string) {
+    return this.http.get<OrderDetailModel>(getEndpoint(`orders/${order_number}`));
   }
 }

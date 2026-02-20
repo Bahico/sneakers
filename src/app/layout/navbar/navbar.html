@@ -38,9 +38,29 @@
     <div class="py-1! cursor-pointer" [routerLink]="['/product', 'search']" (click)="goBack()">
       <icon-list [icon]="isSearchPage() ? 'close-sm' : 'search'" class="sn-control-icon max-h-8"/>
     </div>
-    <div class="py-1 px-2 cursor-pointer" routerLink="/favorites">
-      <icon-list icon="favorite"/>
-    </div>
+    @if (favoritesCount()) {
+      <tui-badged-content>
+        <tui-badge-notification
+          size="s"
+          tuiSlot="top"
+        >
+          {{ favoritesCount() }}
+        </tui-badge-notification>
+        <div
+          class="py-1 px-2 cursor-pointer"
+          routerLink="/favorites"
+        >
+          <icon-list icon="favorite"/>
+        </div>
+      </tui-badged-content>
+    } @else {
+      <div
+        class="py-1 px-2 cursor-pointer"
+        routerLink="/favorites"
+      >
+        <icon-list icon="favorite"/>
+      </div>
+    }
     @if (basketProductCount()) {
       <tui-badged-content>
         <tui-badge-notification

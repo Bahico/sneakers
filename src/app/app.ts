@@ -5,8 +5,9 @@ import Footer from './layout/footer/footer';
 import {TuiRoot} from '@taiga-ui/core';
 import {CartService} from '@/services/cart.service';
 import {AccountStore} from '@/account';
-import {mergeMap} from 'rxjs';
+import {forkJoin, mergeMap} from 'rxjs';
 import {TokenStore} from '@/token';
+import { FavoritesService } from './shared/services/favorites.service';
 
 @Component({
   selector: 'app-root',
@@ -18,18 +19,24 @@ export class App {
   private readonly cartService = inject(CartService);
   private readonly accountStore = inject(AccountStore);
   private readonly tokenStore = inject(TokenStore);
+  private readonly favoritesService = inject(FavoritesService);
 
   constructor() {
     afterNextRender(() => {
-      if (this.tokenStore.token()?.access_token)
-        this.accountStore.getAccount()
-          .pipe(
-            mergeMap(() => this.cartService.loadCart())
-          )
-          .subscribe();
+      if (this.tokenStore.token()?.access_token){
+        forkJoin([
+          this.accountStore.getAccount(),
+          this.favoritesService.get({page: 1, limit: 1})
+        ])
+        .pipe(
+          mergeMap(() => this.cartService.loadCart())
+        )
+        .subscribe()
+      }
 
-      if (this.cartService.getCartId() && !this.tokenStore.token()?.access_token)
+      if (this.cartService.getCartId() && !this.tokenStore.token()?.access_token) {
         this.cartService.loadCart().subscribe();
+      }
     })
   }
 }

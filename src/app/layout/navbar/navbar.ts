@@ -12,6 +12,7 @@ import {ProductDetailStore} from '@/product/detail/services/product-detail-store
 import {HomeStore} from '@/home.store';
 import {filter} from 'rxjs';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import { FavoritesService } from '@/services/favorites.service';
 
 @Component({
   selector: 'navbar',
@@ -45,8 +46,10 @@ export default class Navbar {
   private readonly homeStore = inject(HomeStore);
   private readonly destroyRef = inject(DestroyRef);
   private readonly location = inject(Location);
+  private readonly favoritesService = inject(FavoritesService);
 
   protected readonly isAuthed = computed(() => !!this.accountStore.account());
+  protected readonly favoritesCount = computed(() => 0);
   protected open = false;
   protected readonly openMobileNavbar = signal(false);
 

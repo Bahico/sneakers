@@ -31,7 +31,7 @@ export default [
         loadComponent: () => import('./pages/orders/pages/list/order-list')
       },
       {
-        path: ':id',
+        path: ':order_number',
         loadComponent: () => import('./pages/orders/pages/detail/order-detail')
       },
     ]

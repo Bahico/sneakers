@@ -1,15 +1,20 @@
-import {inject, Injectable} from '@angular/core';
+import {inject, Injectable, signal} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {getEndpoint} from '@/get-endpoint';
 import {Favorite} from '@/models/favorite';
+import { map, tap } from 'rxjs';
 
 @Injectable({providedIn: 'root'})
 export class FavoritesService {
   private readonly http = inject(HttpClient);
   private readonly endpoint = getEndpoint('favorites');
 
+  private readonly total$ = signal<number>(0);
+  total = this.total$.asReadonly();
+
   get(params: {page: number; limit: number}) {
-    return this.http.get<{total: number; items: Favorite[]}>(this.endpoint, {params});
+    return this.http.get<{total: number; items: Favorite[]}>(this.endpoint, {params})
+    .pipe(tap(res => this.total$.set(res.total)), map(res => res.items));
   }
 
   add(product_id: string) {

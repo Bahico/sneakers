@@ -258,6 +258,12 @@
       <span>Товары</span>
       <span>{{ carts()?.total_price | tuiFormatNumber | async}} р.</span>
     </div>
+    @if (promoCodeData()) {
+      <div class="flex w-full justify-between items-center">
+        <span>Скидка по промокоду</span>
+        <span>-{{ promoCodeData()?.discount | tuiFormatNumber | async}} {{ promoCodeData()?.discount_type === 'percent' ? '%' : 'р.' }}</span>
+      </div>
+    }
     @if (form.controls.use_sneaker_coins.value) {
       <div class="flex w-full justify-between items-center">
         <span>Скидка по Sneaker Coins</span>
@@ -278,6 +284,10 @@
         <span class="text-xl font-semibold">Итого</span>
         <span class="text-xl font-semibold">{{ carts()?.total_price | tuiFormatNumber | async}} р.</span>
       </div>
+    }
+
+    @if (enterEmptyFields()) {
+      <span class="text-red-500">Заполните поле!</span>
     }
 
     <button class="sn-btn !py-4" (click)="onSubmit()">Оплатить</button>

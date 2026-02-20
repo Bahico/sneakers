@@ -44,8 +44,9 @@ export default class Orders {
       .params
       .pipe(takeUntil(this.destroy$))
       .subscribe(params => {
-        if (params['id']) {
-          this.search.set(params['id']);
+        console.log(params);
+        if (params['order_number']) {
+          this.search.set(params['order_number']);
         }
       })
   }

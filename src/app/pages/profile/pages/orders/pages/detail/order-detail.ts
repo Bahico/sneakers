@@ -193,7 +193,7 @@ export default class OrderDetail {
 
   loadOrderDetail() {
     this.orderService
-      .detail(this.route.snapshot.params['id'])
+      .detail(this.route.snapshot.params['order_number'])
       .subscribe(data => {
         this.detail.set(data);
       });

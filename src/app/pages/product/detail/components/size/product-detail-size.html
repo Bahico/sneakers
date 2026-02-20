@@ -13,7 +13,7 @@
     }
   </tui-tabs>
 
-  <div class="grid grid-cols-5 gap-1 md:gap-2 my-4">
+  <div class="grid grid-cols-4 gap-1 md:gap-2 my-4">
     @for (size of sizes(); track $index) {
       <button
         (click)="active.set(size.value)"
