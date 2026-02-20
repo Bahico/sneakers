@@ -29,6 +29,7 @@
           [minlength]="6"
           [maxLength]="6"
           onlyNumber
+          #codeRef
         >
       </div>
       @if (errorCode()) {
@@ -74,6 +75,7 @@
           type="email"
           placeholder="Введите свою почту"
           [formControl]="email"
+          #emailRef
         >
       </div>
       @if (email.invalid && email.touched) {

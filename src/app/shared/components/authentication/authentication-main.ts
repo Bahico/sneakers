@@ -1,4 +1,4 @@
-import {Component, inject, OnDestroy, signal} from '@angular/core';
+import {Component, ElementRef, inject, OnDestroy, signal, viewChild} from '@angular/core';
 import {IconComponent} from '@/components/icon/icon';
 import {FormControl, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AuthService} from '@/services/auth.service';
@@ -37,6 +37,9 @@ export class AuthenticationMain implements OnDestroy {
   private readonly cartService = inject(CartService);
   protected readonly context = injectContext<TuiDialogContext<string, string>>();
 
+  emailRef = viewChild<ElementRef<HTMLInputElement>>('emailRef');
+  codeRef = viewChild<ElementRef<HTMLInputElement>>('codeRef'); 
+
   protected readonly email = new FormControl(null, [Validators.email, Validators.required]);
   protected readonly code = new FormControl(null, [Validators.minLength(6), Validators.maxLength(6), Validators.required]);
 
@@ -56,6 +59,9 @@ export class AuthenticationMain implements OnDestroy {
 
   changeType() {
     this.visibleLogin.set(true);
+    setTimeout(() => {
+      this.emailRef()?.nativeElement.focus();
+    }, 100);
   }
 
   sendEmail() {
@@ -64,6 +70,9 @@ export class AuthenticationMain implements OnDestroy {
       .emailLogin(this.email.value)
       .subscribe({
         next: () => {
+          setTimeout(() => {
+            this.codeRef()?.nativeElement.focus();
+          }, 100);
           this.isLoading.set(false);
           this.enterCode.set(true);
           this.startCountDown();
