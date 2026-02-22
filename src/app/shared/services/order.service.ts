@@ -23,6 +23,6 @@ export class OrderService {
   }
 
   detail(order_number: string) {
-    return this.http.get<OrderDetailModel>('faker/order.json'); // getEndpoint(`orders/${order_number}`)
+    return this.http.get<OrderDetailModel>(getEndpoint(`orders/${order_number}`));
   }
 }
