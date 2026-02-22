@@ -4,7 +4,7 @@
     "updated_at": "2026-02-19T07:05:03.433565Z",
     "user": "00b61a2d-7f2e-4671-9859-b5201c3b716b",
     "order_number": "ORD-20260219-88D34E",
-    "status": "delivered",
+    "status": "photo_report_ready",
     "subtotal": 32980,
     "total_amount": 32980,
     "is_split_payment": true,
@@ -15,7 +15,7 @@
     "second_payment_completed": false,
     "waiting_day": null,
     "waiting_path": null,
-    "delivery_type": "cdek_courier",
+    "delivery_type": "cdek_pickup",
     "delivery_data": {
         "name": "MSK205, Москва, ул. Тверская",
         "value": "e254e1b0-c360-4262-a3e7-e94d6625764d",

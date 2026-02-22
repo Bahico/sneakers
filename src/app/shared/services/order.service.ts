@@ -14,6 +14,10 @@ export class OrderService {
     return this.http.post<PaymentRes>(this.endpoint + '/', data);
   }
 
+  payFull(id: string) {
+    return this.http.get<PaymentRes>(`${this.endpoint}/${id}/second-payment/`);
+  }
+
   checkPromocode(data: {promocode: string; product_id?: string}) {
     return this.http.get<{message: {discount_value: number; promo_type: 'percent' | 'fixed'}}>(`${this.endpoint}/check-promocode`, {params: data});
   }

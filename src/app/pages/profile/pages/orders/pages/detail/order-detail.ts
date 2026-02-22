@@ -9,12 +9,14 @@ import {AsyncPipe, DatePipe} from '@angular/common';
 import {NgxMaskPipe} from 'ngx-mask';
 import {TuiFormatNumberPipe} from '@taiga-ui/core';
 import {StepItem, StepsTimeline} from '@/profile/pages/orders/pages/detail/steps-timeline';
-import {injectRegisterIcons} from '@ngneat/svg-icon';
+import { injectRegisterIcons, SvgIconComponent } from '@ngneat/svg-icon';
 import {checkedIcon} from '@/checked';
 import {boxIcon} from '@/box';
 import {courierIcon} from '@/courier';
 import {finishIcon} from '@/finish';
 import { handMoneyIcon } from '@/hand-money';
+import { copyIcon } from '@/copy';
+import { CdkCopyToClipboard } from '@angular/cdk/clipboard';
 
 @Component({
   templateUrl: 'order-detail.html',
@@ -28,14 +30,17 @@ import { handMoneyIcon } from '@/hand-money';
     NgxMaskPipe,
     AsyncPipe,
     TuiFormatNumberPipe,
-    StepsTimeline
-  ]
+    StepsTimeline,
+    SvgIconComponent,
+    CdkCopyToClipboard
+]
 })
 export default class OrderDetail {
   private readonly orderService = inject(OrderService);
   private readonly route = inject(ActivatedRoute);
 
   detail = signal<OrderDetailModel>(null);
+  copySuccess = signal(false);
 
   orderSteps = computed(() => {
     const detail = this.detail();
@@ -166,12 +171,12 @@ export default class OrderDetail {
         return 1;
       case 'paid':
         return 1 + offset;
+      case 'purchasing':
+        return 2 + offset;
       case 'china_warehouse':
       case 'arrived_in_country':
       case 'sent_to_russia':
       case 'in_transit':
-      case 'purchasing':
-        return 2 + offset;
       case 'delivering':
         return 3 + offset; // Доставляется
       case 'ready_for_pickup':
@@ -195,7 +200,8 @@ export default class OrderDetail {
       boxIcon,
       courierIcon,
       finishIcon,
-      handMoneyIcon
+      handMoneyIcon,
+      copyIcon
     ])
   }
 
@@ -205,5 +211,43 @@ export default class OrderDetail {
       .subscribe(data => {
         this.detail.set(data);
       });
+  }
+
+  copyCdekNumber() {
+    this.copySuccess.set(true);
+    setTimeout(() => {
+      this.copySuccess.set(false);
+    }, 3000);
+  }
+
+  payFull() {
+    this.orderService.payFull(this.detail()?.id).subscribe(res => {
+      if (res?.success) {
+        this.openPaymentModal(res.payment.payment_url);
+      }
+    });
+  }
+
+  openPaymentModal(payment_url: string) {
+    const width = 600;
+    const height = 600;
+    const left = (screen.width - width) / 2;
+    const top = (screen.height - height) / 2;
+
+    const features = 'width=700' + ', height=800' +
+      ', top=' + top + ', left=' + left +
+      ', resizable=yes, scrollbars=yes, status=no, menubar=no, toolbar=no';
+    const newWindow = window.open(payment_url, 'payment', features);
+
+    if (newWindow) {
+      newWindow.focus();
+      const polling = setInterval(() => {
+        if (newWindow.closed) {
+          clearInterval(polling);
+          this.loadOrderDetail();
+        }
+      }, 500);
+
+    }
   }
 }

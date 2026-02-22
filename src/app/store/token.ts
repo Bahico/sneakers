@@ -13,7 +13,6 @@ export class TokenStore {
 
   set update(value: TokenModel | null) {
     if (!value) {
-      console.log( location.hostname), '/', location.hostname
       this.cookieService.delete(this.accessCol);
       this.cookieService.delete(this.refreshCol, '/', location.hostname);
       this.token$.set(null)
