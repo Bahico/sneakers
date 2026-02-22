@@ -43,9 +43,13 @@ export default class OrderDetail {
 
     if (detail?.is_split_payment) {
       steps.push({ label: 'Частично оплачен', icon: 'hand-money' });
+    } else {
+      steps.push({ label: 'Оплачен', icon: 'checked' });
     }
-    steps.push({ label: 'Оплачен', icon: 'checked' });
     steps.push({ label: 'На закупке', icon: 'box' });
+    if (detail?.is_split_payment) {
+      steps.push({ label: 'Оплачен', icon: 'checked' });
+    }
     steps.push({ label: 'Доставляется', icon: 'courier' });
     steps.push({ label: 'Готов к выдаче', icon: 'finish' });
     if (detail?.delivery_type === 'cdek_courier') {
@@ -68,10 +72,11 @@ export default class OrderDetail {
 
     // Normal flow steps: title + statusKey (statusKey optional for terminal steps)
     const flowSteps: Array<{ title: string; statusKey: OrderType | null }> = [
-      ...(isSplitPayment ? [{ title: 'Частично оплачен', statusKey: 'partially_paid' as OrderType }] : []),
-      { title: 'Оплачен', statusKey: 'paid' },
-      { title: 'На закупке', statusKey: 'purchasing' },
+      ...(isSplitPayment ? [{ title: 'Частично оплачен', statusKey: 'partially_paid' as OrderType }] : [{ title: 'Оплачен', statusKey: 'paid' as OrderType }]),
+      { title: 'На закупке', statusKey: isSplitPayment ? 'photo_report_ready' : 'purchasing' },
+      ...(isSplitPayment ? [{ title: 'Оплачен', statusKey: 'paid' as OrderType }] : []),
       { title: 'На складе в Китае', statusKey: 'china_warehouse' },
+      { title: 'Отправлено в РФ', statusKey: 'sent_to_russia' },
       { title: 'Принят на склад в РФ', statusKey: 'arrived_in_country' },
       { title: 'Передан в доставку до конечного пункта', statusKey: 'in_transit' },
       { title: 'Готов к выдаче', statusKey: 'ready_for_pickup' },
@@ -80,10 +85,11 @@ export default class OrderDetail {
     ];
 
     const statusOrder: OrderType[] = [
-      ...(isSplitPayment ? ['partially_paid' as OrderType] : []),
-      'paid',
-      'purchasing',
+      ...(isSplitPayment ? ['partially_paid' as OrderType] : ['paid' as OrderType]),
+      ...(isSplitPayment ? ['photo_report_ready' as OrderType] : ['purchasing' as OrderType]),
+      ...(isSplitPayment ? ['paid' as OrderType] : []),
       'china_warehouse',
+      'sent_to_russia',
       'arrived_in_country',
       'in_transit',
       'ready_for_pickup',
@@ -154,22 +160,24 @@ export default class OrderDetail {
     }
 
     switch (status) {
-      case 'photo_report_ready':
       case 'partially_paid':
         return 0;
+      case 'photo_report_ready':
+        return 1;
       case 'paid':
         return 1 + offset;
-      case 'purchasing':
-        return 2 + offset;
       case 'china_warehouse':
       case 'arrived_in_country':
+      case 'sent_to_russia':
       case 'in_transit':
+      case 'purchasing':
+        return 2 + offset;
       case 'delivering':
         return 3 + offset; // Доставляется
       case 'ready_for_pickup':
-        return 4 + offset;
+        return 3 + offset;
       case 'delivering_by_courier':
-        return isCdekCourier ? 5 + offset : 4 + offset;
+        return isCdekCourier ? 4 + offset : 3 + offset;
       case 'delivered':
         return (isCdekCourier ? 6 : 5) + offset; // Вручен
       default:

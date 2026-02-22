@@ -43,6 +43,7 @@ export type OrderType =
   'photo_report_ready' |
   'purchasing' |
   'china_warehouse' |
+  'sent_to_russia' |
   'arrived_in_country' |
   'returned' |
   'in_transit' |
