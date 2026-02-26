@@ -17,8 +17,15 @@
         <button class="sn-btn rounded-sm h-10 w-30 hidden md:block" type="submit">Найти</button>
       </div>
 
-      <button class="sn-btn rounded-sm w-full md:hidden mb-4" type="submit">Найти</button>
+      @if (productsByName().length > 0) {
+        <div class="flex flex-col gap-4 py-2 px-4 max-h-40 overflow-y-auto mb-4">
+          @for (product of productsByName(); track product.name) {
+            <span class="cursor-pointer" (click)="navigateToSearchPage(product.name)">{{product.name}}</span>
+          }
+        </div>
+      }
 
+      <button class="sn-btn rounded-sm w-full md:hidden mb-4" type="submit">Найти</button>
     </form>
 
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">

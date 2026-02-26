@@ -13,7 +13,7 @@ export class FavoritesService {
   total = this.total$.asReadonly();
 
   get(params: {page: number; limit: number}) {
-    return this.http.get<{total: number; items: Favorite[]}>(this.endpoint, {params})
+    return this.http.get<{total: number; items: Favorite[]}>(this.endpoint + '/', {params})
     .pipe(tap(res => this.total$.set(res.total)), map(res => res.items));
   }
 

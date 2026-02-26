@@ -2,7 +2,6 @@ import {inject, Injectable, signal} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {getEndpoint} from '@/get-endpoint';
 import {ProductListDetailModel, ProductListModel, ProductModel} from '@/models/product.model';
-import {ListResult} from '@/models/list-result';
 import {tap} from 'rxjs';
 import {Brand} from '@/models/brand';
 import {SizeTable} from '@/models/size-table.model';
@@ -28,7 +27,11 @@ export class ProductService {
   }
 
   frequentlySearched(params: any) {
-    return this.http.get<ProductListModel>(getEndpoint('products/frequently-searched/'), {params});
+    return this.http.get<ProductListModel>(getEndpoint('products/frequently-searched'), {params});
+  }
+
+  getProductByName(name: string) {
+    return this.http.get<{name: string}[]>(getEndpoint('products/get_product_by_name'), {params: {name}});
   }
 
   similar(product_id: string, params: any = {limit: 12}) {
@@ -36,7 +39,7 @@ export class ProductService {
   }
 
   brands(query: {limit: number; category_slug: string}) {
-    return this.http.get<Brand[]>(getEndpoint('brands'), {params: query});
+    return this.http.get<Brand[]>(getEndpoint('brands') + '/', {params: query});
   }
 
   sizes(query: {category_slug: string; brand_id?: string}) {

@@ -24,6 +24,7 @@ export default class ProductSearch {
 
   search = signal<string>('');
   products = signal<ProductListDetailModel[]>([]);
+  productsByName = signal<{name: string}[]>([]);
   frequentlySearched = signal<ProductListDetailModel[]>([]);
 
   private readonly destroy$ = new Subject<void>();
@@ -37,7 +38,10 @@ export default class ProductSearch {
           takeUntilDestroyed(this.destroyRef),
           debounceTime(500)
         )
-        .subscribe(() => this.loadProduct());
+        .subscribe(() => {
+          this.loadProduct();
+          this.loadProductByName();
+        });
     })
   }
 
@@ -51,6 +55,16 @@ export default class ProductSearch {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(res => {
         this.frequentlySearched.set(res.products);
+      })
+  }
+
+  loadProductByName() {
+
+    this.productService
+      .getProductByName(this.search())
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(res => {
+        this.productsByName.set(res);
       })
   }
 
@@ -83,7 +97,7 @@ export default class ProductSearch {
     });
   }
 
-  navigateToSearchPage() {
-    this.router.navigate(['/product/search-page'], {queryParams: {search: this.search()}});
+  navigateToSearchPage(search?: string) {
+    this.router.navigate(['/product/search-page'], {queryParams: {search: search || this.search()}});
   }
 }
