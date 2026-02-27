@@ -42,7 +42,7 @@ export class CommentService {
     for (const image of data.images || []) {
       images.append('files', image);
     }
-    return this.http.post<Comment>(`${this.endpoint}${data.product_id}/create/`, images, {params: {rating: data.rating, text: data.text}});
+    return this.http.post<Comment>(`${this.endpoint}${data.product_id}/create`, images, {params: {rating: data.rating, text: data.text}});
   }
 
   /**
