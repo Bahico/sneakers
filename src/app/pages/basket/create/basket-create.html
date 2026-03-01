@@ -236,6 +236,7 @@
         type="checkbox"
         [showIcons]="false"
         [formControl]="form.controls.use_sneaker_coins"
+        (change)="form.controls.use_sneaker_coins.updateValueAndValidity()"
         [disabled]="!coins()?.sneaker_coins"
         size="m"
       />
@@ -267,22 +268,22 @@
     @if (form.controls.use_sneaker_coins.value) {
       <div class="flex w-full justify-between items-center">
         <span>Скидка по Sneaker Coins</span>
-        <span>-{{ coins()?.sneaker_coins| tuiFormatNumber | async}} р.</span>
+        <span>-{{ coins()?.sneaker_coins | tuiFormatNumber | async}} р.</span>
       </div>
     }
     @if (form.controls.use_split_payment.value) {
       <div class="flex w-full justify-between items-center">
         <span class="text-xl font-semibold">К оплате сейчас</span>
-        <span class="text-xl font-semibold">{{ carts()?.total_price / 2 | tuiFormatNumber | async}} р.</span>
+        <span class="text-xl font-semibold">{{ totalSum() / 2 | tuiFormatNumber | async}} р.</span>
       </div>
       <div class="flex w-full justify-between items-center">
         <span class="text-xl font-semibold">Остаток после фотоотчёта</span>
-        <span class="text-xl font-semibold">{{ carts()?.total_price / 2 | tuiFormatNumber | async}} р.</span>
+        <span class="text-xl font-semibold">{{ totalSum() / 2 | tuiFormatNumber | async}} р.</span>
       </div>
     } @else {
       <div class="flex w-full justify-between items-center">
         <span class="text-xl font-semibold">Итого</span>
-        <span class="text-xl font-semibold">{{ carts()?.total_price | tuiFormatNumber | async}} р.</span>
+        <span class="text-xl font-semibold">{{ totalSum() | tuiFormatNumber | async}} р.</span>
       </div>
     }
 

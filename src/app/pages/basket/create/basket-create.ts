@@ -1,4 +1,4 @@
-import {afterNextRender, Component, effect, inject, signal, ViewEncapsulation} from '@angular/core';
+import {afterNextRender, Component, computed, effect, inject, signal, ViewEncapsulation} from '@angular/core';
 import {TuiBreadcrumbs, TuiCheckbox, TuiSwitch} from '@taiga-ui/kit';
 import {TuiFlagPipe, TuiFormatNumberPipe, TuiLink} from '@taiga-ui/core';
 import {TuiDay, TuiItem} from '@taiga-ui/cdk';
@@ -21,6 +21,7 @@ import {NgxMaskDirective} from 'ngx-mask';
 import {AuthService} from '@/services/auth.service';
 import {AccountStore} from '@/account';
 import {PassportData} from '@/models/passport';
+import {toSignal} from '@angular/core/rxjs-interop';
 
 @Component({
   templateUrl: 'basket-create.html',
@@ -71,7 +72,7 @@ export default class BasketCreate {
   protected readonly promoCodeSuccess = signal(false);
   protected readonly promoCodeLoading = signal(false);
   protected readonly promoCode = signal('');
-  protected readonly promoCodeData = signal<{discount: number; discount_type: 'percent' | 'fixed'} | null>(null);
+  protected readonly promoCodeData = signal<{ discount: number; discount_type: 'percent' | 'fixed' } | null>(null);
   protected readonly maxDate = signal<TuiDay | null>(null);
 
   protected readonly passportChanged = signal(false);
@@ -103,6 +104,26 @@ export default class BasketCreate {
     inn: new FormControl<string | null>(null, Validators.required),
     date_of_give: new FormControl<string | null>(null, Validators.required),
   });
+
+  protected readonly useSneakerCoins = toSignal(this.form.controls.use_sneaker_coins.valueChanges);
+  protected readonly totalSum = computed(() => {
+    let total = this.carts().total_price;
+    if (this.useSneakerCoins()) {
+      total = total - this.coins().sneaker_coins;
+    }
+    if (this.promoCodeData()) {
+      switch (this.promoCodeData().discount_type) {
+        case 'percent':
+          const percent = total / 100;
+          total = total - (percent * this.promoCodeData().discount);
+          break;
+        case 'fixed':
+          total = total - this.promoCodeData().discount;
+          break;
+      }
+    }
+    return total;
+  })
 
   constructor() {
     afterNextRender(() => {
@@ -165,16 +186,16 @@ export default class BasketCreate {
       )
       .subscribe({
         next: data => {
-            if (data) {
-              this.hasPassportData.set(true);
-              this.passportForm.patchValue(data);
-              if (!data.f_name) {
-                this.checked.set(true);
-              }
-
+          if (data) {
+            this.hasPassportData.set(true);
+            this.passportForm.patchValue(data);
+            if (!data.f_name) {
+              this.checked.set(true);
             }
-            this.subscribePassportChanges();
+
           }
+          this.subscribePassportChanges();
+        }
       });
   }
 
@@ -301,7 +322,7 @@ export default class BasketCreate {
       ? this.authService.updatePassportData(passportData)
       : this.authService.createPassportData(passportData);
 
-      console.log(this.profileChanged(), this.passportChanged());
+    console.log(this.profileChanged(), this.passportChanged());
     return forkJoin({
       profile: this.profileChanged() ? profileUpdate$ : of(null),
       passport: this.passportChanged() ? passportUpdate$ : of(null)
