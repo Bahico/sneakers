@@ -35,7 +35,7 @@ export class ProductService {
   }
 
   similar(product_id: string, params: any = {limit: 12}) {
-    return this.http.get<ProductListModel>(getEndpoint(`products/${product_id}/similar/`), {params});
+    return this.http.get<ProductListModel>(getEndpoint(`products/${product_id}/similar`), {params});
   }
 
   brands(query: {limit: number; category_slug: string}) {
