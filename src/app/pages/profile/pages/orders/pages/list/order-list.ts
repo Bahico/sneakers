@@ -24,7 +24,7 @@ export default class OrderList {
   }
 
   loadOrders(): void {
-    this.orderService.orders({limit: 10, offset: 1})
+    this.orderService.orders({limit: 10, offset: 0})
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(orders => {
         this.orders.set(orders);
