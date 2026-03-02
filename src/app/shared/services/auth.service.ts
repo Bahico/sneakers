@@ -58,10 +58,7 @@ export class AuthService {
   getCoins(force: boolean = false): void {
     if (!this.coins$() || force) {
       this.http.get<UserCoins>(getEndpoint('auth/coins'))
-        .subscribe(data => this.coins$.set({
-          sneaker_coins: 1000,
-          equivalent_rubles: 1000,
-        }));
+        .subscribe(data => this.coins$.set(data));
     }
   }
 }
