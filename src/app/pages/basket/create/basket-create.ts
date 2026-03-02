@@ -70,6 +70,7 @@ export default class BasketCreate {
   protected readonly error = signal<string | null>(null);
   protected readonly hasPassportData = signal(false);
   protected readonly promoCodeSuccess = signal(false);
+  protected readonly promoCodeError = signal(false);
   protected readonly promoCodeLoading = signal(false);
   protected readonly promoCode = signal('');
   protected readonly promoCodeData = signal<{ discount: number; discount_type: 'percent' | 'fixed' } | null>(null);
@@ -221,9 +222,14 @@ export default class BasketCreate {
     this.orderService
       .checkPromocode({promocode: this.promoCode()})
       .pipe(finalize(() => this.promoCodeLoading.set(false)))
-      .subscribe(res => {
-        this.promoCodeSuccess.set(true);
-        this.promoCodeData.set({discount: res.message.discount_value, discount_type: res.message.promo_type});
+      .subscribe({
+        next: res => {
+          this.promoCodeSuccess.set(true);
+          this.promoCodeData.set({discount: res.message.discount_value, discount_type: res.message.promo_type});
+        },
+        error: () => {
+          this.promoCodeError.set(true);
+        }
       })
   }
 

@@ -204,9 +204,9 @@
     <div class="flex flex-col gap-2 mt-2">
       <div class="flex gap-2">
         <div class="sn-control">
-        <span class="sn-control-icon">
-          <icon-list icon="promocode"/>
-        </span>
+          <span class="sn-control-icon">
+            <icon-list icon="promocode"/>
+          </span>
           <input type="text" placeholder="Промокод" [(ngModel)]="promoCode" [ngModelOptions]="{standalone: true}">
         </div>
         <button
@@ -226,6 +226,8 @@
       <div class="flex items-center">
         @if (promoCodeSuccess()) {
           <span class="text-green-600 font-semibold">Промокод - активен</span>
+        } @else if (promoCodeError()) {
+          <span class="text-red-600 font-semibold">Промокод не найден либо недействителен.</span>
         }
       </div>
     </div>
