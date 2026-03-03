@@ -163,6 +163,7 @@ export default class OrderDetail {
     if (status === 'cancelled' || status === 'returned') {
       return 0;
     }
+    
 
     switch (status) {
       case 'partially_paid':
@@ -171,14 +172,13 @@ export default class OrderDetail {
         return 1;
       case 'paid':
         return 1 + offset;
-      case 'purchasing':
-        return 2 + offset;
       case 'china_warehouse':
       case 'arrived_in_country':
       case 'sent_to_russia':
       case 'in_transit':
       case 'delivering':
-        return 3 + offset; // Доставляется
+      case 'purchasing':
+        return 2 + offset;
       case 'ready_for_pickup':
         return 3 + offset;
       case 'delivering_by_courier':
@@ -188,8 +188,18 @@ export default class OrderDetail {
       default:
         return 0;
     }
-  })
+  });
 
+  waitingDays = computed(() => {
+    const detail = this.detail();
+    if (!detail || !detail.waiting_day) {
+      return null;
+    }
+    const waitingDay = new Date(detail.waiting_day);
+    const today = new Date();
+    const waitingDays = Math.ceil((waitingDay.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+    return waitingDays > 0 ? waitingDays : 0;
+  });
 
   constructor() {
     afterNextRender(() => {

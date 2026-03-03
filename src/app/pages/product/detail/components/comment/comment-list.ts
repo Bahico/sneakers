@@ -29,8 +29,11 @@ export class CommentList {
 
   protected readonly detail = this.productDetailStore.detail;
   protected readonly comments = signal<Comment[]>([]);
+  protected readonly brandComments = signal<Comment[]>([]);
   protected readonly loading = signal(false);
+  protected readonly brandLoading = signal(false);
   protected readonly error = signal<string | null>(null);
+  protected readonly brandError = signal<string | null>(null);
 
   protected readonly averageRating = computed(() => {
     const comments = this.comments();
@@ -50,10 +53,28 @@ export class CommentList {
     return index < this.roundedRating();
   }
 
+  protected readonly brandAverageRating = computed(() => {
+    const comments = this.brandComments();
+    if (comments.length === 0) return 0;
+    const sum = comments.reduce((acc, comment) => acc + comment.rating, 0);
+    return sum / comments.length;
+  });
+
+  protected readonly brandRoundedRating = computed(() => {
+    return Math.round(this.brandAverageRating());
+  });
+
+  protected readonly brandTotalComments = computed(() => this.brandComments().length);
+
+  protected isBrandStarFilled(index: number): boolean {
+    return index < this.brandRoundedRating();
+  }
+
   constructor() {
     effect(() => {
       if (this.detail()) {
         this.loadComments();
+        this.loadBrandComments();
       }
     });
   }
@@ -76,6 +97,28 @@ export class CommentList {
       .subscribe(result => {
         this.comments.set(result.reviews);
         this.loading.set(false);
+      });
+  }
+
+  private loadBrandComments() {
+    const brandId = this.detail()?.brand?.id;
+    if (!brandId) return;
+
+    this.brandLoading.set(true);
+    this.brandError.set(null);
+
+    this.commentService
+      .getCommentsByBrand({limit: 4, offset: 0, brand_ids: [brandId]})
+      .pipe(
+        catchError(err => {
+          this.brandError.set(err.message || 'Failed to load brand comments');
+          this.brandLoading.set(false);
+          return of({reviews: [], stats: {total_reviews: 0, total_ratings: 0, average_rating: 0, rating_distribution: {}}});
+        })
+      )
+      .subscribe(result => {
+        this.brandComments.set(result.reviews);
+        this.brandLoading.set(false);
       });
   }
 

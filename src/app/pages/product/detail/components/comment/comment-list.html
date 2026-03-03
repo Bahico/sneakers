@@ -52,35 +52,35 @@
 
 <div class="flex flex-col gap-3">
   <div class="flex gap-2">
-    <h4 class="text-4xl font-semibold">{{averageRating().toFixed(1)}}</h4>
+    <h4 class="text-4xl font-semibold">{{brandAverageRating().toFixed(1)}}</h4>
     <div>
       <span class="flex gap-0.5">
         @for (_ of starsArray(); track $index; let i = $index) {
-          <icon-list icon="star" [class.opacity-30]="!isStarFilled(i)" />
+          <icon-list icon="star" [class.opacity-30]="!isBrandStarFilled(i)" />
         }
       </span>
       <div class="flex gap-2 text-gray-500">
-        <span>{{totalComments()}} оценок</span>
-        <span>{{totalComments()}} отзывов</span>
+        <span>{{brandTotalComments()}} оценок</span>
+        <span>{{brandTotalComments()}} отзывов</span>
       </div>
     </div>
   </div>
 </div>
 
-@if (loading()) {
+@if (brandLoading()) {
   <div class="flex justify-center py-8">
     <span class="text-gray-500">Загрузка отзывов...</span>
   </div>
-} @else if (error()) {
+} @else if (brandError()) {
   <div class="flex justify-center py-8">
-    <span class="text-red-500">{{error()}}</span>
+    <span class="text-red-500">{{brandError()}}</span>
   </div>
-} @else if (comments().length === 0) {
+} @else if (brandComments().length === 0) {
   <div class="flex justify-center py-8">
     <span class="text-gray-500">Пока нет отзывов</span>
   </div>
 } @else {
-  @for (comment of comments(); track comment.id || $index) {
+  @for (comment of brandComments(); track comment.id || $index) {
     <comment-detail [comment]="comment" class="border-b border-gray-200" [class.border-b-0]="$last" />
   }
   <button class="sn-btn secondary w-full mt-2 py-3! text-lg">

@@ -91,4 +91,5 @@ export interface OrderDetailModel {
   completed_at: Date;
   items: OrderItem[];
   payments: OrderPayment[];
+  waiting_day: Date;
 }

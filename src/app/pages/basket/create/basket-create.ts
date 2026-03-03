@@ -241,7 +241,7 @@ export default class BasketCreate {
   }
 
   onSubmit() {
-    if (this.form.invalid) {
+    if (this.form.invalid || this.profileForm.invalid || this.passportForm.invalid) {
       this.form.markAllAsTouched();
       this.enterEmptyFields.set(true);
       return;

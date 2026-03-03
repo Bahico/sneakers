@@ -24,6 +24,16 @@ export class CommentService {
   }
 
   /**
+   * Get comments/reviews for a specific brand
+   * @param params - Query parameters for pagination and brand IDs
+   * @param params - Query parameters for pagination
+   * @returns Observable of paginated comments
+   */
+  getCommentsByBrand(params: {limit: number; offset: number; brand_ids: string[]}): Observable<CommentListResult> {
+    return this.http.get<CommentListResult>(getEndpoint('reviews/by-brands/list'), {params});
+  }
+
+  /**
    * Get a single comment/review by ID
    * @param id - The comment ID
    * @returns Observable of the comment
