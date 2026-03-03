@@ -163,7 +163,7 @@ export default class OrderDetail {
     if (status === 'cancelled' || status === 'returned') {
       return 0;
     }
-    
+
 
     switch (status) {
       case 'partially_paid':
@@ -171,7 +171,7 @@ export default class OrderDetail {
       case 'photo_report_ready':
         return 1;
       case 'paid':
-        return 1 + offset;
+        return offset ? 1 + offset : 0;
       case 'china_warehouse':
       case 'arrived_in_country':
       case 'sent_to_russia':

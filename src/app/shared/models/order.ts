@@ -13,6 +13,8 @@ export interface OrderItem {
 export interface OrderListDetailModel {
   id: string;
   order_number: string;
+  delivery_data: any;
+  delivery_type: DeliveryType;
   status: OrderType;
   total_amount: number;
   is_split_payment: boolean;

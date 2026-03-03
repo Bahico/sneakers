@@ -4,10 +4,46 @@
   [routerLink]="detail().order_number"
 >
   <div class="flex justify-between mb-4">
-    <div class="flex flex-col gap-4">
-      <span class="text-sm md:text-lg font-semibold flex">№<div>{{detail().order_number}}</div></span>
+    <div class="flex flex-col gap-2">
+      <span class="text-sm md:text-lg font-semibold flex">№<div>{{ detail().order_number }}</div></span>
+      @switch (detail().delivery_type) {
+        @case ('cdek_pickup') {
+          <span class="text-sm font-semibold flex">Трек номер: <div>{{ detail().delivery_data?.value }}</div></span>
+          <span class="text-sm font-semibold text-black/40 flex">Пункт выдачи СДЭК: <div>{{ detail().delivery_data?.name }}</div></span>
+        }
+        @case ('russian_post') {
+          <span class="text-sm font-semibold flex">Трек номер: <div>{{ detail().delivery_data?.value }}</div></span>
+          <span class="text-sm font-semibold text-black/40 flex">Пункт выдачи СДЭК: <div>{{ detail().delivery_data?.name }}</div></span>
+        }
+        @case ('cdek_courier') {
+          <span class="text-sm font-semibold text-black/40 flex">Курьером СДЭК: <div>{{ detail().delivery_data?.name }}</div></span>
+        }
+      }
     </div>
 
+    <div>
+      @if (detail().status === 'photo_report_ready') {
+        <div class="sn-btn flex items-center rounded-3xl! gap-1 text-white">
+          Оплатить и заказать
+          <svg-icon key="right" size="xs" />
+        </div>
+      } @else if (detail().status !== 'delivering_by_courier') {
+        <div class="flex flex-col gap-2 text-end items-end">
+          <span class="text-green-600 flex gap-1 text-lg items-center">
+            <span class="text-white bg-green-600 w-6 h-6 rounded-full flex items-center justify-center">
+              <svg-icon key="checked" />
+            </span>
+            Готов к выдачи
+          </span>
+
+          <span class="text-[#B21010B2] font-semibold">
+            Срок хранения заказа: до {{detail().delivery_type === 'cdek_pickup' ? 7 : 15}} января
+          </span>
+        </div>
+      } @else {
+        <span class="text-lg">{{orderSteps()[activeStep()].label}}</span>
+      }
+    </div>
   </div>
 
   <div class="flex w-full gap-2 overflow-y-auto">
@@ -25,7 +61,7 @@
         </div>
 
         <div>
-          <h3 class="text-lg font-semibold">{{item.brand_name}}</h3>
+          <h3 class="text-lg font-semibold">{{ item.brand_name }}</h3>
           <span class="text-sm text-black/40">{{ item.product_name }}</span>
         </div>
       </div>
