@@ -170,6 +170,8 @@ export default class OrderDetail {
         return 0;
       case 'photo_report_ready':
         return 1;
+      case 'purchasing':
+        return offset ? 2 : 1;
       case 'paid':
         return offset ? 1 + offset : 0;
       case 'china_warehouse':
@@ -177,7 +179,6 @@ export default class OrderDetail {
       case 'sent_to_russia':
       case 'in_transit':
       case 'delivering':
-      case 'purchasing':
         return 2 + offset;
       case 'ready_for_pickup':
         return 3 + offset;

@@ -22,6 +22,7 @@ import {AuthService} from '@/services/auth.service';
 import {AccountStore} from '@/account';
 import {PassportData} from '@/models/passport';
 import {toSignal} from '@angular/core/rxjs-interop';
+import {CartService} from '@/services/cart.service';
 
 @Component({
   templateUrl: 'basket-create.html',
@@ -51,6 +52,7 @@ import {toSignal} from '@angular/core/rxjs-interop';
 export default class BasketCreate {
   private readonly rbs = inject(ResponsiveBreakpointsService);
   private readonly cartStore = inject(CartStore);
+  private readonly cartService = inject(CartService);
   private readonly dialogs = inject(DialogService);
   private readonly orderService = inject(OrderService);
   private readonly authService = inject(AuthService);
@@ -163,6 +165,7 @@ export default class BasketCreate {
     const account = this.accountStore.account();
     if (account) {
       this.profileForm.patchValue(account);
+      this.subscribeProfileChanges();
     } else {
       this.accountStore.getAccount()
         .pipe(catchError(() => of(null)))
@@ -170,7 +173,7 @@ export default class BasketCreate {
           if (account) {
             this.profileForm.patchValue(account);
 
-            this.subscribeProfileChanges()
+            this.subscribeProfileChanges();
           }
         });
     }
@@ -254,6 +257,7 @@ export default class BasketCreate {
         .subscribe(res => {
           if (res?.success) {
             this.openPaymentModal(res.payment.payment_url);
+            this.cartService.loadCart();
           }
         })
     }
@@ -328,7 +332,6 @@ export default class BasketCreate {
       ? this.authService.updatePassportData(passportData)
       : this.authService.createPassportData(passportData);
 
-    console.log(this.profileChanged(), this.passportChanged());
     return forkJoin({
       profile: this.profileChanged() ? profileUpdate$ : of(null),
       passport: this.passportChanged() ? passportUpdate$ : of(null)

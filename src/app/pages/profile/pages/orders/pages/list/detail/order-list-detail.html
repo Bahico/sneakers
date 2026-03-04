@@ -8,15 +8,15 @@
       <span class="text-sm md:text-lg font-semibold flex">№<div>{{ detail().order_number }}</div></span>
       @switch (detail().delivery_type) {
         @case ('cdek_pickup') {
-          <span class="text-sm font-semibold flex">Трек номер: <div>{{ detail().delivery_data?.value }}</div></span>
-          <span class="text-sm font-semibold text-black/40 flex">Пункт выдачи СДЭК: <div>{{ detail().delivery_data?.name }}</div></span>
+          <span class="text-sm font-semibold flex">Трек номер: {{ detail().delivery_data?.value }}</span>
+          <span class="text-sm font-semibold text-black/40 flex">Пункт выдачи СДЭК: {{ detail().delivery_data?.name }}</span>
         }
         @case ('russian_post') {
-          <span class="text-sm font-semibold flex">Трек номер: <div>{{ detail().delivery_data?.value }}</div></span>
-          <span class="text-sm font-semibold text-black/40 flex">Пункт выдачи СДЭК: <div>{{ detail().delivery_data?.name }}</div></span>
+          <span class="text-sm font-semibold flex">Трек номер:{{ detail().delivery_data?.value }}</span>
+          <span class="text-sm font-semibold text-black/40 flex">Пункт выдачи Почта России: {{ detail().delivery_data?.name }}</span>
         }
         @case ('cdek_courier') {
-          <span class="text-sm font-semibold text-black/40 flex">Курьером СДЭК: <div>{{ detail().delivery_data?.name }}</div></span>
+          <span class="text-sm font-semibold text-black/40 flex">Курьером СДЭК: {{ detail().delivery_data?.name }}</span>
         }
       }
     </div>
@@ -27,7 +27,7 @@
           Оплатить и заказать
           <svg-icon key="right" size="xs" />
         </div>
-      } @else if (detail().status !== 'delivering_by_courier') {
+      } @else if (detail().status === 'delivering_by_courier') {
         <div class="flex flex-col gap-2 text-end items-end">
           <span class="text-green-600 flex gap-1 text-lg items-center">
             <span class="text-white bg-green-600 w-6 h-6 rounded-full flex items-center justify-center">
