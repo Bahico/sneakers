@@ -1,7 +1,6 @@
 import {Component, computed, input} from '@angular/core';
 import {OrderListDetailModel} from '@/models/order';
 import {RouterLink} from '@angular/router';
-import {IconComponent} from '@/components/icon/icon';
 import {injectRegisterIcons, SvgIconComponent} from '@ngneat/svg-icon';
 import {rightIcon} from '@/right';
 import {checkedIcon} from '@/checked';
@@ -11,7 +10,6 @@ import {checkedIcon} from '@/checked';
   selector: 'order-list-detail',
   imports: [
     RouterLink,
-    IconComponent,
     SvgIconComponent
   ]
 })
@@ -33,9 +31,10 @@ export class OrderListDetail {
       steps.push({ label: 'Оплачен', icon: 'checked' });
     }
     steps.push({ label: 'Доставляется', icon: 'courier' });
-    steps.push({ label: 'Готов к выдаче', icon: 'finish' });
     if (detail?.delivery_type === 'cdek_courier') {
       steps.push({ label: 'Доставляется курьером', icon: 'courier' });
+    } else {
+      steps.push({ label: 'Готов к выдаче', icon: 'finish' });
     }
     steps.push({ label: 'Вручен', icon: 'checked' });
 
@@ -76,7 +75,7 @@ export class OrderListDetail {
       case 'ready_for_pickup':
         return 3 + offset;
       case 'delivering_by_courier':
-        return isCdekCourier ? 4 + offset : 3 + offset;
+        return isCdekCourier ? 3 + offset : 2 + offset;
       case 'delivered':
         return (isCdekCourier ? 6 : 5) + offset; // Вручен
       default:

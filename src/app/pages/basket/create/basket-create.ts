@@ -91,7 +91,7 @@ export default class BasketCreate {
   });
 
   profileForm = new FormGroup({
-    email: new FormControl<string | null>(null, Validators.required),
+    email: new FormControl<string | null>(null),
     phone: new FormControl<string | null>(null, Validators.required),
     first_name: new FormControl<string | null>(null),
     last_name: new FormControl(null),

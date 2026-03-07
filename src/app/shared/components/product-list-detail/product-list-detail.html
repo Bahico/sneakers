@@ -25,21 +25,24 @@
     class="w-full h-full max-h-30 md:max-h-40 object-contain"
   >
 
-  <span class="text-black/40 truncate">
-    EU: {{detail()?.main_variant?.size?.primary}}
-  </span>
+    <span class="text-black/40 truncate">
+      @if (detail()?.main_variant?.size?.primary) {
+        EU: {{ detail()?.main_variant?.size?.primary }}
+      }
+    </span>
 </div>
 
 <div>
-  <h4 class="truncate md:text-lg font-semibold">{{detail().brand.name}}</h4>
-  <h4 class="text-xs md:text-sm text-gray-400 truncate mb-2">{{detail().name}}</h4>
+  <h4 class="truncate md:text-lg font-semibold">{{ detail().brand.name }}</h4>
+  <h4 class="text-xs md:text-sm text-gray-400 truncate mb-2">{{ detail().name }}</h4>
 
-  <span class="text-sm md:text-base font-semibold">{{detail().price | tuiFormatNumber | async}} p.</span>
+  <span class="text-sm md:text-base font-semibold">{{ detail().price | tuiFormatNumber | async }} p.</span>
   <div
     class="flex gap-0.5 items-center"
     [class.hidden]="onHome()"
   >
-    <span class="py-0.5 px-1 bg-primary/80 rounded text-white text-xs">{{detail().price / 2 | tuiFormatNumber | async}} p. x 2</span>
+    <span
+      class="py-0.5 px-1 bg-primary/80 rounded text-white text-xs">{{ detail().price / 2 | tuiFormatNumber | async }} p. x 2</span>
     <span class="text-gray-500 text-xs">Сплит</span>
   </div>
 </div>

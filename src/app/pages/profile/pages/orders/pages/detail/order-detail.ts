@@ -56,9 +56,10 @@ export default class OrderDetail {
       steps.push({ label: 'Оплачен', icon: 'checked' });
     }
     steps.push({ label: 'Доставляется', icon: 'courier' });
-    steps.push({ label: 'Готов к выдаче', icon: 'finish' });
     if (detail?.delivery_type === 'cdek_courier') {
       steps.push({ label: 'Доставляется курьером', icon: 'courier' });
+    } else {
+      steps.push({ label: 'Готов к выдаче', icon: 'finish' });
     }
     steps.push({ label: 'Вручен', icon: 'checked' });
 
@@ -77,15 +78,14 @@ export default class OrderDetail {
 
     // Normal flow steps: title + statusKey (statusKey optional for terminal steps)
     const flowSteps: Array<{ title: string; statusKey: OrderType | null }> = [
-      ...(isSplitPayment ? [{ title: 'Частично оплачен', statusKey: 'partially_paid' as OrderType }] : [{ title: 'Оплачен', statusKey: 'paid' as OrderType }]),
+      isSplitPayment ? { title: 'Частично оплачен', statusKey: 'partially_paid' as OrderType } : { title: 'Оплачен', statusKey: 'paid' as OrderType },
       { title: 'На закупке', statusKey: isSplitPayment ? 'photo_report_ready' : 'purchasing' },
       ...(isSplitPayment ? [{ title: 'Оплачен', statusKey: 'paid' as OrderType }] : []),
       { title: 'На складе в Китае', statusKey: 'china_warehouse' },
       { title: 'Отправлено в РФ', statusKey: 'sent_to_russia' },
       { title: 'Принят на склад в РФ', statusKey: 'arrived_in_country' },
       { title: 'Передан в доставку до конечного пункта', statusKey: 'in_transit' },
-      { title: 'Готов к выдаче', statusKey: 'ready_for_pickup' },
-      ...(isCdekCourier ? [{ title: 'Доставляется\nкурьером', statusKey: 'delivering_by_courier' as OrderType }] : []),
+      isCdekCourier ? { title: 'Доставляется\nкурьером', statusKey: 'delivering_by_courier' as OrderType } : { title: 'Готов к выдаче', statusKey: 'ready_for_pickup' as OrderType },
       { title: 'Вручен', statusKey: 'delivered' },
     ];
 
@@ -183,7 +183,7 @@ export default class OrderDetail {
       case 'ready_for_pickup':
         return 3 + offset;
       case 'delivering_by_courier':
-        return isCdekCourier ? 4 + offset : 3 + offset;
+        return isCdekCourier ? 3 + offset : 2 + offset;
       case 'delivered':
         return (isCdekCourier ? 6 : 5) + offset; // Вручен
       default:

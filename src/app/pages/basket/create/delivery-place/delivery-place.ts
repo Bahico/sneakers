@@ -183,7 +183,7 @@ export class DeliveryPlace implements OnDestroy {
     this.radius_meter.set(Math.round(radius));
   }
 
-  onMapClick(e: YaEvent<ymaps.Map>): void {
+  async onMapClick(e: YaEvent<ymaps.Map>) {
     if (this.delivery_type() !== 'cdek_courier') {
       return;
     }
@@ -192,16 +192,22 @@ export class DeliveryPlace implements OnDestroy {
     if (!this.locationData()) {
       const coords = event.get('coords');
 
+      const res = await ymaps.geocode(coords);
+
+      const firstGeoObject = res.geoObjects.get(0);
+      const address = firstGeoObject.properties.get('name') + ' ' + firstGeoObject.properties.get('description');
+
       this.setLocation({
         lat: coords[0].toPrecision(6),
-        lon: coords[1].toPrecision(6)
+        lon: coords[1].toPrecision(6),
+        address: address
       });
     } else {
       this.setLocation();
     }
   }
 
-  setLocation(data?: { lat: number, lon: number }) {
+  setLocation(data?: { lat: number, lon: number; address: string }) {
     this.form().controls.delivery_data.setValue(data);
   }
 }

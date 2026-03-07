@@ -19,7 +19,7 @@ export class ReferralCreate {
 
   form = new FormGroup({
     name: new FormControl(null, [Validators.required, Validators.minLength(6)]),
-    code: new FormControl(null, [Validators.required, Validators.minLength(6)]),
+    // code: new FormControl(null, [Validators.required, Validators.minLength(6)]),
   })
 
   onSubmit() {

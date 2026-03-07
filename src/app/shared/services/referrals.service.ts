@@ -17,7 +17,7 @@ export class ReferralsService {
     return this.http.get<ReferralLink[]>(`${this.endpoint}/my-links`);
   }
 
-  generateLink(payload: {name: string; code: string}) {
+  generateLink(payload: {name: string}) {
     return this.http.post<ReferralLink>(`${this.endpoint}/generate`, payload);
   }
 }

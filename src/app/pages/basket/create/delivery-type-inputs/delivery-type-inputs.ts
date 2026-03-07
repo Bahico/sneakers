@@ -75,6 +75,9 @@ export class DeliveryTypeInputs implements OnDestroy {
           } case 'russian_post': {
             this.suggestionSearch.set(data?.['address']);
             break;
+          } case 'cdek_courier': {
+            this.formService.courier.address = data?.['address'];
+            break;
           }
         }
       })
