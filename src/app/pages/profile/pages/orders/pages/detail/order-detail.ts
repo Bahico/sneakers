@@ -198,7 +198,7 @@ export default class OrderDetail {
     }
     const waitingDay = new Date(detail.waiting_day);
     const today = new Date();
-    const waitingDays = Math.ceil((waitingDay.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+    const waitingDays = Math.ceil((today.getTime() - waitingDay.getTime()) / (1000 * 60 * 60 * 24));
     return waitingDays > 0 ? waitingDays : 0;
   });
 
