@@ -257,7 +257,6 @@ export default class BasketCreate {
         .subscribe(res => {
           if (res?.success) {
             this.openPaymentModal(res.payment.payment_url);
-            this.cartService.loadCart();
           }
         })
     }
@@ -279,6 +278,7 @@ export default class BasketCreate {
       const polling = setInterval(() => {
         if (newWindow.closed) {
           clearInterval(polling);
+          this.cartService.loadCart();
           this.router.navigate(['/profile', 'orders']);
         }
       }, 500);
@@ -306,6 +306,7 @@ export default class BasketCreate {
       customer_no_middle_name: !passport.f_name,
       customer_passport_series: passport.passport_series,
       customer_passport_number: passport.passport_number,
+      customer_inn: passport.inn,
       customer_passport_issue_date: passport.date_of_give,
     };
   }

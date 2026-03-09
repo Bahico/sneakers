@@ -13,6 +13,7 @@ export interface PaymentModel {
   customer_no_middle_name: boolean;
   customer_passport_series: string;
   customer_passport_number: string;
+  customer_inn: string;
   customer_passport_issue_date: string;
   use_split_payment: boolean;
   referral_code: string;

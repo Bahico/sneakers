@@ -12,6 +12,7 @@ export interface OrderItem {
 
 export interface OrderListDetailModel {
   id: string;
+  delivery_track_number: string;
   order_number: string;
   delivery_data: any;
   delivery_type: DeliveryType;
@@ -81,6 +82,7 @@ export interface OrderDetailModel {
   second_payment_completed: boolean;
   delivery_type: DeliveryType;
   delivery_data: any;
+  delivery_track_number: string;
   customer_first_name: string;
   customer_last_name: string;
   customer_middle_name: string;

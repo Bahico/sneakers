@@ -52,10 +52,10 @@
       <div class="flex gap-2 items-center justify-between">
         <div
           class="sn-control flex gap-2 items-center justify-between"
-          [cdkCopyToClipboard]="detail()?.delivery_data?.value"
+          [cdkCopyToClipboard]="detail()?.delivery_track_number"
           (cdkCopyToClipboardCopied)="copyCdekNumber()"
         >
-          <span>{{ detail()?.delivery_data?.value }}</span>
+          <span>{{ detail()?.delivery_track_number }}</span>
           @if (copySuccess()) {
             <svg-icon key="checked" size="md"/>
           } @else {
