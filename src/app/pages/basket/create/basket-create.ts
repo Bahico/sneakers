@@ -279,6 +279,7 @@ export default class BasketCreate {
         if (newWindow.closed) {
           clearInterval(polling);
           this.cartService.loadCart();
+          this.authService.getCoins(true);
           this.router.navigate(['/profile', 'orders']);
         }
       }, 500);
