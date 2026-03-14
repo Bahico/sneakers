@@ -1,4 +1,4 @@
-import {afterNextRender, Component, inject} from '@angular/core';
+import {afterNextRender, Component, inject, ViewEncapsulation} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
 import Navbar from './layout/navbar/navbar';
 import Footer from './layout/footer/footer';
@@ -7,13 +7,14 @@ import {CartService} from '@/services/cart.service';
 import {AccountStore} from '@/account';
 import {forkJoin, mergeMap} from 'rxjs';
 import {TokenStore} from '@/token';
-import { FavoritesService } from './shared/services/favorites.service';
+import {FavoritesService} from '@/services/favorites.service';
 
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, Navbar, Footer, TuiRoot],
   templateUrl: './app.html',
-  styleUrl: './app.scss'
+  styleUrl: './app.scss',
+  encapsulation: ViewEncapsulation.None
 })
 export class App {
   private readonly cartService = inject(CartService);

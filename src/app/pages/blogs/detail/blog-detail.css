@@ -1,0 +1,29 @@
+.blog-body h1 {
+  font-weight: 600;
+  font-size: 1.875rem; /* text-3xl */
+}
+
+.blog-body h2 {
+  font-weight: 600;
+  font-size: 1.5rem; /* text-2xl */
+}
+
+.blog-body h3 {
+  font-weight: 600;
+  font-size: 1.25rem; /* text-xl */
+}
+
+.blog-body h4 {
+  font-weight: 600;
+  font-size: 1.125rem; /* text-lg */
+}
+
+.blog-body h5 {
+  font-weight: 600;
+  font-size: 1rem; /* text-base */
+}
+
+.blog-body h6 {
+  font-weight: 600;
+  font-size: 0.875rem; /* text-sm */
+}

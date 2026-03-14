@@ -5,5 +5,5 @@
 }
 
 .meet-team-image {
-  @apply w-5 md:w-10 h-5 md:h-10 rounded-full;
+  @apply w-5 md:w-10 h-5 md:h-10;
 }

@@ -39,7 +39,7 @@
   <span class="text-sm md:text-base font-semibold">{{ detail().price | tuiFormatNumber | async }} p.</span>
   <div
     class="flex gap-0.5 items-center"
-    [class.hidden]="onHome()"
+    [class.hidden]="onHome() || detail().price >= 20000"
   >
     <span
       class="py-0.5 px-1 bg-primary/80 rounded text-white text-xs">{{ detail().price / 2 | tuiFormatNumber | async }} p. x 2</span>

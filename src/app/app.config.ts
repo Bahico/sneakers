@@ -1,5 +1,5 @@
 import {ApplicationConfig, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection} from '@angular/core';
-import {provideRouter, withInMemoryScrolling} from '@angular/router';
+import {provideRouter, withComponentInputBinding, withInMemoryScrolling} from '@angular/router';
 
 import routes from './pages/routes';
 import {provideHttpClient, withInterceptors} from '@angular/common/http';
@@ -21,6 +21,7 @@ export const appConfig: ApplicationConfig = {
     provideZonelessChangeDetection(),
     provideRouter(
       routes,
+      withComponentInputBinding(),
       withInMemoryScrolling({
         scrollPositionRestoration: 'top',
       })

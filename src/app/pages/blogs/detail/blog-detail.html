@@ -1,10 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<div class="w-full max-md:container xl:container mb-10 px-0!">
+  <tui-breadcrumbs class="mb-4 hidden! md:block!">
+    <a *tuiItem tuiLink [routerLink]="['/']">Главная</a>
+    <a *tuiItem tuiLink [routerLink]="['/blogs']">Блог</a>
+    @if (blogResource.value(); as blog) {
+      <a *tuiItem tuiLink class="truncate text-primary!">{{ blog.title }}</a>
+    }
+  </tui-breadcrumbs>
+
+  @if (blogResource.isLoading()) {
+    <div class="flex flex-col gap-4 animate-pulse">
+      <div class="h-8 bg-gray-200 rounded w-3/4"></div>
+      <div class="h-4 bg-gray-200 rounded w-1/4"></div>
+      <div class="w-full aspect-video bg-gray-200 rounded-2xl"></div>
+      <div class="flex flex-col gap-2">
+        <div class="h-4 bg-gray-200 rounded w-full"></div>
+        <div class="h-4 bg-gray-200 rounded w-full"></div>
+        <div class="h-4 bg-gray-200 rounded w-2/3"></div>
+      </div>
+    </div>
+  } @else if (blogResource.error()) {
+    <div class="rounded-2xl border border-red-200 bg-red-50 text-red-700 p-6 text-center">
+      Не удалось загрузить статью. Попробуйте позже.
+    </div>
+  } @else if (blogResource.value(); as blog) {
+    @if (blog) {
+      <article class="flex flex-col gap-6">
+        <header class="flex flex-col gap-2">
+          <h1 class="text-2xl md:text-[40px] font-semibold leading-tight text-[#222222]">{{ blog.title }}</h1>
+          <time class="text-gray-500 text-sm" [attr.datetime]="blog.created_at">{{ blog.created_at | date: 'longDate' }}</time>
+        </header>
+
+        @if (blog.image_url) {
+          <div class="w-full rounded-2xl overflow-hidden bg-gray-100">
+            <img
+              [src]="blog.image_url"
+              [alt]="blog.title"
+              class="w-full aspect-video object-cover"
+            />
+          </div>
+        }
+
+        <div class="blog-body text-base leading-[1.25] text-[#222222]" [innerHTML]="blog.body"></div>
+      </article>
+    } @else {
+      <div class="rounded-2xl border border-gray-200 bg-gray-50 text-gray-600 p-6 text-center">
+        Статья не найдена.
+      </div>
+    }
+  }
+</div>

@@ -34,7 +34,7 @@ import { FavoritesService } from '@/services/favorites.service';
     RouterLinkActive
   ],
   host: {
-    class: 'flex w-full justify-center'
+    class: 'flex w-full justify-center sticky top-0 left-0 right-0 z-10 bg-white'
   }
 })
 export default class Navbar {

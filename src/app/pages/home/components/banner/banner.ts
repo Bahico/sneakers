@@ -27,7 +27,7 @@ import {BannerTelegram} from '@/home/components/banner/telegram/banner-telegram'
 export class Banner {
   activeIndex = signal(0);
 
-  slides = ['guarantee-original', 'meet-team', 'real-rate', 'split', 'telegram'] as const;
+  slides = ['meet-team', 'split', 'guarantee-original', 'telegram', 'real-rate'] as const;
 
   protected readonly disablePrevious = computed(() => this.activeIndex() === 0);
   protected readonly disableNext = computed(() => this.activeIndex() === this.slides.length - 1);
@@ -38,5 +38,5 @@ export class Banner {
 
   next() {
     this.activeIndex.update(index => index < this.slides.length - 1 ? index + 1 : 0);
-  } 
+  }
 }

@@ -34,5 +34,9 @@ export default [
   {
     path: 'favorites',
     loadComponent: () => import('./favorites/favorites')
+  },
+  {
+    path: 'blogs',
+    loadChildren: () => import('./blogs/blogs.routes'),
   }
 ] satisfies Routes;
