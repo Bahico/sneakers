@@ -10,7 +10,7 @@ export class BlogService {
   private readonly endpoint = getEndpoint('blog');
 
   query(params: {q?: string; page: number; size: number;}) {
-    return this.http.get<{items: Blog[]; total: number; pages: number; size: number}>(this.endpoint, {params: params});
+    return this.http.get<{items: Blog[]; total: number; pages: number; size: number}>(this.endpoint + '/', {params: params});
   }
 
   detail(slug: string) {
