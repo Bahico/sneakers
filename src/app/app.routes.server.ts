@@ -21,4 +21,8 @@ export const serverRoutes: ServerRoute[] = [
     path: 'profile/orders/:id',
     renderMode: RenderMode.Client
   },
+  {
+    path: 'blogs/:slug',
+    renderMode: RenderMode.Client
+  },
 ];
