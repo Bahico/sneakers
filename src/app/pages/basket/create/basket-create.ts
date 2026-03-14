@@ -278,7 +278,7 @@ export default class BasketCreate {
       const polling = setInterval(() => {
         if (newWindow.closed) {
           clearInterval(polling);
-          this.cartService.loadCart();
+          this.cartService.loadCart(true);
           this.authService.getCoins(true);
           this.router.navigate(['/profile', 'orders']);
         }
