@@ -29,6 +29,7 @@ import {Gender} from '@/models/gender';
 import {combineLatest, debounceTime, filter, of, Subject, takeUntil} from 'rxjs';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {ProductFilterStore} from '@/product/filter/product-filter-store';
+import { ProductCategories } from '@/product/filter/components/categories/product-categories';
 
 @Component({
   selector: 'product-filter',
@@ -52,7 +53,8 @@ import {ProductFilterStore} from '@/product/filter/product-filter-store';
     TuiRadioComponent,
     TuiDropdown,
     TuiObscured,
-    TuiActiveZone
+    TuiActiveZone,
+    ProductCategories
   ]
 })
 export default class ProductFilter implements OnInit, OnDestroy {
@@ -63,16 +65,18 @@ export default class ProductFilter implements OnInit, OnDestroy {
   private readonly destroyRef = inject(DestroyRef);
   private readonly platformId = inject(PLATFORM_ID);
 
-  protected readonly items = PRODUCT_FILTER_BREAD_CRUMBS;
-  protected readonly throttle = 10;
+  protected breadCrumbs = [...PRODUCT_FILTER_BREAD_CRUMBS];
+  protected readonly throttle = 200;
   protected readonly scrollDistance = 2;
   protected readonly sorts = SORT;
 
+  protected readonly caption = signal('');
+  protected readonly genderName = signal('');
   protected readonly currentPage = signal(1);
   protected readonly openFilter = signal(false);
 
   private fullPath: string[] = [];
-  private gender: Gender = 'male';
+  private gender$ = signal<Gender>('male');
   protected readonly search = signal('');
   protected readonly sortOpen = signal(false);
   protected readonly timeStable = signal(false);
@@ -157,8 +161,9 @@ export default class ProductFilter implements OnInit, OnDestroy {
   }
 
   loadCategory(segments: UrlSegment[]) {
-    this.gender = <Gender>this.route.snapshot.params['gender'];
+    this.gender$.set(<Gender>this.route.snapshot.params['gender']);
     this.fullPath = segments?.map(s => s.path);
+    this.updateBreadcrumbs();
 
     this.getBrands();
     this.getSizeTables();
@@ -183,8 +188,8 @@ export default class ProductFilter implements OnInit, OnDestroy {
     const filter = {
       page: this.currentPage(),
       limit: 20,
-      category_slug: this.fullPath.join('/'),
-      fit: this.gender?.toUpperCase(),
+      category_slug: this.genderCategory,
+      fit: this.genderApposite?.toUpperCase(),
       ...rawFilter,
       min_max_price: Array.isArray(rawFilter.min_max_price) ? rawFilter.min_max_price : [],
       sizes: Array.isArray(rawFilter.sizes) ? rawFilter.sizes : [],
@@ -199,6 +204,48 @@ export default class ProductFilter implements OnInit, OnDestroy {
     }
 
     return filter
+  }
+
+  get genderCategory() {
+    return this.gender + '/' + this.fullPath.join('/');
+  }
+
+  get gender() {
+    const gender = this.gender$();
+    return ((gender === 'male' || gender === 'men') ? 'men' : gender === 'female' || gender === 'women' ? 'women' : 'products');
+  }
+
+  get genderApposite() {
+    const gender = this.gender$();
+    return ((gender === 'male' || gender === 'men') ? 'male' : gender === 'female' || gender === 'women' ? 'female' : 'unisex');
+  }
+
+  private updateBreadcrumbs() {
+    const gender = this.gender$();
+
+    const genderCaptionMap: Record<Gender, string> = {
+      male: 'Мужское',
+      men: 'Мужское',
+      female: 'Женское',
+      women: 'Женское',
+      child: 'Детское',
+      unisex: 'Унисекс',
+    };
+
+    const typeCaptionMap: Record<string, string> = {
+      accessories: 'Аксессуары',
+      footwear: 'Обувь',
+      apparel: 'Одежда',
+    };
+
+    const typeSlug = this.fullPath.find((segment) =>
+      ['accessories', 'footwear', 'apparel'].includes(segment),
+    );
+
+    this.caption.set(typeSlug
+      ? typeCaptionMap[typeSlug] ?? (typeSlug.charAt(0).toUpperCase() + typeSlug.slice(1))
+      : '');
+    this.genderName.set(genderCaptionMap[gender]);
   }
 
   nextPage() {
@@ -218,7 +265,7 @@ export default class ProductFilter implements OnInit, OnDestroy {
     this.productService
       .brands({
         limit: 100,
-        category_slug: this.fullPath.join('/')
+        category_slug: this.genderCategory
       })
       // Use takeUntilDestroyed only - won't be cancelled by filter changes
       .pipe(takeUntilDestroyed(this.destroyRef))

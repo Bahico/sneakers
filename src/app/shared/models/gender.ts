@@ -1,1 +1,1 @@
-export type Gender = 'male' | 'female' | 'unisex' | 'child';
+export type Gender = 'male' | 'female' | 'unisex' | 'child' | 'men' | 'women';

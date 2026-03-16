@@ -1,0 +1,30 @@
+@if (categories.isLoading()) {
+<div class="text-sm text-gray-500">Loading categories...</div>
+}
+
+@if (categories.error(); as error) {
+<div class="text-sm text-red-500">Failed to load categories.</div>
+}
+
+@if (categories.value(); as list) {
+@if (list.length > 0) {
+<div class="flex overflow-x-auto gap-4 max-w-full pb-2">
+  @for (category of list; track category.id) {
+  <div 
+    class="min-w-30 w-30 h-30 bg-[#F9F9F9] rounded-2xl text-gray-800 flex flex-col items-center justify-center text-center gap-2 cursor-pointer"
+    routerLink="/product/{{category.full_slug}}"
+  >
+    <img 
+      style="mix-blend-mode: multiply;" 
+      [src]="category.image_url" 
+      alt="{{ category.name }}"
+      class="w-full h-15 object-contain"
+    >
+    <span class="text-sm text-gray-800">
+      {{ category.name }}
+    </span>
+  </div>
+  }
+</div>
+}
+}

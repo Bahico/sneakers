@@ -1,10 +1,11 @@
-import {inject, Injectable, signal} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {getEndpoint} from '@/get-endpoint';
-import {ProductListDetailModel, ProductListModel, ProductModel} from '@/models/product.model';
-import {tap} from 'rxjs';
-import {Brand} from '@/models/brand';
-import {SizeTable} from '@/models/size-table.model';
+import { getEndpoint } from '@/get-endpoint';
+import { Brand } from '@/models/brand';
+import { CategoryListDetailModel } from '@/models/category';
+import { ProductListDetailModel, ProductListModel, ProductModel } from '@/models/product.model';
+import { SizeTable } from '@/models/size-table.model';
+import { HttpClient } from '@angular/common/http';
+import { inject, Injectable, signal } from '@angular/core';
+import { tap } from 'rxjs';
 
 @Injectable({providedIn: 'root'})
 export class ProductService {
@@ -44,5 +45,9 @@ export class ProductService {
 
   sizes(query: {category_slug: string; brand_id?: string}) {
     return this.http.get<{size_table: SizeTable[]}>(getEndpoint('products/filters/sizes'), {params: query});
+  }
+
+  categories(query: {parent_slug: string}) {
+    return this.http.get<CategoryListDetailModel[]>(getEndpoint('categories/'), {params: query});
   }
 }
