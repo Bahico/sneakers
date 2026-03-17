@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, computed, inject} from '@angular/core';
 import {ProductDetailStore} from '@/product/detail/services/product-detail-store';
 import {AsyncPipe} from '@angular/common';
 import {TuiFormatNumberPipe} from '@taiga-ui/core';
@@ -25,6 +25,8 @@ export class ProductDetailName {
 
 
   protected readonly detail = this.productDetailStore.detail;
+  protected readonly data$ = computed(() => this.productDetailStore.selectedSkus() || this.productDetailStore.detail()?.variants?.[0]);
+
 
   openFeedback() {
     if (this.accountStore.account()) {
