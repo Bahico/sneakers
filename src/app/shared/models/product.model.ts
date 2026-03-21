@@ -73,14 +73,15 @@ export interface ProductListDetailModel {
   brand: Brand;
   availability: boolean;
   category: {
-    category1: string;
-    category2: string;
-    category3: string;
+    id: string;
+    full_slug: string;
+    name: string;
   };
   fit: 'MALE' | 'MAN';
   discount: boolean;
   returnable: boolean;
   large_sized: boolean;
+  plashka: boolean;
   shoplaza: boolean;
   is_favorite: boolean;
   price: number;

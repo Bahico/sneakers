@@ -76,4 +76,11 @@ export class ProductDetailSize {
       ).subscribe()
     }
   }
+
+  getSizeValue(value: string) {
+    if (value.includes('(')) {
+      return value.split('(')[1].replace(')', '');
+    }
+    return value;
+  }
 }

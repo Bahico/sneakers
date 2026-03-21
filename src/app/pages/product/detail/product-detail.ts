@@ -1,6 +1,6 @@
 import {
   afterNextRender,
-  Component,
+  Component, computed,
   DestroyRef,
   inject,
   Injector,
@@ -51,6 +51,10 @@ export default class ProductDetail implements OnDestroy, OnInit {
   protected readonly productDetailStore = inject(ProductDetailStore);
   private readonly injector = inject(Injector);
   private readonly platformId = inject(PLATFORM_ID);
+
+  protected readonly detail = this.productDetailStore.detail;
+  protected readonly fitName = computed(() => this.detail().fit === 'MALE' ? 'Мужское' : 'Женское');
+  protected readonly categoryLink = computed(() => ['/product', ...(this.detail().category?.full_slug?.split('/') || [])]);
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {

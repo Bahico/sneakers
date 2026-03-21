@@ -5,7 +5,7 @@
   <div class="flex justify-between">
     <span [class.hidden]="!onHome()"></span>
     <span
-      [class.hidden]="onHome()"
+      [class.hidden]="onHome() || !detail().plashka"
       class="px-1 md:px-2 flex items-center h-4 md:h-6 text-[9px] md:text-xs rounded-xl bg-orange-500 text-white"
     >
       Быстро разбирают
@@ -34,7 +34,7 @@
 
 <div>
   <h4 class="truncate md:text-lg font-semibold">{{ detail().brand.name }}</h4>
-  <h4 class="text-xs md:text-sm text-gray-400 truncate mb-2">{{ detail().name }}</h4>
+  <h4 class="text-xs md:text-sm text-gray-400 truncate mb-2">{{detail().category.name}} {{ detail().name }}</h4>
 
   <span class="text-sm md:text-base font-semibold">{{ detail().price | tuiFormatNumber | async }} p.</span>
   <div

@@ -15,7 +15,7 @@ import {TuiActiveZone, TuiItem, TuiObscured} from '@taiga-ui/cdk';
 import {ActivatedRoute, Router, RouterLink, UrlSegment} from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {IconComponent} from '@/components/icon/icon';
-import {PRODUCT_FILTER_BREAD_CRUMBS, SORT} from '@/product/filter/product-filter.constans';
+import {SORT} from '@/product/filter/product-filter.constans';
 import {ProductListDetailModel} from '@/models/product.model';
 import {ProductService} from '@/services/product.service';
 import {ProductListDetail} from '@/components/product-list-detail/product-list-detail';
@@ -29,7 +29,7 @@ import {Gender} from '@/models/gender';
 import {combineLatest, debounceTime, filter, of, Subject, takeUntil} from 'rxjs';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {ProductFilterStore} from '@/product/filter/product-filter-store';
-import { ProductCategories } from '@/product/filter/components/categories/product-categories';
+import {ProductCategories} from '@/product/filter/components/categories/product-categories';
 
 @Component({
   selector: 'product-filter',
@@ -65,7 +65,6 @@ export default class ProductFilter implements OnInit, OnDestroy {
   private readonly destroyRef = inject(DestroyRef);
   private readonly platformId = inject(PLATFORM_ID);
 
-  protected breadCrumbs = [...PRODUCT_FILTER_BREAD_CRUMBS];
   protected readonly throttle = 200;
   protected readonly scrollDistance = 2;
   protected readonly sorts = SORT;
@@ -191,7 +190,8 @@ export default class ProductFilter implements OnInit, OnDestroy {
       category_slug: this.genderCategory,
       fit: this.genderApposite?.toUpperCase(),
       ...rawFilter,
-      min_max_price: Array.isArray(rawFilter.min_max_price) ? rawFilter.min_max_price : [],
+      min_price: rawFilter.min_max_price?.[0],
+      max_price: rawFilter.min_max_price?.[1],
       sizes: Array.isArray(rawFilter.sizes) ? rawFilter.sizes : [],
       brand_ids: Array.isArray(rawFilter.brand_ids) ? rawFilter.brand_ids : [],
       search: this.search()

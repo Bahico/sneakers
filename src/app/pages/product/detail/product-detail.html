@@ -3,16 +3,31 @@
       <a
         *tuiItem
         tuiLink
-        [routerLink]="['/product', productDetailStore.detail().fit?.toLowerCase(), productDetailStore.detail().category?.full_slug]"
+        routerLink="/"
       >
-        В каталог
+        Главная
+      </a>
+      <a
+        *tuiItem
+        tuiLink
+        class="truncate"
+        [routerLink]="categoryLink()"
+      >
+        {{ detail().category?.name }}
+      </a>
+      <a
+        *tuiItem
+        tuiLink
+        class="truncate"
+      >
+        {{ fitName() }}
       </a>
       <a
         *tuiItem
         tuiLink
         class="truncate text-primary!"
       >
-        {{ productDetailStore.detail().name }}
+        {{ detail().name }}
       </a>
   </tui-breadcrumbs>
 
@@ -22,7 +37,7 @@
       style="align-self: flex-start;"
     />
 
-    <div class="w-full md:w-[380px] md:bg-secondary rounded-2xl py-4 px-5">
+    <div class="w-full md:w-95 md:bg-secondary rounded-2xl py-4 px-5">
       <product-detail-name />
       <product-detail-size />
       <product-detail-order />
