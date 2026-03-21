@@ -25,6 +25,8 @@ export class ProductDetailName {
 
 
   protected readonly detail = this.productDetailStore.detail;
+  protected readonly data$ = computed(() => this.productDetailStore.selectedSkus() || this.productDetailStore.detail()?.variants?.[0]);
+
 
   protected readonly percentage = computed(() => this.detail().price / 100 * 2 || 0);
 
