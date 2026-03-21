@@ -45,8 +45,8 @@ export default class ProfileEdit {
   readonly maxDate = signal<TuiDay | null>(null);
 
   profileForm = new FormGroup({
-    email: new FormControl<string | null>(null),
-    phone: new FormControl<string | null>(null)
+    email: new FormControl<string | null>(null, Validators.required),
+    phone: new FormControl<string | null>(null, Validators.required)
   });
 
   passportForm = new FormGroup({
@@ -112,8 +112,6 @@ export default class ProfileEdit {
   }
 
   onSave() {
-    console.log(this.profileForm.invalid, this.passportForm.invalid);
-    
     if (this.profileForm.invalid || this.passportForm.invalid) {
       this.profileForm.markAllAsTouched();
       this.passportForm.markAllAsTouched();
@@ -125,7 +123,7 @@ export default class ProfileEdit {
     this.success.set(false);
 
     const profileData: Partial<UpdateUserProfileDto> = {
-      // email: this.profileForm.value.email || undefined,
+      email: this.profileForm.value.email || undefined,
       phone: this.profileForm.value.phone || undefined,
       first_name: this.passportForm.value.name || undefined,
       last_name: this.passportForm.value.surname || undefined,

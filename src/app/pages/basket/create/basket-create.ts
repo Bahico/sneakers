@@ -91,10 +91,8 @@ export default class BasketCreate {
   });
 
   profileForm = new FormGroup({
-    email: new FormControl<string | null>(null),
-    phone: new FormControl<string | null>(null, Validators.required),
-    first_name: new FormControl<string | null>(null),
-    last_name: new FormControl(null),
+    email: new FormControl<string | null>(null, Validators.required),
+    phone: new FormControl<string | null>(null, Validators.required)
   });
 
   passportForm = new FormGroup({
@@ -325,6 +323,8 @@ export default class BasketCreate {
     const profileData = {
       email: this.profileForm.value.email || undefined,
       phone: this.profileForm.value.phone || undefined,
+      first_name: this.passportForm.value.name || undefined,
+      last_name: this.passportForm.value.surname || undefined,
     };
 
     const passportData = <PassportData>this.passportForm.getRawValue();

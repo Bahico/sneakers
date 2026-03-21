@@ -114,14 +114,12 @@
           </div>
         </div>
 
-        @if (profileForm.controls.email.value) {
-          <div class="sn-control col-span-2 w-full">
+        <div class="sn-control col-span-2 w-full">
             <span class="sn-control-icon">
               {{ '@' }}
             </span>
-            <input type="text" formControlName="email" placeholder="Email" [readOnly]="true">
-          </div>
-        }
+          <input type="email" formControlName="email" placeholder="Email">
+        </div>
 
       </form>
 

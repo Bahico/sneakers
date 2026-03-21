@@ -10,14 +10,12 @@
   <div class="flex flex-col md:flex-row justify-between w-full gap-10">
     <div class="flex flex-col gap-4 w-full md:max-w-150">
       <form [formGroup]="profileForm" class="flex flex-col gap-4">
-        @if (profileForm.controls.email.value) {
-          <div class="sn-control w-full">
+        <div class="sn-control w-full">
             <span class="sn-control-icon">
               {{ '@' }}
             </span>
-            <input type="text" formControlName="email" placeholder="Email" readonly>
-          </div>
-        }
+          <input type="email" formControlName="email" placeholder="Email">
+        </div>
         <div class="flex gap-2">
           <div class="sn-control w-20! h-10">
             <img
@@ -117,7 +115,8 @@
             >
           </div>
 
-          <app-date class="col-span-2" formControlName="date_of_give" [maxDate]="maxDate()" placeholder="Дата выдачи паспорта" />
+          <app-date class="col-span-2" formControlName="date_of_give" [maxDate]="maxDate()"
+                    placeholder="Дата выдачи паспорта"/>
         </div>
       </form>
 
