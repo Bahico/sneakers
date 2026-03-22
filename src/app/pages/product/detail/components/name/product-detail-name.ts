@@ -28,7 +28,7 @@ export class ProductDetailName {
   protected readonly data$ = computed(() => this.productDetailStore.selectedSkus() || this.productDetailStore.detail()?.variants?.[0]);
 
 
-  protected readonly percentage = computed(() => this.detail().price / 100 * 2 || 0);
+  protected readonly percentage = computed(() => this.data$().price / 100 * 2 || 0);
 
   openFeedback() {
     if (this.accountStore.account()) {
