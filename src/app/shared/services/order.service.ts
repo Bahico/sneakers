@@ -1,4 +1,4 @@
-import {inject, Injectable} from '@angular/core';
+import {inject, Injectable, signal} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {getEndpoint} from '@/get-endpoint';
 import {PaymentModel, PaymentRes} from '@/models/basket';
@@ -10,12 +10,14 @@ export class OrderService {
 
   private readonly endpoint = getEndpoint('orders/payment');
 
+  readonly search = signal<string>('');
+
   payment(data: PaymentModel) {
     return this.http.post<PaymentRes>(this.endpoint + '/', data);
   }
 
   payFull(id: string) {
-    return this.http.get<PaymentRes>(`${this.endpoint}/${id}/second-payment/`);
+    return this.http.post<PaymentRes>(`${this.endpoint}/${id}/second-payment`, {order_id: id});
   }
 
   checkPromocode(data: {promocode: string; product_id?: string}) {

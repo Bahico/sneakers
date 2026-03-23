@@ -7,6 +7,7 @@ import {ProfileMenu} from '@/profile/components/menu/profile-menu';
 import {IconComponent} from '@/components/icon/icon';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {Subject, takeUntil} from 'rxjs';
+import {OrderService} from '@/services/order.service';
 
 @Component({
   templateUrl: 'orders.html',
@@ -27,8 +28,9 @@ import {Subject, takeUntil} from 'rxjs';
 export default class Orders {
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
+  private readonly orderService = inject(OrderService);
 
-  search = signal<string>('');
+  search = this.orderService.search;
 
   private readonly destroy$ = new Subject<void>();
 
@@ -51,6 +53,8 @@ export default class Orders {
   }
 
   navigateOrder(): void {
-    this.router.navigateByUrl(`/profile/orders/${this.search()}`);
+    if (this.search()) {
+      this.router.navigateByUrl(`/profile/orders/${this.search()}`);
+    }
   }
 }

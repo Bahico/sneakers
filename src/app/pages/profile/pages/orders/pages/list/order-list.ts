@@ -1,4 +1,4 @@
-import {afterNextRender, Component, DestroyRef, inject, signal} from '@angular/core';
+import {afterNextRender, Component, computed, DestroyRef, inject, signal} from '@angular/core';
 import {OrderService} from '@/services/order.service';
 import {OrderListDetailModel} from '@/models/order';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
@@ -16,6 +16,11 @@ export default class OrderList {
   private readonly destroyRef = inject(DestroyRef);
 
   protected readonly orders = signal<OrderListDetailModel[]>([]);
+  protected readonly ordersForView = computed(() =>
+    this.orderService.search() ?
+    this.orders().filter(item => item.order_number.includes(this.orderService.search())) :
+      this.orders()
+  );
 
   constructor() {
     afterNextRender(() => {

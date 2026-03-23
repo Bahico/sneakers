@@ -232,7 +232,7 @@ export default class OrderDetail {
   }
 
   payFull() {
-    this.orderService.payFull(this.detail()?.id).subscribe(res => {
+    this.orderService.payFull(this.detail()?.order_number).subscribe(res => {
       if (res?.success) {
         this.openPaymentModal(res.payment.payment_url);
       }

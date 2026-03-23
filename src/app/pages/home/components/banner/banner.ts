@@ -1,23 +1,12 @@
-import { MeetTeam } from '@/home/components/banner/meet-team/meet-team';
-import { BannerRealRate } from '@/home/components/banner/real-rate/banner-real-rate';
-import { BannerSplit } from '@/home/components/banner/split/banner-split';
-import { BannerTelegram } from '@/home/components/banner/telegram/banner-telegram';
-import { BannerService } from '@/services/banner.service';
-import { Component, inject, signal } from "@angular/core";
-import { rxResource } from '@angular/core/rxjs-interop';
-import { map } from 'rxjs';
-import { GuaranteeOriginal } from './guarantee-original/guarantee-original';
+import {BannerService} from '@/services/banner.service';
+import {Component, inject, signal} from "@angular/core";
+import {rxResource} from '@angular/core/rxjs-interop';
+import {map} from 'rxjs';
 
 @Component({
   templateUrl: 'banner.html',
   selector: 'banner',
-  imports: [
-    GuaranteeOriginal,
-    MeetTeam,
-    BannerRealRate,
-    BannerSplit,
-    BannerTelegram
-  ],
+  imports: [],
   styles: [
     `
       .slider-wrapper {
