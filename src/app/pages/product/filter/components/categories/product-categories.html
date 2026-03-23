@@ -1,30 +1,56 @@
 @if (categories.isLoading()) {
-<div class="text-sm text-gray-500">Loading categories...</div>
+  <div class="text-sm text-gray-500">Loading categories...</div>
 }
 
 @if (categories.error(); as error) {
-<div class="text-sm text-red-500">Failed to load categories.</div>
+  <div class="text-sm text-red-500">Failed to load categories.</div>
 }
 
 @if (categories.value(); as list) {
-@if (list.length > 0) {
-<div class="flex overflow-x-auto gap-4 max-w-full pb-2">
-  @for (category of list; track category.id) {
-  <div 
-    class="min-w-20 w-20 h-20 bg-[#F9F9F9] rounded-2xl text-gray-800 flex flex-col items-center justify-center text-center gap-2 cursor-pointer"
-    routerLink="/product/{{category.full_slug}}"
-  >
-    <img 
-      style="mix-blend-mode: multiply;" 
-      [src]="category.image_url" 
-      alt="{{ category.name }}"
-      class="w-full h-8 object-contain"
-    >
-    <span class="text-xs text-gray-800">
-      {{ category.name }}
-    </span>
-  </div>
+  @if (list.length > 0) {
+    <div class="flex">
+      <button
+        type="button"
+        (click)="previous()"
+        class="min-h-full shrink-0 bg-white items-center justify-center hidden md:flex text-2xl cursor-pointer max-w-0 min-w-0 duration-300 overflow-hidden"
+        aria-label="Scroll categories left"
+        [class.max-w-8]="canScrollPrev()"
+        [class.min-w-8]="canScrollPrev()"
+      >
+        <i class="fa fa-angle-left" aria-hidden="true"></i>
+      </button>
+
+      <div #scrollContainer (scroll)="updateScrollState()"
+           class="flex overflow-x-auto overflow-y-hidden max-w-full pb-2 hidden-scrollbar flex-1 min-w-0">
+        <div #scrollContent class="flex gap-4 w-max min-w-min">
+          @for (category of list; track category.id) {
+            <div
+              class="min-w-20 w-20 h-20 shrink-0 bg-[#F9F9F9] rounded-2xl text-gray-800 flex flex-col items-center justify-center text-center gap-2 cursor-pointer"
+              routerLink="/product/{{category.full_slug}}"
+            >
+              <img
+                [src]="category.image_url"
+                alt="{{ category.name }}"
+                class="w-full h-8 object-contain mix-blend-multiply"
+              >
+              <span class="text-xs text-gray-800">
+                {{ category.name }}
+              </span>
+            </div>
+          }
+        </div>
+      </div>
+
+      <button
+        type="button" (click)="next()"
+        class="min-h-full shrink-0 bg-white items-center justify-center hidden md:flex text-2xl cursor-pointer max-w-0 min-w-0 duration-300 overflow-hidden"
+        aria-label="Scroll categories right"
+        [class.max-w-8]="canScrollNext()"
+        [class.min-w-8]="canScrollNext()"
+      >
+        <i class="fa fa-angle-right" aria-hidden="true"></i>
+      </button>
+
+    </div>
   }
-</div>
-}
 }

@@ -6,6 +6,7 @@ import { SizeTable } from '@/models/size-table.model';
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { tap } from 'rxjs';
+import {PromoCard} from '@/models/promo-card';
 
 @Injectable({providedIn: 'root'})
 export class ProductService {
@@ -49,5 +50,9 @@ export class ProductService {
 
   categories(query: {parent_slug: string}) {
     return this.http.get<CategoryListDetailModel[]>(getEndpoint('categories/'), {params: query});
+  }
+
+  promoCards() {
+    return this.http.get<{ promo_cards: PromoCard[] }>(getEndpoint('promo_cards'));
   }
 }

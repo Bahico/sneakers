@@ -27,7 +27,7 @@
   <h1 class="text-2xl font-semibold mb-2">{{caption()}}</h1>
 
   <product-categories [parent_slug]="genderCategory"/>
-  
+
   @if (mode() === 'search') {
     <form class="flex w-full py-2 px-2 md:px-4 border-b border-primary justify-between mb-6" (ngSubmit)="initialLoad()">
       <div class="flex gap-2 md:gap-4 items-center w-full">
@@ -145,28 +145,31 @@
         [infiniteScrollThrottle]="throttle"
         (scrolled)="nextPage()"
       >
-        <a href="https://t.me/sneakerteamru" target="_blank" class="cursor-pointer">
-          <img ngSrc="images/product/team.png" alt="" class="w-full object-cover h-76 mb-2 hidden md:block" height="600"
-               width="531">
-          <img ngSrc="images/product/team-sm.png" alt="" class="w-full object-cover min-h-50 h-50 mb-2 md:hidden object-top" height="600"
-               width="531">
+        @for (promoCard of promoCards.value(); track $index) {
+          <a [href]="promoCard.link_url" target="_blank" class="cursor-pointer">
+            <img [src]="promoCard.image" alt="" class="w-full object-cover h-76 mb-2 hidden md:block" height="600"
+                 width="531">
+            <img [src]="promoCard.image" alt="" class="w-full object-cover min-h-50 h-50 mb-2 md:hidden object-top" height="600"
+                 width="531">
 
-          <div>
-            <h4 class="md:text-xl font-semibold mb-2 md:mb-4">Ранний доступ к релизу - только в Telegram</h4>
-            <h4 class="text-xs md:text-sm text-gray-400 truncate mb-2 underline">Перейти в Telegram</h4>
-          </div>
-        </a>
-        <div routerLink="/information/gift-certificate" class="cursor-pointer">
-          <img ngSrc="images/product/give-cert.png" alt="" class="w-full object-cover h-76 mb-2 hidden md:block" height="600"
-               width="531">
-          <img ngSrc="images/product/give-cert-sm.png" alt="" class="w-full object-cover min-h-50 h-50 mb-2 md:hidden object-top" height="600"
-               width="531">
+            <div>
+              <h4 class="md:text-xl font-semibold mb-2 md:mb-4">{{promoCard.title}}</h4>
+              <h4 class="text-xs md:text-sm text-gray-400 truncate mb-2 underline">{{promoCard.link_title}}</h4>
+            </div>
+          </a>
+        }
 
-          <div>
-            <h4 class="md:text-xl font-semibold mb-2 md:mb-4">Подарочный сертификат</h4>
-            <h4 class="text-xs md:text-sm text-gray-400 truncate mb-2 underline">Оформить в 2 клика</h4>
-          </div>
-        </div>
+<!--        <div routerLink="/information/gift-certificate" class="cursor-pointer">-->
+<!--          <img ngSrc="images/product/give-cert.png" alt="" class="w-full object-cover h-76 mb-2 hidden md:block" height="600"-->
+<!--               width="531">-->
+<!--          <img ngSrc="images/product/give-cert-sm.png" alt="" class="w-full object-cover min-h-50 h-50 mb-2 md:hidden object-top" height="600"-->
+<!--               width="531">-->
+
+<!--          <div>-->
+<!--            <h4 class="md:text-xl font-semibold mb-2 md:mb-4">Подарочный сертификат</h4>-->
+<!--            <h4 class="text-xs md:text-sm text-gray-400 truncate mb-2 underline">Оформить в 2 клика</h4>-->
+<!--          </div>-->
+<!--        </div>-->
 
         @for (product of products(); track product.id) {
           <product-list-detail [detail]="product" (detailChange)="detailChange($event, $index)"/>

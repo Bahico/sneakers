@@ -6,29 +6,30 @@
       class="flex transition-transform duration-500 ease-in-out h-40 md:h-60 lg:h-100"
       [style.transform]="'translateX(-' + (activeIndex() * 100) + '%)'"
     >
-      @for (slide of slides; track $index) {
-        <div class="w-full flex-shrink-0">
-          @switch (slide) {
-            @case ('guarantee-original') {
-              <guarantee-original class="w-full" />
-            }
+      @for (banner of banners.value()?.top_banners || []; track $index) {
+        <div class="w-full shrink-0">
+          <img [src]="banner.image_desktop" [alt]="banner.title" class="w-full h-full object-cover rounded-2xl">
+<!--          @switch (slide) {-->
+<!--            @case ('guarantee-original') {-->
+<!--              <guarantee-original class="w-full" />-->
+<!--            }-->
 
-            @case ('meet-team') {
-              <meet-team class="w-full" />
-            }
+<!--            @case ('meet-team') {-->
+<!--              <meet-team class="w-full" />-->
+<!--            }-->
 
-            @case ('real-rate') {
-              <banner-real-rate class="w-full" />
-            }
+<!--            @case ('real-rate') {-->
+<!--              <banner-real-rate class="w-full" />-->
+<!--            }-->
 
-            @case ('split') {
-              <banner-split class="w-full" />
-            }
+<!--            @case ('split') {-->
+<!--              <banner-split class="w-full" />-->
+<!--            }-->
 
-            @case ('telegram') {
-              <banner-telegram class="w-full" />
-            }
-          }
+<!--            @case ('telegram') {-->
+<!--              <banner-telegram class="w-full" />-->
+<!--            }-->
+<!--          }-->
         </div>
       }
     </div>
@@ -37,7 +38,7 @@
 </div>
 
 <div class="flex gap-2 md:gap-4 justify-center py-4 md:py-10 w-full">
-  @for (_ of slides; track $index) {
+  @for (_ of banners.value()?.top_banners || []; track $index) {
     <div
       class="w-14 md:w-20 h-[5.6px] transition-colors duration-300 cursor-pointer"
       [class.bg-gray-300]="activeIndex() !== $index"

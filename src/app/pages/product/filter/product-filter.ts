@@ -26,8 +26,8 @@ import {MobileFilter} from '@/product/filter/components/mobile-filter/mobile-fil
 import {InfiniteScrollDirective} from 'ngx-infinite-scroll';
 import {isPlatformBrowser, NgOptimizedImage} from '@angular/common';
 import {Gender} from '@/models/gender';
-import {combineLatest, debounceTime, filter, of, Subject, takeUntil} from 'rxjs';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {combineLatest, debounceTime, filter, map, of, Subject, takeUntil} from 'rxjs';
+import {rxResource, takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {ProductFilterStore} from '@/product/filter/product-filter-store';
 import {ProductCategories} from '@/product/filter/components/categories/product-categories';
 
@@ -86,6 +86,10 @@ export default class ProductFilter implements OnInit, OnDestroy {
   });
 
   products = signal<ProductListDetailModel[]>([]);
+
+  promoCards = rxResource({
+    stream: () => this.productService.promoCards().pipe(map(data => data.promo_cards))
+  })
 
   private readonly productRequestDestroyer = new Subject<void>();
 
@@ -207,6 +211,9 @@ export default class ProductFilter implements OnInit, OnDestroy {
   }
 
   get genderCategory() {
+    if (this.fullPath.length === 0) {
+      return null;
+    }
     return this.gender + '/' + this.fullPath.join('/');
   }
 

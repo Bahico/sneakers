@@ -1,9 +1,12 @@
-import {Component, computed, signal} from "@angular/core";
+import {Component, computed, inject, signal} from "@angular/core";
 import {GuaranteeOriginal} from './guarantee-original/guarantee-original';
 import {MeetTeam} from '@/home/components/banner/meet-team/meet-team';
 import {BannerRealRate} from '@/home/components/banner/real-rate/banner-real-rate';
 import {BannerSplit} from '@/home/components/banner/split/banner-split';
 import {BannerTelegram} from '@/home/components/banner/telegram/banner-telegram';
+import {BannerService} from '@/services/banner.service';
+import {rxResource} from '@angular/core/rxjs-interop';
+import {map} from 'rxjs';
 
 @Component({
   templateUrl: 'banner.html',
@@ -25,18 +28,15 @@ import {BannerTelegram} from '@/home/components/banner/telegram/banner-telegram'
   ]
 })
 export class Banner {
+  private readonly bannerService = inject(BannerService);
+
   activeIndex = signal(0);
 
-  slides = ['meet-team', 'split', 'guarantee-original', 'telegram', 'real-rate'] as const;
-
-  protected readonly disablePrevious = computed(() => this.activeIndex() === 0);
-  protected readonly disableNext = computed(() => this.activeIndex() === this.slides.length - 1);
-
-  previous() {
-    this.activeIndex.update(index => index > 0 ? index - 1 : this.slides.length - 1);
-  }
-
-  next() {
-    this.activeIndex.update(index => index < this.slides.length - 1 ? index + 1 : 0);
-  }
+  protected readonly banners = rxResource({
+    stream: () => this.bannerService.banners().pipe(map(banners => {
+      banners.top_banners = banners.top_banners.sort((a, b) => a.order - b.order);
+      return banners;
+    })),
+  })
+  // slides = ['meet-team', 'split', 'guarantee-original', 'telegram', 'real-rate'] as const;
 }
