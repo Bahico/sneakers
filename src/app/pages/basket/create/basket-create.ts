@@ -348,6 +348,7 @@ export default class BasketCreate {
         tap(result => {
           this.loading.set(false);
           if (result) {
+            this.accountStore.getAccount().subscribe();
             if (!this.hasPassportData()) {
               this.hasPassportData.set(true);
             }
