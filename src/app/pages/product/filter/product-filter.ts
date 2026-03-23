@@ -1,3 +1,16 @@
+import { IconComponent } from '@/components/icon/icon';
+import { ProductListDetail } from '@/components/product-list-detail/product-list-detail';
+import { Gender } from '@/models/gender';
+import { ProductListDetailModel } from '@/models/product.model';
+import { ProductFilterBrand } from '@/product/filter/components/brand/product-filter-brand';
+import { ProductCategories } from '@/product/filter/components/categories/product-categories';
+import { MobileFilter } from '@/product/filter/components/mobile-filter/mobile-filter';
+import { ProductFilterPrice } from '@/product/filter/components/price/product-filter-price';
+import { ProductFilterSize } from '@/product/filter/components/size/product-filter-size';
+import { ProductFilterStore } from '@/product/filter/product-filter-store';
+import { SORT } from '@/product/filter/product-filter.constans';
+import { ProductService } from '@/services/product.service';
+import { isPlatformBrowser } from '@angular/common';
 import {
   afterNextRender,
   Component,
@@ -9,27 +22,14 @@ import {
   PLATFORM_ID,
   signal
 } from '@angular/core';
-import {TuiBreadcrumbs, TuiRadioComponent} from '@taiga-ui/kit';
-import {TuiDropdown, TuiLink} from '@taiga-ui/core';
-import {TuiActiveZone, TuiItem, TuiObscured} from '@taiga-ui/cdk';
-import {ActivatedRoute, Router, RouterLink, UrlSegment} from '@angular/router';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {IconComponent} from '@/components/icon/icon';
-import {SORT} from '@/product/filter/product-filter.constans';
-import {ProductListDetailModel} from '@/models/product.model';
-import {ProductService} from '@/services/product.service';
-import {ProductListDetail} from '@/components/product-list-detail/product-list-detail';
-import {ProductFilterPrice} from '@/product/filter/components/price/product-filter-price';
-import {ProductFilterSize} from '@/product/filter/components/size/product-filter-size';
-import {ProductFilterBrand} from '@/product/filter/components/brand/product-filter-brand';
-import {MobileFilter} from '@/product/filter/components/mobile-filter/mobile-filter';
-import {InfiniteScrollDirective} from 'ngx-infinite-scroll';
-import {isPlatformBrowser, NgOptimizedImage} from '@angular/common';
-import {Gender} from '@/models/gender';
-import {combineLatest, debounceTime, filter, map, of, Subject, takeUntil} from 'rxjs';
-import {rxResource, takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {ProductFilterStore} from '@/product/filter/product-filter-store';
-import {ProductCategories} from '@/product/filter/components/categories/product-categories';
+import { rxResource, takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink, UrlSegment } from '@angular/router';
+import { TuiActiveZone, TuiItem, TuiObscured } from '@taiga-ui/cdk';
+import { TuiDropdown, TuiLink } from '@taiga-ui/core';
+import { TuiBreadcrumbs, TuiRadioComponent } from '@taiga-ui/kit';
+import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
+import { combineLatest, debounceTime, filter, map, of, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'product-filter',
@@ -49,7 +49,6 @@ import {ProductCategories} from '@/product/filter/components/categories/product-
     ProductFilterBrand,
     MobileFilter,
     InfiniteScrollDirective,
-    NgOptimizedImage,
     TuiRadioComponent,
     TuiDropdown,
     TuiObscured,

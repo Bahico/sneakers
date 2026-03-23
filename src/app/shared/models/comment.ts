@@ -1,5 +1,6 @@
 export interface Comment {
   id?: string;
+  full_name: string;
   user_name: string;
   product_id: string;
   rating: number;

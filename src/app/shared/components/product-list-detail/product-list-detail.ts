@@ -1,4 +1,4 @@
-import {Component, inject, input, model} from '@angular/core';
+import {Component, computed, inject, input, model} from '@angular/core';
 import {ProductListDetailModel} from '@/models/product.model';
 import {AsyncPipe} from '@angular/common';
 import {RouterLink} from '@angular/router';
@@ -27,6 +27,10 @@ export class ProductListDetail {
   detail = model.required<ProductListDetailModel>();
   onHome = input(false);
   isMobile = this.rbs.isMobile;
+  euSizes = computed(() => {
+    const euSizeTable = this.detail().size_table.find(({type}) => type.toLowerCase() === 'eu');
+    return euSizeTable?.values.join(' ') ?? '';
+  });
 
   clickFavor() {
     if (!this.accountStore.account()?.id) {

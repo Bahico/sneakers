@@ -89,6 +89,7 @@ export interface ProductListDetailModel {
   split: number;
   images: string[];
   main_variant: Variant;
+  size_table: SizeTable[];
 }
 
 export interface ProductListModel {

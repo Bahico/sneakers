@@ -26,8 +26,8 @@
   >
 
     <span class="text-black/40 truncate">
-      @if (detail()?.main_variant?.size?.primary) {
-        EU: {{ detail()?.main_variant?.size?.primary }}
+      @if (euSizes()) {
+        EU: {{ euSizes() }}
       }
     </span>
 </div>

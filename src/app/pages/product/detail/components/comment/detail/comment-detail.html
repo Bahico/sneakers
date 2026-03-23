@@ -1,7 +1,8 @@
 @if (comment(); as commentData) {
   <div class="flex flex-col gap-1">
-    <div class="flex gap-1">
-      <span class="font-semibold">{{commentData.user_name}}</span>
+    <div class="flex flex-col">
+      <span class="font-semibold text-lg">{{commentData.full_name}}</span>
+      <span class="text-sm">{{commentData.user_name}}</span>
     </div>
     <div class="flex gap-1 items-center">
       <span class="flex gap-0.5">
