@@ -150,6 +150,7 @@ export default class ProfileEdit {
       .subscribe(result => {
         this.loading.set(false);
         if (result) {
+          this.accountStore.getAccount().subscribe();
           this.success.set(true);
           if (!this.hasPassportData()) {
             this.hasPassportData.set(true);
