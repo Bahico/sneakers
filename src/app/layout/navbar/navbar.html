@@ -230,7 +230,7 @@
     <span (click)="openMobileNavbar.set(false)" [routerLink]="['product', gender(), 'accessories']">Аксессуары</span>
     <span (click)="openMobileNavbar.set(false)" routerLink="/information/reviews">Отзывы</span>
     <span (click)="openMobileNavbar.set(false)" routerLink="/information/payment">Доставка и оплата</span>
-    <span>Блог</span>
+    <span (click)="openMobileNavbar.set(false)" routerLink="/blogs">Блог</span>
     <span class="cursor-pointer" (click)="openMobileNavbar.set(false)" routerLink="/information/contact">Контакты</span>
   </div>
   <span
