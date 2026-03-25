@@ -27,7 +27,7 @@
 <div
   class="flex flex-col gap-2 duration-300 overflow-hidden"
   [class.max-h-8]="!openDescription()"
-  [class.max-h-100]="openDescription()"
+  [class.max-h-120]="openDescription()"
 >
   <div class="flex justify-between items-center cursor-pointer" (click)="openDescription.set(!openDescription())">
     <span class="text-primary text-xl font-bold">Описание</span>
@@ -38,7 +38,7 @@
       <icon-list icon="plus" class="w-8 h-8 flex items-center justify-center" />
     }
   </div>
-  <p style="white-space: pre-wrap;">{{detail().description}}</p>
+  <p style="white-space: pre-wrap;" [innerHTML]="detail().description"></p>
 </div>
 
 <span class="line mt-8 mb-4"></span>
