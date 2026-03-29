@@ -35,7 +35,7 @@ export class AuthenticationMain implements OnDestroy {
   private readonly accountStore = inject(AccountStore);
   private readonly tokenStore = inject(TokenStore);
   private readonly cartService = inject(CartService);
-  protected readonly context = injectContext<TuiDialogContext<string, string>>();
+  protected readonly context = injectContext<TuiDialogContext<string, { ref_code?: string }>>();
 
   emailRef = viewChild<ElementRef<HTMLInputElement>>('emailRef');
   codeRef = viewChild<ElementRef<HTMLInputElement>>('codeRef'); 
@@ -86,7 +86,7 @@ export class AuthenticationMain implements OnDestroy {
   sendCode() {
     this.isLoading.set(true);
     this.authService
-      .sendCode({email: this.email.value, code: this.code.value})
+      .sendCode({email: this.email.value, code: this.code.value, ref_code: this.context.data?.ref_code})
       .subscribe({
         next: (token: TokenModel) => {
           this.setToken(token);
@@ -110,7 +110,7 @@ export class AuthenticationMain implements OnDestroy {
 
   navigateTelegram(): void {
     this.authService
-      .telegramLink()
+      .telegramLink({ref_code: this.context.data?.ref_code})
       .subscribe(data => {
         const a = document.createElement('a');
         a.href = data.login_link;

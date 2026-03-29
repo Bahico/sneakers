@@ -14,4 +14,13 @@ export interface ReferralLink {
   updated_at?: Date;
 }
 
+export interface ReferralStats {
+  total_clicks: number;
+  clicks_last_30_days: number;
+  clicks_today: number;
+  total_links: number;
+  conversion_rate: number;
+  created_at: Date;
+  updated_at: Date;
+}
 

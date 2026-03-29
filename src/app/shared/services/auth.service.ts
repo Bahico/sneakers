@@ -1,12 +1,12 @@
-import {inject, Injectable, signal} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {getEndpoint} from '@/get-endpoint';
-import {TokenModel} from '@/models/token.model';
-import {PassportData, UpdateUserProfileDto, UserCoins} from '@/models/passport';
-import {Observable, of, tap} from 'rxjs';
+import { inject, Injectable, signal } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { getEndpoint } from '@/get-endpoint';
+import { TokenModel } from '@/models/token.model';
+import { PassportData, UpdateUserProfileDto, UserCoins } from '@/models/passport';
+import { Observable, of, tap } from 'rxjs';
 import { TokenStore } from '@/token';
 
-@Injectable({ providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly tokenStore = inject(TokenStore);
@@ -14,8 +14,8 @@ export class AuthService {
   private readonly coins$ = signal<UserCoins>(null);
   coins = this.coins$.asReadonly();
 
-  telegramLink() {
-    return this.http.post<{login_link: string; session_id: string; expires_in: number;}>(getEndpoint('auth/request-login'), {})
+  telegramLink(data: { ref_code?: string }) {
+    return this.http.post<{ login_link: string; session_id: string; expires_in: number; }>(getEndpoint('auth/request-login'), data)
   }
 
   checkSession(session_id: string): Observable<TokenModel> {
@@ -23,10 +23,10 @@ export class AuthService {
   }
 
   emailLogin(email: string) {
-    return this.http.post<{email: string}>(getEndpoint('auth/request-code'), {}, {params: {email}})
+    return this.http.post<{ email: string }>(getEndpoint('auth/request-code'), {}, { params: { email } })
   }
 
-  sendCode(data: {email: string, code: string}) {
+  sendCode(data: { email: string, code: string; ref_code?: string }) {
     return this.http.post<TokenModel>(getEndpoint('auth/verify-code'), data)
   }
 

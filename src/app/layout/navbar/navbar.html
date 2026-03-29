@@ -1,34 +1,20 @@
 <div class="container hidden md:flex justify-between items-center py-4 gap-4">
   <div class="flex gap-10 items-center md:w-1/2 xl:w-[80%]!">
-    <img
-      ngSrc="images/logo/logo.png"
-      alt="site logo"
-      routerLink="/"
-      class="object-contain cursor-pointer"
-      width="98"
-      height="40"
-    >
+    <img ngSrc="images/logo/logo.png" alt="site logo" routerLink="/" class="object-contain cursor-pointer" width="98"
+      height="40">
     <div class="flex gap-6 overflow-x-auto">
-      <span
-        [routerLink]="['product', gender(), 'footwear']"
-        class="text-base font-medium color-base cursor-pointer"
-      >
+      <span [routerLink]="['product', gender(), 'footwear']" class="text-base font-medium color-base cursor-pointer">
         Обувь
       </span>
-      <span
-        class="text-base font-medium color-base cursor-pointer"
-        [routerLink]="['product', gender(), 'apparel']"
-      >
+      <span class="text-base font-medium color-base cursor-pointer" [routerLink]="['product', gender(), 'apparel']">
         Одежда
       </span>
-      <span
-        class="text-base font-medium color-base cursor-pointer"
-        [routerLink]="['product', gender(), 'accessories']"
-      >
+      <span class="text-base font-medium color-base cursor-pointer" [routerLink]="['product', gender(), 'accessories']">
         Аксессуары
       </span>
       <span class="text-base font-medium color-base cursor-pointer" routerLink="/information/reviews">Отзывы</span>
-      <span class="text-base font-medium color-base cursor-pointer text-nowrap" routerLink="/information/payment">Доставка и оплата</span>
+      <span class="text-base font-medium color-base cursor-pointer text-nowrap"
+        routerLink="/information/payment">Доставка и оплата</span>
       <span class="text-base font-medium color-base cursor-pointer" routerLink="/blogs">Блог</span>
       <span class="text-base font-medium color-base cursor-pointer" routerLink="/information/contact">Контакты</span>
     </div>
@@ -36,75 +22,46 @@
 
   <div class="flex gap-2 items-center w-1/2 xl:w-[20%]! justify-end">
     <div class="py-1! cursor-pointer" [routerLink]="['/product', 'search']" (click)="goBack()">
-      <icon-list [icon]="isSearchPage() ? 'close-sm' : 'search'" class="sn-control-icon max-h-8"/>
+      <icon-list [icon]="isSearchPage() ? 'close-sm' : 'search'" class="sn-control-icon max-h-8" />
     </div>
     @if (favoritesCount()) {
-      <tui-badged-content>
-        <tui-badge-notification
-          size="s"
-          tuiSlot="top"
-        >
-          {{ favoritesCount() }}
-        </tui-badge-notification>
-        <div
-          class="py-1 px-2 cursor-pointer"
-          routerLink="/favorites"
-        >
-          <icon-list icon="favorite"/>
-        </div>
-      </tui-badged-content>
-    } @else {
-      <div
-        class="py-1 px-2 cursor-pointer"
-        routerLink="/favorites"
-      >
-        <icon-list icon="favorite"/>
+    <tui-badged-content>
+      <tui-badge-notification size="s" tuiSlot="top">
+        {{ favoritesCount() }}
+      </tui-badge-notification>
+      <div class="py-1 px-2 cursor-pointer" routerLink="/favorites">
+        <icon-list icon="favorite" />
       </div>
+    </tui-badged-content>
+    } @else {
+    <div class="py-1 px-2 cursor-pointer" routerLink="/favorites">
+      <icon-list icon="favorite" />
+    </div>
     }
     @if (basketProductCount()) {
-      <tui-badged-content>
-        <tui-badge-notification
-          size="s"
-          tuiSlot="top"
-        >
-          {{ basketProductCount() || 1 }}
-        </tui-badge-notification>
-        <div
-          class="py-1 px-2 cursor-pointer"
-          routerLink="/basket"
-        >
-          <icon-list icon="basket-sm"/>
-        </div>
-      </tui-badged-content>
-    } @else {
-      <div
-        class="py-1 px-2 cursor-pointer"
-        routerLink="/basket"
-      >
-        <icon-list icon="basket-sm"/>
+    <tui-badged-content>
+      <tui-badge-notification size="s" tuiSlot="top">
+        {{ basketProductCount() || 1 }}
+      </tui-badge-notification>
+      <div class="py-1 px-2 cursor-pointer" routerLink="/basket">
+        <icon-list icon="basket-sm" />
       </div>
+    </tui-badged-content>
+    } @else {
+    <div class="py-1 px-2 cursor-pointer" routerLink="/basket">
+      <icon-list icon="basket-sm" />
+    </div>
     }
     @if (isAuthed()) {
-      <div
-        class="text-xl cursor-pointer rounded-md py-1 px-2"
-        [ngClass]="{'bg-black text-white': open}"
-        [tuiDropdown]="dropdownContent"
-        [tuiDropdownManual]="open"
-        [tuiObscuredEnabled]="open"
-        tuiDropdownAlign="center"
-        (click)="onClick()"
-        (tuiActiveZoneChange)="onActiveZone($event)"
-        (tuiObscured)="onObscured($event)"
-      >
-        <i class="fa fa-user-o"></i>
-      </div>
+    <div class="text-xl cursor-pointer rounded-md py-1 px-2" [ngClass]="{'bg-black text-white': open}"
+      [tuiDropdown]="dropdownContent" [tuiDropdownManual]="open" [tuiObscuredEnabled]="open" tuiDropdownAlign="center"
+      (click)="onClick()" (tuiActiveZoneChange)="onActiveZone($event)" (tuiObscured)="onObscured($event)">
+      <i class="fa fa-user-o"></i>
+    </div>
     } @else {
-      <div
-        class="text-xl cursor-pointer rounded-md py-1 px-2"
-        (click)="openAuthentication()"
-      >
-        <i class="fa fa-user-o"></i>
-      </div>
+    <div class="text-xl cursor-pointer rounded-md py-1 px-2" (click)="openAuthentication()">
+      <i class="fa fa-user-o"></i>
+    </div>
     }
 
     <ng-template #dropdownContent>
@@ -133,74 +90,61 @@
   <div class="w-[90%] flex justify-between items-end relative">
     <button
       class="sn-btn py-4.5! absolute left-0 top-1/2 -translate-y-1/2 w-[85%] overflow-hidden duration-300 transition-all text-nowrap z-20"
-      [class.max-w-[85%]]="openCartBtn()"
-      [class.max-w-0]="!openCartBtn()"
-      [class.!px-0]="!openCartBtn()"
-      (click)="openMobileCart()"
-    >
+      [class.max-w-[85%]]="openCartBtn()" [class.max-w-0]="!openCartBtn()" [class.!px-0]="!openCartBtn()"
+      (click)="openMobileCart()">
       @if (addedCart()) {
-        Перейти в корзину
+      Перейти в корзину
       } @else {
-        Добавить в корзину
+      Добавить в корзину
       }
     </button>
-    <div (click)="openMobileNavbar.set(false)" class="flex flex-col items-center navbar-item" routerLink="/home" routerLinkActive="active">
+    <div (click)="openMobileNavbar.set(false)" class="flex flex-col items-center navbar-item" routerLink="/home"
+      routerLinkActive="active">
       <icon-list class="h-7 unactive" icon="home" />
       <icon-list class="h-7 active" icon="home-active" />
       <span class="text-xs">Главная</span>
     </div>
-    <div (click)="openMobileNavbar.set(false)" class="flex flex-col items-center navbar-item" [routerLink]="['product', 'search']" routerLinkActive="active">
-      <icon-list class="h-7 unactive" icon="search"/>
-      <icon-list class="h-7 active" icon="search-active"/>
+    <div (click)="openMobileNavbar.set(false)" class="flex flex-col items-center navbar-item"
+      [routerLink]="['product', 'search']" routerLinkActive="active">
+      <icon-list class="h-7 unactive" icon="search" />
+      <icon-list class="h-7 active" icon="search-active" />
       <span class="text-xs">Поиск</span>
     </div>
     @if (basketProductCount()) {
-      <tui-badged-content>
-        <tui-badge-notification
-          size="s"
-          tuiSlot="top"
-        >
-          {{ basketProductCount() }}
-        </tui-badge-notification>
-        <div
-          routerLink="/basket"
-          (click)="openMobileNavbar.set(false)"
-          routerLinkActive="active"
-          class="flex flex-col items-center text-xl navbar-item"
-        >
-          <icon-list class="h-7 flex items-center unactive" icon="basket"/>
-          <icon-list class="h-7 flex items-center active" icon="basket-active"/>
-          <span class="text-xs text-primary">Корзина</span>
-        </div>
-      </tui-badged-content>
-    } @else {
-      <div class="flex flex-col items-center text-xl navbar-item">
-        <icon-list class="h-7 flex items-center" icon="basket"/>
-        <span class="text-xs">Корзина</span>
+    <tui-badged-content>
+      <tui-badge-notification size="s" tuiSlot="top">
+        {{ basketProductCount() }}
+      </tui-badge-notification>
+      <div routerLink="/basket" (click)="openMobileNavbar.set(false)" routerLinkActive="active"
+        class="flex flex-col items-center text-xl navbar-item">
+        <icon-list class="h-7 flex items-center unactive" icon="basket" />
+        <icon-list class="h-7 flex items-center active" icon="basket-active" />
+        <span class="text-xs text-primary">Корзина</span>
       </div>
+    </tui-badged-content>
+    } @else {
+    <div class="flex flex-col items-center text-xl navbar-item">
+      <icon-list class="h-7 flex items-center" icon="basket" />
+      <span class="text-xs">Корзина</span>
+    </div>
     }
     @if (isAuthed()) {
-      <div class="flex flex-col items-center navbar-item" (click)="openMobileNavbar.set(false)" routerLink="/profile" routerLinkActive="active">
-        <icon-list class="h-7 unactive" icon="profile"/>
-        <icon-list class="h-7 active" icon="profile-active"/>
-        <span class="text-xs">Профиль</span>
-      </div>
+    <div class="flex flex-col items-center navbar-item" (click)="openMobileNavbar.set(false)" routerLink="/profile"
+      routerLinkActive="active">
+      <icon-list class="h-7 unactive" icon="profile" />
+      <icon-list class="h-7 active" icon="profile-active" />
+      <span class="text-xs">Профиль</span>
+    </div>
     } @else {
-      <div
-        class="flex flex-col items-center"
-        (click)="openAuthentication()"
-      >
-        <icon-list class="h-7" icon="profile"/>
-        <span class="text-xs">Профиль</span>
-      </div>
+    <div class="flex flex-col items-center" (click)="openAuthentication()">
+      <icon-list class="h-7" icon="profile" />
+      <span class="text-xs">Профиль</span>
+    </div>
     }
 
     <div class="flex flex-col items-center" (click)="openMobileNavbar.set(!openMobileNavbar())">
       <span class="text-2xl flex items-center h-7">
-        <div
-          class="burger"
-          [class.active]="openMobileNavbar()"
-        >
+        <div class="burger" [class.active]="openMobileNavbar()">
           <span></span>
         </div>
       </span>
@@ -211,17 +155,12 @@
 
 <div
   class="fixed inset-0 bg-white backdrop-blur-md z-100 w-full h-[calc(100vh-80px)] transition-transform duration-300 py-5"
-  [class.translate-x-full]="!openMobileNavbar()"
->
-  <div class="w-full flex justify-center items-center">
-    <img
-      ngSrc="images/logo/logo.png"
-      alt="site logo"
-      routerLink="/"
-      class="object-contain cursor-pointer w-20 h-10"
-      width="1047"
-      height="420"
-    >
+  [class.translate-x-full]="!openMobileNavbar()">
+  <div class="w-full flex justify-between items-center px-10">
+    <svg-icon key="right" class="rotate-180" (click)="openMobileNavbar.set(false)" />
+    <img ngSrc="images/logo/logo.png" alt="site logo" routerLink="/" class="object-contain cursor-pointer w-20 h-10"
+      width="1047" height="420">
+    <span></span>
   </div>
 
   <div class="flex flex-col gap-4 mt-4 px-6 pb-4 mx-4 text-lg border-b border-gray-200">
@@ -233,16 +172,10 @@
     <span (click)="openMobileNavbar.set(false)" routerLink="/blogs">Блог</span>
     <span class="cursor-pointer" (click)="openMobileNavbar.set(false)" routerLink="/information/contact">Контакты</span>
   </div>
-  <span
-    class="flex gap-2 items-center px-6 py-4 mx-4 text-lg cursor-pointer"
-    routerLink="/favorites"
-    (click)="openMobileNavbar.set(false)"
-  >
+  <span class="flex gap-2 items-center px-6 py-4 mx-4 text-lg cursor-pointer" routerLink="/favorites"
+    (click)="openMobileNavbar.set(false)">
     Избранные
-    	<img
-        alt=""
-        [src]="'@tui.heart' | tuiIcon"
-      />
+    <img alt="" [src]="'@tui.heart' | tuiIcon" />
   </span>
 
   <div class="bg-gray-200 rounded-lg p-2 mx-10 mt-4 flex gap-2 relative">

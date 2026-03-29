@@ -1,18 +1,20 @@
-import {afterNextRender, Component, computed, DestroyRef, inject, signal} from '@angular/core';
-import {Location, NgClass, NgOptimizedImage} from '@angular/common';
-import {IconComponent} from '@/components/icon/icon';
-import {TuiDropdownDirective, TuiDropdownManual, TuiDropdownOptionsDirective, TuiIconPipe} from '@taiga-ui/core';
-import {TuiActiveZone, TuiObscured} from '@taiga-ui/cdk';
-import {AccountStore} from '@/account';
-import {AuthenticationOpen} from '@/components/authentication/authentication-open';
-import {NavigationEnd, Router, RouterLink, RouterLinkActive} from '@angular/router';
-import {TuiBadgedContentComponent, TuiBadgeNotification} from '@taiga-ui/kit';
-import {CartStore} from '@/cart';
-import {ProductDetailStore} from '@/product/detail/services/product-detail-store';
-import {HomeStore} from '@/home.store';
-import {filter} from 'rxjs';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import { afterNextRender, Component, computed, DestroyRef, inject, signal } from '@angular/core';
+import { Location, NgClass, NgOptimizedImage } from '@angular/common';
+import { IconComponent } from '@/components/icon/icon';
+import { TuiDropdownDirective, TuiDropdownManual, TuiDropdownOptionsDirective, TuiIconPipe } from '@taiga-ui/core';
+import { TuiActiveZone, TuiObscured } from '@taiga-ui/cdk';
+import { AccountStore } from '@/account';
+import { AuthenticationOpen } from '@/components/authentication/authentication-open';
+import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { TuiBadgedContentComponent, TuiBadgeNotification } from '@taiga-ui/kit';
+import { CartStore } from '@/cart';
+import { ProductDetailStore } from '@/product/detail/services/product-detail-store';
+import { HomeStore } from '@/home.store';
+import { filter } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FavoritesService } from '@/services/favorites.service';
+import { injectRegisterIcons, SvgIconComponent } from '@ngneat/svg-icon';
+import { rightIcon } from '@/right';
 
 @Component({
   selector: 'navbar',
@@ -31,7 +33,8 @@ import { FavoritesService } from '@/services/favorites.service';
     TuiBadgedContentComponent,
     TuiBadgeNotification,
     TuiIconPipe,
-    RouterLinkActive
+    RouterLinkActive,
+    SvgIconComponent
   ],
   host: {
     class: 'flex w-full justify-center sticky top-0 left-0 right-0 z-10 bg-white'
@@ -78,7 +81,8 @@ export default class Navbar {
             this.isSearchPage.set(false);
           }
         })
-    })
+    });
+    injectRegisterIcons([rightIcon]);
   }
 
   logout() {

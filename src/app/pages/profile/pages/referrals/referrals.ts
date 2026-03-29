@@ -1,26 +1,26 @@
-import {ReferralsService} from '@/services/referrals.service';
-import {Component, DestroyRef, inject, signal} from '@angular/core';
-import {RouterLink} from '@angular/router';
-import {TuiBreadcrumbs} from '@taiga-ui/kit';
-import {TuiFormatNumberPipe, TuiLink} from '@taiga-ui/core';
-import {TuiTable} from '@taiga-ui/addon-table';
-import {ProfileMenu} from '@/profile/components/menu/profile-menu';
-import {ReferralLink} from '@/models/referral';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {catchError, of} from 'rxjs';
-import {AsyncPipe} from '@angular/common';
-import {CdkCopyToClipboard} from '@angular/cdk/clipboard';
-import {IconComponent} from '@/components/icon/icon';
-import {TuiItem} from '@taiga-ui/cdk';
-import {DialogService} from '@/services/dialog.service';
-import {ReferralCreate} from '@/profile/pages/referrals/create/referral-create';
-import {PolymorpheusComponent} from '@taiga-ui/polymorpheus';
+import { ReferralsService } from '@/services/referrals.service';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { TuiBreadcrumbs } from '@taiga-ui/kit';
+import { TuiFormatNumberPipe, TuiLink } from '@taiga-ui/core';
+import { TuiTable } from '@taiga-ui/addon-table';
+import { ProfileMenu } from '@/profile/components/menu/profile-menu';
+import { ReferralLink } from '@/models/referral';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { catchError, of } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
+import { CdkCopyToClipboard } from '@angular/cdk/clipboard';
+import { IconComponent } from '@/components/icon/icon';
+import { TuiItem } from '@taiga-ui/cdk';
+import { DialogService } from '@/services/dialog.service';
+import { ReferralCreate } from '@/profile/pages/referrals/create/referral-create';
+import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
 
 @Component({
   templateUrl: 'referrals.html',
   selector: 'referrals',
-  host: {class: 'flex w-full justify-center pb-10'},
+  host: { class: 'flex w-full justify-center pb-10' },
   imports: [
     RouterLink,
     TuiBreadcrumbs,

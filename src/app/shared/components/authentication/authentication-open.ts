@@ -7,7 +7,7 @@ import {DialogService} from '@/services/dialog.service';
 export class AuthenticationOpen {
   private readonly dialogs = inject(DialogService);
 
-  openModal() {
+  openModal(ref_code?: string) {
     this.dialogs
       .open(
         new PolymorpheusComponent(AuthenticationMain),
@@ -16,6 +16,7 @@ export class AuthenticationOpen {
           size: 'm',
           offset: 16,
           stops: ['29rem'],
+          data: { ref_code }
         } as any,
       )
       .subscribe();
