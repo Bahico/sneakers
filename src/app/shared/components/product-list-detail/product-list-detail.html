@@ -1,48 +1,34 @@
-<div
-  routerLink="/product/detail/{{detail().id}}"
-  class="relative flex flex-col justify-between h-44 md:h-76 bg-gray-100 rounded-md px-1 py-2 md:p-3 cursor-pointer mb-2"
->
+<div routerLink="/product/detail/{{detail().id}}"
+  class="relative flex flex-col justify-between h-44 md:h-76 bg-gray-100 rounded-md px-1 py-2 md:p-3 cursor-pointer mb-2">
   <div class="flex justify-between">
     <span [class.hidden]="!onHome()"></span>
-    <span
-      [class.hidden]="onHome() || !detail().plashka"
-      class="px-1 md:px-2 flex items-center h-4 md:h-6 text-[9px] md:text-xs rounded-xl bg-orange-500 text-white"
-    >
+    <span [class.hidden]="onHome() || !detail().plashka"
+      class="px-1 md:px-2 flex items-center h-4 md:h-6 text-[9px] md:text-xs rounded-xl bg-orange-500 text-white">
       Быстро разбирают
     </span>
 
-    <tui-icon
-      [icon]="detail().is_favorite ? '@tui.heart-filled' : '@tui.heart'"
-      [style.font-size.rem]="isMobile() ? 1.5 : 2"
-      (click)="$event.stopPropagation(); clickFavor()"
-    />
+    <tui-icon [icon]="detail().is_favorite ? '@tui.heart-filled' : '@tui.heart'"
+      [style.font-size.rem]="isMobile() ? 1.5 : 2" (click)="$event.stopPropagation(); clickFavor()" />
   </div>
 
-  <img
-    [src]="detail().images?.[0]"
-    alt="product list detail"
-    style="mix-blend-mode: multiply;"
-    class="w-full h-full max-h-30 md:max-h-40 object-contain"
-  >
+  <img [src]="detail().images?.[0]" alt="product list detail" style="mix-blend-mode: multiply;"
+    class="w-full h-full max-h-30 md:max-h-40 object-contain">
 
-    <span class="text-black/40 truncate">
-      @if (euSizes()) {
-        EU: {{ euSizes() }}
-      }
-    </span>
+  <span class="text-black/40 truncate">
+    @if (euSizes()) {
+    EU: {{ euSizes() }}
+    }
+  </span>
 </div>
 
 <div>
   <h4 class="truncate md:text-lg font-semibold">{{ detail().brand.name }}</h4>
   <h4 class="text-xs md:text-sm text-gray-400 truncate mb-2">{{detail().category.name}} {{ detail().name }}</h4>
 
-  <span class="text-sm md:text-base font-semibold">{{ detail().price | tuiFormatNumber | async }} p.</span>
-  <div
-    class="flex gap-0.5 items-center"
-    [class.hidden]="onHome() || detail().price >= 20000"
-  >
-    <span
-      class="py-0.5 px-1 bg-primary/80 rounded text-white text-xs">{{ detail().price / 2 | tuiFormatNumber | async }} p. x 2</span>
+  <span class="text-sm md:text-base font-semibold">от {{ detail().price | tuiFormatNumber | async }} p.</span>
+  <div class="flex gap-0.5 items-center" [class.hidden]="onHome() || detail().price >= 20000">
+    <span class="py-0.5 px-1 bg-primary/80 rounded text-white text-xs">{{ detail().price / 2 | tuiFormatNumber | async
+      }} p. x 2</span>
     <span class="text-gray-500 text-xs">Сплит</span>
   </div>
 </div>

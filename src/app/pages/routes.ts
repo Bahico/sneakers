@@ -1,42 +1,49 @@
 import {Routes} from '@angular/router';
+import {appInitResolver} from '@/resolvers/app-init.resolver';
 
 export default [
   {
     path: '',
-    redirectTo: 'home/male',
-    pathMatch: 'full',
-  },
-  {
-    path: 'home',
-    redirectTo: 'home/male',
-    pathMatch: 'full',
-  },
-  {
-    path: 'home/:gender',
-    loadComponent: () => import('./home/home'),
-  },
-  {
-    path: 'product',
-    loadChildren: () => import('./product/product.routes'),
-  },
-  {
-    path: 'information',
-    loadChildren: () => import('./information/information.routes'),
-  },
-  {
-    path: 'basket',
-    loadChildren: () => import('./basket/basket.routes'),
-  },
-  {
-    path: 'profile',
-    loadChildren: () => import('./profile/profile.routes'),
-  },
-  {
-    path: 'favorites',
-    loadComponent: () => import('./favorites/favorites')
-  },
-  {
-    path: 'blogs',
-    loadChildren: () => import('./blogs/blogs.routes'),
+    resolve: {appInit: appInitResolver},
+    children: [
+      {
+        path: '',
+        redirectTo: 'home/male',
+        pathMatch: 'full',
+      },
+      {
+        path: 'home',
+        redirectTo: 'home/male',
+        pathMatch: 'full',
+      },
+      {
+        path: 'home/:gender',
+        loadComponent: () => import('./home/home'),
+      },
+      {
+        path: 'product',
+        loadChildren: () => import('./product/product.routes'),
+      },
+      {
+        path: 'information',
+        loadChildren: () => import('./information/information.routes'),
+      },
+      {
+        path: 'basket',
+        loadChildren: () => import('./basket/basket.routes'),
+      },
+      {
+        path: 'profile',
+        loadChildren: () => import('./profile/profile.routes'),
+      },
+      {
+        path: 'favorites',
+        loadComponent: () => import('./favorites/favorites')
+      },
+      {
+        path: 'blogs',
+        loadChildren: () => import('./blogs/blogs.routes'),
+      }
+    ]
   }
 ] satisfies Routes;

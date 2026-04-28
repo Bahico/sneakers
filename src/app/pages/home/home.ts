@@ -1,21 +1,21 @@
-import {afterNextRender, Component, inject} from '@angular/core';
-import {ActivatedRoute, RouterLink, RouterLinkActive} from "@angular/router";
-import {CategoryShoes} from '@/home/components/category/shoes/category-shoes';
-import {ProductService} from '@/services/product.service';
-import {CategoryCloth} from '@/home/components/category/cloth/category-cloth';
-import {CategoryAccessories} from '@/home/components/category/accessories/category-accessories';
-import {Banner} from "./components/banner/banner";
-import {NgOptimizedImage} from '@angular/common';
-import {PolymorpheusComponent} from '@taiga-ui/polymorpheus';
-import {PoizonProductCalculate} from '@/home/components/poizon-product-calculate/poizon-product-calculate';
-import {HomeStore} from '@/home.store';
-import {DialogService} from '@/services/dialog.service';
+import { afterNextRender, Component, inject } from '@angular/core';
+import { ActivatedRoute, RouterLink, RouterLinkActive } from "@angular/router";
+import { CategoryShoes } from '@/home/components/category/shoes/category-shoes';
+import { ProductService } from '@/services/product.service';
+import { CategoryCloth } from '@/home/components/category/cloth/category-cloth';
+import { CategoryAccessories } from '@/home/components/category/accessories/category-accessories';
+import { Banner } from "./components/banner/banner";
+import { NgOptimizedImage } from '@angular/common';
+import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
+import { PoizonProductCalculate } from '@/home/components/poizon-product-calculate/poizon-product-calculate';
+import { HomeStore } from '@/home.store';
+import { DialogService } from '@/services/dialog.service';
 
 
 @Component({
   templateUrl: 'home.html',
   selector: 'home',
-  host: {class: 'flex w-full justify-center'},
+  host: { class: 'flex w-full justify-center' },
   imports: [RouterLink, RouterLinkActive, CategoryShoes, CategoryCloth, CategoryAccessories, Banner, NgOptimizedImage],
 })
 export default class Home {
@@ -28,7 +28,7 @@ export default class Home {
 
   constructor() {
     afterNextRender(() => {
-      this.productService.query({page:1,limit: 20, sort_by: 'created_at'}).subscribe();
+      this.productService.query({ page: 1, limit: 20 }).subscribe();
       this.activatedRoute.params.subscribe(params => this.gender.set(params['gender']));
     })
   }

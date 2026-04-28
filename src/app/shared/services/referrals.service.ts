@@ -20,4 +20,8 @@ export class ReferralsService {
   generateLink(payload: { name: string }) {
     return this.http.post<ReferralLink>(`${this.endpoint}/generate`, payload);
   }
+
+  trackClick(ref_code: string) {
+    return this.http.post<{ success: boolean }>(`${this.endpoint}/track-click`, {}, { params: { ref_code } });
+  }
 }

@@ -20,17 +20,10 @@ export default [
     }
   },
   {
-    path: ':gender',
+    path: ':gender/:category',
     loadComponent: () => import('./filter/product-filter'),
     data: {
       mode: 'category'
-    },
-    children: [
-      {
-        path: '**',
-        pathMatch: 'full',
-        loadComponent: () => import('./filter/product-filter')
-      }
-    ]
+    }
   }
 ] satisfies import('@angular/router').Routes;
