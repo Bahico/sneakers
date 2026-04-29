@@ -15,6 +15,7 @@ import {
 import { rxResource } from "@angular/core/rxjs-interop";
 import { of } from "rxjs";
 import { RouterLink } from "@angular/router";
+import { Gender } from "@/models/gender";
 
 @Component({
     templateUrl: 'product-categories.html',
@@ -33,11 +34,12 @@ export class ProductCategories {
     readonly canScrollPrev = signal(false);
     readonly canScrollNext = signal(false);
 
-    parent_slug = input.required<string>();
+    parent_category = input.required<string>();
+    gender = input.required<string>();
 
     readonly categories = rxResource<CategoryListDetailModel[], string>({
-        params: () => this.parent_slug(),
-        stream: ({ params }) => params ? this.productService.categories({ parent_slug: params }) : of([]),
+        params: () => this.parent_category(),
+        stream: ({ params }) => params ? this.productService.categories({ parent_category_name_search: params }) : of([]),
         defaultValue: [],
     });
 

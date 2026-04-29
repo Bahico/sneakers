@@ -19,5 +19,6 @@ export interface CategoryListDetailModel {
   products_count: number;
   is_active: boolean;
   sort_order: number;
+  name_search: string;
   children: CategoryListDetailModel[];
 }

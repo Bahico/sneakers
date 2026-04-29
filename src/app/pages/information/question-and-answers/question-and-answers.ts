@@ -27,7 +27,10 @@ export default class QuestionAndAnswers {
         },
         {
             name: "Как выбрать правильный размер?",
-            description: `Для обуви: воспользуйтесь инструкцией на странице <a href="https://sneakerteam.ru/information/choose-size" target="_blank" class="text-primary underline hover:text-primary-hover">https://sneakerteam.ru/information/choose-size</a><br>Для одежды: напишите менеджеру для консультации в любую удобную соц.сеть: Telegram, Whatsapp, +7 917 045 08 92`
+            description: `Для обуви: воспользуйтесь инструкцией на странице <a href="https://sneakerteam.ru/information/choose-size" target="_blank" class="text-primary underline hover:text-primary-hover">https://sneakerteam.ru/information/choose-size</a><br>Для одежды: напишите менеджеру для консультации в любую удобную соц.сеть: 
+            <a href="https://t.me/sneaker_team_bot" target="_blank" class="text-primary underline hover:text-primary-hover">Telegram</a>, 
+            <a href="https://wa.me/79170450892" target="_blank" class="text-primary underline hover:text-primary-hover">Whatsapp</a>, 
+            <a href="tel:+79170450892" target="_blank" class="text-primary underline hover:text-primary-hover">+7 917 045 08 92</a>`
         },
         {
             name: "Можно ли вернуть товар, если он не подошел по размеру?",

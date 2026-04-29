@@ -18,35 +18,35 @@
 </div>
 
 
-<div class="border-b border-gray-200 pb-4 mt-4">
+<div class="border-b border-gray-200 pb-4 mt-4" [formGroup]="form">
   <label for="telegram_name" class="md:text-lg">Ваш ник в Telegram</label>
   <p class="text-gray-500 text-xs md:text-sm mb-2">На этот Telegram аккаунт мы вышлем вам сам сертификат в формате PDF</p>
   <div class="sn-control">
     <span class="sn-control-icon">{{ '@' }}</span>
-    <input type="text" id="telegram_name" placeholder="">
+    <input type="text" id="telegram_name" formControlName="telegram_nickname" placeholder="">
   </div>
 </div>
 
-<div class="border-b border-gray-200 pb-4 mt-4">
+<div class="border-b border-gray-200 pb-4 mt-4" [formGroup]="form">
   <label for="fullName" class="md:text-lg">Имя и Фамилия получателя</label>
   <p class="text-gray-500 text-xs md:text-sm mb-2">Как зовут человека, кому вы подарите сертификат? Это имя будет указано на сертификате.</p>
   <div class="sn-control">
     <span class="sn-control-icon">{{ '@' }}</span>
-    <input type="text" id="fullName" placeholder="">
+    <input type="text" id="fullName" formControlName="fio" placeholder="">
   </div>
 </div>
 
-<div class="border-b border-gray-200 pb-4 mt-4">
+<div class="border-b border-gray-200 pb-4 mt-4" [formGroup]="form">
   <label for="telegram_username" class="md:text-lg">Telegram Username получателя</label>
   <p class="text-gray-500 text-xs md:text-sm mb-2">Username нужен будет нам для идентификации получателя, чтобы мы смогли потом активировать его сертификат и начислить ему сумму на баланс.</p>
   <div class="sn-control">
     <span class="sn-control-icon">{{ '@' }}</span>
-    <input type="text" id="telegram_username" placeholder="">
+    <input type="text" id="telegram_username" formControlName="telegram_username" placeholder="">
   </div>
 </div>
 
 <div class="flex justify-center mt-4">
-  <button class="sn-btn w-70 !py-3">
+  <button class="sn-btn w-70 !py-3" (click)="onSubmit()">
     Заказать за {{context.data | tuiFormatNumber | async}} ₽
   </button>
 </div>

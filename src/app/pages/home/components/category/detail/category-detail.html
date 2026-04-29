@@ -8,18 +8,21 @@
     </span>
   </div>
 
-  <div class="flex">
-    <button (click)="previous()" class="min-h-full min-w-8 bg-white items-center justify-center hidden md:flex text-2xl cursor-pointer">
+  <div class="flex w-full">
+    <button (click)="previous()"
+      class="min-h-full min-w-8 bg-white items-center justify-center hidden md:flex text-2xl cursor-pointer">
       <i class="fa fa-angle-left" aria-hidden="true"></i>
     </button>
 
     <div #scrollContainer class="flex overflow-x-auto overflow-y-hidden gap-2 hidden-scrollbar mt-4">
       @for (product of products(); track $index) {
-        <product-list-detail class="min-w-1/3 w-1/3 md:min-w-1/6 md:w-1/6" [detail]="product" (detailChange)="detailChange($event, $index)" [onHome]="true" />
+      <product-list-detail class="min-w-1/3 w-1/3 md:min-w-1/6 md:w-1/6" [detail]="product"
+        (detailChange)="detailChange($event, $index)" [onHome]="true" />
       }
     </div>
 
-    <button (click)="next()" class="min-h-full min-w-8 bg-white items-center justify-center hidden md:flex text-2xl cursor-pointer">
+    <button (click)="next()"
+      class="min-h-full ml-auto min-w-8 bg-white items-center justify-center hidden md:flex text-2xl cursor-pointer">
       <i class="fa fa-angle-right" aria-hidden="true"></i>
     </button>
   </div>

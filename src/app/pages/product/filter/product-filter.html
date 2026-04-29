@@ -6,14 +6,16 @@
     <a *tuiItem tuiLink routerLink="/">
       {{ genderName() }}
     </a>
+    @if (caption()) {
     <a *tuiItem tuiLink routerLink="/" class="text-primary!">
       {{ caption() }}
     </a>
+    }
   </tui-breadcrumbs>
 
   <h1 class="text-2xl font-semibold mb-2">{{caption()}}</h1>
 
-  <product-categories [parent_slug]="categoryName()" />
+  <product-categories [gender]="gender" [parent_category]="categoryName()" />
 
   @if (mode() === 'search') {
   <form class="flex w-full py-2 px-2 md:px-4 border-b border-primary justify-between mb-6" (ngSubmit)="initialLoad()">
