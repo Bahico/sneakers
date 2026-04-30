@@ -278,7 +278,7 @@ export default class BasketCreate {
           clearInterval(polling);
           this.cartService.loadCart(true);
           this.authService.getCoins(true);
-          this.router.navigate(['/profile', 'orders']);
+          this.router.navigate(['/basket', 'success']);
         }
       }, 500);
 

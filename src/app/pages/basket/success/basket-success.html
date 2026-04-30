@@ -1,0 +1,55 @@
+<div class="container">
+    <tui-breadcrumbs>
+        <a tuiLink routerLink="/">Главная</a>
+        <a tuiLink routerLink="/catalog">Каталог</a>
+        <a tuiLink routerLink="/basket">Оплата</a>
+        <span tuiItem>Успешно</span>
+    </tui-breadcrumbs>
+    <div class="flex flex-col gap-4 mt-2">
+        <h1 class="text-3xl font-semibold">Заказ успешно сформирован !</h1>
+        <p>
+            Вы можете просматривать историю заказов в
+            <a routerLink="/profile" class="text-primary">Личном кабинете</a> открыв
+            <a routerLink="/profile/orders" class="text-primary">История заказов</a>.
+        </p>
+        <p class="max-w-150">
+            Если у вас возникнут какие-либо вопросы, или нужна консультация по выбранному размеру,
+            пожалуйста, свяжитесь с нами:
+        </p>
+        <div class="flex flex-col gap-2">
+            <a href="https://t.me/sneaker_team_bot"
+                class="max-w-80 w-full rounded-md border border-primary text-primary relative h-10 items-center flex justify-center">
+                <div>Telegram</div>
+                <svg-icon key="telegram" class="absolute top-1/2 -translate-y-1/2 right-2" />
+            </a>
+            <a href="https://t.me/sneaker_team_bot"
+                class="max-w-80 w-full rounded-md border border-primary text-primary relative h-10 items-center flex justify-center">
+                <div>WhatsApp</div>
+                <svg-icon key="whatsapp" class="absolute top-1/2 -translate-y-1/2 right-2" />
+            </a>
+            <a href="tel:+79170450892"
+                class="max-w-80 w-full rounded-md border border-primary text-primary relative h-10 items-center flex justify-center">
+                <div>+7 917 045 08 92</div>
+                <svg-icon key="call" class="absolute top-1/2 -translate-y-1/2 right-2" />
+            </a>
+        </div>
+
+        <span class="mt-4 font-semibold text-lg">Подписывайтесь на наши соц. сети !</span>
+        <div class="flex gap-4 items-center">
+            <a href="https://t.me/sneaker_team_bot" target="_blank" class="cursor-pointer">
+                <svg-icon key="telegram-circle" fontSize="32px" />
+            </a>
+            <a href="https://www.youtube.com/@sneakerteamru" target="_blank" class="cursor-pointer">
+                <svg-icon key="youtube" fontSize="32px" />
+            </a>
+            <a href="https://www.instagram.com/sneakerteam.ru?igsh=NGxpcm96NWszMm15" target="_blank"
+                class="cursor-pointer">
+                <svg-icon key="instagram" fontSize="32px" />
+            </a>
+        </div>
+        <p class="text-gray-600 text-xs max-w-100">*Meta Platforms Ins. признана экстремистской организацией и запрещена
+            в РФ</p>
+
+        <p class="text-lg">Спасибо за покупки в нашем сервисе доставки оригинальных товар !</p>
+    </div>
+</div>
