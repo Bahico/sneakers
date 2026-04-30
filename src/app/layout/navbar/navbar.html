@@ -1,56 +1,57 @@
 <div class="container hidden md:flex justify-between items-center py-4 gap-4">
   <div class="flex gap-10 items-center md:w-1/2 xl:w-[80%]!">
-    <img ngSrc="images/logo/logo.png" alt="site logo" routerLink="/" class="object-contain cursor-pointer" width="98"
-      height="40">
+    <a routerLink="/" class="object-contain cursor-pointer">
+      <img ngSrc="images/logo/logo.png" alt="site logo" class="object-contain" width="98" height="40">
+    </a>
     <div class="flex gap-6 overflow-x-auto">
-      <span [routerLink]="['product', gender(), 'Обувь']" class="text-base font-medium color-base cursor-pointer">
+      <a [routerLink]="['product', gender(), 'Обувь']" class="text-base font-medium color-base cursor-pointer">
         Обувь
-      </span>
-      <span class="text-base font-medium color-base cursor-pointer" [routerLink]="['product', gender(), 'Одежда']">
+      </a>
+      <a class="text-base font-medium color-base cursor-pointer" [routerLink]="['product', gender(), 'Одежда']">
         Одежда
-      </span>
-      <span class="text-base font-medium color-base cursor-pointer" [routerLink]="['product', gender(), 'Аксессуары']">
+      </a>
+      <a class="text-base font-medium color-base cursor-pointer" [routerLink]="['product', gender(), 'Аксессуары']">
         Аксессуары
-      </span>
-      <span class="text-base font-medium color-base cursor-pointer" routerLink="/information/reviews">Отзывы</span>
-      <span class="text-base font-medium color-base cursor-pointer text-nowrap"
-        routerLink="/information/payment">Доставка и оплата</span>
-      <span class="text-base font-medium color-base cursor-pointer" routerLink="/blogs">Блог</span>
-      <span class="text-base font-medium color-base cursor-pointer" routerLink="/information/contact">Контакты</span>
+      </a>
+      <a class="text-base font-medium color-base cursor-pointer" routerLink="/information/reviews">Отзывы</a>
+      <a class="text-base font-medium color-base cursor-pointer text-nowrap"
+        routerLink="/information/payment">Доставка и оплата</a>
+      <a class="text-base font-medium color-base cursor-pointer" routerLink="/blogs">Блог</a>
+      <a class="text-base font-medium color-base cursor-pointer" routerLink="/information/contact">Контакты</a>
     </div>
   </div>
 
   <div class="flex gap-2 items-center w-1/2 xl:w-[20%]! justify-end">
-    <div class="py-1! cursor-pointer" [routerLink]="['/product', 'search']" (click)="goBack()">
+    <a class="py-1! cursor-pointer" [routerLink]="['/product', 'search']" (click)="goBack()">
       <icon-list [icon]="isSearchPage() ? 'close-sm' : 'search'" class="sn-control-icon max-h-8" />
-    </div>
+    </a>
     @if (favoritesCount()) {
     <tui-badged-content>
       <tui-badge-notification size="s" tuiSlot="top">
         {{ favoritesCount() }}
       </tui-badge-notification>
-      <div class="py-1 px-2 cursor-pointer" routerLink="/favorites">
+      <a class="py-1 px-2 cursor-pointer" routerLink="/favorites">
         <icon-list icon="favorite" />
-      </div>
+      </a>
     </tui-badged-content>
     } @else {
-    <div class="py-1 px-2 cursor-pointer" routerLink="/favorites">
+    <a class="py-1 px-2 cursor-pointer" routerLink="/favorites">
       <icon-list icon="favorite" />
-    </div>
+    </a>
     }
     @if (basketProductCount()) {
     <tui-badged-content>
       <tui-badge-notification size="s" tuiSlot="top">
         {{ basketProductCount() || 1 }}
       </tui-badge-notification>
-      <div class="py-1 px-2 cursor-pointer" routerLink="/basket">
+      <a class="py-1 px-2 cursor-pointer" routerLink="/basket">
         <icon-list icon="basket-sm" />
-      </div>
+      </a>
     </tui-badged-content>
     } @else {
-    <div class="py-1 px-2 cursor-pointer" routerLink="/basket">
+    <a class="py-1 px-2 cursor-pointer" routerLink="/basket">
       <icon-list icon="basket-sm" />
-    </div>
+    </a>
     }
     @if (isAuthed()) {
     <div class="text-xl cursor-pointer rounded-md py-1 px-2" [ngClass]="{'bg-black text-white': open}"
@@ -66,18 +67,18 @@
 
     <ng-template #dropdownContent>
       <div class="grid grid-cols-1 flex-col gap-2 w-50 p-2">
-        <div class="menu-item" routerLink="/profile/main">
+        <a class="menu-item" routerLink="/profile/main">
           Управление профилем
-        </div>
-        <div class="menu-item" routerLink="/profile/orders">
+        </a>
+        <a class="menu-item" routerLink="/profile/orders">
           Заказы
-        </div>
-        <div class="menu-item" routerLink="/profile/referrals">
+        </a>
+        <a class="menu-item" routerLink="/profile/referrals">
           Реферальная ссылка
-        </div>
-        <div class="menu-item border-gray-400!" routerLink="/profile/loyalty-program">
+        </a>
+        <a class="menu-item border-gray-400!" routerLink="/profile/loyalty-program">
           Программа лояльности
-        </div>
+        </a>
         <div class="menu-item border-none" (click)="logout()">
           Выйти
         </div>
@@ -98,29 +99,29 @@
       Добавить в корзину
       }
     </button>
-    <div (click)="openMobileNavbar.set(false)" class="flex flex-col items-center navbar-item" routerLink="/home"
+    <a (click)="openMobileNavbar.set(false)" class="flex flex-col items-center navbar-item" routerLink="/home"
       routerLinkActive="active">
       <icon-list class="h-7 unactive" icon="home" />
       <icon-list class="h-7 active" icon="home-active" />
       <span class="text-xs">Главная</span>
-    </div>
-    <div (click)="openMobileNavbar.set(false)" class="flex flex-col items-center navbar-item"
+    </a>
+    <a (click)="openMobileNavbar.set(false)" class="flex flex-col items-center navbar-item"
       [routerLink]="['product', 'search']" routerLinkActive="active">
       <icon-list class="h-7 unactive" icon="search" />
       <icon-list class="h-7 active" icon="search-active" />
       <span class="text-xs">Поиск</span>
-    </div>
+    </a>
     @if (basketProductCount()) {
     <tui-badged-content>
       <tui-badge-notification size="s" tuiSlot="top">
         {{ basketProductCount() }}
       </tui-badge-notification>
-      <div routerLink="/basket" (click)="openMobileNavbar.set(false)" routerLinkActive="active"
+      <a routerLink="/basket" (click)="openMobileNavbar.set(false)" routerLinkActive="active"
         class="flex flex-col items-center text-xl navbar-item">
         <icon-list class="h-7 flex items-center unactive" icon="basket" />
         <icon-list class="h-7 flex items-center active" icon="basket-active" />
         <span class="text-xs text-primary">Корзина</span>
-      </div>
+      </a>
     </tui-badged-content>
     } @else {
     <div class="flex flex-col items-center text-xl navbar-item">
@@ -129,12 +130,12 @@
     </div>
     }
     @if (isAuthed()) {
-    <div class="flex flex-col items-center navbar-item" (click)="openMobileNavbar.set(false)" routerLink="/profile"
+    <a class="flex flex-col items-center navbar-item" (click)="openMobileNavbar.set(false)" routerLink="/profile"
       routerLinkActive="active">
       <icon-list class="h-7 unactive" icon="profile" />
       <icon-list class="h-7 active" icon="profile-active" />
       <span class="text-xs">Профиль</span>
-    </div>
+    </a>
     } @else {
     <div class="flex flex-col items-center" (click)="openAuthentication()">
       <icon-list class="h-7" icon="profile" />
@@ -158,25 +159,27 @@
   [class.translate-x-full]="!openMobileNavbar()">
   <div class="w-full flex justify-between items-center px-10">
     <svg-icon key="right" class="rotate-180" (click)="openMobileNavbar.set(false)" />
-    <img ngSrc="images/logo/logo.png" alt="site logo" routerLink="/" class="object-contain cursor-pointer w-20 h-10"
-      width="1047" height="420">
+    <a routerLink="/" class="object-contain cursor-pointer w-20 h-10">
+      <img ngSrc="images/logo/logo.png" alt="site logo" class="object-contain w-20 h-10"
+        width="1047" height="420">
+    </a>
     <span></span>
   </div>
 
   <div class="flex flex-col gap-4 mt-4 px-6 pb-4 mx-4 text-lg border-b border-gray-200">
-    <span (click)="openMobileNavbar.set(false)" [routerLink]="['product', gender(), 'footwear']">Обувь</span>
-    <span (click)="openMobileNavbar.set(false)" [routerLink]="['product', gender(), 'apparel']">Одежда</span>
-    <span (click)="openMobileNavbar.set(false)" [routerLink]="['product', gender(), 'accessories']">Аксессуары</span>
-    <span (click)="openMobileNavbar.set(false)" routerLink="/information/reviews">Отзывы</span>
-    <span (click)="openMobileNavbar.set(false)" routerLink="/information/payment">Доставка и оплата</span>
-    <span (click)="openMobileNavbar.set(false)" routerLink="/blogs">Блог</span>
-    <span class="cursor-pointer" (click)="openMobileNavbar.set(false)" routerLink="/information/contact">Контакты</span>
+    <a (click)="openMobileNavbar.set(false)" [routerLink]="['product', gender(), 'footwear']">Обувь</a>
+    <a (click)="openMobileNavbar.set(false)" [routerLink]="['product', gender(), 'apparel']">Одежда</a>
+    <a (click)="openMobileNavbar.set(false)" [routerLink]="['product', gender(), 'accessories']">Аксессуары</a>
+    <a (click)="openMobileNavbar.set(false)" routerLink="/information/reviews">Отзывы</a>
+    <a (click)="openMobileNavbar.set(false)" routerLink="/information/payment">Доставка и оплата</a>
+    <a (click)="openMobileNavbar.set(false)" routerLink="/blogs">Блог</a>
+    <a class="cursor-pointer" (click)="openMobileNavbar.set(false)" routerLink="/information/contact">Контакты</a>
   </div>
-  <span class="flex gap-2 items-center px-6 py-4 mx-4 text-lg cursor-pointer" routerLink="/favorites"
+  <a class="flex gap-2 items-center px-6 py-4 mx-4 text-lg cursor-pointer" routerLink="/favorites"
     (click)="openMobileNavbar.set(false)">
     Избранные
     <img alt="" [src]="'@tui.heart' | tuiIcon" />
-  </span>
+  </a>
 
   <div class="bg-gray-200 rounded-lg p-2 mx-10 mt-4 flex gap-2 relative">
     <img ngSrc="images/logo/poizon.png" class="object-cover w-10 h-10 rounded-lg" alt="" height="92" width="92">

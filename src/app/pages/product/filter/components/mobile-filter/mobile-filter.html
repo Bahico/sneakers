@@ -1,66 +1,60 @@
 <div class="flex w-full justify-between items-center pb-4">
-  <icon-list icon="right-arrow" class="text-primary text-2xl" (click)="back()"/>
+  <icon-list icon="right-arrow" class="text-primary text-2xl" (click)="back()" />
   <span class="text-lg font-semibold">
     @switch (typeView()) {
-      @case ('brand') {
-        Бренд
-      }
-      @case ('size') {
-        Размер
-      }
-      @default {
-        Фильтры
-      }
+    @case ('brand') {
+    Бренд
+    }
+    @case ('size') {
+    Размер
+    }
+    @default {
+    Фильтры
+    }
     }
   </span>
   <span class="w-2"></span>
 </div>
 
 @switch (typeView()) {
-  @case ('brand') {
-    <product-filter-brand/>
+@case ('brand') {
+<product-filter-brand />
 
-    <button class="sn-btn w-full !py-3 mt-4">Применить фильтр</button>
+<button class="sn-btn w-full !py-3 mt-4" (click)="close()">Применить фильтр</button>
 
-  }
-  @case ('size') {
-    <product-filter-mobile-size/>
-
-    <button class="sn-btn w-full !py-3 mt-4">Применить фильтр</button>
-
-  }
-  @default {
-    <div class="flex flex-col gap-8">
-      <div class="border-gray-200 border-b border-t pb-4 pt-4 flex flex-col gap-2">
-        <h2 class="text-lg font-semibold">Сортировка</h2>
-        @for (currentSort of sorts; track currentSort) {
-          <label tuiLabel>
-            <input
-              tuiRadio
-              type="radio"
-              [value]="currentSort.key"
-              [formControl]="productFilterStore.filter.controls.sort_by"
-              size="s"
-            />
-            {{ currentSort.name }}
-          </label>
-        }
-      </div>
-
-      <product-filter-price/>
-
-      <div class="flex justify-between items-center" (click)="typeView.set('size')">
-        <span class="text-base font-semibold">Размер</span>
-        <icon-list icon="right-arrow" class="rotate-180"/>
-      </div>
-
-      <div class="flex justify-between items-center" (click)="typeView.set('brand')">
-        <span class="text-base font-semibold">Бренд</span>
-        <icon-list icon="right-arrow" class="rotate-180"/>
-      </div>
-
-      <button class="sn-btn !py-3">Показать 309 товаров</button>
-    </div>
-  }
 }
+@case ('size') {
+<product-filter-mobile-size />
 
+<button class="sn-btn w-full !py-3 mt-4" (click)="close()">Применить фильтр</button>
+
+}
+@default {
+<div class="flex flex-col gap-8">
+  <div class="border-gray-200 border-b border-t pb-4 pt-4 flex flex-col gap-2">
+    <h2 class="text-lg font-semibold">Сортировка</h2>
+    @for (currentSort of sorts; track currentSort) {
+    <label tuiLabel>
+      <input tuiRadio type="radio" [value]="currentSort.key" [formControl]="productFilterStore.filter.controls.sort_by"
+        size="s" />
+      {{ currentSort.name }}
+    </label>
+    }
+  </div>
+
+  <product-filter-price />
+
+  <div class="flex justify-between items-center" (click)="typeView.set('size')">
+    <span class="text-base font-semibold">Размер</span>
+    <icon-list icon="right-arrow" class="rotate-180" />
+  </div>
+
+  <div class="flex justify-between items-center" (click)="typeView.set('brand')">
+    <span class="text-base font-semibold">Бренд</span>
+    <icon-list icon="right-arrow" class="rotate-180" />
+  </div>
+
+  <button class="sn-btn !py-3">Показать 309 товаров</button>
+</div>
+}
+}

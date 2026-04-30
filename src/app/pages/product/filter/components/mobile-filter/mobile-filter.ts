@@ -1,13 +1,13 @@
-import {Component, inject, input, output, signal} from '@angular/core';
-import {IconComponent} from '@/components/icon/icon';
-import {ProductFilterPrice} from '@/product/filter/components/price/product-filter-price';
-import {ProductFilterBrand} from '@/product/filter/components/brand/product-filter-brand';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {TuiLabel} from '@taiga-ui/core';
-import {TuiRadioComponent} from '@taiga-ui/kit';
-import {SORT} from '@/product/filter/product-filter.constans';
-import {ProductFilterMobileSize} from '@/product/filter/components/mobile-size/product-filter-mobile-size';
-import {ProductFilterStore} from '@/product/filter/product-filter-store';
+import { Component, inject, input, output, signal } from '@angular/core';
+import { IconComponent } from '@/components/icon/icon';
+import { ProductFilterPrice } from '@/product/filter/components/price/product-filter-price';
+import { ProductFilterBrand } from '@/product/filter/components/brand/product-filter-brand';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TuiLabel } from '@taiga-ui/core';
+import { TuiRadioComponent } from '@taiga-ui/kit';
+import { SORT } from '@/product/filter/product-filter.constans';
+import { ProductFilterMobileSize } from '@/product/filter/components/mobile-size/product-filter-mobile-size';
+import { ProductFilterStore } from '@/product/filter/product-filter-store';
 
 @Component({
   templateUrl: 'mobile-filter.html',
@@ -41,7 +41,7 @@ export class MobileFilter {
 
   typeView = signal<'size' | 'brand' | null>(null);
 
-  protected identityMatcher = (a: {name: string; key: string}, b: {name: string; key: string}): boolean =>
+  protected identityMatcher = (a: { name: string; key: string }, b: { name: string; key: string }): boolean =>
     a?.key === b?.key;
 
   back() {
@@ -50,5 +50,10 @@ export class MobileFilter {
       return;
     }
     this.openFilterChange.emit(false);
+  }
+
+  close() {
+    this.openFilterChange.emit(false);
+    this.typeView.set(null);
   }
 }

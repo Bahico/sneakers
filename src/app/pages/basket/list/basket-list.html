@@ -21,7 +21,7 @@
         <div class="p-4 border flex flex-col gap-3 w-full border-gray-200 rounded-xl">
           @for (cart of carts().items; track cart.id) {
             <div class="w-full flex gap-4 border-b border-gray-200 last:border-b-0 pb-4 last:pb-0 relative h-40">
-              <div
+              <a
                 routerLink="/product/detail/{{cart.product.id}}"
                 class="w-40 h-full rounded-xl bg-gray-200 px-2 cursor-pointer"
               >
@@ -31,7 +31,7 @@
                   class="flex w-full h-full object-contain"
                   alt=""
                 >
-              </div>
+              </a>
 
               <div class="flex flex-col justify-between w-full relative">
                 <div class="flex flex-col">
@@ -86,9 +86,9 @@
             <span class="text-base md:text-lg lg:text-2xl font-semibold">{{carts().total_price | tuiFormatNumber | async }} p.</span>
           </div>
 
-          <button class="sn-btn w-full mt-4 text-sm md:text-lg lg:text-xl" routerLink="../create">
+          <a class="sn-btn w-full mt-4 text-sm md:text-lg lg:text-xl" routerLink="../create">
             Оформить заказ
-          </button>
+          </a>
         </div>
       </div>
     </div>
@@ -101,9 +101,9 @@
         <span class="text-primary">Добавьте товар, нажав кнопку «В корзину» в карточке товара</span>
       </div>
 
-      <button class="sn-btn" routerLink="/">
+      <a class="sn-btn" routerLink="/">
         На главную
-      </button>
+      </a>
     </div>
   }
 </div>
