@@ -36,9 +36,10 @@ export class GiftOrder {
       amount: this.context.data,
     };
 
-    this.http.post(getEndpoint('orders/payment/certifacte'), body)
-      .subscribe(() => {
+    this.http.post<{ payment_url: string }>(getEndpoint('orders/payment/certifacte'), body)
+      .subscribe((res) => {
         this.close();
+        window.open(res.payment_url, '_blank');
       });
   }
 
