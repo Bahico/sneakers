@@ -24,12 +24,12 @@ import {
 } from '@angular/core';
 import { rxResource, takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink, UrlSegment } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, RouterLink, UrlSegment } from '@angular/router';
 import { TuiActiveZone, TuiItem, TuiObscured } from '@taiga-ui/cdk';
 import { TuiDropdown, TuiLink } from '@taiga-ui/core';
 import { TuiBreadcrumbs, TuiRadioComponent } from '@taiga-ui/kit';
 import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
-import { combineLatest, debounceTime, filter, map, of, Subject, takeUntil } from 'rxjs';
+import { combineLatest, debounceTime, filter, finalize, map, of, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'product-filter',
@@ -66,12 +66,16 @@ export default class ProductFilter implements OnInit, OnDestroy {
 
   protected readonly throttle = 200;
   protected readonly scrollDistance = 2;
+  protected readonly pageSize = 20;
   protected readonly sorts = SORT;
 
   protected readonly caption = signal('');
   protected readonly genderName = signal('');
   protected readonly currentPage = signal(1);
   protected readonly openFilter = signal(false);
+  protected readonly loading = signal(false);
+  protected readonly initialLoading = signal(false);
+  protected readonly hasMore = signal(true);
 
   protected categoryName = signal<string>(null);
   private gender$ = signal<Gender>('male');
@@ -98,6 +102,8 @@ export default class ProductFilter implements OnInit, OnDestroy {
     afterNextRender(() => {
       this.mode.set(this.route.snapshot.data['mode']);
       this.search.set(this.route.snapshot.queryParams['search'] || '');
+      this.loadCategory();
+      this.initialLoad();
       setTimeout(() => {
         this.timeStable.set(true);
       }, 1000)
@@ -134,6 +140,7 @@ export default class ProductFilter implements OnInit, OnDestroy {
   subscribeEvents() {
     this.router.events
       .pipe(
+        filter((event): event is NavigationEnd => event instanceof NavigationEnd),
         takeUntilDestroyed(this.destroyRef),
         debounceTime(500)
       )
@@ -157,9 +164,12 @@ export default class ProductFilter implements OnInit, OnDestroy {
 
   initialLoad() {
     this.currentPage.set(1);
+    this.hasMore.set(true);
     this.products.set([]);
     this.productRequestDestroyer.next();
-    this.loadProduct();
+    this.loading.set(false);
+    this.initialLoading.set(false);
+    this.loadProduct(true);
   }
 
   loadCategory() {
@@ -171,12 +181,32 @@ export default class ProductFilter implements OnInit, OnDestroy {
     this.getSizeTables();
   }
 
-  loadProduct() {
+  loadProduct(initial = false) {
+    if (this.loading()) {
+      return;
+    }
+
+    this.loading.set(true);
+    this.initialLoading.set(initial);
+
     this.productService
       .query(this.rowFilter)
-      .pipe(takeUntil(this.productRequestDestroyer), takeUntilDestroyed(this.destroyRef))
+      .pipe(
+        takeUntil(this.productRequestDestroyer),
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => {
+          this.loading.set(false);
+          this.initialLoading.set(false);
+        })
+      )
       .subscribe(res => {
-        this.products.update(items => [...items, ...res.products]);
+        this.hasMore.set(res.products.length >= this.pageSize);
+
+        if (this.currentPage() === 1) {
+          this.products.set(res.products);
+        } else {
+          this.products.update(items => [...items, ...res.products]);
+        }
 
         if (this.productFilterStore.maxPrice() === 0) {
           this.productFilterStore.maxPrice.set(res.max_price);
@@ -189,8 +219,8 @@ export default class ProductFilter implements OnInit, OnDestroy {
     const rawFilter = this.productFilterStore.filter.getRawValue();
     const filter = {
       page: this.currentPage(),
-      limit: 20,
-      category_name_search: this.categoryName(),
+      limit: this.pageSize,
+      category_name_search: this.categoryNameSearch(),
       fit: this.genderApposite?.toUpperCase(),
       ...rawFilter,
       min_price: rawFilter.min_max_price?.[0],
@@ -212,6 +242,28 @@ export default class ProductFilter implements OnInit, OnDestroy {
   get gender() {
     const gender = this.gender$();
     return ((gender === 'male' || gender === 'men') ? 'men' : gender === 'female' || gender === 'women' ? 'women' : 'products');
+  }
+
+  protected categoryNameSearch() {
+    const categoryName = this.categoryName();
+    const categoryNameSearchMap: Record<string, string> = {
+      'Сланцы, сандалии, сабо, мюле': 'Тапки',
+    };
+
+    return categoryNameSearchMap[categoryName] ?? categoryName;
+  }
+
+  protected categorySlug() {
+    const categoryName = this.categoryName();
+    const categorySlugMap: Record<string, string> = {
+      'Обувь': 'footwear',
+      'Одежда': 'apparel',
+      'Аксессуары': 'accessories',
+      'Кроссовки': 'footwear/sneakers',
+      'Сланцы, сандалии, сабо, мюле': 'footwear/slippers',
+    };
+
+    return categorySlugMap[categoryName] ?? categoryName;
   }
 
   get genderApposite() {
@@ -244,6 +296,14 @@ export default class ProductFilter implements OnInit, OnDestroy {
   }
 
   nextPage() {
+    if (this.loading()) {
+      return;
+    }
+
+    if (!this.hasMore()) {
+      return;
+    }
+
     this.currentPage.update(page => page + 1);
     this.loadProduct();
   }
@@ -260,7 +320,7 @@ export default class ProductFilter implements OnInit, OnDestroy {
     this.productService
       .brands({
         limit: 100,
-        category_name_search: this.categoryName()
+        category_name_search: this.categoryNameSearch()
       })
       // Use takeUntilDestroyed only - won't be cancelled by filter changes
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -272,7 +332,7 @@ export default class ProductFilter implements OnInit, OnDestroy {
   getSizeTables() {
     this.productService
       .sizes({
-        category_slug: this.categoryName()
+        category_slug: this.categorySlug()
       })
       // Use takeUntilDestroyed only - won't be cancelled by filter changes
       .pipe(takeUntilDestroyed(this.destroyRef))

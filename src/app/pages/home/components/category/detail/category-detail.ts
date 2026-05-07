@@ -23,8 +23,34 @@ export class CategoryDetail implements OnInit {
   ngOnInit() {
     this.productService.lastSold({ category_search: this.category_search() })
       .subscribe(products => {
-        this.products.set(products);
+        this.products.set(products.map((product: any) => this.mapLastSoldProduct(product)));
       });
+  }
+
+  private mapLastSoldProduct(product: any): ProductListDetailModel {
+    const size = product.size ?? {};
+
+    return {
+      id: product.product_id ?? product.id ?? product.product_article ?? product.order_number ?? '',
+      slug: product.product_article ?? '',
+      name: product.product_name ?? '',
+      brand: { id: '', name: product.brand_name ?? '' } as any,
+      availability: true,
+      category: { id: '', full_slug: '', name: product.product_article ?? '' },
+      fit: 'MALE',
+      discount: false,
+      returnable: true,
+      large_sized: false,
+      plashka: false,
+      shoplaza: false,
+      is_favorite: false,
+      price: product.price_per_item ?? 0,
+      article: product.product_article ?? '',
+      split: product.price_per_item ? Math.round(product.price_per_item / 2) : 0,
+      images: product.product_image_url ? [product.product_image_url] : [],
+      main_variant: { size } as any,
+      size_table: Object.keys(size).length ? [size] : [],
+    } as ProductListDetailModel;
   }
 
   previous() {
