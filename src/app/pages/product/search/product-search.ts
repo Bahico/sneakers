@@ -1,12 +1,12 @@
-import {afterNextRender, Component, DestroyRef, inject, signal} from '@angular/core';
-import {IconComponent} from '@/components/icon/icon';
-import {ProductListDetail} from '@/components/product-list-detail/product-list-detail';
-import {ProductListDetailModel} from '@/models/product.model';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {ProductService} from '@/services/product.service';
-import {FormsModule} from '@angular/forms';
-import {debounceTime, Subject, takeUntil} from 'rxjs';
-import {Router} from '@angular/router';
+import { afterNextRender, Component, DestroyRef, inject, signal } from '@angular/core';
+import { IconComponent } from '@/components/icon/icon';
+import { ProductListDetail } from '@/components/product-list-detail/product-list-detail';
+import { ProductListDetailModel } from '@/models/product.model';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ProductService } from '@/services/product.service';
+import { FormsModule } from '@angular/forms';
+import { debounceTime, Subject, takeUntil } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   templateUrl: 'product-search.html',
@@ -24,7 +24,7 @@ export default class ProductSearch {
 
   search = signal<string>('');
   products = signal<ProductListDetailModel[]>([]);
-  productsByName = signal<{name: string}[]>([]);
+  productsByName = signal<{ name: string }[]>([]);
   frequentlySearched = signal<ProductListDetailModel[]>([]);
 
   private readonly destroy$ = new Subject<void>();
@@ -51,7 +51,7 @@ export default class ProductSearch {
 
   loadFrequentlySearched() {
     this.productService
-      .frequentlySearched({limit: 20})
+      .frequentlySearched({ limit: 20 })
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(res => {
         this.frequentlySearched.set(res.products);
@@ -62,7 +62,7 @@ export default class ProductSearch {
 
     this.productService
       .getProductByName(this.search())
-      .pipe(takeUntilDestroyed(this.destroyRef))
+      .pipe(takeUntilDestroyed(this.destroyRef), takeUntil(this.searchEvent$))
       .subscribe(res => {
         this.productsByName.set(res);
       })
@@ -98,6 +98,6 @@ export default class ProductSearch {
   }
 
   navigateToSearchPage(search?: string) {
-    this.router.navigate(['/product/search-page'], {queryParams: {search: search || this.search()}});
+    this.router.navigate(['/product/search-page'], { queryParams: { search: search || this.search() } });
   }
 }

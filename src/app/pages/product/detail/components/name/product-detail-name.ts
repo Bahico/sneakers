@@ -1,13 +1,13 @@
-import {Component, computed, inject} from '@angular/core';
-import {ProductDetailStore} from '@/product/detail/services/product-detail-store';
-import {AsyncPipe} from '@angular/common';
-import {TuiFormatNumberPipe} from '@taiga-ui/core';
-import {Feedback} from '@/product/detail/components/feedback/feedback';
-import {PolymorpheusComponent} from '@taiga-ui/polymorpheus';
-import {BuyCoin} from '@/product/detail/components/buy-coin/buy-coin';
-import {AccountStore} from '@/account';
-import {AuthenticationOpen} from '@/components/authentication/authentication-open';
-import {DialogService} from '@/services/dialog.service';
+import { Component, computed, inject } from '@angular/core';
+import { ProductDetailStore } from '@/product/detail/services/product-detail-store';
+import { AsyncPipe } from '@angular/common';
+import { TuiFormatNumberPipe } from '@taiga-ui/core';
+import { Feedback } from '@/product/detail/components/feedback/feedback';
+import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
+import { BuyCoin } from '@/product/detail/components/buy-coin/buy-coin';
+import { AccountStore } from '@/account';
+import { AuthenticationOpen } from '@/components/authentication/authentication-open';
+import { DialogService } from '@/services/dialog.service';
 
 @Component({
   templateUrl: 'product-detail-name.html',
@@ -28,7 +28,7 @@ export class ProductDetailName {
   protected readonly data$ = computed(() => this.productDetailStore.selectedSkus() || this.productDetailStore.detail()?.variants?.[0]);
 
 
-  protected readonly percentage = computed(() => this.data$().price / 100 * 2 || 0);
+  protected readonly percentage = computed(() => this.data$()?.price / 100 * 2 || 0);
 
   openFeedback() {
     if (this.accountStore.account()) {

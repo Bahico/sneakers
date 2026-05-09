@@ -22,36 +22,36 @@
   </div>
 
   <div class="flex gap-2 items-center w-1/2 xl:w-[20%]! justify-end">
-    <a class="py-1! cursor-pointer" [routerLink]="['/product', 'search']" (click)="goBack()">
+    <div class="py-1! cursor-pointer" [routerLink]="['/product', 'search']" (click)="goBack()">
       <icon-list [icon]="isSearchPage() ? 'close-sm' : 'search'" class="sn-control-icon max-h-8" />
-    </a>
+    </div>
     @if (favoritesCount()) {
     <tui-badged-content>
       <tui-badge-notification size="s" tuiSlot="top">
         {{ favoritesCount() }}
       </tui-badge-notification>
-      <a class="py-1 px-2 cursor-pointer" routerLink="/favorites">
+      <div class="py-1 px-2 cursor-pointer" routerLink="/favorites">
         <icon-list icon="favorite" />
-      </a>
+      </div>
     </tui-badged-content>
     } @else {
-    <a class="py-1 px-2 cursor-pointer" routerLink="/favorites">
+    <div class="py-1 px-2 cursor-pointer" routerLink="/favorites">
       <icon-list icon="favorite" />
-    </a>
+    </div>
     }
     @if (basketProductCount()) {
     <tui-badged-content>
       <tui-badge-notification size="s" tuiSlot="top">
         {{ basketProductCount() || 1 }}
       </tui-badge-notification>
-      <a class="py-1 px-2 cursor-pointer" routerLink="/basket">
+      <div class="py-1 px-2 cursor-pointer" routerLink="/basket">
         <icon-list icon="basket-sm" />
-      </a>
+      </div>
     </tui-badged-content>
     } @else {
-    <a class="py-1 px-2 cursor-pointer" routerLink="/basket">
+    <div class="py-1 px-2 cursor-pointer" routerLink="/basket">
       <icon-list icon="basket-sm" />
-    </a>
+    </div>
     }
     @if (isAuthed()) {
     <div class="text-xl cursor-pointer rounded-md py-1 px-2" [ngClass]="{'bg-black text-white': open}"

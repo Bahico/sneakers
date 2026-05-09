@@ -7,10 +7,7 @@ import { ProductListDetailModel } from '@/models/product.model';
 @Component({
   templateUrl: 'category-detail.html',
   selector: 'category-detail',
-  host: { class: 'my-10 flex' },
-  imports: [
-    ProductListDetail
-  ]
+  host: { class: 'my-10 flex' }
 })
 export class CategoryDetail implements OnInit {
   private readonly productService = inject(ProductService);
