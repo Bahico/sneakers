@@ -10,7 +10,6 @@
     <tui-icon [icon]="detail().is_favorite ? '@tui.heart-filled' : '@tui.heart'"
       [style.font-size.rem]="isMobile() ? 1.5 : 2" (click)="$event.stopPropagation(); clickFavor()" />
   </div>
-
   <img [src]="detail().images?.[0]" alt="product list detail" style="mix-blend-mode: multiply;"
     class="w-full h-full max-h-30 md:max-h-40 object-contain">
 
@@ -22,8 +21,8 @@
 </a>
 
 <div>
-  <h4 class="truncate md:text-lg font-semibold">{{ detail().brand.name }}</h4>
-  <h4 class="text-xs md:text-sm text-gray-400 truncate mb-2">{{detail().category.name}} {{ detail().name }}</h4>
+  <h4 class="truncate md:text-lg font-semibold">{{ detail().brand?.name || detail().brand_name }}</h4>
+  <h4 class="text-xs md:text-sm text-gray-400 truncate mb-2">{{detail().category?.name || detail().category_name}} {{ detail().name }}</h4>
 
   <span class="text-sm md:text-base font-semibold">от {{ detail().price | tuiFormatNumber | async }} p.</span>
   <div class="flex gap-0.5 items-center" [class.hidden]="onHome() || detail().price >= 20000">

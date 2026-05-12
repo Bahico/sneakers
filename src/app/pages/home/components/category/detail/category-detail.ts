@@ -7,7 +7,8 @@ import { ProductListDetailModel } from '@/models/product.model';
 @Component({
   templateUrl: 'category-detail.html',
   selector: 'category-detail',
-  host: { class: 'my-10 flex' }
+  host: { class: 'my-10 flex' },
+  imports: [ProductListDetail]
 })
 export class CategoryDetail implements OnInit {
   private readonly productService = inject(ProductService);
@@ -20,7 +21,7 @@ export class CategoryDetail implements OnInit {
   ngOnInit() {
     this.productService.lastSold({ category_search: this.category_search() })
       .subscribe(products => {
-        this.products.set(products.map((product: any) => this.mapLastSoldProduct(product)));
+        this.products.set(products);
       });
   }
 

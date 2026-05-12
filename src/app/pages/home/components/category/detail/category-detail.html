@@ -17,7 +17,8 @@
     <div #scrollContainer class="flex overflow-x-auto overflow-y-hidden gap-2 hidden-scrollbar mt-4 w-full">
       @if (products().length) {
       @for (product of products(); track $index) {
-      <a class="min-w-44 w-44 md:min-w-[168px] md:w-[168px] flex flex-col gap-2"
+      <product-list-detail class="min-w-44 w-44 md:min-w-[168px] md:w-[168px]" [detail]="product" (detailChange)="detailChange($event, $index)" />
+      <!-- <a class="min-w-44 w-44 md:min-w-[168px] md:w-[168px] flex flex-col gap-2"
         [href]="'/product/detail/' + product.id">
         <div class="h-44 md:h-56 bg-gray-100 rounded-md px-2 py-3 flex items-center justify-center">
           <img [src]="product.images[0]" [alt]="product.name" class="w-full h-full object-contain"
@@ -32,7 +33,7 @@
             <span class="text-gray-500 text-xs">Сплит</span>
           </div>
         </div>
-      </a>
+      </a> -->
       }
       } @else {
       <div data-empty-state="last-sold-empty"

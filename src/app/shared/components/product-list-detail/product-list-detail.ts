@@ -28,7 +28,7 @@ export class ProductListDetail {
   onHome = input(false);
   isMobile = this.rbs.isMobile;
   euSizes = computed(() => {
-    const euSizeTable = this.detail().size_table.find(({type}) => type.toLowerCase() === 'eu');
+    const euSizeTable = this.detail().size_table?.find(({type}) => type.toLowerCase() === 'eu');
     return euSizeTable?.values.join(' ') ?? '';
   });
 

@@ -71,12 +71,14 @@ export interface ProductListDetailModel {
   slug: string;
   name: string;
   brand: Brand;
+  brand_name?: Brand;
   availability: boolean;
   category: {
     id: string;
     full_slug: string;
     name: string;
   };
+  category_name?: string;
   fit: 'MALE' | 'MAN';
   discount: boolean;
   returnable: boolean;
