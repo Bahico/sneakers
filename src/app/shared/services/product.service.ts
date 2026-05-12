@@ -40,7 +40,7 @@ export class ProductService {
     return this.http.get<ProductListModel>(getEndpoint(`products/${product_id}/similar`), { params });
   }
 
-  brands(query: { limit: number; category_name_search: string }) {
+  brands(query: { limit?: number; category_name_search?: string }) {
     if (!query.category_name_search) {
       delete query.category_name_search;
     }

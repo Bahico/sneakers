@@ -319,7 +319,7 @@ export default class ProductFilter implements OnInit, OnDestroy {
   getBrands() {
     this.productService
       .brands({
-        limit: 100,
+        // limit: 100,
         category_name_search: this.categoryNameSearch()
       })
       // Use takeUntilDestroyed only - won't be cancelled by filter changes
