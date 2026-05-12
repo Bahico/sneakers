@@ -68,6 +68,7 @@ export interface Variant {
 
 export interface ProductListDetailModel {
   id: string;
+  product_id?: string;
   slug: string;
   name: string;
   brand: Brand;

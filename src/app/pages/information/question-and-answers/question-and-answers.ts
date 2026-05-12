@@ -28,7 +28,7 @@ export default class QuestionAndAnswers {
         {
             name: "Как выбрать правильный размер?",
             description: `Для обуви: воспользуйтесь инструкцией на странице <a href="https://sneakerteam.ru/information/choose-size" target="_blank" class="text-primary underline hover:text-primary-hover">https://sneakerteam.ru/information/choose-size</a><br>Для одежды: напишите менеджеру для консультации в любую удобную соц.сеть: 
-            <a href="https://t.me/sneaker_team_bot" target="_blank" class="text-primary underline hover:text-primary-hover">Telegram</a>, 
+            <a href="https://t.me/sneakerteamru" target="_blank" class="text-primary underline hover:text-primary-hover">Telegram</a>, 
             <a href="https://wa.me/79170450892" target="_blank" class="text-primary underline hover:text-primary-hover">Whatsapp</a>, 
             <a href="tel:+79170450892" target="_blank" class="text-primary underline hover:text-primary-hover">+7 917 045 08 92</a>`
         },
@@ -55,7 +55,7 @@ export default class QuestionAndAnswers {
         {
             name: "Что делать, если я указал неверные данные?",
             description: `Свяжитесь со службой поддержки как можно скорее для их исправления.
-            <a href="https://t.me/sneaker_team_bot" target="_blank" class="text-primary underline hover:text-primary-hover">Telegram</a>, 
+            <a href="https://t.me/sneakerteamru" target="_blank" class="text-primary underline hover:text-primary-hover">Telegram</a>, 
             <a href="https://wa.me/79170450892" target="_blank" class="text-primary underline hover:text-primary-hover">Whatsapp</a>, 
             <a href="tel:+79170450892" target="_blank" class="text-primary underline hover:text-primary-hover">+7 917 045 08 92</a>`
         },
@@ -98,7 +98,7 @@ export default class QuestionAndAnswers {
         {
             name: "Как связаться с поддержкой?",
             description: `Напишите менеджеру для консультации в любую удобную соц.сеть:
-            <a href="https://t.me/sneaker_team_bot" target="_blank" class="text-primary underline hover:text-primary-hover">Telegram</a>, 
+            <a href="https://t.me/sneakerteamru" target="_blank" class="text-primary underline hover:text-primary-hover">Telegram</a>, 
             <a href="https://wa.me/79170450892" target="_blank" class="text-primary underline hover:text-primary-hover">Whatsapp</a>, 
             <a href="tel:+79170450892" target="_blank" class="text-primary underline hover:text-primary-hover">+7 917 045 08 92</a>`
         },
