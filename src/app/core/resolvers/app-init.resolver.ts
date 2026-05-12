@@ -1,10 +1,10 @@
-import {ResolveFn} from '@angular/router';
-import {inject} from '@angular/core';
-import {CartService} from '@/services/cart.service';
-import {AccountStore} from '@/account';
-import {TokenStore} from '@/token';
-import {FavoritesService} from '@/services/favorites.service';
-import {forkJoin, mergeMap, of} from 'rxjs';
+import { ResolveFn } from '@angular/router';
+import { inject } from '@angular/core';
+import { CartService } from '@/services/cart.service';
+import { AccountStore } from '@/account';
+import { TokenStore } from '@/token';
+import { FavoritesService } from '@/services/favorites.service';
+import { forkJoin, mergeMap, of } from 'rxjs';
 
 export const appInitResolver: ResolveFn<boolean> = () => {
   const cartService = inject(CartService);
@@ -15,18 +15,12 @@ export const appInitResolver: ResolveFn<boolean> = () => {
   if (tokenStore.token()?.access_token) {
     return forkJoin([
       accountStore.getAccount(),
-      favoritesService.get({page: 1, limit: 1})
+      favoritesService.get({ page: 1, limit: 1 })
     ])
-    .pipe(
-      mergeMap(() => cartService.loadCart()),
-      mergeMap(() => of(true))
-    );
-  }
-
-  if (cartService.getCartId() && !tokenStore.token()?.access_token) {
-    return cartService.loadCart().pipe(
-      mergeMap(() => of(true))
-    );
+      .pipe(
+        mergeMap(() => cartService.loadCart()),
+        mergeMap(() => of(true))
+      );
   }
 
   return of(true);

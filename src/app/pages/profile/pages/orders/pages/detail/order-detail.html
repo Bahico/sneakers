@@ -1,79 +1,81 @@
 <div class="flex w-full justify-between mb-4">
   <a class="hidden md:flex gap-2 rounded-4xl bg-secondary px-4 2xl:px-6 py-2 items-center cursor-pointer"
-       routerLink="../">
-    <icon-list icon="right-arrow-sm"/>
+    routerLink="../">
+    <icon-list icon="right-arrow-sm" />
     <span>Вернуться ко всем заказам</span>
   </a>
   @if (typeof waitingDays() === 'number') {
-    <div class="flex gap-2 rounded-2xl items-center text-xs md:text-sm 2xl:text-base">
-      <span>Ожидается: {{ detail()?.waiting_day | date: 'dd.MM.yyyy' }} г</span>
-    </div>
-    @if (detail().status !== 'delivered') {
-      <div class="flex gap-2 rounded-2xl items-center text-xs md:text-sm 2xl:text-base">
-        <span>Дней в пути: {{ waitingDays() }}</span>
-      </div>
-    }
+  <div class="flex gap-2 rounded-2xl items-center text-xs md:text-sm 2xl:text-base">
+    <span>Ожидается: {{ detail()?.waiting_day | date: 'dd.MM.yyyy' }} г</span>
+  </div>
+  @if (detail().status !== 'delivered') {
+  <div class="flex gap-2 rounded-2xl items-center text-xs md:text-sm 2xl:text-base">
+    <span>Дней в пути: {{ waitingDays() }}</span>
+  </div>
+  }
   }
 </div>
 
 @if (detail()?.is_split_payment) {
-  <div class="mb-6">
-    <h2 class="text-lg md:text-xl font-semibold mb-2">Фотоотчет</h2>
-    <p>К каждому выкупленному товару мы предоставим отчёт, который подтверждает, что товар был приобретён именно под ваш
-      индивидуальный запрос.</p>
+<div class="mb-6">
+  <h2 class="text-lg md:text-xl font-semibold mb-2">Фотоотчет</h2>
+  <p>К каждому выкупленному товару мы предоставим отчёт, который подтверждает, что товар был приобретён именно под ваш
+    индивидуальный запрос.</p>
 
-    <div class="flex gap-3 overflow-x-auto">
-      @for (photo of detail()?.photo_report_urls || []; track photo) {
-        <img [src]="photo" class="min-w-50 w-50 h-40 object-cover rounded-lg" alt="">
-      }
-    </div>
+  <div class="flex gap-3 overflow-x-auto">
+    @for (photo of detail()?.photo_report_urls || []; track photo) {
+    <img [src]="photo" class="min-w-50 w-50 h-40 object-cover rounded-lg" alt="">
+    }
   </div>
+
+  @if (detail().status === 'partially_paid') {
+  <p class="text-xs md:text-sm text-[#BF0000] font-semibold mt-2">
+    *Заказ был оформлен “В сплит” после получения фотоотчета, необходимо оплатить остаток!
+  </p>
+  }
+</div>
 }
 
 <div>
   <h2 class="text-lg md:text-xl font-semibold mb-2">Стадия заказа</h2>
-  <steps [steps]="orderSteps()" [activeIndex]="activeStep()"/>
+  <steps [steps]="orderSteps()" [activeIndex]="activeStep()" />
 
   @if (detail()?.status === 'photo_report_ready') {
-    <div class="flex flex-col gap-2 mt-4">
-      <button class="sn-btn py-4!" (click)="payFull()">
-        Оплатить полностью
-      </button>
+  <div class="flex flex-col gap-2 mt-4">
+    <button class="sn-btn py-4!" (click)="payFull()">
+      Оплатить полностью
+    </button>
 
-      <p class="text-sm text-[#BF0000] font-semibold">
-        Для дальнейшего движения посылки, необходимо оплатить вторую половину стоимости
-        !</p>
-    </div>
+    <p class="text-sm text-[#BF0000] font-semibold">
+      Для дальнейшего движения посылки, необходимо оплатить вторую половину стоимости
+      !</p>
+  </div>
   }
 
   @if (['cdek_pickup', 'russian_post'].includes(detail()?.delivery_type) && detail()?.status === 'delivering') {
-    <div class="flex flex-col gap-2 mt-4">
-      <label>Номер отправления СДЭК:</label>
-      <div class="flex gap-2 items-center justify-between">
-        <div
-          class="sn-control flex gap-2 items-center justify-between"
-          [cdkCopyToClipboard]="detail()?.delivery_track_number"
-          (cdkCopyToClipboardCopied)="copyCdekNumber()"
-        >
-          <span>{{ detail()?.delivery_track_number }}</span>
-          @if (copySuccess()) {
-            <svg-icon key="checked" size="md"/>
-          } @else {
-            <svg-icon key="copy" size="md"/>
-          }
-        </div>
-        <a
-          [href]="detail().delivery_type === 'cdek_pickup' ? 'https://www.cdek.ru/ru/tracking' : 'https://www.pochta.ru/tracking'"
-          target="_blank">
-          <button class="sn-btn text-nowrap">Отследить посылку</button>
-        </a>
+  <div class="flex flex-col gap-2 mt-4">
+    <label>Номер отправления СДЭК:</label>
+    <div class="flex gap-2 items-center justify-between">
+      <div class="sn-control flex gap-2 items-center justify-between"
+        [cdkCopyToClipboard]="detail()?.delivery_track_number" (cdkCopyToClipboardCopied)="copyCdekNumber()">
+        <span>{{ detail()?.delivery_track_number }}</span>
+        @if (copySuccess()) {
+        <svg-icon key="checked" size="md" />
+        } @else {
+        <svg-icon key="copy" size="md" />
+        }
       </div>
+      <a [href]="detail().delivery_type === 'cdek_pickup' ? 'https://www.cdek.ru/ru/tracking' : 'https://www.pochta.ru/tracking'"
+        target="_blank">
+        <button class="sn-btn text-nowrap">Отследить посылку</button>
+      </a>
     </div>
+  </div>
   }
 
   <div class="flex flex-col gap-2 mt-4">
     <label>Статус заказа:</label>
-    <steps-timeline [steps]="steps()"/>
+    <steps-timeline [steps]="steps()" />
   </div>
 
   <div class="flex flex-col gap-1 mt-6">
@@ -94,9 +96,9 @@
     <label for="order-number">Способ оплаты:</label>
     <div class="sn-control">
       @if (detail()?.is_split_payment) {
-        Частичная оплата
+      Частичная оплата
       } @else {
-        Полная оплата
+      Полная оплата
       }
     </div>
   </div>
@@ -128,22 +130,22 @@
 
   <div class="flex flex-col gap-2 mb-2">
     @for (item of (detail()?.items || []); track item.id) {
-      <div class="flex gap-4 items-center">
-        <div class="w-40 h-40 bg-secondary rounded-md">
-          <img [src]="item.product_image_url" alt="" [style.mix-blend-mode]="'multiply'"
-               class="w-full h-full object-contain">
-        </div>
-
-        <div class="flex flex-col gap-2">
-          <h4 class="text-lg font-semibold">{{ item.product_name }}</h4>
-          <div class="flex flex-col">
-            <span>Размер: {{ item.size?.['ru'] }}</span>
-            <span>Артикул: {{ item.product_article }}</span>
-            <span>Количество: {{ item.quantity }}</span>
-          </div>
-          <h4 class=" font-semibold">{{ item.total_price | tuiFormatNumber | async }} р.</h4>
-        </div>
+    <div class="flex gap-4 items-center">
+      <div class="w-40 h-40 bg-secondary rounded-md">
+        <img [src]="item.product_image_url" alt="" [style.mix-blend-mode]="'multiply'"
+          class="w-full h-full object-contain">
       </div>
+
+      <div class="flex flex-col gap-2">
+        <h4 class="text-lg font-semibold">{{ item.product_name }}</h4>
+        <div class="flex flex-col">
+          <span>Размер: {{ item.size?.['ru'] }}</span>
+          <span>Артикул: {{ item.product_article }}</span>
+          <span>Количество: {{ item.quantity }}</span>
+        </div>
+        <h4 class=" font-semibold">{{ item.total_price | tuiFormatNumber | async }} р.</h4>
+      </div>
+    </div>
     }
   </div>
 
