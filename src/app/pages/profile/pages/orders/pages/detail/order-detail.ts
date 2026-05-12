@@ -1,19 +1,19 @@
-import {afterNextRender, Component, computed, inject, signal} from '@angular/core';
-import {OrderDetailModel, OrderType} from '@/models/order';
-import {OrderService} from '@/services/order.service';
-import {ActivatedRoute, RouterLink} from '@angular/router';
-import {IconComponent} from '@/components/icon/icon';
-import {StepsComponent} from '@/profile/pages/orders/pages/detail/step';
-import {FormsModule} from '@angular/forms';
-import {AsyncPipe, DatePipe} from '@angular/common';
-import {NgxMaskPipe} from 'ngx-mask';
-import {TuiFormatNumberPipe} from '@taiga-ui/core';
-import {StepItem, StepsTimeline} from '@/profile/pages/orders/pages/detail/steps-timeline';
+import { afterNextRender, Component, computed, inject, signal } from '@angular/core';
+import { OrderDetailModel, OrderType } from '@/models/order';
+import { OrderService } from '@/services/order.service';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { IconComponent } from '@/components/icon/icon';
+import { StepsComponent } from '@/profile/pages/orders/pages/detail/step';
+import { FormsModule } from '@angular/forms';
+import { AsyncPipe, DatePipe } from '@angular/common';
+import { NgxMaskPipe } from 'ngx-mask';
+import { TuiFormatNumberPipe } from '@taiga-ui/core';
+import { StepItem, StepsTimeline } from '@/profile/pages/orders/pages/detail/steps-timeline';
 import { injectRegisterIcons, SvgIconComponent } from '@ngneat/svg-icon';
-import {checkedIcon} from '@/checked';
-import {boxIcon} from '@/box';
-import {courierIcon} from '@/courier';
-import {finishIcon} from '@/finish';
+import { checkedIcon } from '@/checked';
+import { boxIcon } from '@/box';
+import { courierIcon } from '@/courier';
+import { finishIcon } from '@/finish';
 import { handMoneyIcon } from '@/hand-money';
 import { copyIcon } from '@/copy';
 import { CdkCopyToClipboard } from '@angular/cdk/clipboard';
@@ -33,7 +33,7 @@ import { CdkCopyToClipboard } from '@angular/cdk/clipboard';
     StepsTimeline,
     SvgIconComponent,
     CdkCopyToClipboard
-]
+  ]
 })
 export default class OrderDetail {
   private readonly orderService = inject(OrderService);
@@ -134,7 +134,7 @@ export default class OrderDetail {
     );
   });
 
-  paidSum = computed(() => {
+  paidSum = computed<number>(() => {
     const detail = this.detail();
     if (detail?.is_split_payment) {
       if (detail.second_payment_completed) {
