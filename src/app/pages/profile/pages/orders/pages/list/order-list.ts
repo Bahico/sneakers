@@ -24,6 +24,7 @@ export default class OrderList {
 
   constructor() {
     afterNextRender(() => {
+      this.orderService.search.set('');
       this.loadOrders();
     });
   }

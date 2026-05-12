@@ -25,7 +25,7 @@
       }
     </div>
 
-    <div>
+    <div class="flex justify-end">
       @if (detail().status === 'photo_report_ready') {
         <div class="sn-btn flex items-center rounded-3xl! gap-1 text-white">
           Оплатить и заказать
@@ -45,7 +45,7 @@
           </span>
         </div>
       } @else {
-        <span class="text-lg">{{orderSteps()[activeStep()].label}}</span>
+        <span class="text-lg text-end">{{orderSteps()[activeStep()].label}}</span>
       }
     </div>
   </div>

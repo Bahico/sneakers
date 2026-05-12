@@ -1,9 +1,9 @@
 <div class="container">
     <tui-breadcrumbs>
-        <a tuiLink routerLink="/">Главная</a>
-        <a tuiLink routerLink="/catalog">Каталог</a>
-        <a tuiLink routerLink="/basket">Оплата</a>
-        <span tuiItem>Успешно</span>
+        <a tuiLink *tuiItem routerLink="/">Главная</a>
+        <a tuiLink *tuiItem routerLink="/catalog">Каталог</a>
+        <a tuiLink *tuiItem routerLink="/basket">Оплата</a>
+        <span *tuiItem tuiItem>Успешно</span>
     </tui-breadcrumbs>
     <div class="flex flex-col gap-4 mt-2">
         <h1 class="text-3xl font-semibold">Заказ успешно сформирован !</h1>
