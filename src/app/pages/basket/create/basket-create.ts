@@ -110,7 +110,11 @@ export default class BasketCreate {
   protected readonly totalSum = computed(() => {
     let total = this.carts().total_price;
     if (this.useSneakerCoins()) {
-      total = total - this.coins().sneaker_coins;
+      if (total < this.coins().sneaker_coins) {
+        total = 100;
+      } else {
+        total = total - this.coins().sneaker_coins;
+      }
     }
     if (this.promoCodeData()) {
       switch (this.promoCodeData().discount_type) {
