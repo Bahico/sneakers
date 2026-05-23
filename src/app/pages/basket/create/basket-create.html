@@ -1,17 +1,9 @@
 <div class="container mb-10 mt-5 md:mt-0">
   <tui-breadcrumbs class="mb-4">
-    <a
-      *tuiItem
-      tuiLink
-      routerLink="/"
-    >
+    <a *tuiItem tuiLink routerLink="/">
       Главная
     </a>
-    <a
-      *tuiItem
-      tuiLink
-      class="text-primary!"
-    >
+    <a *tuiItem tuiLink class="text-primary!">
       Оформление заказa
     </a>
   </tui-breadcrumbs>
@@ -21,103 +13,81 @@
 
     <div class="p-4 border flex flex-col gap-3 w-full border-gray-200 rounded-xl">
       @for (cart of carts()?.items; track cart.id) {
-        <div class="w-full flex gap-4 border-b border-gray-200 last:border-b-0 pb-4 last:pb-0 relative h-40">
-          <div
-            routerLink="/product/detail/{{cart.product.id}}"
-            class="w-40 h-full rounded-xl bg-gray-200 px-2 cursor-pointer"
-          >
-            <img
-              [src]="cart.product.images?.[0]"
-              style="mix-blend-mode: multiply;"
-              class="flex w-full h-full object-contain"
-              alt=""
-            >
-          </div>
-
-          <div class="flex flex-col justify-between w-full relative">
-            <div class="flex flex-col">
-              <span class="text-base md:text-xl font-semibold">{{ cart.product.brand.name }}</span>
-              <span class="text-xs md:text-base text-gray-500 mb-2">{{ cart.product.name }}</span>
-              <div class="flex gap-6 items-center">
-                <span
-                  class="text-sm md:text-base text-gray-500 mb-1 flex items-center">EU {{ cart.variant.size?.['eu'] }}
-                  <span class="w-1 h-1 rounded-full bg-gray-500 mx-2 "></span> RU {{ cart.variant.size?.['ru'] }}</span>
-              </div>
-              <span class="text-xs md:text-sm">Стандартная доставка 20-25 дней</span>
-            </div>
-
-            <span
-              class="text-lg md:text-xl lg:text-3xl font-bold text-primary">
-              {{ cart.variant.price | tuiFormatNumber | async }}р.
-            </span>
-          </div>
+      <div class="w-full flex gap-4 border-b border-gray-200 last:border-b-0 pb-4 last:pb-0 relative h-40">
+        <div routerLink="/product/detail/{{cart.product.id}}"
+          class="w-40 h-full rounded-xl bg-gray-200 px-2 cursor-pointer">
+          <img [src]="cart.product.images?.[0]" style="mix-blend-mode: multiply;"
+            class="flex w-full h-full object-contain" alt="">
         </div>
+
+        <div class="flex flex-col justify-between w-full relative">
+          <div class="flex flex-col">
+            <span class="text-base md:text-xl font-semibold">{{ cart.product.brand.name }}</span>
+            <span class="text-xs md:text-base text-gray-500 mb-2">{{ cart.product.name }}</span>
+            <div class="flex gap-6 items-center">
+              <span class="text-sm md:text-base text-gray-500 mb-1 flex items-center">EU {{ cart.variant.size?.['eu'] }}
+                <span class="w-1 h-1 rounded-full bg-gray-500 mx-2 "></span> RU {{ cart.variant.size?.['ru'] }}</span>
+            </div>
+            <span class="text-xs md:text-sm">Стандартная доставка 20-25 дней</span>
+          </div>
+
+          <span class="text-lg md:text-xl lg:text-3xl font-bold text-primary">
+            {{ cart.variant.price | tuiFormatNumber | async }}р.
+          </span>
+        </div>
+      </div>
       }
     </div>
 
     <h3 class="text-lg md:text-2xl font-semibold" id="form">Способ доставки</h3>
 
-    <delivery-type-inputs [form]="form" [readonly]="true" (openModal)="openModal()"/>
+    <delivery-type-inputs [form]="form" [readonly]="true" (openModal)="openModal()" />
 
     <h3 class="text-lg md:text-2xl font-semibold">Получатель</h3>
     <div class="flex flex-col gap-4">
       <form [formGroup]="profileForm" class="grid grid-cols-2 gap-4">
         <div class="sn-control">
-            <span class="sn-control-icon">
-              <i class="fa fa-user-o" aria-hidden="true"></i>
-            </span>
+          <span class="sn-control-icon">
+            <i class="fa fa-user-o" aria-hidden="true"></i>
+          </span>
           <input type="text" [formControl]="passportForm.controls.surname" placeholder="Фамилия">
         </div>
 
         <div class="sn-control">
-            <span class="sn-control-icon">
-              <i class="fa fa-user-o" aria-hidden="true"></i>
-            </span>
+          <span class="sn-control-icon">
+            <i class="fa fa-user-o" aria-hidden="true"></i>
+          </span>
           <input type="text" [formControl]="passportForm.controls.name" placeholder="Имя">
         </div>
 
         <div class="sn-control" [class.!hidden]="checked()">
-            <span class="sn-control-icon">
-              <i class="fa fa-user-o" aria-hidden="true"></i>
-            </span>
+          <span class="sn-control-icon">
+            <i class="fa fa-user-o" aria-hidden="true"></i>
+          </span>
           <input type="text" [formControl]="passportForm.controls.f_name" placeholder="Отчество (если есть)"
-                 [disabled]="checked()">
+            [disabled]="checked()">
         </div>
 
         <div class="flex gap-2 items-center h-10">
-          <input
-            tuiCheckbox
-            type="checkbox"
-            [ngModel]="checked()"
-            (ngModelChange)="onSurnameCheckboxChange($event)"
-            [ngModelOptions]="{standalone: true}"
-          />
+          <input tuiCheckbox type="checkbox" [ngModel]="checked()" (ngModelChange)="onSurnameCheckboxChange($event)"
+            [ngModelOptions]="{standalone: true}" />
           <span>Нет отчества</span>
         </div>
 
         <div class="flex col-span-2 gap-2">
           <div class="sn-control w-20! h-10">
-            <img
-              alt="ru"
-              [src]="'ru' | tuiFlag"
-              class="rounded-sm h-full w-10 object-cover"
-            />
+            <img alt="ru" [src]="'ru' | tuiFlag" class="rounded-sm h-full w-10 object-cover" />
             <span class=" font-semibold">+7</span>
           </div>
           <div class="sn-control w-full">
-            <input
-              type="text"
-              formControlName="phone"
-              mask="(000) 000-00-00"
-              placeholder="(912) 345-67-89"
-            >
+            <input type="text" formControlName="phone" mask="(000) 000-00-00" placeholder="(912) 345-67-89">
           </div>
         </div>
 
         <div class="sn-control col-span-2 w-full">
-            <span class="sn-control-icon">
-              {{ '@' }}
-            </span>
+          <span class="sn-control-icon">
+            {{ '@' }}
+          </span>
           <input type="email" formControlName="email" placeholder="Email">
         </div>
 
@@ -132,44 +102,30 @@
 
           <div class="sn-control">
             <span class="sn-control-icon">
-              <icon-list icon="calendar"/>
+              <icon-list icon="calendar" />
             </span>
-            <input
-              type="text"
-              formControlName="passport_series"
-              placeholder="Серия паспорта"
-              mask="0000"
-            >
+            <input type="text" formControlName="passport_series" placeholder="Серия паспорта" mask="0000">
           </div>
 
           <div class="sn-control">
             <span class="sn-control-icon">
-              <icon-list icon="calendar"/>
+              <icon-list icon="calendar" />
             </span>
-            <input
-              type="text"
-              formControlName="passport_number"
-              placeholder="Номер паспорта"
-              mask="000000"
-            >
+            <input type="text" formControlName="passport_number" placeholder="Номер паспорта" mask="000000">
           </div>
 
           <app-date class="col-span-2" formControlName="date_of_give" [maxDate]="maxDate()"
-                    placeholder="Дата выдачи паспорта"/>
+            placeholder="Дата выдачи паспорта" />
 
           <div class="sn-control col-span-2">
             <span class="sn-control-icon">
-              <icon-list icon="calendar"/>
+              <icon-list icon="calendar" />
             </span>
-            <input
-              type="text"
-              formControlName="inn"
-              placeholder="ИНН"
-              mask="000000000000"
-            >
+            <input type="text" formControlName="inn" placeholder="ИНН" mask="000000000000">
           </div>
 
-          <a href="https://www.gosuslugi.ru/findinn" target="_blank" class="text-primary underline cursor-pointer">Узнать
+          <a href="https://www.gosuslugi.ru/findinn" target="_blank"
+            class="text-primary underline cursor-pointer">Узнать
             свой ИНН на Госуслугах</a>
         </div>
       </form>
@@ -185,14 +141,10 @@
           <button
             class="flex h-6 w-6 items-center justify-center absolute right-0 top-1/2 -translate-y-1/2 cursor-pointer"
             (click)="hideText.set(!hideText())">
-            <icon-list [icon]="hideText() ? 'plus' : 'minus'"/>
+            <icon-list [icon]="hideText() ? 'plus' : 'minus'" />
           </button>
         </div>
-        <div
-          class="pl-10 overflow-hidden duration-300"
-          [class.max-h-0]="hideText()"
-          [class.max-h-100]="!hideText()"
-        >
+        <div class="pl-10 overflow-hidden duration-300" [class.max-h-0]="hideText()" [class.max-h-100]="!hideText()">
           <p>Все посылки в рамках международных отправлений проходят процедуру таможенного оформления. Для товаров
             личного пользования используется реестр экспресс-грузов, который, согласно приказу ФТС(федеральная
             таможенная служба) №1060 от 05.07.18, должен содержать в себе сведения о документе, удостоверяющем
@@ -209,19 +161,16 @@
       <div class="flex gap-2">
         <div class="sn-control">
           <span class="sn-control-icon">
-            <icon-list icon="promocode"/>
+            <icon-list icon="promocode" />
           </span>
           <input type="text" placeholder="Промокод" [(ngModel)]="promoCode" [ngModelOptions]="{standalone: true}">
         </div>
-        <button
-          class="sn-btn flex items-center text-center gap-2 text-nowrap"
-          (click)="checkPromoCode()"
-          [disabled]="promoCodeLoading()"
-        >
+        <button class="sn-btn flex items-center text-center gap-2 text-nowrap" (click)="checkPromoCode()"
+          [disabled]="promoCodeLoading()">
           @if (promoCodeLoading()) {
-            <span class="animate-spin">
-              <i class="fa fa-spinner" aria-hidden="true"></i>
-            </span>
+          <span class="animate-spin">
+            <i class="fa fa-spinner" aria-hidden="true"></i>
+          </span>
           }
           Проверить промокод
         </button>
@@ -229,87 +178,79 @@
 
       <div class="flex items-center">
         @if (promoCodeSuccess()) {
-          <span class="text-green-600 font-semibold">Промокод - активен</span>
+        <span class="text-green-600 font-semibold">Промокод - активен</span>
         } @else if (promoCodeError()) {
-          <span class="text-red-600 font-semibold">Промокод не найден либо недействителен.</span>
+        <span class="text-red-600 font-semibold">Промокод не найден либо недействителен.</span>
         }
       </div>
     </div>
     <div class="flex w-full justify-between items-center">
-      <span class="text-sm md:text-lg">У вас есть <strong>{{ coins()?.sneaker_coins }} Sneaker Coins</strong>. Списать?</span>
-      <input
-        tuiSwitch
-        type="checkbox"
-        [showIcons]="false"
-        [formControl]="form.controls.use_sneaker_coins"
-        (change)="form.controls.use_sneaker_coins.updateValueAndValidity()"
-        [disabled]="!coins()?.sneaker_coins"
-        size="m"
-      />
+      <span class="text-sm md:text-lg">У вас есть <strong>{{ coins()?.sneaker_coins }} Sneaker Coins</strong>.
+        Списать?</span>
+      <input tuiSwitch type="checkbox" [showIcons]="false" [formControl]="form.controls.use_sneaker_coins"
+        (change)="form.controls.use_sneaker_coins.updateValueAndValidity()" [disabled]="!coins()?.sneaker_coins"
+        size="m" />
     </div>
     <div class="flex w-full justify-between items-center">
-      <span class="text-sm md:text-lg">Сплит: Половину оплачиваете сейчас, а вторую половину после того, как мы пришлём Вам фото отчёт заказа со склада в Китае</span>
-      <input
-        tuiSwitch
-        type="checkbox"
-        [showIcons]="false"
-        [formControl]="form.controls.use_split_payment"
-        size="m"
-      />
+      <span class="text-sm md:text-lg">Сплит: Половину оплачиваете сейчас, а вторую половину после того, как мы пришлём
+        Вам фото отчёт заказа со склада в Китае</span>
+      <input tuiSwitch type="checkbox" [showIcons]="false" [formControl]="form.controls.use_split_payment" size="m" />
     </div>
     <span class="border-b border-gray-200 col-span-2"></span>
     <div class="sn-control">
       <textarea placeholder="Комментарий к заказу (не обязательно)" rows="4"
-                [formControl]="form.controls.customer_comment"></textarea>
+        [formControl]="form.controls.customer_comment"></textarea>
     </div>
     <div class="flex w-full justify-between items-center">
       <span>Товары</span>
       <span>{{ carts()?.total_price | tuiFormatNumber | async }} р.</span>
     </div>
     @if (promoCodeData()) {
-      <div class="flex w-full justify-between items-center">
-        <span>Скидка по промокоду</span>
-        <span>-{{ promoCodeData()?.discount | tuiFormatNumber | async }} {{ promoCodeData()?.discount_type === 'percent' ? '%' : 'р.' }}</span>
-      </div>
+    <div class="flex w-full justify-between items-center">
+      <span>Скидка по промокоду</span>
+      <span>-{{ promoCodeData()?.discount | tuiFormatNumber | async }} {{ promoCodeData()?.discount_type === 'percent' ?
+        '%' : 'р.' }}</span>
+    </div>
     }
     @if (form.controls.use_sneaker_coins.value) {
-      <div class="flex w-full justify-between items-center">
-        <span>Скидка по Sneaker Coins</span>
-        <span>-{{ coins()?.sneaker_coins | tuiFormatNumber | async }} р.</span>
-      </div>
+    <div class="flex w-full justify-between items-center">
+      <span>Скидка по Sneaker Coins</span>
+      <span>-{{ sneaker_coins() | tuiFormatNumber | async }} р.</span>
+    </div>
     }
     @if (form.controls.use_split_payment.value) {
-      <div class="flex w-full justify-between items-center">
-        <span class="text-xl font-semibold">К оплате сейчас</span>
-        <span class="text-xl font-semibold">{{ totalSum() / 2 | tuiFormatNumber | async }} р.</span>
-      </div>
-      <div class="flex w-full justify-between items-center">
-        <span class="text-xl font-semibold">Остаток после фотоотчёта</span>
-        <span class="text-xl font-semibold">{{ totalSum() / 2 | tuiFormatNumber | async }} р.</span>
-      </div>
+    <div class="flex w-full justify-between items-center">
+      <span class="text-xl font-semibold">К оплате сейчас</span>
+      <span class="text-xl font-semibold">{{ totalSum() / 2 | tuiFormatNumber | async }} р.</span>
+    </div>
+    <div class="flex w-full justify-between items-center">
+      <span class="text-xl font-semibold">Остаток после фотоотчёта</span>
+      <span class="text-xl font-semibold">{{ totalSum() / 2 | tuiFormatNumber | async }} р.</span>
+    </div>
     } @else {
-      <div class="flex w-full justify-between items-center">
-        <span class="text-xl font-semibold">Итого</span>
-        <span class="text-xl font-semibold">{{ totalSum() | tuiFormatNumber | async }} р.</span>
-      </div>
+    <div class="flex w-full justify-between items-center">
+      <span class="text-xl font-semibold">Итого</span>
+      <span class="text-xl font-semibold">{{ totalSum() | tuiFormatNumber | async }} р.</span>
+    </div>
     }
 
     @if (enterEmptyFields()) {
-      <span class="text-red-500">Заполните поле!</span>
+    <span class="text-red-500">Заполните поле!</span>
     }
 
     <button class="sn-btn !py-4" (click)="onSubmit()">Оплатить</button>
     <p class="text-xs text-gray-500">
       Нажимая «Оплатить», вы соглашаетесь с условиями Пользовательского соглашения
       @if (openMoreInfo()) {
-        , Политики обработки персональных данных и файлов Cookie, Правила совершения платежей и возврата оплаты, соглашаетесь на получение рекламно-информационных материалов
+      , Политики обработки персональных данных и файлов Cookie, Правила совершения платежей и возврата оплаты,
+      соглашаетесь на получение рекламно-информационных материалов
       } @else {
-        <span class="underline cursor-pointer hover:text-gray-700" (click)="openMoreInfo.set(true)">подробнее</span>
+      <span class="underline cursor-pointer hover:text-gray-700" (click)="openMoreInfo.set(true)">подробнее</span>
       }
     </p>
   </div>
 </div>
 
 @defer (on timer(100ms)) {
-  <delivery-place [form]="form" class="hidden md:block" [(open)]="openDeliveryPlace"/>
+<delivery-place [form]="form" class="hidden md:block" [(open)]="openDeliveryPlace" />
 }

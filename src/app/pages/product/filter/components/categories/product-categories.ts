@@ -15,7 +15,6 @@ import {
 import { rxResource } from "@angular/core/rxjs-interop";
 import { of } from "rxjs";
 import { RouterLink } from "@angular/router";
-import { Gender } from "@/models/gender";
 
 @Component({
     templateUrl: 'product-categories.html',

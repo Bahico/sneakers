@@ -1,35 +1,35 @@
-import {afterNextRender, Component, computed, effect, inject, signal, ViewEncapsulation} from '@angular/core';
-import {TuiBreadcrumbs, TuiCheckbox, TuiSwitch} from '@taiga-ui/kit';
-import {TuiFlagPipe, TuiFormatNumberPipe, TuiLink} from '@taiga-ui/core';
-import {TuiDay, TuiItem} from '@taiga-ui/cdk';
-import {Router, RouterLink} from '@angular/router';
-import {AsyncPipe} from '@angular/common';
-import {CartStore} from '@/cart';
-import {IconComponent} from '@/components/icon/icon';
-import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
-import {DeliveryPlace} from './delivery-place/delivery-place';
-import {DeliveryTypeInputs} from '@/basket/create/delivery-type-inputs/delivery-type-inputs';
-import {PolymorpheusComponent} from '@taiga-ui/polymorpheus';
-import {ResponsiveBreakpointsService} from '@/services/responsive-breakpoints.service';
-import {DialogService} from '@/services/dialog.service';
-import {OrderService} from '@/services/order.service';
-import {catchError, concatMap, finalize, forkJoin, Observable, of, tap} from 'rxjs';
-import {PaymentForm, PaymentModel} from '@/models/basket';
-import {DeliveryType} from '@/models/order';
-import {DateComponent} from '@/components/date/date';
-import {NgxMaskDirective} from 'ngx-mask';
-import {AuthService} from '@/services/auth.service';
-import {AccountStore} from '@/account';
-import {PassportData} from '@/models/passport';
-import {toSignal} from '@angular/core/rxjs-interop';
-import {CartService} from '@/services/cart.service';
+import { afterNextRender, Component, computed, effect, inject, signal, ViewEncapsulation } from '@angular/core';
+import { TuiBreadcrumbs, TuiCheckbox, TuiSwitch } from '@taiga-ui/kit';
+import { TuiFlagPipe, TuiFormatNumberPipe, TuiLink } from '@taiga-ui/core';
+import { TuiDay, TuiItem } from '@taiga-ui/cdk';
+import { Router, RouterLink } from '@angular/router';
+import { AsyncPipe } from '@angular/common';
+import { CartStore } from '@/cart';
+import { IconComponent } from '@/components/icon/icon';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { DeliveryPlace } from './delivery-place/delivery-place';
+import { DeliveryTypeInputs } from '@/basket/create/delivery-type-inputs/delivery-type-inputs';
+import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
+import { ResponsiveBreakpointsService } from '@/services/responsive-breakpoints.service';
+import { DialogService } from '@/services/dialog.service';
+import { OrderService } from '@/services/order.service';
+import { catchError, concatMap, finalize, forkJoin, Observable, of, tap } from 'rxjs';
+import { PaymentForm, PaymentModel } from '@/models/basket';
+import { DeliveryType } from '@/models/order';
+import { DateComponent } from '@/components/date/date';
+import { NgxMaskDirective } from 'ngx-mask';
+import { AuthService } from '@/services/auth.service';
+import { AccountStore } from '@/account';
+import { PassportData } from '@/models/passport';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { CartService } from '@/services/cart.service';
 
 @Component({
   templateUrl: 'basket-create.html',
   selector: 'basket-create',
   styleUrl: 'basket-create.css',
   encapsulation: ViewEncapsulation.None,
-  host: {class: 'flex w-full justify-center'},
+  host: { class: 'flex w-full justify-center' },
   imports: [
     TuiBreadcrumbs,
     TuiLink,
@@ -128,11 +128,18 @@ export default class BasketCreate {
       }
     }
     return total;
+  });
+  protected readonly sneaker_coins = computed(() => {
+    if (this.carts().total_price < this.coins().sneaker_coins) {
+      return this.carts().total_price - 100;
+    } else {
+      return this.coins().sneaker_coins;
+    }
   })
 
   constructor() {
     afterNextRender(() => {
-      setTimeout(() => document.getElementById('form').scrollIntoView({behavior: 'smooth'}), 1000);
+      setTimeout(() => document.getElementById('form').scrollIntoView({ behavior: 'smooth' }), 1000);
       this.loadMaxDate();
       this.loadUserData();
       this.loadPassportData();
@@ -225,12 +232,12 @@ export default class BasketCreate {
   checkPromoCode() {
     this.promoCodeLoading.set(true);
     this.orderService
-      .checkPromocode({promocode: this.promoCode()})
+      .checkPromocode({ promocode: this.promoCode() })
       .pipe(finalize(() => this.promoCodeLoading.set(false)))
       .subscribe({
         next: res => {
           this.promoCodeSuccess.set(true);
-          this.promoCodeData.set({discount: res.message.discount_value, discount_type: res.message.promo_type});
+          this.promoCodeData.set({ discount: res.message.discount_value, discount_type: res.message.promo_type });
         },
         error: () => {
           this.promoCodeError.set(true);
@@ -241,7 +248,7 @@ export default class BasketCreate {
   onSurnameCheckboxChange(checked: boolean) {
     this.checked.set(checked);
     if (checked) {
-      this.passportForm.patchValue({f_name: null});
+      this.passportForm.patchValue({ f_name: null });
     }
   }
 
