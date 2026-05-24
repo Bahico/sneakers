@@ -96,4 +96,20 @@ export interface OrderDetailModel {
   items: OrderItem[];
   payments: OrderPayment[];
   waiting_day: Date;
+  delivery_date: Date | null;
+  days_path: number;
+  pending_payment_at: Date | null;
+  partially_paid_at: Date | null;
+  photo_report_ready_at: Date | null;
+  purchasing_at: Date | null;
+  paid_at: Date | null;
+  china_warehouse_at: Date | null;
+  sent_to_russia_at: Date | null;
+  arrived_in_country_at: Date | null;
+  in_transit_at: Date | null;
+  ready_for_pickup_at: Date | null;
+  delivered_at: Date | null;
+  delivering_by_courier_at: Date | null;
+  cancelled_at: Date | null;
+  returned_at: Date | null;
 }

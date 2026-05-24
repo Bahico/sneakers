@@ -1,41 +1,21 @@
 <div class="w-full max-md:container xl:container mb-10 px-0!">
   <tui-breadcrumbs class="mb-4 hidden! md:block!">
-      <a
-        *tuiItem
-        tuiLink
-        routerLink="/"
-      >
-        Главная
-      </a>
-      <a
-        *tuiItem
-        tuiLink
-        class="truncate"
-        [routerLink]="categoryLink()"
-      >
-        {{ detail().category?.name }}
-      </a>
-      <a
-        *tuiItem
-        tuiLink
-        class="truncate"
-      >
-        {{ fitName() }}
-      </a>
-      <a
-        *tuiItem
-        tuiLink
-        class="truncate text-primary!"
-      >
-        {{ detail().name }}
-      </a>
+    <a *tuiItem tuiLink routerLink="/">
+      Главная
+    </a>
+    <a *tuiItem tuiLink class="truncate" [routerLink]="categoryLink()">
+      {{ detail().category?.name }}
+    </a>
+    <a *tuiItem tuiLink class="truncate">
+      {{ fitName() }}
+    </a>
+    <a *tuiItem tuiLink class="truncate text-primary!">
+      {{ detail().name }}
+    </a>
   </tui-breadcrumbs>
 
   <div class="flex flex-col md:flex-row relative w-full gap-2 md:gap-8 mb-10">
-    <product-images
-      class="w-full md:w-[calc(100%-380px)] md:sticky top-2"
-      style="align-self: flex-start;"
-    />
+    <product-images class="w-full md:w-[calc(100%-380px)] md:sticky top-2" style="align-self: flex-start;" />
 
     <div class="w-full md:w-95 md:bg-secondary rounded-2xl py-4 px-5">
       <product-detail-name />
@@ -48,5 +28,5 @@
 
   <comment-list class="px-5 md:px-0" />
 
-  <similar-products class="mt-20 flex flex-col px-5 md:px-0" />
+  <similar-products [gender]="detail()?.fit" class="mt-20 flex flex-col px-5 md:px-0" />
 </div>

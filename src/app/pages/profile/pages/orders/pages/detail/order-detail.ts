@@ -42,6 +42,16 @@ export default class OrderDetail {
   detail = signal<OrderDetailModel>(null);
   copySuccess = signal(false);
 
+  private formatDate(dateVal: Date | string | null | undefined): string {
+    if (!dateVal) return '';
+    const date = new Date(dateVal);
+    if (isNaN(date.getTime())) return '';
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}.${month}.${year}`;
+  }
+
   orderSteps = computed(() => {
     const detail = this.detail();
     const steps: Array<{ label: string; icon: string }> = [];
@@ -105,6 +115,57 @@ export default class OrderDetail {
     const isTerminal = status === 'cancelled' || status === 'returned';
     const currentStatusIndex = statusOrder.indexOf(status);
 
+    const getStatusDate = (statusKey: OrderType | null): string => {
+      if (!statusKey) return '';
+      let dateVal: any = null;
+      switch (statusKey) {
+        case 'pending_payment':
+          dateVal = detail.pending_payment_at;
+          break;
+        case 'partially_paid':
+          dateVal = detail.partially_paid_at;
+          break;
+        case 'photo_report_ready':
+          dateVal = detail.photo_report_ready_at;
+          break;
+        case 'purchasing':
+          dateVal = detail.purchasing_at;
+          break;
+        case 'paid':
+          dateVal = detail.paid_at;
+          break;
+        case 'china_warehouse':
+          dateVal = detail.china_warehouse_at;
+          break;
+        case 'sent_to_russia':
+          dateVal = detail.sent_to_russia_at;
+          break;
+        case 'arrived_in_country':
+          dateVal = detail.arrived_in_country_at;
+          break;
+        case 'in_transit':
+        case 'delivering':
+          dateVal = detail.in_transit_at;
+          break;
+        case 'ready_for_pickup':
+          dateVal = detail.ready_for_pickup_at;
+          break;
+        case 'delivering_by_courier':
+          dateVal = detail.delivering_by_courier_at;
+          break;
+        case 'delivered':
+          dateVal = detail.delivered_at;
+          break;
+        case 'cancelled':
+          dateVal = detail.cancelled_at;
+          break;
+        case 'returned':
+          dateVal = detail.returned_at;
+          break;
+      }
+      return this.formatDate(dateVal);
+    };
+
     return flowSteps.map((step) => {
       let stepStatus: 'done' | 'active' | 'pending';
       if (isTerminal) {
@@ -124,12 +185,16 @@ export default class OrderDetail {
           stepStatus = 'pending';
         }
       }
-      return { title: step.title, status: stepStatus };
+      return { 
+        title: step.title, 
+        status: stepStatus,
+        date: getStatusDate(step.statusKey)
+      };
     }).concat(
       status === 'cancelled'
-        ? [{ title: 'Отменен', status: 'active' as const }]
+        ? [{ title: 'Отменен', status: 'active' as const, date: this.formatDate(detail.cancelled_at) }]
         : status === 'returned'
-          ? [{ title: 'Возврат', status: 'active' as const }]
+          ? [{ title: 'Возврат', status: 'active' as const, date: this.formatDate(detail.returned_at) }]
           : []
     );
   });

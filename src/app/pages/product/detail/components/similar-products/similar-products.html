@@ -2,18 +2,12 @@
 
 <div class="flex overflow-x-auto md:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
   @for (product of products(); track product.id) {
-    <product-list-detail class="min-w-40 w-40 md:w-auto" [detail]="product"/>
+  <product-list-detail class="min-w-40 w-40 md:w-auto" [detail]="product" />
   }
 </div>
 
 @if (products()?.length === 8) {
-  <button
-    class="sn-btn secondary w-full !py-3 text-lg mt-10"
-    routerLink="/product/filter"
-    [queryParams]="{
-      category_slug: category().full_slug,
-    }"
-  >
-    Показать все
-  </button>
+<button class="sn-btn secondary w-full !py-3 text-lg mt-10" routerLink="/product/{{gender()}}/{{category().name}}">
+  Показать все
+</button>
 }
