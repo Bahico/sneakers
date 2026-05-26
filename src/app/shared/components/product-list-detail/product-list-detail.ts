@@ -9,8 +9,8 @@ import { AccountStore } from '@/account';
 import { AuthenticationOpen } from '@/components/authentication/authentication-open';
 
 @Component({
-  selector: 'product-list-detail',
   templateUrl: 'product-list-detail.html',
+  selector: 'product-list-detail',
   imports: [
     RouterLink,
     AsyncPipe,

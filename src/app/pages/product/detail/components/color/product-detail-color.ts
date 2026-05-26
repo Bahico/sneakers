@@ -1,4 +1,4 @@
-import {Component, computed, ElementRef, inject, signal, viewChildren} from '@angular/core';
+import {Component, computed, ElementRef, inject, input, signal, viewChildren} from '@angular/core';
 import {getImageUrl} from '@/get-endpoint';
 import {NgClass} from '@angular/common';
 import {ProductModel} from '@/models/product.model';
@@ -14,7 +14,9 @@ import {RouterLink} from '@angular/router';
   ]
 })
 export class ProductDetailColor {
-  private readonly productDetailStore = inject(ProductDetailStore);
+  protected readonly productDetailStore = inject(ProductDetailStore);
+
+  gender = input.required<string>();
 
   thumbs = viewChildren<ElementRef>('thumb');
 
