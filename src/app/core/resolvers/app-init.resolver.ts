@@ -4,7 +4,7 @@ import { CartService } from '@/services/cart.service';
 import { AccountStore } from '@/account';
 import { TokenStore } from '@/token';
 import { FavoritesService } from '@/services/favorites.service';
-import { forkJoin, mergeMap, of } from 'rxjs';
+import {concatMap, forkJoin, mergeMap, of} from 'rxjs';
 
 export const appInitResolver: ResolveFn<boolean> = () => {
   const cartService = inject(CartService);
@@ -13,13 +13,13 @@ export const appInitResolver: ResolveFn<boolean> = () => {
   const favoritesService = inject(FavoritesService);
 
   if (tokenStore.token()?.access_token) {
-    return forkJoin([
-      accountStore.getAccount(),
-      favoritesService.get({ page: 1, limit: 1 })
-    ])
+    return accountStore.getAccount()
       .pipe(
-        mergeMap(() => cartService.loadCart()),
-        mergeMap(() => of(true))
+        mergeMap(() => forkJoin([
+          cartService.loadCart(),
+          favoritesService.get({ page: 1, limit: 1 })
+        ])),
+        concatMap(() => of(true))
       );
   }
 

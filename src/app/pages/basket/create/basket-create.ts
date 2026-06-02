@@ -265,35 +265,33 @@ export default class BasketCreate {
         .pipe(concatMap(() => this.orderService.payment(this.paymentRowValue)))
         .subscribe(res => {
           if (res?.success) {
-            this.openPaymentModal(res.payment.payment_url);
+            this.openPaymentTab(res.payment.payment_url, res.order_number);
           }
         })
     }
   }
 
-  openPaymentModal(payment_url: string) {
-    const width = 600;
-    const height = 600;
-    const left = (screen.width - width) / 2;
-    const top = (screen.height - height) / 2;
+  openPaymentTab(payment_url: string, order_number: string) {
+    window.open(payment_url, '_blank');
+    this.connectPaymentWs(order_number);
+  }
 
-    const features = 'width=700' + ', height=800' +
-      ', top=' + top + ', left=' + left +
-      ', resizable=yes, scrollbars=yes, status=no, menubar=no, toolbar=no';
-    const newWindow = window.open(payment_url, 'payment', features);
+  connectPaymentWs(order_number: string) {
+    const ws = new WebSocket(`wss://api.sneakerteam.ru/api/v1/orders/payment/ws/${order_number}`);
 
-    if (newWindow) {
-      newWindow.focus();
-      const polling = setInterval(() => {
-        if (newWindow.closed) {
-          clearInterval(polling);
+    ws.onmessage = (event) => {
+      try {
+        const data = JSON.parse(event.data);
+        if (data.status === 'success') {
+          ws.close();
           this.cartService.loadCart(true);
           this.authService.getCoins(true);
           this.router.navigate(['/basket', 'success']);
         }
-      }, 500);
+      } catch {}
+    };
 
-    }
+    ws.onerror = () => ws.close();
   }
 
   get paymentRowValue(): PaymentModel {
