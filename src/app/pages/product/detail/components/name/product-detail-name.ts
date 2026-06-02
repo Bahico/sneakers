@@ -11,11 +11,11 @@ import { DialogService } from '@/services/dialog.service';
 
 @Component({
   templateUrl: 'product-detail-name.html',
+  selector: 'product-detail-name',
   imports: [
     AsyncPipe,
     TuiFormatNumberPipe
   ],
-  selector: 'product-detail-name'
 })
 export class ProductDetailName {
   private readonly accountStore = inject(AccountStore);

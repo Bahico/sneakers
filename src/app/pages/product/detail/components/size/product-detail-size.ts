@@ -11,12 +11,12 @@ import {PolymorpheusComponent} from '@taiga-ui/polymorpheus';
 import {ContactsProduct} from '@/product/detail/components/contacts/contacts-product';
 
 @Component({
+  selector: 'product-detail-size',
   templateUrl: 'product-detail-size.html',
   imports: [
     TuiTabs,
     NgClass
   ],
-  selector: 'product-detail-size'
 })
 export class ProductDetailSize {
   private readonly productDetailStore = inject(ProductDetailStore);

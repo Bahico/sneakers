@@ -3,10 +3,10 @@
 <div class="flex items-center justify-between mb-4">
   <h4 class="text-lg font-bold text-primary">Расцветки</h4>
 
-  <div class="flex items-center text-[12px] rounded-3xl px-2 py-1 bg-[#DEDEDE] gap-2">
+  <a class="flex items-center cursor-pointer text-[12px] rounded-3xl px-2 py-1 bg-[#DEDEDE] gap-2" routerLink="/product/{{gender()}}/{{productDetailStore.detail().category.name}}">
     <span>Показать все</span>
     <i class="fa fa-angle-right"></i>
-  </div>
+  </a>
 </div>
 
 <div class="flex gap-1 h-30">
