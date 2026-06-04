@@ -51,7 +51,7 @@ export class ProductDetailStore {
   }
 
   addToCart(): void {
-    if (!this.isAuthed() && !this.cartService.getCartId()) {
+    if (!this.isAuthed()) {
       return this.authenticationService.openModal();
     }
     this.cartService.addCart({

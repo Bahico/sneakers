@@ -62,7 +62,6 @@
     "express": "^5.1.0",
     "less": "^4.4.2",
     "ngx-cookie-service": "^21.1.0",
-    "ngx-cookie-service-ssr": "^21.1.0",
     "ngx-infinite-scroll": "^21.0.0",
     "ngx-mask": "^20.0.3",
     "rxjs": "~7.8.0",

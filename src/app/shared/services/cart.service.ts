@@ -4,17 +4,11 @@ import { getEndpoint } from '@/get-endpoint';
 import { CartAdd, CartList } from '@/models/cart';
 import { CartStore } from '@/cart';
 import { Observable, of, tap } from 'rxjs';
-import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({ providedIn: 'root' })
 export class CartService {
   private readonly http = inject(HttpClient);
   private readonly cartStore = inject(CartStore);
-  private readonly cookieService = inject(CookieService);
-
-  getCartId() {
-    return this.cookieService.get('sn_cart_id');
-  }
 
   loadCart(force = false) {
     if (force) {
