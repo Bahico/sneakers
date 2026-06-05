@@ -21,7 +21,9 @@ export class OrderListDetail {
     const detail = this.detail();
     const steps: Array<{ label: string; icon: string }> = [];
 
-    if (detail?.is_split_payment) {
+    if (detail?.status === 'pending_payment') {
+      steps.push({ label: 'Ожидает оплаты', icon: 'checked' });
+    } else if (detail?.is_split_payment) {
       steps.push({ label: 'Частично оплачен', icon: 'hand-money' });
     } else {
       steps.push({ label: 'Оплачен', icon: 'checked' });
@@ -59,6 +61,7 @@ export class OrderListDetail {
 
 
     switch (status) {
+      case 'pending_payment':
       case 'partially_paid':
         return 0;
       case 'photo_report_ready':

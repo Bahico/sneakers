@@ -68,8 +68,7 @@
               <span class="text-lg text-primary font-semibold">Бренд</span>
             </div>
 
-            <div class="overflow-hidden w-full duration-300" [class.max-h-0]="!openFilters().brand"
-              [class.max-h-[400vh]]="openFilters().brand">
+            <div class="w-full" [class.hidden]="!openFilters().brand">
               <product-filter-brand />
             </div>
           </div>
