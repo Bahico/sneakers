@@ -208,7 +208,7 @@ export default class ProductFilter implements OnInit, OnDestroy {
           this.products.update(items => [...items, ...res.products]);
         }
 
-        if (this.productFilterStore.maxPrice() === 0) {
+        if (this.productFilterStore.maxPrice() === 0 || initial) {
           this.productFilterStore.maxPrice.set(res.max_price);
           this.productFilterStore.minPrice.set(res.min_price);
         }
