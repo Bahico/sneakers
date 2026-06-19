@@ -85,7 +85,7 @@ export default class ProductDetail implements OnDestroy, OnInit {
         runInInjectionContext(this.injector, () => {
           this.productDetailStore.update = res;
           const size = res.size_table[0];
-          this.productDetailStore.sizeType.set(size.primary ? 'primary' : size.type);
+          this.productDetailStore.sizeType.set(size?.primary ? 'primary' : size?.type);
         })
       })
   }
